@@ -41,7 +41,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets the total number of particles that can be alive at once.
         /// </summary>
-        public int TotalParticlesAliveAtOnce { get; set; }
+        public int TotalParticlesAliveAtOnce { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets the minimum size of the range that a <see cref="Particle"/> will be randomly set to.
