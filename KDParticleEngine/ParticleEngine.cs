@@ -507,6 +507,10 @@ namespace KDParticleEngine
         /// </summary>
         private void SpawnNewParticle()
         {
+            //If there are no textures, a particle cannot be spawned
+            if (_textures.Count <= 0)
+                return;
+
             //Find the first dead particle and bring it back to life
             for (int i = 0; i < _particles.Count; i++)
             {
