@@ -465,6 +465,8 @@ namespace KDParticleEngine
             if (!Enabled)
                 return;
 
+            CleanParticlesIfNoTextures();
+
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
 
             //If the amount of time to spawn a new particle has passed
@@ -501,6 +503,16 @@ namespace KDParticleEngine
 
 
         #region Private Methods
+        /// <summary>
+        /// Cleans the list of particles if there are no textures for any particles to be rendered.
+        /// </summary>
+        private void CleanParticlesIfNoTextures()
+        {
+            if (_textures.Count <= 0 && _particles.Count > 0)
+                _particles.Clear();
+        }
+
+
         /// <summary>
         /// Spawns a new <see cref="Particle"/>.  This simple finds the first dead <see cref="Particle"/> and
         /// sets it back to alive and sets all of its parameters to random values.
