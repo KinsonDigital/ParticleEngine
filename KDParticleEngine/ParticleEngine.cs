@@ -8,8 +8,6 @@ using System.Linq;
 
 namespace KDParticleEngine
 {
-    //TODO: Look into using a better random number generator than the built in .NET framework one
-
     /// <summary>
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
     /// how all of the <see cref="Particle"/>s behave and look on the screen.
@@ -61,7 +59,9 @@ namespace KDParticleEngine
             set => _textures[i] = value;
         }
 
-        //TODO: Add code docs
+        /// <summary>
+        /// Gets the list of particles in the engine.
+        /// </summary>
         public Particle<Texture>[] Particles => _particles.ToArray();
 
         /// <summary>
