@@ -4,9 +4,9 @@ using Xunit;
 namespace KDParticleEngineTests.Services
 {
     /// <summary>
-    /// Unit tests to test the <see cref="RandomizerService"/> class.
+    /// Provides methods for randomizing numbers.
     /// </summary>
-    public class RandomizerServiceTests
+    public class TrueRandomizerServiceTests
     {
         [Theory]
         [InlineData(1, 2)]
@@ -16,7 +16,7 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithIntValuesAndMinIsLessThanMax_ReturnsWithinRange(int minValue, int maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
+            var randomizer = new TrueRandomizerService();
 
             for (int i = 0; i < 1000; i++)
             {
@@ -37,7 +37,7 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithIntValuesAndMinIsGreaterThanMax_ReturnsWithinRange(int minValue, int maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
+            var randomizer = new TrueRandomizerService();
 
             for (int i = 0; i < 1000; i++)
             {
@@ -58,7 +58,7 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithFloatValuesAndMinIsLessThanMax_ReturnsWithinRange(float minValue, float maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
+            var randomizer = new TrueRandomizerService();
 
             for (int i = 0; i < 100000; i++)
             {
@@ -80,7 +80,7 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithFloatValuesAndMaxIsGreaterThanMin_ReturnsWithinRange(float minValue, float maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
+            var randomizer = new TrueRandomizerService();
 
             for (int i = 0; i < 100000; i++)
             {
@@ -102,8 +102,8 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithDoubleValuesAndMinIsLessThanMax_ReturnsWithinRange(double minValue, double maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
-            
+            var randomizer = new TrueRandomizerService();
+
             for (int i = 0; i < 100000; i++)
             {
                 //Act
@@ -124,7 +124,7 @@ namespace KDParticleEngineTests.Services
         public void GetValue_WhenInvokingWithDoubleValuesAndMaxIsGreaterThanMin_ReturnsWithinRange(double minValue, double maxValue)
         {
             //Arrange
-            var randomizer = new RandomizerService();
+            var randomizer = new TrueRandomizerService();
 
             for (int i = 0; i < 100000; i++)
             {
