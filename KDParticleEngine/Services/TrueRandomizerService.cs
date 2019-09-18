@@ -90,6 +90,8 @@ namespace KDParticleEngine.Services
 
             if (minValue == maxValue) return minValue;
 
+            maxValue += 1;
+
             var diff = (long)(maxValue - minValue);
 
             while (true)
