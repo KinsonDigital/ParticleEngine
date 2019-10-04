@@ -116,7 +116,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets a value indicating if the colors will be randomly chosen from a list.
         /// </summary>
-        public bool UseColorsFromList { get; set; } = true;
+        public bool UseColorsFromList { get; set; }
 
         /// <summary>
         /// Gets or sets the list of colors to randomly choose from.
