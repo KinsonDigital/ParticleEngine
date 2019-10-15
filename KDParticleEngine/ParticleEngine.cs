@@ -18,7 +18,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Occurs every time the total living particles has changed.
         /// </summary>
-        public event EventHandler<EventArgs> LivingParticlesCountChanged;
+        public event EventHandler<EventArgs>? LivingParticlesCountChanged;
         #endregion
 
 
@@ -306,22 +306,17 @@ namespace KDParticleEngine
         public int Count => _textures.Count;
 
         /// <summary>
-        /// Gets or sets the syncronization object for multi-threaded operations.
-        /// </summary>
-        public object SyncRoot { get; set; }
-
-        /// <summary>
         /// Returns a value indicating if the list of <see cref="Texture"/>s is syncrhonized
         /// for multi-threaded operations.
         /// </summary>
         public bool IsSynchronized => false;
 
         /// <summary>
-        /// Gets or stets the custom process to occurr right before the particles
+        /// Gets or stets the custom process to occur right before the particles
         /// update when the engine update process is invoked.  Will be invoked as long
         /// as the action is not null.
         /// </summary>
-        public Action PreParticleUpdate { get; set; }
+        public Action? PreParticleUpdate { get; set; }
         #endregion
 
 

@@ -438,18 +438,6 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void SyncRoot_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Act
-            var testObj = new object();
-            _engine.SyncRoot = testObj;
-
-            //Assert
-            Assert.Equal(testObj, _engine.SyncRoot);
-        }
-
-
-        [Fact]
         public void IsSyncrhonized_WhenGettingValue_ReturnsCorrectValue()
         {
             //Assert
