@@ -11,6 +11,7 @@
     <Company>Kinson Digital</Company>
     <RootNamespace>KDParticleEngine</RootNamespace>
     <AssemblyName>ParticleEngine</AssemblyName>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
