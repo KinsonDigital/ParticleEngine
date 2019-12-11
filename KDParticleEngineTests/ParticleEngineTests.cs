@@ -5,6 +5,7 @@ using KDParticleEngine;
 using KDParticleEngine.Services;
 using Moq;
 using Xunit;
+using XUnitHelpers;
 
 namespace KDParticleEngineTests
 {
@@ -459,7 +460,7 @@ namespace KDParticleEngineTests
 
         #region Method Tests
         [Fact]
-        public void Add_WhenInvokedWithUseRandomVelocityFalse_UsesParticleVelocity()
+        public void Add_WhileNotUsingRandomVelocity_UsesParticleVelocity()
         {
             //Arrange
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(10);
@@ -476,7 +477,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Add_WhenInvokedWithUseRandomVelocityTrue_UsesRandomVelocity()
+        public void Add_WhileUsingRandomVelocity_UsesRandomVelocity()
         {
             //Arrange
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(10);
@@ -501,14 +502,14 @@ namespace KDParticleEngineTests
 
             //Act
             var actual = _engine.Count;
-
+            
             //Assert
             Assert.Equal(1, actual);
         }
 
 
         [Fact]
-        public void Add_WhenInvokedWithPredicateReturningTrue_AddsTextureToEngine()
+        public void Add_WithPredicateReturningTrue_AddsTextureToEngine()
         {
             //Arrange
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(0);
@@ -524,7 +525,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Add_WhenInvokedWithPredicateReturningFalse_DoesNotAddTextureToEngine()
+        public void Add_WithPredicateReturningFalse_DoesNotAddTextureToEngine()
         {
             //Arrange
             var mockTexture = new Mock<IFakeTexture>();
@@ -539,7 +540,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Add_WhenInvokedWithTextureArray_AddsAllTexturesToEngine()
+        public void Add_WithTextureArray_AddsAllTexturesToEngine()
         {
             //Arrange
             var mockTextureA = new Mock<IFakeTexture>();
@@ -581,7 +582,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Contains_WhenInvokedWithAddedTexture_ReturnsTrue()
+        public void Contains_WithAddedTexture_ReturnsTrue()
         {
             //Arrange
             var mockTexture = new Mock<IFakeTexture>();
@@ -596,7 +597,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Update_WhenInvokedWhileDisabled_DoesNotGenerateParticles()
+        public void Update_WhileDisabled_DoesNotGenerateParticles()
         {
             //Arrange
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(0);
@@ -629,7 +630,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Update_WhenInvokedWhenSpawnMinIsLessOrEqualToMax_ProperlyRandomizesValue()
+        public void Update_WhenSpawnMinIsLessOrEqualToMax_ProperlyRandomizesValue()
         {
             //Arrange
             _engine.Add(new Mock<IFakeTexture>().Object);
@@ -645,7 +646,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Update_WhenInvokedWhenSpawnMaxIsGreaterThanMin_ProperlyRandomizesValue()
+        public void Update_WhenSpawnMaxIsGreaterThanMin_ProperlyRandomizesValue()
         {
             //Arrange
             _engine.Add(new Mock<IFakeTexture>().Object);
@@ -661,7 +662,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Update_WhenInvokedWhenLifeTimeMinIsLessOrEqualToMax_ProperlyRandomizesValue()
+        public void Update_WhenLifeTimeMinIsLessOrEqualToMax_ProperlyRandomizesValue()
         {
             //Arrange
             _engine.LifeTimeMin = 2;
@@ -676,7 +677,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Update_WhenInvokedWhenLifeTimeMaxIsGreaterThanMin_ProperlyRandomizesValue()
+        public void Update_WhenLifeTimeMaxIsGreaterThanMin_ProperlyRandomizesValue()
         {
             //Arrange
             _engine.LifeTimeMin = 6;
