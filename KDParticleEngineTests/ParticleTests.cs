@@ -3,9 +3,8 @@ using Moq;
 using Xunit;
 using System.Drawing;
 using KDParticleEngine;
-using KDParticleEngineTests;
 
-namespace KD.Particle.Engine.Tests
+namespace KDParticleEngineTests
 {
     /// <summary>
     /// Unit tests to test the <see cref="Particle{IFakeTexture}"/> class.

@@ -2,7 +2,7 @@
 using Xunit;
 using System.Drawing;
 
-namespace KD.Particle.Engine.Tests
+namespace KDParticleEngineTests
 {
     /// <summary>
     /// Unit tests to test the <see cref="ParticleSetup"/> class.
