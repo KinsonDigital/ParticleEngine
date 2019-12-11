@@ -210,7 +210,7 @@ namespace KD.Particle.Engine.Tests
 
         #region Method Tests
         [Fact]
-        public void Update_WhenInvoked_UpdatesLifeTimePositionAndAngleValues()
+        public void Update_WhenInvoked_UpdatesLifeTime()
         {
             //Arrange
             var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
@@ -220,8 +220,34 @@ namespace KD.Particle.Engine.Tests
 
             //Assert
             Assert.Equal(15, particle.LifeTime);
-            Assert.Equal(new PointF(10, 20), particle.Position);
-            Assert.Equal(6, particle.Angle);
+        }
+
+
+        [Fact]
+        public void Update_WhenInvoked_UpdatesPositions()
+        {
+            //Arrange
+            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
+
+            //Act
+            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
+
+            //Assert
+            Assert.Equal(new PointF(0.14999999f, 0.29999998f), particle.Position);
+        }
+
+
+        [Fact]
+        public void Update_WhenInvoked_UpdatesAngle()
+        {
+            //Arrange
+            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
+
+            //Act
+            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
+
+            //Assert
+            Assert.Equal(0.089999996f, particle.Angle);
         }
         #endregion
 
