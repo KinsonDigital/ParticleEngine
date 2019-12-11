@@ -43,7 +43,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Add_WhenInvoking_ReturnsCorrectResult()
+        public void Add_WhenInvoking_ReturnsCorrectValue()
         {
             //Arrange
             var pointA = new PointF(10, 20);
@@ -58,7 +58,7 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Mult_WhenInvoking_ReturnsCorrectResult()
+        public void Mult_WhenInvoking_ReturnsCorrectValue()
         {
             //Arrange
             var point = new PointF(10, 20);

@@ -5,7 +5,6 @@ using KDParticleEngine;
 using KDParticleEngine.Services;
 using Moq;
 using Xunit;
-using XUnitHelpers;
 
 namespace KDParticleEngineTests
 {
