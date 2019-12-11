@@ -41,12 +41,36 @@ namespace KDParticleEngine
 
 
         /// <summary>
-        /// Adds the given <paramref name="point"/>'s X and Y components to this point and returns the result.
+        /// Adds the given <paramref name="pointB"/>'s X and Y components to this point and returns the result.
         /// </summary>
-        /// <param name="otherPoint">The current point to add the given point to.</param>
-        /// <param name="point">The point to add to this point.</param>
+        /// <param name="pointA">The current point to add the given point to.</param>
+        /// <param name="pointB">The point to add to this point.</param>
         /// <returns></returns>
-        public static PointF Add(this PointF otherPoint, PointF point) => new PointF(otherPoint.X + point.X, otherPoint.Y + point.Y);
+        public static PointF Add(this PointF pointA, PointF pointB)
+        {
+            pointA.X += pointB.X;
+            pointA.Y += pointB.Y;
+
+
+            return pointA;
+        }
+
+
+        /// <summary>
+        /// Multiplies the components of this <see cref="PointF"/>
+        /// by the given <paramref name="scalar"/>.
+        /// </summary>
+        /// <param name="point">The left operand of the multiplication operation.</param>
+        /// <param name="scalar">The right operand of the multiplication operation.</param>
+        /// <returns></returns>
+        public static PointF Mult(this PointF point, double scalar)
+        {
+            point.X *= (float)scalar;
+            point.Y *= (float)scalar;
+
+
+            return point;
+        }
         #endregion
     }
 }
