@@ -50,6 +50,23 @@ namespace KDParticleEngineTests.Services
         }
 
 
+        [Fact]
+        public void GetValue_WhenInvokingWithIntValuesAndMinIsEqualToMax_ReturnsValueThatMatchesMinOrMax()
+        {
+            //Arrange
+            var randomizer = new TrueRandomizerService();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                //Act
+                var result = randomizer.GetValue(10, 10);
+
+                //Assert
+                Assert.Equal(10, result);
+            }
+        }
+
+
         [Theory]
         [InlineData(1.001f, 2.001f)]
         [InlineData(1.001f, 4.001f)]

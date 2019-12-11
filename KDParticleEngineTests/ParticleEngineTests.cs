@@ -613,6 +613,22 @@ namespace KDParticleEngineTests
 
 
         [Fact]
+        public void Update_WhenInvokedWithNoTextures_ClearsOutParticles()
+        {
+            //Arrange
+            var mockTexture = new Mock<IFakeTexture>();
+            _engine.Add(mockTexture.Object);
+
+            //Act
+            _engine.Remove(mockTexture.Object);
+            _engine.Update(new TimeSpan(0, 0, 0, 0, 30));
+
+            //Assert
+            Assert.Empty(_engine);
+        }
+
+
+        [Fact]
         public void Update_WhenInvokedWhenSpawnMinIsLessOrEqualToMax_ProperlyRandomizesValue()
         {
             //Arrange
@@ -690,6 +706,7 @@ namespace KDParticleEngineTests
             //Assert
             Assert.True(eventInvoked);
         }
+
 
         [Fact]
         public void Update_WhenInvokingWithUnexpiredParticleLifeTime_LivingParticlesCountChangeEventNeverFires()
