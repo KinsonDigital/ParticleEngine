@@ -1,6 +1,7 @@
 ﻿using KDParticleEngine;
 using Xunit;
 using System;
+using System.Drawing;
 
 namespace KDParticleEngineTests
 {
@@ -38,6 +39,35 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
+        public void Add_WhenInvoking_ReturnsCorrectValue()
+        {
+            //Arrange
+            var pointA = new PointF(10, 20);
+            var pointB = new PointF(5, 3);
+
+            //Act
+            var result = pointA.Add(pointB);
+
+            //Assert
+            Assert.Equal(new PointF(15f, 23f), result);
+        }
+
+
+        [Fact]
+        public void Mult_WhenInvoking_ReturnsCorrectValue()
+        {
+            //Arrange
+            var point = new PointF(10, 20);
+
+            //Act
+            var result = point.Mult(2);
+
+            //Assert
+            Assert.Equal(new PointF(20f, 40f), result);
         }
         #endregion
     }

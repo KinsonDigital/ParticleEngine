@@ -100,8 +100,9 @@ namespace KDParticleEngine
         public void Update(TimeSpan timeElapsed)
         {
             LifeTime -= (int)timeElapsed.TotalMilliseconds;
-            Position = Position.Add(Velocity);
-            Angle += AngularVelocity;
+
+            Position = Position.Add(Velocity.Mult(timeElapsed.TotalSeconds));
+            Angle += AngularVelocity * (float)timeElapsed.TotalSeconds;
         }
         #endregion
     }
