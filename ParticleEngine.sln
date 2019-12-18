@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine.Tests", "KDParticleEngineTests\KD.Particle.Engine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIO", "FileIO\FileIO\FileIO.csproj", "{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,12 @@ Global
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x64.Build.0 = Release|x64
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x86.ActiveCfg = Release|x86
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x86.Build.0 = Release|x86
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Debug|x64.ActiveCfg = Debug|x64
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Debug|x64.Build.0 = Debug|x64
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Debug|x86.ActiveCfg = Debug|x64
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Release|x64.ActiveCfg = Release|x64
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Release|x64.Build.0 = Release|x64
+		{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
