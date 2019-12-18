@@ -23,7 +23,7 @@ namespace KDParticleEngine
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
 
-        public ParticlePool(ParticleSetup setup, IRandomizerService randomizer)
+        public ParticlePool(ParticleEffect setup, IRandomizerService randomizer)
         {
             Setup = setup;
             _randomizer = randomizer;
@@ -45,7 +45,7 @@ namespace KDParticleEngine
         public Particle[] Particles => _particles.ToArray();
 
 
-        public ParticleSetup Setup { get; private set; }
+        public ParticleEffect Setup { get; private set; }
 
 
         public void Update(TimeSpan timeElapsed)

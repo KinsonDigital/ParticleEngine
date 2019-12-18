@@ -132,7 +132,7 @@ namespace KDParticleEngine
 
 
         #region Public Methods
-        public void AddSetup(ParticleSetup setup)
+        public void AddSetup(ParticleEffect setup)
         {
             _particlePools.Add(new ParticlePool(setup, _randomizer));
         }

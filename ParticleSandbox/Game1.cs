@@ -72,7 +72,7 @@ namespace ParticleSandbox
 
             var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
 
-            var setupA = new ParticleSetup("Shape-A")
+            var setupA = new ParticleEffect("Shape-A")
             {
                 SpawnLocation = spawnLocation,
                 //This becomes a behavior
@@ -95,7 +95,7 @@ namespace ParticleSandbox
 
             setupA.Behaviors.Add(new EaseInBehavior(700, 3000));
 
-            var setupB = new ParticleSetup("Shape-B")
+            var setupB = new ParticleEffect("Shape-B")
             {
                 SpawnLocation = new NETPointF(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2),
                 VelocityXMin = 100f,

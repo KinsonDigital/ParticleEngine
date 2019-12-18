@@ -7,7 +7,7 @@ namespace KDParticleEngine
     /// <summary>
     /// Holds the particle setup settings data for the <see cref="ParticleEngine"/> to consume.
     /// </summary>
-    public class ParticleSetup
+    public class ParticleEffect
     {
         #region Private Fields
         private float _angleMax;
@@ -16,7 +16,7 @@ namespace KDParticleEngine
 
 
         #region Constructors
-        public ParticleSetup(string particleTextureName) => ParticleTextureName = particleTextureName;
+        public ParticleEffect(string particleTextureName) => ParticleTextureName = particleTextureName;
         #endregion
 
 
