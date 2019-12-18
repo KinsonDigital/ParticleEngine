@@ -1,4 +1,5 @@
-﻿using KDParticleEngine.Services;
+﻿using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace KDParticleEngine
 {
-    internal class ParticlePool<Texture> where Texture : class
+    public class ParticlePool
     {
         #region Public Events
         /// <summary>
@@ -16,16 +17,18 @@ namespace KDParticleEngine
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
         #endregion
 
-        private List<Particle<Texture>> _particles;
-        private ParticleSetup<Texture> _setup;
+
+        private List<Particle> _particles = new List<Particle>();
         private IRandomizerService _randomizer;
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
 
-        public ParticlePool(ParticleSetup<Texture> setup, IRandomizerService randomizer)
+        public ParticlePool(ParticleSetup setup, IRandomizerService randomizer)
         {
-            _setup = setup;
+            Setup = setup;
             _randomizer = randomizer;
+
+            GenerateAllParticles();
         }
 
 
@@ -39,7 +42,10 @@ namespace KDParticleEngine
         /// </summary>
         public int TotalDeadParticles => _particles.Count(p => p.IsDead);
 
-        public Particle<Texture>[] Particles => _particles.ToArray();
+        public Particle[] Particles => _particles.ToArray();
+
+
+        public ParticleSetup Setup { get; private set; }
 
 
         public void Update(TimeSpan timeElapsed)
@@ -65,6 +71,12 @@ namespace KDParticleEngine
                 //Update the current particle
                 _particles[i].Update(timeElapsed);
 
+                //Apply all of the behaviors
+                Setup.Behaviors.ForEach(b =>
+                {
+                    b.Update(_particles[i], timeElapsed);
+                });
+
                 //If the current particle's time to live has expired, kill the particle
                 if (_particles[i].LifeTime <= 0)
                 {
@@ -88,8 +100,8 @@ namespace KDParticleEngine
             {
                 if (_particles[i].IsDead)
                 {
-                    _particles[i].Position = _setup.SpawnLocation;
-                    _particles[i].Velocity = _setup.UseRandomVelocity ? GetRandomVelocity() : _setup.ParticleVelocity;
+                    _particles[i].Position = Setup.SpawnLocation;
+                    _particles[i].Velocity = Setup.UseRandomVelocity ? GetRandomVelocity() : Setup.ParticleVelocity;
                     _particles[i].Angle = GetRandomAngle();
                     _particles[i].AngularVelocity = GetRandomAngularVelocity();
                     _particles[i].TintColor = GetRandomColor();
@@ -113,11 +125,11 @@ namespace KDParticleEngine
         /// <returns></returns>
         private int GetRandomSpawnRate()
         {
-            if (_setup.SpawnRateMin <= _setup.SpawnRateMax)
-                return _randomizer.GetValue(_setup.SpawnRateMin, _setup.SpawnRateMax);
+            if (Setup.SpawnRateMin <= Setup.SpawnRateMax)
+                return _randomizer.GetValue(Setup.SpawnRateMin, Setup.SpawnRateMax);
 
 
-            return _randomizer.GetValue(_setup.SpawnRateMax, _setup.SpawnRateMin);
+            return _randomizer.GetValue(Setup.SpawnRateMax, Setup.SpawnRateMin);
         }
 
 
@@ -128,7 +140,7 @@ namespace KDParticleEngine
         {
             _particles.Clear();
 
-            for (int i = 0; i < _setup.TotalParticlesAliveAtOnce; i++)
+            for (int i = 0; i < Setup.TotalParticlesAliveAtOnce; i++)
             {
                 _particles.Add(GenerateParticle());
             }
@@ -140,11 +152,11 @@ namespace KDParticleEngine
         /// range settings.
         /// </summary>
         /// <returns></returns>
-        private Particle<Texture> GenerateParticle()
+        private Particle GenerateParticle()
         {
-            var position = _setup.SpawnLocation;
+            var position = Setup.SpawnLocation;
 
-            var velocity = _setup.UseRandomVelocity ? GetRandomVelocity() : _setup.ParticleVelocity;
+            var velocity = Setup.UseRandomVelocity ? GetRandomVelocity() : Setup.ParticleVelocity;
 
             var angle = GetRandomAngle();
 
@@ -157,7 +169,7 @@ namespace KDParticleEngine
             var lifeTime = GetRandomLifeTime();
 
 
-            return new Particle<Texture>(_setup.ParticleTexture, position, velocity, angle, angularVelocity, color, size, lifeTime);
+            return new Particle(position, velocity, angle, angularVelocity, color, size, lifeTime);
         }
 
 
@@ -167,8 +179,8 @@ namespace KDParticleEngine
         /// <returns></returns>
         private PointF GetRandomVelocity()
         {
-            var velXRandomResult = _randomizer.GetValue(_setup.VelocityXMin, _setup.VelocityXMax);
-            var velYRandomResult = _randomizer.GetValue(_setup.VelocityYMin, _setup.VelocityYMax);
+            var velXRandomResult = _randomizer.GetValue(Setup.VelocityXMin, Setup.VelocityXMax);
+            var velYRandomResult = _randomizer.GetValue(Setup.VelocityYMin, Setup.VelocityYMax);
 
 
             return new PointF(velXRandomResult,
@@ -180,14 +192,14 @@ namespace KDParticleEngine
         /// Returns a random <see cref="Particle.Angle"/> for a spawned <see cref="Particle"/>.
         /// </summary>
         /// <returns></returns>
-        private float GetRandomAngle() => _randomizer.GetValue(_setup.AngleMin, _setup.AngleMax);
+        private float GetRandomAngle() => _randomizer.GetValue(Setup.AngleMin, Setup.AngleMax);
 
 
         /// <summary>
         /// Returns a random <see cref="Particle.AngularVelocity"/> for a spawned <see cref="Particle"/>.
         /// </summary>
         /// <returns></returns>
-        private float GetRandomAngularVelocity() => _randomizer.GetValue(_setup.AngularVelocityMin, _setup.AngularVelocityMax) * (_randomizer.FlipCoin() ? 1 : -1);
+        private float GetRandomAngularVelocity() => _randomizer.GetValue(Setup.AngularVelocityMin, Setup.AngularVelocityMax) * (_randomizer.FlipCoin() ? 1 : -1);
 
 
         /// <summary>
@@ -196,21 +208,21 @@ namespace KDParticleEngine
         /// <returns></returns>
         private Color GetRandomColor()
         {
-            if (_setup.UseColorsFromList)
+            if (Setup.UseColorsFromList)
             {
-                return _setup.TintColors is null || _setup.TintColors.Length == 0 ? Color.FromArgb(255, 255, 255, 255) : _setup.TintColors[_randomizer.GetValue(0, _setup.TintColors.Length - 1)];
+                return Setup.TintColors is null || Setup.TintColors.Length == 0 ? Color.FromArgb(255, 255, 255, 255) : Setup.TintColors[_randomizer.GetValue(0, Setup.TintColors.Length - 1)];
             }
             else
             {
-                var red = _setup.RedMin <= _setup.RedMax ?
-                    (byte)_randomizer.GetValue(_setup.RedMin, _setup.RedMax) :
-                    (byte)_randomizer.GetValue(_setup.RedMax, _setup.RedMin);
-                var green = _setup.GreenMin <= _setup.GreenMax ?
-                    (byte)_randomizer.GetValue(_setup.GreenMin, _setup.GreenMax) :
-                    (byte)_randomizer.GetValue(_setup.GreenMax, _setup.GreenMin);
-                var blue = _setup.BlueMin <= _setup.BlueMax ?
-                    (byte)_randomizer.GetValue(_setup.BlueMin, _setup.BlueMax) :
-                    (byte)_randomizer.GetValue(_setup.BlueMax, _setup.BlueMin);
+                var red = Setup.RedMin <= Setup.RedMax ?
+                    (byte)_randomizer.GetValue(Setup.RedMin, Setup.RedMax) :
+                    (byte)_randomizer.GetValue(Setup.RedMax, Setup.RedMin);
+                var green = Setup.GreenMin <= Setup.GreenMax ?
+                    (byte)_randomizer.GetValue(Setup.GreenMin, Setup.GreenMax) :
+                    (byte)_randomizer.GetValue(Setup.GreenMax, Setup.GreenMin);
+                var blue = Setup.BlueMin <= Setup.BlueMax ?
+                    (byte)_randomizer.GetValue(Setup.BlueMin, Setup.BlueMax) :
+                    (byte)_randomizer.GetValue(Setup.BlueMax, Setup.BlueMin);
 
                 return Color.FromArgb(255, red, green, blue);
             }
@@ -221,7 +233,7 @@ namespace KDParticleEngine
         /// Returns a random <see cref="Particle.Size"/> for a spawned <see cref="Particle"/>.
         /// </summary>
         /// <returns></returns>
-        private float GetRandomSize() => _randomizer.GetValue(_setup.SizeMin, _setup.SizeMax);
+        private float GetRandomSize() => _randomizer.GetValue(Setup.SizeMin, Setup.SizeMax);
 
 
         /// <summary>
@@ -232,11 +244,11 @@ namespace KDParticleEngine
         /// <returns></returns>
         private int GetRandomLifeTime()
         {
-            if (_setup.LifeTimeMin <= _setup.LifeTimeMax)
-                return _randomizer.GetValue(_setup.LifeTimeMin, _setup.LifeTimeMax);
+            if (Setup.LifeTimeMin <= Setup.LifeTimeMax)
+                return _randomizer.GetValue(Setup.LifeTimeMin, Setup.LifeTimeMax);
 
 
-            return _randomizer.GetValue(_setup.LifeTimeMax, _setup.LifeTimeMin);
+            return _randomizer.GetValue(Setup.LifeTimeMax, Setup.LifeTimeMin);
         }
     }
 }

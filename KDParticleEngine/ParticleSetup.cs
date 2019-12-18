@@ -1,11 +1,13 @@
-﻿using System.Drawing;
+﻿using KDParticleEngine.Behaviors;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace KDParticleEngine
 {
     /// <summary>
     /// Holds the particle setup settings data for the <see cref="ParticleEngine"/> to consume.
     /// </summary>
-    public class ParticleSetup<Texture> where Texture : class
+    public class ParticleSetup
     {
         #region Private Fields
         private float _angleMax;
@@ -13,8 +15,15 @@ namespace KDParticleEngine
         #endregion
 
 
+        #region Constructors
+        public ParticleSetup(string particleTextureName) => ParticleTextureName = particleTextureName;
+        #endregion
+
+
         #region Props
-        public Texture ParticleTexture { get; set; }
+        public string ParticleTextureName { get; private set; }
+
+        public List<IBehavior> Behaviors { get; set; } = new List<IBehavior>();
 
         /// <summary>
         /// Gets or sets the location on the screen of where to spawn the <see cref="Particle"/>s.

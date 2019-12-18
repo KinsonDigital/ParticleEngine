@@ -23,14 +23,16 @@ namespace KDParticleEngine
 
 
         #region Private Fields
-        private List<ParticlePool<Texture>> _particlePools = new List<ParticlePool<Texture>>();
+        private List<ParticlePool> _particlePools = new List<ParticlePool>();
+        private readonly ITextureLoader<Texture> _textureLoader;
         private readonly IRandomizerService _randomizer;
+        private readonly Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
         private int _totalParticlesAliveAtOnce = 10;
 
         private float _angleMin;
         private float _angleMax = 360;
         private bool _enabled = true;
-
+        private bool _texturesLoaded;
         #endregion
 
 
@@ -38,8 +40,9 @@ namespace KDParticleEngine
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngine"/>.
         /// </summary>
-        public ParticleEngine(IRandomizerService randomizer)
+        public ParticleEngine(ITextureLoader<Texture> textureLoader, IRandomizerService randomizer)
         {
+            _textureLoader = textureLoader;
             _randomizer = randomizer;
         }
         #endregion
@@ -49,17 +52,36 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of particles in the engine.
         /// </summary>
-        public Particle<Texture>[] Particles
+        public Particle[] Particles
         {
             get
             {
-                var result = new List<Particle<Texture>>();
+                var result = new List<Particle>();
 
                 _particlePools.ForEach(pool => result.AddRange(pool.Particles));
 
 
                 return result.ToArray();
             }
+        }
+
+
+        public ParticlePool[] ParticlePools
+        {
+            get => _particlePools.ToArray();
+        }
+
+
+        public Texture GetTexture(string name)
+        {
+            if (!_texturesLoaded)
+                throw new Exception("The textures just be loaded first.");
+
+            if (!_textures.ContainsKey(name))
+                throw new Exception($"Particle with the name '{name}' does exist.");
+
+
+            return _textures[name];
         }
 
 
@@ -110,9 +132,20 @@ namespace KDParticleEngine
 
 
         #region Public Methods
-        public void AddSetup(ParticleSetup<Texture> setup)
+        public void AddSetup(ParticleSetup setup)
         {
-            _particlePools.Add(new ParticlePool<Texture>(setup, _randomizer));
+            _particlePools.Add(new ParticlePool(setup, _randomizer));
+        }
+
+
+        public void LoadTextures()
+        {
+            _particlePools.ToList().ForEach(pool =>
+            {
+                _textures.Add(pool.Setup.ParticleTextureName, _textureLoader.LoadTexture(pool.Setup.ParticleTextureName));
+            });
+
+            _texturesLoaded = true;
         }
 
 
@@ -128,6 +161,9 @@ namespace KDParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed in the <see cref="Engine"/> since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
+            if (!_texturesLoaded)
+                throw new Exception("The textures just be loaded first.");
+
             if (!Enabled)
                 return;
 

@@ -1,16 +1,26 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
+using XNARect = Microsoft.Xna.Framework.Rectangle;
+using XNAColor = Microsoft.Xna.Framework.Color;
+using NETColor = System.Drawing.Color;
 
 namespace ParticleSandbox
 {
     public static class ExtensionMethods
     {
-        public static ParticleTexture LoadTexture(this ContentManager content, string assetName)
+        public static Vector2 ToVector2(this PointF point) => new Vector2(point.X, point.Y);
+
+
+        public static XNAColor ToXNAColor(this NETColor clr) => new XNAColor(clr.R, clr.G, clr.B, clr.A);
+
+        public static XNARect GetSrcRect(this Texture2D texture)
         {
-            return new ParticleTexture(content.Load<Texture2D>(assetName));
+            return new XNARect(0, 0, texture.Width, texture.Height);
         }
+
+
+        public static Vector2 GetOriginAsCenter(this Texture2D texture) => new Vector2(texture.Width / 2, texture.Height / 2);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KDParticleEngine.Behaviors;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace KDParticleEngine
@@ -7,7 +9,7 @@ namespace KDParticleEngine
     /// Represents a single particle with various properties that dictate how the <see cref="Particle"/>
     /// behaves and looks on the screen.
     /// </summary>
-    public class Particle<ITexture> where ITexture : class
+    public class Particle
     {
         #region Constructors
         /// <summary>
@@ -21,9 +23,8 @@ namespace KDParticleEngine
         /// <param name="color">The color to tint the <see cref="Texture"/>.</param>
         /// <param name="size">The size of the <see cref="Particle"/>.</param>
         /// <param name="lifeTime">The amount of time in milliseconds for the particle to stay alive.</param>
-        public Particle(ITexture texture, PointF position, PointF velocity, float angle, float angularVelocity, Color color, float size, int lifeTime)
+        public Particle(PointF position, PointF velocity, float angle, float angularVelocity, Color color, float size, int lifeTime)
         {
-            Texture = texture;
             Position = position;
             Velocity = velocity;
             Angle = angle;
@@ -36,11 +37,6 @@ namespace KDParticleEngine
 
 
         #region Props
-        /// <summary>
-        /// Gets or sets the texture of the <see cref="Particle"/>.
-        /// </summary>
-        public ITexture Texture { get; set; }
-
         /// <summary>
         /// Gets or sets the position of the <see cref="Particle"/>.
         /// </summary>
@@ -101,8 +97,11 @@ namespace KDParticleEngine
         {
             LifeTime -= (int)timeElapsed.TotalMilliseconds;
 
-            Position = Position.Add(Velocity.Mult(timeElapsed.TotalSeconds));
-            Angle += AngularVelocity * (float)timeElapsed.TotalSeconds;
+            //Movement before behavior implementation
+            //Position = Position.Add(Velocity.Mult(timeElapsed.TotalSeconds));
+            //Angle += AngularVelocity * (float)timeElapsed.TotalSeconds;
+
+
         }
         #endregion
     }
