@@ -10,25 +10,17 @@ namespace KDParticleEngine.Behaviors
         private float _timeElapsed;//milliseconds
 
 
-        public EaseInBehavior(float destination, float totalTime)
+        public EaseInBehavior()
         {
-            Destination = destination;
-            TotalTime = totalTime;
         }
-
-
-        public float Destination { get; }
-
-        public float TotalTime { get; }
 
 
         public void Update(Particle particle, TimeSpan timeElapsed)
         {
-            var result = EaseInQuad(_timeElapsed, particle.Position.X, Destination - particle.Position.X, TotalTime);
-
-            particle.Position = new PointF(result, particle.Position.Y);
-
             _timeElapsed += (float)timeElapsed.TotalMilliseconds;
+            //particle.Position = new PointF(result, particle.Position.Y);
+
+
         }
 
 
