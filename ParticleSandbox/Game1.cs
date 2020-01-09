@@ -93,7 +93,6 @@ namespace ParticleSandbox
                 TotalParticlesAliveAtOnce = 1
             };
 
-            setupA.Behaviors.Add(new EaseInBehavior(700, 3000));
 
             var setupB = new ParticleEffect("Shape-B")
             {

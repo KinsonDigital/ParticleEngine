@@ -5,7 +5,7 @@ using System.Text;
 
 namespace KDParticleEngine.Behaviors
 {
-    public class EaseInBehavior : IEaseFunctionBehavior
+    public class EaseInBehavior
     {
         private float _timeElapsed;//milliseconds
 
