@@ -18,11 +18,16 @@ namespace KDParticleEngine
         #endregion
 
 
-        private List<Particle> _particles = new List<Particle>();
-        private IRandomizerService _randomizer;
+        #region Private Fields
+        private readonly List<Particle> _particles = new List<Particle>();
+        private readonly IRandomizerService _randomizer;
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
+        #endregion
 
+
+        #region Constructors
+        //TODO: Finish adding code docs
         public ParticlePool(ParticleEffect setup, IRandomizerService randomizer)
         {
             Setup = setup;
@@ -30,8 +35,10 @@ namespace KDParticleEngine
 
             GenerateAllParticles();
         }
+        #endregion
 
 
+        #region Props
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
@@ -44,10 +51,11 @@ namespace KDParticleEngine
 
         public Particle[] Particles => _particles.ToArray();
 
-
         public ParticleEffect Setup { get; private set; }
+        #endregion
 
 
+        #region Public Methods
         public void Update(TimeSpan timeElapsed)
         {
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
@@ -250,5 +258,6 @@ namespace KDParticleEngine
 
             return _randomizer.GetValue(Setup.LifeTimeMax, Setup.LifeTimeMin);
         }
+        #endregion
     }
 }
