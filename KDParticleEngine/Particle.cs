@@ -1,6 +1,4 @@
-﻿using KDParticleEngine.Behaviors;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 
 namespace KDParticleEngine

@@ -1,13 +1,10 @@
-using KDParticleEngine;
+﻿using KDParticleEngine;
 using KDParticleEngine.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Drawing;
-using System.Linq;
 
 using XNAColor = Microsoft.Xna.Framework.Color;
 using NETPointF = System.Drawing.PointF;
-using NETColor = System.Drawing.Color;
 using Microsoft.Xna.Framework.Input;
 using System;
 using MathExpressionEngine;

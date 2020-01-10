@@ -1,9 +1,7 @@
-using MathExpressionEngine;
+﻿using MathExpressionEngine;
 using MathExpressionEngine.Expressions;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace KDParticleEngine.Behaviors
 {

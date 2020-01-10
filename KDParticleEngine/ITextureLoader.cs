@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KDParticleEngine
+﻿namespace KDParticleEngine
 {
     public interface ITextureLoader<T> where T : class
     {
