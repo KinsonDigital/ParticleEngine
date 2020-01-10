@@ -1,4 +1,4 @@
-﻿using MathExpressionEngine;
+using MathExpressionEngine;
 using MathExpressionEngine.Expressions;
 using System;
 using System.Collections.Generic;
@@ -15,16 +15,21 @@ namespace KDParticleEngine.Behaviors
 
         public EaseInBehavior()
         {
-            _expression = Compiler.Compile("$t*(t/$d)*(t/$d)+$s");
+            _expression = Compiler.Compile("$c*($t/$d)*($t/$d)+$b");
         }
 
 
         public void Update(Particle particle, TimeSpan timeElapsed)
         {
-            _timeElapsed += (float)timeElapsed.TotalMilliseconds;
-            //particle.Position = new PointF(result, particle.Position.Y);
+            _timeElapsed += (float)timeElapsed.TotalSeconds;
 
+            _expression.UpdateVariable("t", _timeElapsed);
+            _expression.UpdateVariable("d", 100);//Start
+            _expression.UpdateVariable("s", 4);
 
+            var result = (float)_expression.Eval();
+
+            particle.Position = new PointF(result, particle.Position.Y);
         }
 
 

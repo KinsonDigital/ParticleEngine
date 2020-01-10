@@ -1,4 +1,4 @@
-﻿using KDParticleEngine;
+using KDParticleEngine;
 using KDParticleEngine.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +10,8 @@ using NETPointF = System.Drawing.PointF;
 using NETColor = System.Drawing.Color;
 using Microsoft.Xna.Framework.Input;
 using System;
-using KDParticleEngine.Behaviors;
+using MathExpressionEngine;
+using MathExpressionEngine.Expressions;
 
 /*Easing Functino Resources
  * 1. http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
@@ -25,6 +26,8 @@ namespace ParticleSandbox
 {
     public class Game1 : Game
     {
+        private Expression _moveRightExpression;
+        private Expression _redColorExpression;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private TrueRandomizerService _randomService;
@@ -35,15 +38,20 @@ namespace ParticleSandbox
         private Vector2 _velocity = new Vector2(100, 0);
         private KeyboardState _currentState;
         private KeyboardState _prevState;
+        private XNAColor _tintColor;
         private bool _enableEaseFunction;
         private int _duration = 4;
         private float _timeElapsed = 0;
         private float _dest = 400;
         private float _start = 100;
-
+        private double _clrResult;
 
         public Game1()
         {
+            _moveRightExpression = Compiler.Compile("$c*($t/$d)*($t/$d)+$b");
+            _redColorExpression = Compiler.Compile("$c*($t/$d)*($t/$d)+$b");
+
+            _tintColor = new XNAColor(255, 255, 255, 255);
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -121,21 +129,36 @@ namespace ParticleSandbox
 
         protected override void Update(GameTime gameTime)
         {
-            _engine.Update(gameTime.ElapsedGameTime);
+            //_engine.Update(gameTime.ElapsedGameTime);
 
             _currentState = Keyboard.GetState();
 
             if (_currentState.IsKeyDown(Keys.Space) && _prevState.IsKeyUp(Keys.Space))
                 _enableEaseFunction = true;
 
-            if (_enableEaseFunction)
-            {
-                if (_entityPos.X < 400)
-                {
-                    _entityPos.X = EaseInQuad(_timeElapsed, _start, _dest - _start, 4f);
+            _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    _timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
+            if (_entityPos.X < 400)
+            {
+                _moveRightExpression.UpdateVariable("t", _timeElapsed);
+                _moveRightExpression.UpdateVariable("b", 100);//Start
+                _moveRightExpression.UpdateVariable("c", 400 - 100);
+                _moveRightExpression.UpdateVariable("d", 4);
+
+                _entityPos.X = (float)_moveRightExpression.Eval();
+            }
+
+            if (_clrResult <= 255)
+            {
+                _redColorExpression.UpdateVariable("t", _timeElapsed);
+                _redColorExpression.UpdateVariable("b", 0);//Start
+                _redColorExpression.UpdateVariable("c", 255);
+                _redColorExpression.UpdateVariable("d", 1);
+
+                _clrResult = _redColorExpression.Eval();
+
+                _tintColor.G -= (byte)_clrResult;
+                _tintColor.B -= (byte)_clrResult;
             }
 
             _prevState = _currentState;
@@ -156,25 +179,27 @@ namespace ParticleSandbox
             //Particle Engine Draw Call
             _spriteBatch.Begin();
 
-            _engine.ParticlePools.ToList().ForEach(pool =>
-            {
-                pool.Particles.ToList().ForEach(p =>
-                {
-                    var textureName = pool.Setup.ParticleTextureName;
+            _spriteBatch.Draw(_easeTexture, _entityPos, _tintColor);
 
-                    var texture = _engine.GetTexture(textureName);
+            //_engine.ParticlePools.ToList().ForEach(pool =>
+            //{
+            //    pool.Particles.ToList().ForEach(p =>
+            //    {
+            //        var textureName = pool.Setup.ParticleTextureName;
 
-                    _spriteBatch.Draw(texture,
-                                      p.Position.ToVector2(),
-                                      texture.GetSrcRect(),
-                                      p.TintColor.ToXNAColor(),
-                                      ToRadians(p.Angle),
-                                      texture.GetOriginAsCenter(),
-                                      p.Size,
-                                      SpriteEffects.None,
-                                      0f);
-                });
-            });
+            //        var texture = _engine.GetTexture(textureName);
+
+            //        _spriteBatch.Draw(texture,
+            //                          p.Position.ToVector2(),
+            //                          texture.GetSrcRect(),
+            //                          p.TintColor.ToXNAColor(),
+            //                          ToRadians(p.Angle),
+            //                          texture.GetOriginAsCenter(),
+            //                          p.Size,
+            //                          SpriteEffects.None,
+            //                          0f);
+            //    });
+            //});
 
             _spriteBatch.End();
 
