@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathExpressionEngine;
+using MathExpressionEngine.Expressions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -8,10 +10,12 @@ namespace KDParticleEngine.Behaviors
     public class EaseInBehavior
     {
         private float _timeElapsed;//milliseconds
+        private Expression _expression;
 
 
         public EaseInBehavior()
         {
+            _expression = Compiler.Compile("$t*(t/$d)*(t/$d)+$s");
         }
 
 
