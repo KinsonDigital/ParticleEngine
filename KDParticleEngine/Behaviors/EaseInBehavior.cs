@@ -1,33 +1,23 @@
-﻿using MathExpressionEngine;
+﻿using KDParticleEngine.Services;
+using MathExpressionEngine;
 using MathExpressionEngine.Expressions;
 using System;
 using System.Drawing;
 
 namespace KDParticleEngine.Behaviors
 {
-    public class EaseInBehavior
+    public class EaseInBehavior : EasingBehavior
     {
-        private float _timeElapsed;//milliseconds
-        private Expression _expression;
-
-
         public EaseInBehavior()
         {
-            _expression = Compiler.Compile("$c*($t/$d)*($t/$d)+$b");
         }
 
 
-        public void Update(Particle particle, TimeSpan timeElapsed)
+        public override void Update(TimeSpan timeElapsed)
         {
-            _timeElapsed += (float)timeElapsed.TotalSeconds;
+            Value = EaseInQuad(TimeElapsed, Start, Change, TotalTime);
 
-            _expression.UpdateVariable("t", _timeElapsed);
-            _expression.UpdateVariable("d", 100);//Start
-            _expression.UpdateVariable("s", 4);
-
-            var result = (float)_expression.Eval();
-
-            particle.Position = new PointF(result, particle.Position.Y);
+            base.Update(timeElapsed);
         }
 
 

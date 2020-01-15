@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine", "KDPar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49C662-51F3-4D0F-892A-60079135A5DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine.Tests", "KDParticleEngineTests\KD.Particle.Engine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine.Tests", "KDParticleEngineTests\KDParticleEngine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIO", "FileIO\FileIO\FileIO.csproj", "{BBB2FC36-6A21-4B2E-9ED0-AC71D36FB7BC}"
 EndProject

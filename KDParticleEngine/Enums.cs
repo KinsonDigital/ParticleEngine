@@ -1,7 +1,14 @@
 ﻿namespace KDParticleEngine
 {
-    public enum BehaviorType
+    public enum ParticleAttribute
     {
-        MovementBehavior
+        X,
+        Y,
+        Angle,
+        Size,
+        RedChannel,
+        GreenChannel,
+        BlueChannel,
+        AlphaChannel
     }
 }

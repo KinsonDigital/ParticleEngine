@@ -42,8 +42,8 @@ namespace KDParticleEngine.Services
         /// <returns></returns>
         public float GetValue(float minValue, float maxValue)
         {
-            var minValueAsInt = (int)((minValue + 0.001f) * 1000);
-            var maxValueAsInt = (int)((maxValue + 0.001f) * 1000);
+            var minValueAsInt = (int)(minValue * 1000);
+            var maxValueAsInt = (int)(maxValue * 1000);
 
             if (minValueAsInt > maxValueAsInt)
             {

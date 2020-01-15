@@ -4,6 +4,13 @@ namespace KDParticleEngine.Behaviors
 {
     public interface IBehavior
     {
-        void Update(Particle particle, TimeSpan timeElapsed);
+        int ParticleID { get; set; }
+
+        int BehaviorSetupID { get; set; }
+
+        float Value { get; set; }
+
+
+        void Update(TimeSpan timeElapsed);
     }
 }

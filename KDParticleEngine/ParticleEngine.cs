@@ -20,7 +20,7 @@ namespace KDParticleEngine
 
 
         #region Private Fields
-        private List<ParticlePool> _particlePools = new List<ParticlePool>();
+        private readonly List<ParticlePool> _particlePools = new List<ParticlePool>();
         private readonly ITextureLoader<Texture> _textureLoader;
         private readonly IRandomizerService _randomizer;
         private readonly Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
@@ -49,6 +49,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of particles in the engine.
         /// </summary>
+        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
         public Particle[] Particles
         {
             get
@@ -101,11 +102,13 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
+        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
         public int TotalLivingParticles => _particlePools.Sum(p => p.TotalLivingParticles);
 
         /// <summary>
         /// Gets the current total number of dead <see cref="Particle"/>s.
         /// </summary>
+        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
         public int TotalDeadParticles => _particlePools.Sum(p => p.TotalDeadParticles);
 
         /// <summary>
@@ -129,7 +132,7 @@ namespace KDParticleEngine
 
 
         #region Public Methods
-        public void AddSetup(ParticleEffect setup)
+        public void AddEffect(ParticleEffect setup)
         {
             _particlePools.Add(new ParticlePool(setup, _randomizer));
         }
@@ -139,7 +142,7 @@ namespace KDParticleEngine
         {
             _particlePools.ToList().ForEach(pool =>
             {
-                _textures.Add(pool.Setup.ParticleTextureName, _textureLoader.LoadTexture(pool.Setup.ParticleTextureName));
+                _textures.Add(pool.Effect.ParticleTextureName, _textureLoader.LoadTexture(pool.Effect.ParticleTextureName));
             });
 
             _texturesLoaded = true;

@@ -9,6 +9,10 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using MathExpressionEngine;
 using MathExpressionEngine.Expressions;
+using KDParticleEngine.Behaviors;
+using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 /*Easing Functino Resources
  * 1. http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
@@ -16,13 +20,18 @@ using MathExpressionEngine.Expressions;
  * 3. https://joshondesign.com/2013/03/01/improvedEasingEquations
  * 4. https://onedrive.live.com/?authkey=%21AEzQODHVxYRbtp0&cid=171ED2CFBE9647CB&id=171ED2CFBE9647CB%21923534&parId=171ED2CFBE9647CB%21923533&o=OneUp
  * 5. https://doc.magnum.graphics/magnum/namespaceMagnum_1_1Animation_1_1Easing.html#a1ab2d81d7e5c4f3361d155787b5f8bdb
- *  NOTE: Very promising one.  This one is used differently due to the params used.
+ *  
  *  
  */
 namespace ParticleSandbox
 {
     public class Game1 : Game
     {
+        //DEBUGGING - PERFORMANCE CHECKING
+        private Stopwatch _timer = new Stopwatch();
+        private List<double> _timings = new List<double>();
+        //////////////////////////////////
+
         private Expression _moveRightExpression;
         private Expression _redColorExpression;
         private GraphicsDeviceManager _graphics;
@@ -75,9 +84,112 @@ namespace ParticleSandbox
             //TODO: Figure out how to deal with particle textures
             //ParticleTexture = Content.Load<Texture2D>("Shape-A"),
 
-            var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
+            var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, 50);
 
-            var setupA = new ParticleEffect("Shape-A")
+            var setups = new BehaviorSetup[]
+            {
+                //new BehaviorSetup()//X Position to left setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseOutBounce,
+                //    ApplyToAttribute = ParticleAttribute.X,
+                //    StartMin = Window.ClientBounds.Width / 2,
+                //    StartMax = Window.ClientBounds.Width / 2,
+                //    ChangeMin = -200,
+                //    ChangeMax = 200,
+                //    TotalTimeMin = 2,
+                //    TotalTimeMax = 2
+                //},
+                //new BehaviorSetup()//X Position to right setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseOutBounce,
+                //    ApplyToAttribute = ParticleAttribute.X,
+                //    StartMin = Window.ClientBounds.Width / 2,
+                //    StartMax = Window.ClientBounds.Width / 2,
+                //    ChangeMin = 200,
+                //    ChangeMax = 200,
+                //    TotalTimeMin = 3,
+                //    TotalTimeMax = 6
+                //},
+                //new BehaviorSetup()//Y Position setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseOutBounce,
+                //    ApplyToAttribute = ParticleAttribute.Y,
+                //    StartMin = 50,
+                //    StartMax = 50,
+                //    ChangeMin = 200,
+                //    ChangeMax = 200,
+                //    TotalTimeMin = 3,
+                //    TotalTimeMax = 6
+                //},
+                //new BehaviorSetup()//Angle setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseOutBounce,
+                //    ApplyToAttribute = ParticleAttribute.Angle,
+                //    StartMin = 0,
+                //    StartMax = 180,
+                //    ChangeMin = 90,
+                //    ChangeMax = 270,
+                //    TotalTimeMin = 1,
+                //    TotalTimeMax = 8
+                //},
+                //new BehaviorSetup()//Red channel setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseIn,
+                //    ApplyToAttribute = ParticleAttribute.RedChannel,
+                //    StartMin = 255,
+                //    StartMax = 255,
+                //    ChangeMin = -255,
+                //    ChangeMax = -255,
+                //    TotalTimeMin = 1,
+                //    TotalTimeMax = 4
+                //},
+                //new BehaviorSetup()//Green channel setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseIn,
+                //    ApplyToAttribute = ParticleAttribute.GreenChannel,
+                //    StartMin = 255,
+                //    StartMax = 255,
+                //    ChangeMin = -255,
+                //    ChangeMax = -255,
+                //    TotalTimeMin = 1,
+                //    TotalTimeMax = 4
+                //},
+                //new BehaviorSetup()//Blue channel setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseIn,
+                //    ApplyToAttribute = ParticleAttribute.BlueChannel,
+                //    StartMin = 255,
+                //    StartMax = 255,
+                //    ChangeMin = -255,
+                //    ChangeMax = -255,
+                //    TotalTimeMin = 1,
+                //    TotalTimeMax = 4
+                //},
+                //new BehaviorSetup()//Alpha channel setup
+                //{
+                //    TypeOfBehavior = BehaviorType.EaseIn,
+                //    ApplyToAttribute = ParticleAttribute.AlphaChannel,
+                //    StartMin = 255,
+                //    StartMax = 255,
+                //    ChangeMin = -255,
+                //    ChangeMax = -255,
+                //    TotalTimeMin = 1,
+                //    TotalTimeMax = 4
+                //}
+                new BehaviorSetup()//Size setup
+                {
+                    TypeOfBehavior = BehaviorType.EaseOutBounce,
+                    ApplyToAttribute = ParticleAttribute.Size,
+                    StartMin = 1,
+                    StartMax = 1,
+                    ChangeMin = -1f,
+                    ChangeMax = -1f,
+                    TotalTimeMin = 1,
+                    TotalTimeMax = 4
+                }
+            };
+
+            var effectA = new ParticleEffect("Shape-A", setups, _randomService)
             {
                 SpawnLocation = spawnLocation,
                 //This becomes a behavior
@@ -85,7 +197,6 @@ namespace ParticleSandbox
                 VelocityXMax = 100,
                 VelocityYMin = 0f,
                 VelocityYMax = 0,
-
 
                 AngularVelocityMin = 50,
                 AngularVelocityMax = 200,
@@ -95,30 +206,13 @@ namespace ParticleSandbox
                 LifeTimeMax = 5000,
                 SpawnRateMin = 125,
                 SpawnRateMax = 500,
-                TotalParticlesAliveAtOnce = 1
+                TotalParticlesAliveAtOnce = 1,
+                TypeOfBehavior = BehaviorType.EaseOutBounce,
+                ApplyBehaviorTo = ParticleAttribute.Y
             };
 
 
-            var setupB = new ParticleEffect("Shape-B")
-            {
-                SpawnLocation = new NETPointF(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2),
-                VelocityXMin = 100f,
-                VelocityXMax = 100,
-                VelocityYMin = -100f,
-                VelocityYMax = 100,
-                AngularVelocityMin = 200,
-                AngularVelocityMax = 200,
-                SizeMin = 0.25f,
-                SizeMax = 0.5f,
-                LifeTimeMin = 125,
-                LifeTimeMax = 2000,
-                SpawnRateMin = 125,
-                SpawnRateMax = 125,
-                TotalParticlesAliveAtOnce = 40
-            };
-
-            _engine.AddSetup(setupA);
-            //_engine.AddSetup(setupB);
+            _engine.AddEffect(effectA);
 
             _engine.LoadTextures();
         }
@@ -126,7 +220,7 @@ namespace ParticleSandbox
 
         protected override void Update(GameTime gameTime)
         {
-            //_engine.Update(gameTime.ElapsedGameTime);
+            _engine.Update(gameTime.ElapsedGameTime);
 
             _currentState = Keyboard.GetState();
 
@@ -137,26 +231,25 @@ namespace ParticleSandbox
 
             if (_entityPos.X < 400)
             {
-                _moveRightExpression.UpdateVariable("t", _timeElapsed);
-                _moveRightExpression.UpdateVariable("b", 100);//Start
-                _moveRightExpression.UpdateVariable("c", 400 - 100);
-                _moveRightExpression.UpdateVariable("d", 4);
+                //_moveRightExpression.UpdateVariable("t", _timeElapsed);
+                //_moveRightExpression.UpdateVariable("b", 100);//Start
+                //_moveRightExpression.UpdateVariable("c", 400 - 100);
+                //_moveRightExpression.UpdateVariable("d", 4);
+                //_entityPos.X = (float)_moveRightExpression.Eval();
 
-                _entityPos.X = (float)_moveRightExpression.Eval();
+                //_entityPos.X = EaseOutBounce(_timeElapsed, 100, 300, 4);
             }
 
-            if (_clrResult <= 255)
-            {
-                _redColorExpression.UpdateVariable("t", _timeElapsed);
-                _redColorExpression.UpdateVariable("b", 0);//Start
-                _redColorExpression.UpdateVariable("c", 255);
-                _redColorExpression.UpdateVariable("d", 1);
 
-                _clrResult = _redColorExpression.Eval();
+            //if (_clrResult <= 255)
+            //{
+            //    _clrResult = EaseInQuad(_timeElapsed, 0, 255, 4);
 
-                _tintColor.G -= (byte)_clrResult;
-                _tintColor.B -= (byte)_clrResult;
-            }
+            //    _clrResult = _clrResult > 255 ? 255 : _clrResult;
+
+            //    _tintColor.G = (byte)(255 - _clrResult);
+            //    _tintColor.B = (byte)(255 - _clrResult);
+            //}
 
             _prevState = _currentState;
             
@@ -174,32 +267,62 @@ namespace ParticleSandbox
             //_spriteBatch.End();
 
             //Particle Engine Draw Call
+
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(_easeTexture, _entityPos, _tintColor);
+            _engine.ParticlePools.ToList().ForEach(pool =>
+            {
+                pool.Particles.ToList().ForEach(p =>
+                {
+                    if (p.IsAlive)
+                    {
+                        var textureName = pool.Effect.ParticleTextureName;
 
-            //_engine.ParticlePools.ToList().ForEach(pool =>
-            //{
-            //    pool.Particles.ToList().ForEach(p =>
-            //    {
-            //        var textureName = pool.Setup.ParticleTextureName;
+                        var texture = _engine.GetTexture(textureName);
 
-            //        var texture = _engine.GetTexture(textureName);
+                        //DEBUGGING ONLY
+                        //var position = p.Position.ToVector2();
+                        //var srcRect = texture.GetSrcRect();
+                        //var tintClr = p.TintColor.ToXNAColor();
+                        //var angle = ToRadians(p.Angle);
+                        //var center = texture.GetOriginAsCenter();
+                        //var size = p.Size;
 
-            //        _spriteBatch.Draw(texture,
-            //                          p.Position.ToVector2(),
-            //                          texture.GetSrcRect(),
-            //                          p.TintColor.ToXNAColor(),
-            //                          ToRadians(p.Angle),
-            //                          texture.GetOriginAsCenter(),
-            //                          p.Size,
-            //                          SpriteEffects.None,
-            //                          0f);
-            //    });
-            //});
 
+                        _spriteBatch.Draw(texture,
+                                          p.Position.ToVector2(),
+                                          texture.GetSrcRect(),
+                                          p.TintColor.ToXNAColor(),
+                                          ToRadians(p.Angle),
+                                          texture.GetOriginAsCenter(),
+                                          p.Size,
+                                          SpriteEffects.None,
+                                          0f);
+                    }
+                });
+            });
+
+            _timer.Start();
             _spriteBatch.End();
+            _timer.Stop();
+            _timings.Add(_timer.Elapsed.TotalMilliseconds);
+            _timer.Reset();
 
+
+            var perfResult = _timings.Average();
+
+
+            /*Perf Results(ms):
+             * Using ToList().ForEach()     => 3.46
+             * Using standard for loop      => 4.32
+             * GetTexture()                 => 2.65
+             * Smaller Size                 => 
+             */
+
+            if (_timings.Count >= 10000)
+            {
+
+            }
             base.Draw(gameTime);
         }
 
@@ -230,136 +353,40 @@ namespace ParticleSandbox
         }
 
 
+        private float EaseOut(float t, float b, float c, float d)
+        {
+            t /= d;
+
+            return -c * t * (t - 2) + b;
+        }
+
+
         private float EaseInQuad(float t, float b, float c, float d)
         {
             t /= d;
 
             return c * t * t + b;
         }
-    }
 
 
-    public static class Easing
-    {
-        // Adapted from source : http://www.robertpenner.com/easing/
-
-        public static float Ease(double linearStep, float acceleration, EasingType type)
+        private float EaseOutBounce(float t, float b, float c, float d)
         {
-            float easedStep = acceleration > 0 ? EaseIn(linearStep, type) :
-                              acceleration < 0 ? EaseOut(linearStep, type) :
-                              (float)linearStep;
-
-            return MathHelper.Lerp(linearStep, easedStep, Math.Abs(acceleration));
-        }
-
-        public static float EaseIn(double linearStep, EasingType type)
-        {
-            switch (type)
+            if ((t /= d) < (1 / 2.75f))
             {
-                case EasingType.Step: return linearStep < 0.5 ? 0 : 1;
-                case EasingType.Linear: return (float)linearStep;
-                case EasingType.Sine: return Sine.EaseIn(linearStep);
-                case EasingType.Quadratic: return Power.EaseIn(linearStep, 2);
-                case EasingType.Cubic: return Power.EaseIn(linearStep, 3);
-                case EasingType.Quartic: return Power.EaseIn(linearStep, 4);
-                case EasingType.Quintic: return Power.EaseIn(linearStep, 5);
+                return c * (7.5625f * t * t) + b;
             }
-            throw new NotImplementedException();
-        }
-
-        public static float EaseOut(double linearStep, EasingType type)
-        {
-            switch (type)
+            else if (t < (2 / 2.75f))
             {
-                case EasingType.Step: return linearStep < 0.5 ? 0 : 1;
-                case EasingType.Linear: return (float)linearStep;
-                case EasingType.Sine: return Sine.EaseOut(linearStep);
-                case EasingType.Quadratic: return Power.EaseOut(linearStep, 2);
-                case EasingType.Cubic: return Power.EaseOut(linearStep, 3);
-                case EasingType.Quartic: return Power.EaseOut(linearStep, 4);
-                case EasingType.Quintic: return Power.EaseOut(linearStep, 5);
+                return c * (7.5625f * (t -= (1.5f / 2.75f)) * t + .75f) + b;
             }
-            throw new NotImplementedException();
-        }
-
-        public static float EaseInOut(double linearStep, EasingType easeInType, EasingType easeOutType)
-        {
-            return linearStep < 0.5 ? EaseInOut(linearStep, easeInType) : EaseInOut(linearStep, easeOutType);
-        }
-        public static float EaseInOut(double linearStep, EasingType type)
-        {
-            switch (type)
+            else if (t < (2.5f / 2.75f))
             {
-                case EasingType.Step: return linearStep < 0.5 ? 0 : 1;
-                case EasingType.Linear: return (float)linearStep;
-                case EasingType.Sine: return Sine.EaseInOut(linearStep);
-                case EasingType.Quadratic: return Power.EaseInOut(linearStep, 2);
-                case EasingType.Cubic: return Power.EaseInOut(linearStep, 3);
-                case EasingType.Quartic: return Power.EaseInOut(linearStep, 4);
-                case EasingType.Quintic: return Power.EaseInOut(linearStep, 5);
+                return c * (7.5625f * (t -= (2.25f / 2.75f)) * t + .9375f) + b;
             }
-            throw new NotImplementedException();
-        }
-
-        static class Sine
-        {
-            public static float EaseIn(double s)
+            else
             {
-                return (float)Math.Sin(s * MathHelper.HalfPi - MathHelper.HalfPi) + 1;
+                return c * (7.5625f * (t -= (2.625f / 2.75f)) * t + .984375f) + b;
             }
-            public static float EaseOut(double s)
-            {
-                return (float)Math.Sin(s * MathHelper.HalfPi);
-            }
-            public static float EaseInOut(double s)
-            {
-                return (float)(Math.Sin(s * MathHelper.Pi - MathHelper.HalfPi) + 1) / 2;
-            }
-        }
-
-        static class Power
-        {
-            public static float EaseIn(double s, int power)
-            {
-                return (float)Math.Pow(s, power);
-            }
-            public static float EaseOut(double s, int power)
-            {
-                var sign = power % 2 == 0 ? -1 : 1;
-                return (float)(sign * (Math.Pow(s - 1, power) + sign));
-            }
-            public static float EaseInOut(double s, int power)
-            {
-                s *= 2;
-                if (s < 1) return EaseIn(s, power) / 2;
-                var sign = power % 2 == 0 ? -1 : 1;
-                return (float)(sign / 2.0 * (Math.Pow(s - 2, power) + sign * 2));
-            }
-        }
-    }
-
-
-    public enum EasingType
-    {
-        Step,
-        Linear,
-        Sine,
-        Quadratic,
-        Cubic,
-        Quartic,
-        Quintic
-    }
-
-
-    public static class MathHelper
-    {
-        public const float Pi = (float)Math.PI;
-        public const float HalfPi = (float)(Math.PI / 2);
-
-
-        public static float Lerp(double from, double to, double step)
-        {
-            return (float)((to - from) * step + from);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using KDParticleEngine.Behaviors;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace KDParticleEngine
 {
@@ -31,10 +34,15 @@ namespace KDParticleEngine
             Size = size;
             LifeTime = lifeTime;
         }
+
+
+        public Particle() { }
         #endregion
 
 
         #region Props
+        public int ID { get; set; } = -1;
+
         /// <summary>
         /// Gets or sets the position of the <see cref="Particle"/>.
         /// </summary>
@@ -73,7 +81,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets if the <see cref="Particle"/> is alive or dead.
         /// </summary>
-        public bool IsAlive { get; set; } = true;
+        public bool IsAlive { get; set; } = false;
 
         /// <summary>
         /// Gets or sets if the <see cref="Particle"/> is dead or alive.
@@ -88,18 +96,19 @@ namespace KDParticleEngine
 
         #region Public Methods
         /// <summary>
-        /// Updates the <see cref="Particle"/>.
+        /// Resets all of the particles properties.
         /// </summary>
-        /// <param name="timeElapsed">The amount of time that the <see cref="Engine"/> has passed since the last frame.</param>
-        public void Update(TimeSpan timeElapsed)
+        //TODO: Remove this
+        public void Reset()
         {
-            LifeTime -= (int)timeElapsed.TotalMilliseconds;
-
-            //Movement before behavior implementation
-            //Position = Position.Add(Velocity.Mult(timeElapsed.TotalSeconds));
-            //Angle += AngularVelocity * (float)timeElapsed.TotalSeconds;
-
-
+            Position = PointF.Empty;
+            Velocity = PointF.Empty;
+            Angle = 0;
+            AngularVelocity = 0;
+            TintColor = Color.White;
+            Size = 0;
+            LifeTime = 0;
+            IsAlive = false;
         }
         #endregion
     }
