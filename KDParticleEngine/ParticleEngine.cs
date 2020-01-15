@@ -162,7 +162,7 @@ namespace KDParticleEngine
         public void Update(TimeSpan timeElapsed)
         {
             if (!_texturesLoaded)
-                throw new Exception("The textures just be loaded first.");
+                throw new Exception("The textures must be loaded first.");
 
             if (!Enabled)
                 return;

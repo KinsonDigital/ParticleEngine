@@ -26,10 +26,9 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoking_ProperlySetsUpObject()
         {
             //Arrange/Act
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(1234, 5678), new PointF(12,34), 11.11f, 22.22f, Color.FromArgb(11, 22, 33, 44), 33.33f, 44);
+            var particle = new Particle(new PointF(1234, 5678), new PointF(12,34), 11.11f, 22.22f, Color.FromArgb(11, 22, 33, 44), 33.33f, 44);
 
             //Assert
-            Assert.NotNull(particle.Texture);
             Assert.Equal(new PointF(1234, 5678), particle.Position);
             Assert.Equal(new PointF(12, 34), particle.Velocity);
             Assert.Equal(11.11f, particle.Angle);
@@ -43,27 +42,10 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void Texture_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(null, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                Texture = _mockTexture.Object
-            };
-
-            //Act
-            var actual = particle.Texture;
-
-            //Assert
-            Assert.NotNull(actual);
-        }
-
-
-        [Fact]
         public void Position_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 Position = new PointF(11, 22)
             };
@@ -80,7 +62,7 @@ namespace KDParticleEngineTests
         public void Velocity_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 Velocity = new PointF(33, 44)
             };
@@ -97,7 +79,7 @@ namespace KDParticleEngineTests
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 Angle = 1234f
             };
@@ -114,7 +96,7 @@ namespace KDParticleEngineTests
         public void AngularVelocity_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 AngularVelocity = 5678f
             };
@@ -131,7 +113,7 @@ namespace KDParticleEngineTests
         public void TintColor_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 TintColor = Color.FromArgb(11, 22, 33, 44)
             };
@@ -148,7 +130,7 @@ namespace KDParticleEngineTests
         public void Size_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 Size = 1019f
             };
@@ -165,7 +147,7 @@ namespace KDParticleEngineTests
         public void LifeTime_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 LifeTime = 7784
             };
@@ -182,7 +164,7 @@ namespace KDParticleEngineTests
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 IsAlive = true
             };
@@ -196,57 +178,13 @@ namespace KDParticleEngineTests
         public void IsDead_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
             {
                 IsDead = false
             };
 
             //Assert
             Assert.False(particle.IsDead);
-        }
-        #endregion
-
-
-        #region Method Tests
-        [Fact]
-        public void Update_WhenInvoked_UpdatesLifeTime()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
-
-            //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
-
-            //Assert
-            Assert.Equal(15, particle.LifeTime);
-        }
-
-
-        [Fact]
-        public void Update_WhenInvoked_UpdatesPositions()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
-
-            //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
-
-            //Assert
-            Assert.Equal(new PointF(0.14999999f, 0.29999998f), particle.Position);
-        }
-
-
-        [Fact]
-        public void Update_WhenInvoked_UpdatesAngle()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
-
-            //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
-
-            //Assert
-            Assert.Equal(0.089999996f, particle.Angle);
         }
         #endregion
 
