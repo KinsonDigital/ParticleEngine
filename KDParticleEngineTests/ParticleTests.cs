@@ -30,9 +30,7 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(new PointF(1234, 5678), particle.Position);
-            Assert.Equal(new PointF(12, 34), particle.Velocity);
             Assert.Equal(11.11f, particle.Angle);
-            Assert.Equal(22.22f, particle.AngularVelocity);
             Assert.Equal(Color.FromArgb(11, 22, 33, 44), particle.TintColor);
             Assert.Equal(33.33f, particle.Size);
             Assert.Equal(44, particle.LifeTime);
@@ -59,23 +57,6 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Velocity_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                Velocity = new PointF(33, 44)
-            };
-
-            //Act
-            var actual = particle.Velocity;
-
-            //Assert
-            Assert.Equal(new PointF(33, 44), actual);
-        }
-
-
-        [Fact]
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
@@ -89,23 +70,6 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(1234f, actual);
-        }
-
-
-        [Fact]
-        public void AngularVelocity_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                AngularVelocity = 5678f
-            };
-
-            //Act
-            var actual = particle.AngularVelocity;
-
-            //Assert
-            Assert.Equal(5678f, actual);
         }
 
 

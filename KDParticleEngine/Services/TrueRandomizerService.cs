@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace KDParticleEngine.Services
@@ -103,7 +106,11 @@ namespace KDParticleEngine.Services
                 var remainder = max % diff;
 
                 if (rand < max - remainder)
-                    return (int)(minValue + (rand % diff));
+                {
+                    var result = (int)(minValue + (rand % diff));
+
+                    return result;
+                }
             }
         }
         #endregion

@@ -1,4 +1,10 @@
-﻿using System;
+﻿using KDParticleEngine.Services;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
 
 namespace ParticleSandbox
 {
@@ -7,8 +13,8 @@ namespace ParticleSandbox
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            using var game = new Game1();
+            game.Run();
         }
     }
 }

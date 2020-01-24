@@ -1,6 +1,7 @@
 ﻿using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace KDParticleEngine
@@ -132,9 +133,9 @@ namespace KDParticleEngine
 
 
         #region Public Methods
-        public void AddEffect(ParticleEffect setup)
+        public void AddEffect(ParticleEffect effect)
         {
-            _particlePools.Add(new ParticlePool(setup, _randomizer));
+            _particlePools.Add(new ParticlePool(effect, _randomizer));
         }
 
 

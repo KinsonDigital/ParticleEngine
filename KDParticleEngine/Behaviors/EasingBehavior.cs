@@ -8,56 +8,41 @@ namespace KDParticleEngine.Behaviors
 {
     public abstract class EasingBehavior : IBehavior
     {
-        public EasingBehavior() { }
+        private IRandomizerService _randomizer;
 
 
-        public float Start { get; set; }
+        public EasingBehavior(IRandomizerService randomizer)
+        {
+            _randomizer = randomizer;
+        }
 
-        public float Change { get; set; }
 
-        public float TotalTime { get; set; }
+        public double Start { get; set; }
 
-        public int ParticleID { get; set; } = -1;
+        public double Change { get; set; }
 
-        public int BehaviorSetupID { get; set; } = -1;
+        public double TotalTime { get; set; }
 
-        public float Value { get; set; }
+        public double Value { get; set; }
 
-        public float TimeElapsed { get; set; }//seconds
+        public BehaviorSetting Settings { get; set; }
+
+        public double TimeElapsed { get; private set; }
+
+
+        public void Reset()
+        {
+            Value = 0;
+            Start = _randomizer.GetValue(Settings.StartMin, Settings.StartMax);
+            Change = _randomizer.GetValue(Settings.ChangeMin, Settings.ChangeMax);
+            TotalTime = _randomizer.GetValue(Settings.TotalTimeMin, Settings.TotalTimeMax);
+            TimeElapsed = 0;
+        }
 
 
         public virtual void Update(TimeSpan timeElapsed)
         {
-            //TODO: Have this part managed by the ParticleEffect class
-            //if (TimeElapsed >= TotalTime)
-            //{
-                //particle.IsAlive = false;
-                //ParticleID = -1;
-                //TimeElapsed = 0;
-                //return;
-            //}
-
-            TimeElapsed += (float)timeElapsed.TotalSeconds;
+            TimeElapsed += timeElapsed.TotalSeconds;
         }
-
-
-        //TODO: Remove
-        //protected void ApplyToAttribute(Particle particle, float result)
-        //{
-        //    switch (ApplyToAttribute)
-        //    {
-        //        case ParticleAttribute.X:
-        //            particle.Position = new PointF(result, particle.Position.Y);
-        //            break;
-        //        case ParticleAttribute.Y:
-        //            particle.Position = new PointF(particle.Position.X, result);
-        //            break;
-        //        case ParticleAttribute.Angle:
-        //            particle.Angle = result;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
     }
 }

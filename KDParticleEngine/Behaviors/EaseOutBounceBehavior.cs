@@ -9,7 +9,7 @@ namespace KDParticleEngine.Behaviors
 {
     public class EaseOutBounceBehavior : EasingBehavior
     {
-        public EaseOutBounceBehavior() { }
+        public EaseOutBounceBehavior(IRandomizerService randomizer) : base (randomizer) { }
 
 
         public override void Update(TimeSpan timeElapsed)
@@ -21,23 +21,23 @@ namespace KDParticleEngine.Behaviors
 
 
         //TODO: This can be moved out to a helper/util/static method of some kind
-        private float EaseOutBounce(float t, float b, float c, float d)
+        private double EaseOutBounce(double t, double b, double c, double d)
         {
-            if ((t /= d) < (1 / 2.75f))
+            if ((t /= d) < 0.36363636363636363636363636363636)
             {
-                return c * (7.5625f * t * t) + b;
+                return c * (7.5625 * t * t) + b;
             }
-            else if (t < (2 / 2.75f))
+            else if (t < 0.72727272727272727272727272727273)
             {
-                return c * (7.5625f * (t -= (1.5f / 2.75f)) * t + .75f) + b;
+                return c * (7.5625 * (t -= 0.54545454545454545454545454545455) * t + 0.75) + b;
             }
-            else if (t < (2.5f / 2.75f))
+            else if (t < 0.90909090909090909090909090909091)
             {
-                return c * (7.5625f * (t -= (2.25f / 2.75f)) * t + .9375f) + b;
+                return c * (7.5625 * (t -= 0.81818181818181818181818181818182) * t + 0.9375) + b;
             }
             else
             {
-                return c * (7.5625f * (t -= (2.625f / 2.75f)) * t + .984375f) + b;
+                return c * (7.5625 * (t -= 0.9) * t + 0.95454545454545454545454545454545) + b;
             }
         }
     }

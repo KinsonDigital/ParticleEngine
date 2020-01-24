@@ -2,6 +2,7 @@
 using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -9,6 +10,12 @@ namespace KDParticleEngine
 {
     public class ParticlePool
     {
+        //DEBUGGING
+        private Stopwatch _timer = new Stopwatch();
+        private List<double> _timings = new List<double>();
+        ///////////
+
+
         #region Public Events
         /// <summary>
         /// Occurs every time the total living particles has changed.
@@ -19,8 +26,7 @@ namespace KDParticleEngine
 
         #region Private Fields
         private readonly List<Particle> _particles = new List<Particle>();
-        private readonly List<IBehavior> _behaviors = new List<IBehavior>();//TODO: Remove this
-        private readonly IRandomizerService _randomizer;
+        private readonly IRandomizerService _randomService;
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
         #endregion
@@ -28,10 +34,10 @@ namespace KDParticleEngine
 
         #region Constructors
         //TODO: Finish adding code docs
-        public ParticlePool(ParticleEffect setup, IRandomizerService randomizer)
+        public ParticlePool(ParticleEffect effect, IRandomizerService randomizer)
         {
-            Effect = setup;
-            _randomizer = randomizer;
+            Effect = effect;
+            _randomService = randomizer;
 
             CreateAllParticles();
         }
@@ -58,6 +64,8 @@ namespace KDParticleEngine
         #region Public Methods
         public void Update(TimeSpan timeElapsed)
         {
+            //int totalTimings = 1000;
+
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
 
             //If the amount of time to spawn a new particle has passed
@@ -71,12 +79,35 @@ namespace KDParticleEngine
             }
 
 
+
             for (int i = 0; i < _particles.Count; i++)
             {
                 if (_particles[i].IsDead)
                     continue;
 
-                Effect.Update(_particles[i], timeElapsed);
+                //_timer.Start();
+
+                _particles[i].Update(timeElapsed);
+
+                //TODO: Removed. Effect.Update() code moved to Particle.Update()
+                //Effect.Update(_particles[i], timeElapsed);
+
+                //_timer.Stop();
+                //_timings.Add(_timer.Elapsed.TotalMilliseconds);
+                //_timer.Reset();
+
+
+                //if (_timings.Count >= totalTimings)
+                //{
+                //    var maxValue = _timings.Max();
+
+                //    _timings = _timings.Where(t => t < maxValue).ToList();
+                //}
+
+                //if (_timings.Count >= totalTimings - 1)
+                //{
+                //    var perfResult = _timings.Average();
+                //}
             }
         }
 
@@ -91,14 +122,11 @@ namespace KDParticleEngine
             {
                 if (_particles[i].IsDead)
                 {
-                    _particles[i].Position = Effect.SpawnLocation;//WORKS
-                    _particles[i].IsAlive = true;//WORKS
+                    _particles[i].Position = Effect.SpawnLocation;
 
-                    _particles[i].Size = 1f;
-                    _particles[i].TintColor = Color.White;
+                    _particles[i].Reset();
 
-
-                    _particles.ForEach(p => Effect.ResetBehaviors(p.ID));
+                    var stop = true;
                 }
             }
         }
@@ -117,10 +145,10 @@ namespace KDParticleEngine
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
-                return _randomizer.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+                return _randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
 
 
-            return _randomizer.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
+            return _randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }
 
 
@@ -145,109 +173,13 @@ namespace KDParticleEngine
         /// <returns></returns>
         private Particle CreateParticle()
         {
-            var position = Effect.SpawnLocation;
-
-            var velocity = Effect.UseRandomVelocity ? GetRandomVelocity() : Effect.ParticleVelocity;
-
-            var angle = GetRandomAngle();
-
-            var angularVelocity = GetRandomAngularVelocity();
-
-            var color = GetRandomColor();
-
-            var size = GetRandomSize();
-
-            var lifeTime = GetRandomLifeTime();
-
-
             var newId = GetNewParticleId();
 
-            Effect.CreateParticleBehaviors(newId);
 
-
-            return new Particle()
+            return new Particle(Effect.BehaviorSettings, _randomService)
             {
                 ID = newId
             };
-        }
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.Velocity"/> for a spawned <see cref="Particle"/>.
-        /// </summary>
-        /// <returns></returns>
-        private PointF GetRandomVelocity()
-        {
-            var velXRandomResult = _randomizer.GetValue(Effect.VelocityXMin, Effect.VelocityXMax);
-            var velYRandomResult = _randomizer.GetValue(Effect.VelocityYMin, Effect.VelocityYMax);
-
-
-            return new PointF(velXRandomResult,
-                              velYRandomResult);
-        }
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.Angle"/> for a spawned <see cref="Particle"/>.
-        /// </summary>
-        /// <returns></returns>
-        private float GetRandomAngle() => _randomizer.GetValue(Effect.AngleMin, Effect.AngleMax);
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.AngularVelocity"/> for a spawned <see cref="Particle"/>.
-        /// </summary>
-        /// <returns></returns>
-        private float GetRandomAngularVelocity() => _randomizer.GetValue(Effect.AngularVelocityMin, Effect.AngularVelocityMax) * (_randomizer.FlipCoin() ? 1 : -1);
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.TintColor"/> for a spawned <see cref="Particle"/>.
-        /// </summary>
-        /// <returns></returns>
-        private Color GetRandomColor()
-        {
-            if (Effect.UseColorsFromList)
-            {
-                return Effect.TintColors is null || Effect.TintColors.Length == 0 ? Color.FromArgb(255, 255, 255, 255) : Effect.TintColors[_randomizer.GetValue(0, Effect.TintColors.Length - 1)];
-            }
-            else
-            {
-                var red = Effect.RedMin <= Effect.RedMax ?
-                    (byte)_randomizer.GetValue(Effect.RedMin, Effect.RedMax) :
-                    (byte)_randomizer.GetValue(Effect.RedMax, Effect.RedMin);
-                var green = Effect.GreenMin <= Effect.GreenMax ?
-                    (byte)_randomizer.GetValue(Effect.GreenMin, Effect.GreenMax) :
-                    (byte)_randomizer.GetValue(Effect.GreenMax, Effect.GreenMin);
-                var blue = Effect.BlueMin <= Effect.BlueMax ?
-                    (byte)_randomizer.GetValue(Effect.BlueMin, Effect.BlueMax) :
-                    (byte)_randomizer.GetValue(Effect.BlueMax, Effect.BlueMin);
-
-                return Color.FromArgb(255, red, green, blue);
-            }
-        }
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.Size"/> for a spawned <see cref="Particle"/>.
-        /// </summary>
-        /// <returns></returns>
-        private float GetRandomSize() => _randomizer.GetValue(Effect.SizeMin, Effect.SizeMax);
-
-
-        /// <summary>
-        /// Returns a random <see cref="Particle.LifeTime"/> for a spawned <see cref="Particle"/>.
-        /// If the max is less than the min, the <see cref="Particle.LifeTime"/> will still be chosen
-        /// randomly between the two values.
-        /// </summary>
-        /// <returns></returns>
-        private int GetRandomLifeTime()
-        {
-            if (Effect.LifeTimeMin <= Effect.LifeTimeMax)
-                return _randomizer.GetValue(Effect.LifeTimeMin, Effect.LifeTimeMax);
-
-
-            return _randomizer.GetValue(Effect.LifeTimeMax, Effect.LifeTimeMin);
         }
 
 
@@ -256,14 +188,6 @@ namespace KDParticleEngine
         /// </summary>
         /// <returns></returns>
         private int GetNewParticleId() => _particles.Count <= 0 ? 0 : _particles.Max(p => p.ID) + 1;
-
-
-        private bool IsEasingBehavior(IBehavior behavior)
-        {
-            var behaviorType = behavior.GetType();
-
-            return behaviorType.IsSubclassOf(typeof(EasingBehavior));
-        }
         #endregion
     }
 }

@@ -3,14 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KDParticleEngine
+namespace KDParticleEngine.Behaviors
 {
     //TODO: Add code docs and regions
-    public class BehaviorSetup
+    public class BehaviorSetting
     {
-        //TODO: Make sure that this does not get saved into the JSON data in the ParticleMaker app
-        public int ID { get; set; }
-
         public BehaviorType TypeOfBehavior { get; set; }
 
         public ParticleAttribute ApplyToAttribute { get; set; }

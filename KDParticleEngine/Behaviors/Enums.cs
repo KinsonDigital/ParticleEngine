@@ -6,7 +6,8 @@ namespace KDParticleEngine.Behaviors
 {
     public enum BehaviorType
     {
-        EaseOutBounce = 1,
-        EaseIn = 2
+        Unknown,
+        EaseOutBounce,
+        EaseIn
     }
 }

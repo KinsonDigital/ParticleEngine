@@ -8,9 +8,7 @@ namespace KDParticleEngine.Behaviors
 {
     public class EaseInBehavior : EasingBehavior
     {
-        public EaseInBehavior()
-        {
-        }
+        public EaseInBehavior(IRandomizerService randomizer) : base(randomizer) { }
 
 
         public override void Update(TimeSpan timeElapsed)
@@ -21,7 +19,7 @@ namespace KDParticleEngine.Behaviors
         }
 
 
-        private float EaseInQuad(float t, float b, float c, float d)
+        private double EaseInQuad(double t, double b, double c, double d)
         {
             t /= d;
 
