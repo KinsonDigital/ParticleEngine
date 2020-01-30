@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Linq;
 using KDParticleEngine;
 using KDParticleEngine.Services;
 using Moq;
@@ -27,16 +25,6 @@ namespace KDParticleEngineTests
             _mockTextureLoader = new Mock<ITextureLoader<IFakeTexture>>();
 
             _engine = new ParticleEngine<IFakeTexture>(_mockTextureLoader.Object, _mockRandomizerService.Object);
-        }
-        #endregion
-
-
-        #region Constructor Tests
-        [Fact]
-        public void Ctor_WhenInvoked_ProperlySetsParticleList()
-        {
-            //Assert
-            Assert.NotNull(_engine.Particles);
         }
         #endregion
 

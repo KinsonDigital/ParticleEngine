@@ -1,29 +1,29 @@
 ﻿using KDParticleEngine.Services;
-using MathExpressionEngine;
-using MathExpressionEngine.Expressions;
 using System;
-using System.Drawing;
 
 namespace KDParticleEngine.Behaviors
 {
+    /// <summary>
+    /// Represents an ease in type of easing function behavior.
+    /// </summary>
     public class EaseInBehavior : EasingBehavior
     {
-        public EaseInBehavior(IRandomizerService randomizer) : base(randomizer) { }
+        #region Constructors
+        public EaseInBehavior(BehaviorSetting setting, IRandomizerService randomizer) : base(setting, randomizer) { }
+        #endregion
 
 
+        #region Public Methods
+        /// <summary>
+        /// Updates the behavior.
+        /// </summary>
+        /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
         public override void Update(TimeSpan timeElapsed)
         {
-            Value = EaseInQuad(TimeElapsed, Start, Change, TotalTime);
+            Value = EasingFunctions.EaseInQuad(ElapsedTime, Start, Change, TotalTime);
 
             base.Update(timeElapsed);
         }
-
-
-        private double EaseInQuad(double t, double b, double c, double d)
-        {
-            t /= d;
-
-            return c * t * t + b;
-        }
+        #endregion
     }
 }

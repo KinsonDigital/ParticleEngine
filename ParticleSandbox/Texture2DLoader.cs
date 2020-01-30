@@ -6,7 +6,7 @@ namespace ParticleSandbox
 {
     public class Texture2DLoader : ITextureLoader<Texture2D>
     {
-        private ContentManager _content;
+        private readonly ContentManager _content;
 
 
         public Texture2DLoader(ContentManager content) => _content = content;

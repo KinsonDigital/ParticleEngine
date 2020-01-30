@@ -2,20 +2,15 @@
 using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 
 namespace KDParticleEngine
 {
+    /// <summary>
+    /// Contains a number of resusable particles with a given particle effect applied to them.
+    /// </summary>
     public class ParticlePool
     {
-        //DEBUGGING
-        private Stopwatch _timer = new Stopwatch();
-        private List<double> _timings = new List<double>();
-        ///////////
-
-
         #region Public Events
         /// <summary>
         /// Occurs every time the total living particles has changed.
@@ -33,7 +28,11 @@ namespace KDParticleEngine
 
 
         #region Constructors
-        //TODO: Finish adding code docs
+        /// <summary>
+        /// Creates a new instance of <see cref="ParticlePool"/>.
+        /// </summary>
+        /// <param name="effect"></param>
+        /// <param name="randomizer"></param>
         public ParticlePool(ParticleEffect effect, IRandomizerService randomizer)
         {
             Effect = effect;
@@ -55,8 +54,14 @@ namespace KDParticleEngine
         /// </summary>
         public int TotalDeadParticles => _particles.Count(p => p.IsDead);
 
+        /// <summary>
+        /// Gets the list of particle in the pool.
+        /// </summary>
         public Particle[] Particles => _particles.ToArray();
 
+        /// <summary>
+        /// Gets the particle effect of the pool.
+        /// </summary>
         public ParticleEffect Effect { get; private set; }
         #endregion
 
@@ -64,8 +69,6 @@ namespace KDParticleEngine
         #region Public Methods
         public void Update(TimeSpan timeElapsed)
         {
-            //int totalTimings = 1000;
-
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
 
             //If the amount of time to spawn a new particle has passed
@@ -78,36 +81,12 @@ namespace KDParticleEngine
                 _spawnRateElapsed = 0;
             }
 
-
-
             for (int i = 0; i < _particles.Count; i++)
             {
                 if (_particles[i].IsDead)
                     continue;
 
-                //_timer.Start();
-
                 _particles[i].Update(timeElapsed);
-
-                //TODO: Removed. Effect.Update() code moved to Particle.Update()
-                //Effect.Update(_particles[i], timeElapsed);
-
-                //_timer.Stop();
-                //_timings.Add(_timer.Elapsed.TotalMilliseconds);
-                //_timer.Reset();
-
-
-                //if (_timings.Count >= totalTimings)
-                //{
-                //    var maxValue = _timings.Max();
-
-                //    _timings = _timings.Where(t => t < maxValue).ToList();
-                //}
-
-                //if (_timings.Count >= totalTimings - 1)
-                //{
-                //    var perfResult = _timings.Average();
-                //}
             }
         }
 
@@ -125,8 +104,6 @@ namespace KDParticleEngine
                     _particles[i].Position = Effect.SpawnLocation;
 
                     _particles[i].Reset();
-
-                    var stop = true;
                 }
             }
         }
@@ -161,33 +138,9 @@ namespace KDParticleEngine
 
             for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                _particles.Add(CreateParticle());
+                _particles.Add(new Particle(BehaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
             }
         }
-
-
-        /// <summary>
-        /// Generates a single <see cref="Particle"/> with random settings based on the <see cref="ParticleEngine"/>s
-        /// range settings.
-        /// </summary>
-        /// <returns></returns>
-        private Particle CreateParticle()
-        {
-            var newId = GetNewParticleId();
-
-
-            return new Particle(Effect.BehaviorSettings, _randomService)
-            {
-                ID = newId
-            };
-        }
-
-
-        /// <summary>
-        /// Gets a new particle ID.
-        /// </summary>
-        /// <returns></returns>
-        private int GetNewParticleId() => _particles.Count <= 0 ? 0 : _particles.Max(p => p.ID) + 1;
         #endregion
     }
 }

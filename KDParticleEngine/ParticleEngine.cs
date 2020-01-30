@@ -1,7 +1,6 @@
 ﻿using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace KDParticleEngine
@@ -12,23 +11,11 @@ namespace KDParticleEngine
     /// </summary>
     public class ParticleEngine<Texture> where Texture : class
     {
-        //#region Public Events
-        ///// <summary>
-        ///// Occurs every time the total living particles has changed.
-        ///// </summary>
-        //public event EventHandler<EventArgs>? LivingParticlesCountChanged;
-        //#endregion
-
-
         #region Private Fields
         private readonly List<ParticlePool> _particlePools = new List<ParticlePool>();
         private readonly ITextureLoader<Texture> _textureLoader;
         private readonly IRandomizerService _randomizer;
         private readonly Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
-        private int _totalParticlesAliveAtOnce = 10;
-
-        private float _angleMin;
-        private float _angleMax = 360;
         private bool _enabled = true;
         private bool _texturesLoaded;
         #endregion
@@ -47,42 +34,10 @@ namespace KDParticleEngine
 
 
         #region Props
-        /// <summary>
-        /// Gets the list of particles in the engine.
-        /// </summary>
-        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
-        public Particle[] Particles
-        {
-            get
-            {
-                var result = new List<Particle>();
-
-                _particlePools.ForEach(pool => result.AddRange(pool.Particles));
-
-
-                return result.ToArray();
-            }
-        }
-
-
         public ParticlePool[] ParticlePools
         {
             get => _particlePools.ToArray();
         }
-
-
-        public Texture GetTexture(string name)
-        {
-            if (!_texturesLoaded)
-                throw new Exception("The textures just be loaded first.");
-
-            if (!_textures.ContainsKey(name))
-                throw new Exception($"Particle with the name '{name}' does exist.");
-
-
-            return _textures[name];
-        }
-
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
@@ -99,18 +54,6 @@ namespace KDParticleEngine
                     KillAllParticles();
             }
         }
-
-        /// <summary>
-        /// Gets current total number of living <see cref="Particle"/>s.
-        /// </summary>
-        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
-        public int TotalLivingParticles => _particlePools.Sum(p => p.TotalLivingParticles);
-
-        /// <summary>
-        /// Gets the current total number of dead <see cref="Particle"/>s.
-        /// </summary>
-        //TODO: Remove.  Not needed anymore. The particle pools hold the particles now
-        public int TotalDeadParticles => _particlePools.Sum(p => p.TotalDeadParticles);
 
         /// <summary>
         /// Returns a value indicating if the list of <see cref="ParticleEngine{ITexture}"/>
@@ -133,10 +76,11 @@ namespace KDParticleEngine
 
 
         #region Public Methods
-        public void AddEffect(ParticleEffect effect)
-        {
-            _particlePools.Add(new ParticlePool(effect, _randomizer));
-        }
+        /// <summary>
+        /// Creates a particle pool using the given particle <paramref name="effect"/>.
+        /// </summary>
+        /// <param name="effect">The particle effect for the pool to use.</param>
+        public void CreatePool(ParticleEffect effect) => _particlePools.Add(new ParticlePool(effect, _randomizer));
 
 
         public void LoadTextures()

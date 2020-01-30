@@ -1,40 +1,17 @@
-﻿using System;
-using Moq;
-using Xunit;
+﻿using Xunit;
 using System.Drawing;
 using KDParticleEngine;
+using KDParticleEngine.Behaviors;
 
 namespace KDParticleEngineTests
 {
     /// <summary>
     /// Unit tests to test the <see cref="Particle{IFakeTexture}"/> class.
     /// </summary>
-    public class ParticleTests : IDisposable
+    public class ParticleTests
     {
-        #region Private Fields
-        private Mock<IFakeTexture> _mockTexture;
-        #endregion
-
-
-        #region Constructors
-        public ParticleTests() => _mockTexture = new Mock<IFakeTexture>();
-        #endregion
-
-
         #region Constructor Tests
-        [Fact]
-        public void Ctor_WhenInvoking_ProperlySetsUpObject()
-        {
-            //Arrange/Act
-            var particle = new Particle(new PointF(1234, 5678), new PointF(12,34), 11.11f, 22.22f, Color.FromArgb(11, 22, 33, 44), 33.33f, 44);
-
-            //Assert
-            Assert.Equal(new PointF(1234, 5678), particle.Position);
-            Assert.Equal(11.11f, particle.Angle);
-            Assert.Equal(Color.FromArgb(11, 22, 33, 44), particle.TintColor);
-            Assert.Equal(33.33f, particle.Size);
-            Assert.Equal(44, particle.LifeTime);
-        }
+        //TODO: Need to add ctor tests
         #endregion
 
 
@@ -43,7 +20,7 @@ namespace KDParticleEngineTests
         public void Position_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Position = new PointF(11, 22)
             };
@@ -60,7 +37,7 @@ namespace KDParticleEngineTests
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Angle = 1234f
             };
@@ -77,16 +54,16 @@ namespace KDParticleEngineTests
         public void TintColor_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
-                TintColor = Color.FromArgb(11, 22, 33, 44)
+                TintColor = ParticleColor.FromArgb(11, 22, 33, 44)
             };
 
             //Act
             var actual = particle.TintColor;
 
             //Assert
-            Assert.Equal(Color.FromArgb(11, 22, 33, 44), actual);
+            Assert.Equal(ParticleColor.FromArgb(11, 22, 33, 44), actual);
         }
 
 
@@ -94,7 +71,7 @@ namespace KDParticleEngineTests
         public void Size_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Size = 1019f
             };
@@ -111,7 +88,7 @@ namespace KDParticleEngineTests
         public void LifeTime_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 LifeTime = 7784
             };
@@ -128,7 +105,7 @@ namespace KDParticleEngineTests
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 IsAlive = true
             };
@@ -142,7 +119,7 @@ namespace KDParticleEngineTests
         public void IsDead_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle(new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 IsDead = false
             };
@@ -150,11 +127,6 @@ namespace KDParticleEngineTests
             //Assert
             Assert.False(particle.IsDead);
         }
-        #endregion
-
-
-        #region Public Methods
-        public void Dispose() => _mockTexture = null;
         #endregion
     }
 }
