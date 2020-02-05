@@ -145,8 +145,8 @@ namespace KDParticleEngine
                 if (_particles[i].IsDead)
                 {
                     _particles[i].Position = Effect.SpawnLocation;
-
                     _particles[i].Reset();
+                    break;
                 }
             }
         }
