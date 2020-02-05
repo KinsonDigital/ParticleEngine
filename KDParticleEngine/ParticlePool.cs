@@ -67,6 +67,10 @@ namespace KDParticleEngine
 
 
         #region Public Methods
+        /// <summary>
+        /// Updates the particle pool.
+        /// </summary>
+        /// <param name="timeElapsed">The amount of time that has passed in the <see cref="Engine"/> since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
@@ -92,6 +96,32 @@ namespace KDParticleEngine
 
 
         /// <summary>
+        /// Kills all of the particles.
+        /// </summary>
+        public void KillAllParticles() => _particles.ForEach(p => p.IsDead = true);
+
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is ParticlePool pool))
+                return false;
+
+
+            return TotalLivingParticles == pool.TotalLivingParticles &&
+                TotalDeadParticles == pool.TotalDeadParticles &&
+                _particles.Count == pool.Particles.Length &&
+                Effect == pool.Effect;
+        }
+        #endregion
+
+
+        #region Private Methods
+        /// <summary>
         /// Spawns a new <see cref="Particle"/>.  This simple finds the first dead <see cref="Particle"/> and
         /// sets it back to alive and sets all of its parameters to random values.
         /// </summary>
@@ -107,12 +137,6 @@ namespace KDParticleEngine
                 }
             }
         }
-
-
-        /// <summary>
-        /// Kills all of the particles.
-        /// </summary>
-        public void KillAllParticles() => _particles.ForEach(p => p.IsDead = true);
 
 
         /// <summary>

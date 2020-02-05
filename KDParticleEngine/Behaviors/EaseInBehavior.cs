@@ -9,6 +9,11 @@ namespace KDParticleEngine.Behaviors
     public class EaseInBehavior : EasingBehavior
     {
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of <see cref="EaseInBehavior"/>.
+        /// </summary>
+        /// <param name="setting">The behavior settings of the behavior.</param>
+        /// <param name="randomizer">The randomizer used for ther setting value.</param>
         public EaseInBehavior(BehaviorSetting setting, IRandomizerService randomizer) : base(setting, randomizer) { }
         #endregion
 

@@ -47,7 +47,7 @@ namespace KDParticleEngine.Behaviors
         public double Value { get; set; }
 
         /// <summary>
-        /// Gets the current amount of time that has elapsed for the behavior.
+        /// Gets the current amount of time that has elapsed for the behavior in seconds.
         /// </summary>
         public double ElapsedTime { get; private set; }
 

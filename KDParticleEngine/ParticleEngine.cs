@@ -34,10 +34,10 @@ namespace KDParticleEngine
 
 
         #region Props
-        public ParticlePool[] ParticlePools
-        {
-            get => _particlePools.ToArray();
-        }
+        /// <summary>
+        /// Gets all of the particle pools.
+        /// </summary>
+        public ParticlePool[] ParticlePools => _particlePools.ToArray();
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
@@ -83,6 +83,10 @@ namespace KDParticleEngine
         public void CreatePool(ParticleEffect effect) => _particlePools.Add(new ParticlePool(effect, _randomizer));
 
 
+        /// <summary>
+        /// Loads all of the textures for each <see cref="ParticlePool"/>
+        /// in the engine.
+        /// </summary>
         public void LoadTextures()
         {
             _particlePools.ToList().ForEach(pool =>

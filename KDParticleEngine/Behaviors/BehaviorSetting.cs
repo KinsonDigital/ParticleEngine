@@ -1,4 +1,6 @@
-﻿namespace KDParticleEngine.Behaviors
+﻿using System;
+
+namespace KDParticleEngine.Behaviors
 {
     /// <summary>
     /// Stores settings for creating an <see cref="EasingBehavior"/>.
@@ -45,6 +47,41 @@
         /// The maximum total amount of time to complete the behavior used in randomization.
         /// </summary>
         public float TotalTimeMax { get; set; }
+        #endregion
+
+
+        #region Public Methods
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is BehaviorSetting setting))
+                return false;
+
+
+            return TypeOfBehavior == setting.TypeOfBehavior &&
+                ApplyToAttribute == setting.ApplyToAttribute &&
+                StartMin == setting.StartMin &&
+                StartMax == setting.StartMax &&
+                ChangeMin == setting.ChangeMin &&
+                ChangeMax == setting.ChangeMax &&
+                TotalTimeMin == setting.TotalTimeMin &&
+                TotalTimeMax == setting.TotalTimeMax;
+        }
+
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() =>
+            HashCode.Combine(TypeOfBehavior, ApplyToAttribute,
+                             StartMin, StartMax,
+                             ChangeMin, ChangeMax,
+                             TotalTimeMin, TotalTimeMax);
         #endregion
     }
 }

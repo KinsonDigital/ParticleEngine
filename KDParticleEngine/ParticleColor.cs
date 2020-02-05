@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace KDParticleEngine
 {
@@ -763,10 +763,10 @@ namespace KDParticleEngine
         /// <returns></returns>
         public float GetBrightness()
         {
-            int min = Math.Min(Math.Min(R, G), B);
-            int max = Math.Max(Math.Max(R, G), B);
+            var min = Math.Min(Math.Min(R, G), B);
+            var max = Math.Max(Math.Max(R, G), B);
 
-            return (max + min) / (byte.MaxValue * 2f);
+            return (max + min) / (byte.MaxValue * 2f) * 100f;
         }
 
 
@@ -806,18 +806,58 @@ namespace KDParticleEngine
         /// <returns></returns>
         public float GetSaturation()
         {
-            if (R == G && G == B)
-                return 0f;
+            var r = R / 255f;
+            var b = B / 255f;
 
-            int min = Math.Min(Math.Min(R, G), B);
-            int max = Math.Max(Math.Max(R, G), B);
 
-            int div = max + min;
-            if (div > byte.MaxValue)
-                div = byte.MaxValue * 2 - max - min;
-
-            return (max - min) / (float)div;
+            return (b - r) / (b + r) * 100f;
         }
+
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is ParticleColor color))
+                return false;
+
+            var alphaSame = A == color.A;
+            var redSame = R == color.R;
+            var greenSame = G == color.G;
+            var blueSame = B == color.B;
+
+            return alphaSame && redSame && greenSame && blueSame;
+        }
+
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => HashCode.Combine(R, G, B, A);
+        #endregion
+
+
+        #region Overloaded Operators
+        /// <summary>
+        /// Returns a value indicating if the given colors are equal.
+        /// </summary>
+        /// <param name="clrA">The first color to compare.</param>
+        /// <param name="clrB">The second color to compare.</param>
+        /// <returns></returns>
+        public static bool operator == (ParticleColor clrA, ParticleColor clrB) => clrA.Equals(clrB);
+
+
+        /// <summary>
+        /// Returns a value indicating if the given colors are notequal.
+        /// </summary>
+        /// <param name="clrA">The first color to compare.</param>
+        /// <param name="clrB">The second color to compare.</param>
+        /// <returns></returns>
+        public static bool operator !=(ParticleColor clrA, ParticleColor clrB) => !(clrA == clrB);
         #endregion
     }
 }

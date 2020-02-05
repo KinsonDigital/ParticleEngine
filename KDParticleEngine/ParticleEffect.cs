@@ -1,4 +1,5 @@
 ﻿using KDParticleEngine.Behaviors;
+using System;
 using System.Drawing;
 
 namespace KDParticleEngine
@@ -48,7 +49,7 @@ namespace KDParticleEngine
         /// randomly choose from when spawning a new <see cref="Particle"/>.
         /// Only used if the <see cref="UseColorsFromList"/> is set to true.
         /// </summary>
-        public Color[] TintColors { get; set; } = new Color[0];
+        public ParticleColor[] TintColors { get; set; } = new ParticleColor[0];
 
         /// <summary>
         /// Gets or sets the total number of particles that can be alive at once.
@@ -74,6 +75,82 @@ namespace KDParticleEngine
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
         public BehaviorSetting[] BehaviorSettings { get; }
+        #endregion
+
+
+        #region Public Methods
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is ParticleEffect effect))
+                return false;
+
+            var colorsAreSame = true;
+
+            if (TintColors.Length == effect.TintColors.Length)
+            {
+                for (int i = 0; i < TintColors.Length; i++)
+                {
+                    if (TintColors[i] != effect.TintColors[i])
+                    {
+                        colorsAreSame = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                colorsAreSame = false;
+            }
+
+
+            return ParticleTextureName == effect.ParticleTextureName &&
+                TypeOfBehavior == effect.TypeOfBehavior &&
+                ApplyBehaviorTo == effect.ApplyBehaviorTo &&
+                SpawnLocation == effect.SpawnLocation &&
+                colorsAreSame &&
+                TotalParticlesAliveAtOnce == effect.TotalParticlesAliveAtOnce &&
+                SpawnRateMin == effect.SpawnRateMin &&
+                SpawnRateMax == effect.SpawnRateMax &&
+                UseColorsFromList == effect.UseColorsFromList &&
+                BehaviorSettings == effect.BehaviorSettings;
+        }
+
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+
+            hash.Add(ParticleTextureName);
+            hash.Add(TypeOfBehavior);
+            hash.Add(ApplyBehaviorTo);
+            hash.Add(SpawnLocation);
+
+            var colorHash = 0;
+
+            foreach (var clr in TintColors)
+            {
+                colorHash += clr.GetHashCode();
+            }
+
+            hash.Add(colorHash);
+            hash.Add(TotalParticlesAliveAtOnce);
+            hash.Add(SpawnRateMin);
+            hash.Add(SpawnRateMax);
+            hash.Add(UseColorsFromList);
+            hash.Add(BehaviorSettings);
+
+            
+            return hash.ToHashCode();
+        }
         #endregion
     }
 }

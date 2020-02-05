@@ -1,6 +1,5 @@
 ﻿using KDParticleEngine.Behaviors;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace KDParticleEngine
@@ -114,8 +113,6 @@ namespace KDParticleEngine
                         case ParticleAttribute.AlphaColorComponent:
                             TintColor.A = ClampClrValue((float)_behaviors[i].Value);
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -138,6 +135,35 @@ namespace KDParticleEngine
             LifeTime = 0;
             IsAlive = true;
         }
+
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Particle particle))
+                return false;
+
+            
+            return Position == particle.Position &&
+                Angle == particle.Angle &&
+                TintColor == particle.TintColor &&
+                Size == particle.Size &&
+                LifeTime == particle.LifeTime &&
+                IsAlive == particle.IsAlive &&
+                IsDead == particle.IsDead;
+        }
+
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() =>
+            HashCode.Combine(_behaviors, Position, Angle, TintColor, Size, LifeTime, IsAlive, IsDead);
         #endregion
     }
 }

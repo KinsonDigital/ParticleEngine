@@ -1,6 +1,8 @@
 ﻿using System;
 using KDParticleEngine;
+using KDParticleEngine.Behaviors;
 using KDParticleEngine.Services;
+using KDParticleEngineTests.XUnitHelpers;
 using Moq;
 using Xunit;
 
@@ -67,6 +69,72 @@ namespace KDParticleEngineTests
 
 
         #region Method Tests
+        [Fact]
+        public void CreatePool_WhenInvoked_CreatesParticlePool()
+        {
+            //Arrange
+            var settings = new BehaviorSetting[]
+            {
+                new BehaviorSetting()
+            };
+            var effect = new ParticleEffect(It.IsAny<string>(), settings);
+            var expected = new ParticlePool[]
+            {
+                new ParticlePool(effect, _mockRandomizerService.Object)
+            };
+
+            //Act
+            _engine.CreatePool(effect);
+            var actual = _engine.ParticlePools;
+
+            //Assert
+            Assert.Single(actual);
+            //TODO: Setup equals comparison for ParticlePool
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
+        public void Equals_WhenBothEqual_ReturnsTrue()
+        {
+            //Arrange
+            //var poolA = new ParticlePool()
+
+            //Act
+
+            //Assert
+        }
+
+
+        [Fact]
+        public void Update_WithTexturesNotLoaded_ThrowsException()
+        {
+            //Act & Assert
+            AssertHelpers.ExceptionHasMessage(() =>
+            {
+                _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            }, "The textures must be loaded first.");
+        }
+
+
+        //[Fact]
+        public void Update_WhenDisabled_DoesNotUpdateParticles()
+        {
+            //Arrange
+            var settings = new BehaviorSetting[]
+            {
+                new BehaviorSetting()
+            };
+            var effect = new ParticleEffect(It.IsAny<string>(), settings);
+            _engine.CreatePool(effect);
+            _engine.LoadTextures();
+
+            //Act
+            _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+
+            //Assert
+            
+        }
         #endregion
 
 
