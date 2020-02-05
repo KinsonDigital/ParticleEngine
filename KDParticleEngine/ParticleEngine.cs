@@ -1,4 +1,5 @@
-﻿using KDParticleEngine.Services;
+﻿using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +80,7 @@ namespace KDParticleEngine
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
-        public void CreatePool(ParticleEffect effect) => _particlePools.Add(new ParticlePool<Texture>(_textureLoader, effect, _randomizer));
+        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<Texture>(behaviorFactory, _textureLoader, effect, _randomizer));
 
 
         /// <summary>

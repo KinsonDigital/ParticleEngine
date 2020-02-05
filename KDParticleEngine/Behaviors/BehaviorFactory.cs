@@ -6,13 +6,13 @@ namespace KDParticleEngine.Behaviors
     /// <summary>
     /// Creates behaviors using behavior settings.
     /// </summary>
-    public static class BehaviorFactory
+    public class BehaviorFactory : IBehaviorFactory
     {
         /// <summary>
         /// Creates all of the behaviors using the given <paramref name="randomService"/>.
         /// </summary>
         /// <param name="randomService">The random used to randomly generate values.</param>
-        public static IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomService)
+        public IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomService)
         {
             var behaviors = new List<IBehavior>();
 

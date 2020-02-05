@@ -34,13 +34,13 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="effect"></param>
         /// <param name="randomizer"></param>
-        public ParticlePool(ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
+        public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
             _textureLoader = textureLoader;
             Effect = effect;
             _randomService = randomizer;
 
-            CreateAllParticles();
+            CreateAllParticles(behaviorFactory);
         }
         #endregion
 
@@ -169,13 +169,13 @@ namespace KDParticleEngine
         /// <summary>
         /// Generates all of the particles.
         /// </summary>
-        private void CreateAllParticles()
+        private void CreateAllParticles(IBehaviorFactory behaviorFactory)
         {
             _particles.Clear();
 
             for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                _particles.Add(new Particle(BehaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
+                _particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
             }
         }
         #endregion

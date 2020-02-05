@@ -126,7 +126,7 @@ namespace KDParticleEngineTests
                 new BehaviorSetting()
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
-            _engine.CreatePool(effect);
+            //_engine.CreatePool(effect);
             _engine.LoadTextures();
 
             //Act

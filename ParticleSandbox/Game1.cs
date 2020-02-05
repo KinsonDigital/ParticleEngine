@@ -168,8 +168,9 @@ namespace ParticleSandbox
                 ApplyBehaviorTo = ParticleAttribute.Y
             };
 
+            IBehaviorFactory factory = new BehaviorFactory();
 
-            _engine.CreatePool(effectA);
+            _engine.CreatePool(effectA, factory);
 
             _engine.LoadTextures();
         }
