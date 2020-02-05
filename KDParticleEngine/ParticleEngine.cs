@@ -12,10 +12,9 @@ namespace KDParticleEngine
     public class ParticleEngine<Texture> where Texture : class
     {
         #region Private Fields
-        private readonly List<ParticlePool> _particlePools = new List<ParticlePool>();
+        private readonly List<ParticlePool<Texture>> _particlePools = new List<ParticlePool<Texture>>();
         private readonly ITextureLoader<Texture> _textureLoader;
         private readonly IRandomizerService _randomizer;
-        private readonly Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
         private bool _enabled = true;
         private bool _texturesLoaded;
         #endregion
@@ -37,7 +36,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ParticlePool[] ParticlePools => _particlePools.ToArray();
+        public ParticlePool<Texture>[] ParticlePools => _particlePools.ToArray();
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
@@ -80,7 +79,7 @@ namespace KDParticleEngine
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
-        public void CreatePool(ParticleEffect effect) => _particlePools.Add(new ParticlePool(effect, _randomizer));
+        public void CreatePool(ParticleEffect effect) => _particlePools.Add(new ParticlePool<Texture>(_textureLoader, effect, _randomizer));
 
 
         /// <summary>
@@ -89,10 +88,10 @@ namespace KDParticleEngine
         /// </summary>
         public void LoadTextures()
         {
-            _particlePools.ToList().ForEach(pool =>
+            foreach (var pool in _particlePools)
             {
-                _textures.Add(pool.Effect.ParticleTextureName, _textureLoader.LoadTexture(pool.Effect.ParticleTextureName));
-            });
+                pool.LoadTexture();
+            }
 
             _texturesLoaded = true;
         }

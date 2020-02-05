@@ -47,6 +47,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets the amount of time in milliseconds that the <see cref="Particle"/> will stay alive.
         /// </summary>
+        //TODO: Add the ability to kill off the particles with this property OR when all of the behaviors have finished.
         public int LifeTime { get; set; }
 
         /// <summary>

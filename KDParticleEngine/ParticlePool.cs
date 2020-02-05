@@ -9,7 +9,7 @@ namespace KDParticleEngine
     /// <summary>
     /// Contains a number of resusable particles with a given particle effect applied to them.
     /// </summary>
-    public class ParticlePool
+    public class ParticlePool<Texture> where Texture : class
     {
         #region Public Events
         /// <summary>
@@ -22,6 +22,7 @@ namespace KDParticleEngine
         #region Private Fields
         private readonly List<Particle> _particles = new List<Particle>();
         private readonly IRandomizerService _randomService;
+        private readonly ITextureLoader<Texture> _textureLoader;
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
         #endregion
@@ -33,8 +34,9 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="effect"></param>
         /// <param name="randomizer"></param>
-        public ParticlePool(ParticleEffect effect, IRandomizerService randomizer)
+        public ParticlePool(ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
+            _textureLoader = textureLoader;
             Effect = effect;
             _randomService = randomizer;
 
@@ -63,6 +65,11 @@ namespace KDParticleEngine
         /// Gets the particle effect of the pool.
         /// </summary>
         public ParticleEffect Effect { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the texture of the particles in the pool.
+        /// </summary>
+        public Texture? PoolTexture { get; private set; }
         #endregion
 
 
@@ -102,13 +109,19 @@ namespace KDParticleEngine
 
 
         /// <summary>
+        /// Loads the texture for the pool to use for rendering the particles.
+        /// </summary>
+        public void LoadTexture() => PoolTexture = _textureLoader.LoadTexture(Effect.ParticleTextureName);
+
+
+        /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object? obj)
         {
-            if (!(obj is ParticlePool pool))
+            if (!(obj is ParticlePool<Texture> pool))
                 return false;
 
 
