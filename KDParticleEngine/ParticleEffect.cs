@@ -35,7 +35,7 @@ namespace KDParticleEngine
         public BehaviorType TypeOfBehavior { get; set; }
 
         /// <summary>
-        /// Gets or sets the particle attribute to set the behavior to.
+        /// Gets or sets the particle attribute to apply the behavior to.
         /// </summary>
         public ParticleAttribute ApplyBehaviorTo { get; set; }
 

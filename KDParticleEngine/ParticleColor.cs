@@ -230,187 +230,187 @@ namespace KDParticleEngine
         public static ParticleColor DarkSeaGreen => new ParticleColor(255, 143, 188, 139);
 
         /// <summary>
-        /// Get the color DarkSlateBlueZZZZ.
+        /// Get the color DarkSlateBlue.
         /// </summary>
         public static ParticleColor DarkSlateBlue => new ParticleColor(255, 72, 61, 139);
 
         /// <summary>
-        /// Get the color DarkSlateGrayZZZZ.
+        /// Get the color DarkSlateGray.
         /// </summary>
         public static ParticleColor DarkSlateGray => new ParticleColor(255, 47, 79, 79);
 
         /// <summary>
-        /// Get the color DarkTurquoiseZZZZ.
+        /// Get the color DarkTurquoise.
         /// </summary>
         public static ParticleColor DarkTurquoise => new ParticleColor(255, 0, 206, 209);
 
         /// <summary>
-        /// Get the color DarkVioletZZZZ.
+        /// Get the color DarkViolet.
         /// </summary>
         public static ParticleColor DarkViolet => new ParticleColor(255, 148, 0, 211);
 
         /// <summary>
-        /// Get the color DeepPinkZZZZ.
+        /// Get the color DeepPink.
         /// </summary>
         public static ParticleColor DeepPink => new ParticleColor(255, 255, 20, 147);
 
         /// <summary>
-        /// Get the color DeepSkyBlueZZZZ.
+        /// Get the color DeepSkyBlue.
         /// </summary>
         public static ParticleColor DeepSkyBlue => new ParticleColor(255, 0, 191, 255);
 
         /// <summary>
-        /// Get the color DimGrayZZZZ.
+        /// Get the color DimGray.
         /// </summary>
         public static ParticleColor DimGray => new ParticleColor(255, 105, 105, 105);
 
         /// <summary>
-        /// Get the color DodgerBlueZZZZ.
+        /// Get the color DodgerBlue.
         /// </summary>
         public static ParticleColor DodgerBlue => new ParticleColor(255, 30, 144, 255);
 
         /// <summary>
-        /// Get the color FirebrickZZZZ.
+        /// Get the color Firebrick.
         /// </summary>
         public static ParticleColor Firebrick => new ParticleColor(255, 178, 34, 34);
 
         /// <summary>
-        /// Get the color FloralWhiteZZZZ.
+        /// Get the color FloralWhite.
         /// </summary>
         public static ParticleColor FloralWhite => new ParticleColor(255, 255, 250, 240);
 
         /// <summary>
-        /// Get the color ForestGreenZZZZ.
+        /// Get the color ForestGreen.
         /// </summary>
         public static ParticleColor ForestGreen => new ParticleColor(255, 34, 139, 34);
 
         /// <summary>
-        /// Get the color FuchsiaZZZZ.
+        /// Get the color Fuchsia.
         /// </summary>
         public static ParticleColor Fuchsia => new ParticleColor(255, 255, 0, 255);
 
         /// <summary>
-        /// Get the color GainsboroZZZZ.
+        /// Get the color Gainsboro.
         /// </summary>
         public static ParticleColor Gainsboro => new ParticleColor(255, 220, 220, 220);
 
         /// <summary>
-        /// Get the color GhostWhiteZZZZ.
+        /// Get the color GhostWhite.
         /// </summary>
         public static ParticleColor GhostWhite => new ParticleColor(255, 248, 248, 255);
 
         /// <summary>
-        /// Get the color GoldZZZZ.
+        /// Get the color Gold.
         /// </summary>
         public static ParticleColor Gold => new ParticleColor(255, 255, 215, 0);
 
         /// <summary>
-        /// Get the color GoldenrodZZZZ.
+        /// Get the color Goldenrod.
         /// </summary>
         public static ParticleColor Goldenrod => new ParticleColor(255, 218, 165, 32);
 
         /// <summary>
-        /// Get the color GrayZZZZ.
+        /// Get the color Gray.
         /// </summary>
         public static ParticleColor Gray => new ParticleColor(255, 128, 128, 128);
 
         /// <summary>
-        /// Get the color GreenZZZZ.
+        /// Get the color Green.
         /// </summary>
         public static ParticleColor Green => new ParticleColor(255, 0, 128, 0);
 
         /// <summary>
-        /// Get the color GreenYellowZZZZ.
+        /// Get the color GreenYellow.
         /// </summary>
         public static ParticleColor GreenYellow => new ParticleColor(255, 173, 255, 47);
 
         /// <summary>
-        /// Get the color HoneydewZZZZ.
+        /// Get the color Honeydew.
         /// </summary>
         public static ParticleColor Honeydew => new ParticleColor(255, 240, 255, 240);
 
         /// <summary>
-        /// Get the color HotPinkZZZZ.
+        /// Get the color HotPink.
         /// </summary>
         public static ParticleColor HotPink => new ParticleColor(255, 255, 105, 180);
 
         /// <summary>
-        /// Get the color IndianRedZZZZ.
+        /// Get the color IndianRed.
         /// </summary>
         public static ParticleColor IndianRed => new ParticleColor(255, 205, 92, 92);
 
         /// <summary>
-        /// Get the color IndigoZZZZ.
+        /// Get the color Indigo.
         /// </summary>
         public static ParticleColor Indigo => new ParticleColor(255, 75, 0, 130);
 
         /// <summary>
-        /// Get the color IvoryZZZZ.
+        /// Get the color Ivory.
         /// </summary>
         public static ParticleColor Ivory => new ParticleColor(255, 255, 255, 240);
 
         /// <summary>
-        /// Get the color KhakiZZZZ.
+        /// Get the color Khaki.
         /// </summary>
         public static ParticleColor Khaki => new ParticleColor(255, 240, 230, 140);
 
         /// <summary>
-        /// Get the color LavenderZZZZ.
+        /// Get the color Lavender.
         /// </summary>
         public static ParticleColor Lavender => new ParticleColor(255, 230, 230, 250);
 
         /// <summary>
-        /// Get the color LavenderBlushZZZZ.
+        /// Get the color LavenderBlush.
         /// </summary>
         public static ParticleColor LavenderBlush => new ParticleColor(255, 255, 240, 245);
 
         /// <summary>
-        /// Get the color LawnGreenZZZZ.
+        /// Get the color LawnGreen.
         /// </summary>
         public static ParticleColor LawnGreen => new ParticleColor(255, 124, 252, 0);
 
         /// <summary>
-        /// Get the color LemonChiffonZZZZ.
+        /// Get the color LemonChiffon.
         /// </summary>
         public static ParticleColor LemonChiffon => new ParticleColor(255, 255, 250, 205);
 
         /// <summary>
-        /// Get the color LightBlueZZZZ.
+        /// Get the color LightBlue.
         /// </summary>
         public static ParticleColor LightBlue => new ParticleColor(255, 173, 216, 230);
 
         /// <summary>
-        /// Get the color LightCoralZZZZ.
+        /// Get the color LightCoral.
         /// </summary>
         public static ParticleColor LightCoral => new ParticleColor(255, 240, 128, 128);
 
         /// <summary>
-        /// Get the color LightCyanZZZZ.
+        /// Get the color LightCyan.
         /// </summary>
         public static ParticleColor LightCyan => new ParticleColor(255, 224, 255, 255);
 
         /// <summary>
-        /// Get the color LightGoldenrodYellowZZZZ.
+        /// Get the color LightGoldenrodYellow.
         /// </summary>
         public static ParticleColor LightGoldenrodYellow => new ParticleColor(255, 250, 250, 210);
 
         /// <summary>
-        /// Get the color LightGrayZZZZ.
+        /// Get the color LightGray.
         /// </summary>
         public static ParticleColor LightGray => new ParticleColor(255, 211, 211, 211);
 
         /// <summary>
-        /// Get the color LightGreenZZZZ.
+        /// Get the color LightGreen.
         /// </summary>
         public static ParticleColor LightGreen => new ParticleColor(255, 144, 238, 144);
 
         /// <summary>
-        /// Get the color LightPinkZZZZ.
+        /// Get the color LightPink.
         /// </summary>
         public static ParticleColor LightPink => new ParticleColor(255, 255, 182, 193);
 
         /// <summary>
-        /// Get the color LightSalmonZZZZ.
+        /// Get the color LightSalmon.
         /// </summary>
         public static ParticleColor LightSalmon => new ParticleColor(255, 255, 160, 122);
 
@@ -766,6 +766,7 @@ namespace KDParticleEngine
             var min = Math.Min(Math.Min(R, G), B);
             var max = Math.Max(Math.Max(R, G), B);
 
+
             return (max + min) / (byte.MaxValue * 2f) * 100f;
         }
 
@@ -779,10 +780,10 @@ namespace KDParticleEngine
             if (R == G && G == B)
                 return 0f;
 
-            int min = Math.Min(Math.Min(R, G), B);
-            int max = Math.Max(Math.Max(R, G), B);
+            var min = Math.Min(Math.Min(R, G), B);
+            var max = Math.Max(Math.Max(R, G), B);
 
-            float delta = max - min;
+            var delta = (float)(max - min);
             float hue;
 
             if (R == max)
@@ -793,8 +794,10 @@ namespace KDParticleEngine
                 hue = (R - G) / delta + 4f;
 
             hue *= 60f;
+
             if (hue < 0f)
                 hue += 360f;
+
 
             return hue;
         }
@@ -829,6 +832,7 @@ namespace KDParticleEngine
             var greenSame = G == color.G;
             var blueSame = B == color.B;
 
+
             return alphaSame && redSame && greenSame && blueSame;
         }
 
@@ -852,7 +856,7 @@ namespace KDParticleEngine
 
 
         /// <summary>
-        /// Returns a value indicating if the given colors are notequal.
+        /// Returns a value indicating if the given colors are not equal.
         /// </summary>
         /// <param name="clrA">The first color to compare.</param>
         /// <param name="clrB">The second color to compare.</param>

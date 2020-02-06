@@ -19,32 +19,32 @@ namespace KDParticleEngine.Behaviors
         public ParticleAttribute ApplyToAttribute { get; set; }
 
         /// <summary>
-        /// The starting value minimum used in randomization.
+        /// The minimum starting value used in randomization.
         /// </summary>
         public float StartMin { get; set; }
 
         /// <summary>
-        /// The starting value maximum used in randomization.
+        /// The maximum starting value used in randomization.
         /// </summary>
         public float StartMax { get; set; }
 
         /// <summary>
-        /// The amount of change minimum used in randomization.
+        /// The minimum amount of change used in randomization.
         /// </summary>
         public float ChangeMin { get; set; }
 
         /// <summary>
-        /// The amount of change maximum used in randomization.
+        /// The maximum amount of change used in randomization.
         /// </summary>
         public float ChangeMax { get; set; }
 
         /// <summary>
-        /// The minimum total amount of time to complete the behavior used in randomization.
+        /// The minimum total amount of time to complete the behavior.
         /// </summary>
         public float TotalTimeMin { get; set; }
 
         /// <summary>
-        /// The maximum total amount of time to complete the behavior used in randomization.
+        /// The maximum total amount of time to complete the behavior.
         /// </summary>
         public float TotalTimeMax { get; set; }
         #endregion

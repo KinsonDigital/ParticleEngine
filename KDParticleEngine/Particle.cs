@@ -30,17 +30,17 @@ namespace KDParticleEngine
         public PointF Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the angle that the <see cref="Particle"/> is at when first spawned.
+        /// Gets or sets the angle of the <see cref="Particle"/>.
         /// </summary>
         public float Angle { get; set; }
 
         /// <summary>
-        /// Gets or sets the color that the <see cref="Texture"/> will be tinted.
+        /// Gets or sets the color that the <see cref="Texture"/> will be tinted to.
         /// </summary>
         public ParticleColor TintColor { get; set; } = ParticleColor.White;
 
         /// <summary>
-        /// Gets or sets the sized of the <see cref="Particle"/>.
+        /// Gets or sets the size of the <see cref="Particle"/>.
         /// </summary>
         public float Size { get; set; }
 

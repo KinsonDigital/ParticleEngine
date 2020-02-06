@@ -46,30 +46,6 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void IsReadOnly_WhenGettingValue_ReturnsCorrectValue()
-        {
-            //Assert
-            Assert.False(_engine.IsReadOnly);
-        }
-
-
-        [Fact]
-        public void IsFixedSize_WhenGettingValue_ReturnsCorrectValue()
-        {
-            //Assert
-            Assert.False(_engine.IsFixedSize);
-        }
-
-
-        [Fact]
-        public void IsSyncrhonized_WhenGettingValue_ReturnsCorrectValue()
-        {
-            //Assert
-            Assert.False(_engine.IsSynchronized);
-        }
-
-
-        [Fact]
         public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
         {
             //Arrange

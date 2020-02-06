@@ -2,7 +2,6 @@
 using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace KDParticleEngine
 {
@@ -13,8 +12,9 @@ namespace KDParticleEngine
     {
         #region Public Events
         /// <summary>
-        /// Occurs every time the total living particles has changed.
+        /// Occurs every time the total amount of living particles has changed.
         /// </summary>
+        //TODO: Implement code to make use of invoking this event.
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
         #endregion
 
@@ -32,8 +32,10 @@ namespace KDParticleEngine
         /// <summary>
         /// Creates a new instance of <see cref="ParticlePool"/>.
         /// </summary>
-        /// <param name="effect"></param>
-        /// <param name="randomizer"></param>
+        /// <param name="behaviorFactory">The factory used for creating new behaviors for each particle.</param>
+        /// <param name="textureLoader">Loads the textures for the <see cref="ParticlePool{Texture}"/></param>
+        /// <param name="effect">The particle effect to be applied to all of the particles in the pool.</param>
+        /// <param name="randomizer">Used for generating random values when a particle is spawned.</param>
         public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
             _textureLoader = textureLoader;
@@ -77,7 +79,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Updates the particle pool.
         /// </summary>
-        /// <param name="timeElapsed">The amount of time that has passed in the <see cref="Engine"/> since the last frame.</param>
+        /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
             _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
@@ -143,8 +145,7 @@ namespace KDParticleEngine
 
         #region Private Methods
         /// <summary>
-        /// Spawns a new <see cref="Particle"/>.  This simple finds the first dead <see cref="Particle"/> and
-        /// sets it back to alive and sets all of its parameters to random values.
+        /// Resets all of the particles.
         /// </summary>
         private void SpawnNewParticle()
         {

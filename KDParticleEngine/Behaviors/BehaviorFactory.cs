@@ -8,9 +8,11 @@ namespace KDParticleEngine.Behaviors
     /// </summary>
     public class BehaviorFactory : IBehaviorFactory
     {
+        #region Public Methods
         /// <summary>
         /// Creates all of the behaviors using the given <paramref name="randomizerService"/>.
         /// </summary>
+        /// <param name="settings">The list of settings used to create each behavior.</param>
         /// <param name="randomizerService">The random used to randomly generate values.</param>
         public IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomizerService)
         {
@@ -34,5 +36,6 @@ namespace KDParticleEngine.Behaviors
 
             return behaviors.ToArray();
         }
+        #endregion
     }
 }

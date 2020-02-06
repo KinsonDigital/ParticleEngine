@@ -3,8 +3,12 @@ using Xunit;
 
 namespace KDParticleEngineTests.XUnitHelpers
 {
+    /// <summary>
+    /// Provides simple helpers for unit testing assertions.
+    /// </summary>
     public static class AssertHelpers
     {
+        #region Public Methods
         /// <summary>
         /// Asserts the the exception thrown in the given <paramref name="testCode"/> action
         /// will have an exception message that matches the <paramref name="expectedMessage"/>.
@@ -22,5 +26,6 @@ namespace KDParticleEngineTests.XUnitHelpers
                 Assert.Equal(expectedMessage, ex.Message);
             }
         }
+        #endregion
     }
 }

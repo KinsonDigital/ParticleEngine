@@ -22,7 +22,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Updates the behavior.
         /// </summary>
-        /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
+        /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public override void Update(TimeSpan timeElapsed)
         {
             Value = EasingFunctions.EaseOutBounce(ElapsedTime, Start, Change, TotalTime);

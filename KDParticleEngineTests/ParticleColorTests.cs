@@ -182,6 +182,11 @@ namespace KDParticleEngineTests
                 .Where(p => p.PropertyType == typeof(ParticleColor)).Select(p => p.Name).ToArray();
 
 
+        /// <summary>
+        /// Gets the <see cref="ParticleColor"/> property value that matches the given <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns></returns>
         private ParticleColor GetColorPropValue(string name)
         {
             var foundProp = typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)

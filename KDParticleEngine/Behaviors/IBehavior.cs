@@ -19,7 +19,7 @@ namespace KDParticleEngine.Behaviors
         double ElapsedTime { get; }
 
         /// <summary>
-        /// The particle attribute to set the behavior value to.
+        /// The particle attribute to apply the behavior result to.
         /// </summary>
         ParticleAttribute ApplyToAttribute { get; }
 
@@ -34,7 +34,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Updates the behavior.
         /// </summary>
-        /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
+        /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         void Update(TimeSpan timeElapsed);
 
 

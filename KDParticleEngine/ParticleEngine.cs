@@ -53,24 +53,6 @@ namespace KDParticleEngine
                     KillAllParticles();
             }
         }
-
-        /// <summary>
-        /// Returns a value indicating if the list of <see cref="ParticleEngine{ITexture}"/>
-        /// <see cref="Texture"/>s is readonly.
-        /// </summary>
-        public bool IsReadOnly => false;
-
-        /// <summary>
-        /// Returns a value indicating if the list of <see cref="ParticleEngine{ITexture}"/>
-        /// <see cref="Texture"/>s has a fixed size.
-        /// </summary>
-        public bool IsFixedSize => false;
-
-        /// <summary>
-        /// Returns a value indicating if the list of <see cref="Texture"/>s is syncrhonized
-        /// for multi-threaded operations.
-        /// </summary>
-        public bool IsSynchronized => false;
         #endregion
 
 
@@ -79,6 +61,7 @@ namespace KDParticleEngine
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
+        /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
         public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<Texture>(behaviorFactory, _textureLoader, effect, _randomizer));
 
 
@@ -106,7 +89,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Updates all of the <see cref="Particle"/>s.
         /// </summary>
-        /// <param name="timeElapsed">The amount of time that has passed in the <see cref="Engine"/> since the last frame.</param>
+        /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
             if (!_texturesLoaded)

@@ -103,11 +103,7 @@ namespace KDParticleEngine.Services
                 var remainder = max % diff;
 
                 if (rand < max - remainder)
-                {
-                    var result = (int)(minValue + (rand % diff));
-
-                    return result;
-                }
+                    return (int)(minValue + (rand % diff));
             }
         }
         #endregion
