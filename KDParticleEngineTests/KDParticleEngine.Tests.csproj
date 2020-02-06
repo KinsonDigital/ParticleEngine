@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\XUnitHelpers\XUnitHelpers.csproj" />
     <ProjectReference Include="..\KDParticleEngine\KD.Particle.Engine.csproj" />
   </ItemGroup>
 

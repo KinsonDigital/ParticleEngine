@@ -2,6 +2,9 @@
 using Xunit;
 using System;
 using System.Drawing;
+using KDParticleEngine.Behaviors;
+using Moq;
+using System.Collections.Generic;
 
 namespace KDParticleEngineTests
 {
@@ -68,6 +71,50 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(new PointF(20f, 40f), result);
+        }
+
+
+        [Fact]
+        public void Count_WhenInvokingListVersion_ReturnsCorrectValue()
+        {
+            //Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            var particles = new List<Particle>();
+
+            for (int i = 0; i < 20; i++)
+            {
+                particles.Add(new Particle(new IBehavior[] { mockBehavior.Object }) { IsAlive = i > 10 });
+            }
+
+            //Act
+            var actual = particles.Count(p => p.IsAlive);
+
+            //Assert
+            Assert.Equal(9, actual);
+        }
+
+
+        [Fact]
+        public void Count_WhenInvokingArrayVersion_ReturnsCorrectValue()
+        {
+            //Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            Particle[] particles;
+
+            var tempList = new List<Particle>();
+            for (int i = 0; i < 20; i++)
+            {
+                tempList.Add(new Particle(new IBehavior[] { mockBehavior.Object }) { IsAlive = i > 10 });
+            }
+            particles = tempList.ToArray();
+
+            //Act
+            var actual = particles.Count(p => p.IsAlive);
+
+            //Assert
+            Assert.Equal(9, actual);
         }
         #endregion
     }

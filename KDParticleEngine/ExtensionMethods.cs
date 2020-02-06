@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
@@ -70,6 +71,50 @@ namespace KDParticleEngine
 
 
             return point;
+        }
+
+
+        /// <summary>
+        /// Counts the given <paramref name="items"/> based on given <paramref name="predicate"/> returning true.
+        /// </summary>
+        /// <typeparam name="T">The type of object in list to count.</typeparam>
+        /// <param name="items">The list of items to count based on the predicate.</param>
+        /// <param name="predicate">The predicate that when returns true, counts the item.</param>
+        /// <returns></returns>
+        public static int Count<T>(this List<T> items, Predicate<T> predicate)
+        {
+            var result = 0;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (predicate(items[i]))
+                    result++;
+            }
+
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Counts the given <paramref name="items"/> based on given <paramref name="predicate"/> returning true.
+        /// </summary>
+        /// <typeparam name="T">The type of object in list to count.</typeparam>
+        /// <param name="items">The list of items to count based on the predicate.</param>
+        /// <param name="predicate">The predicate that when returns true, counts the item.</param>
+        /// <returns></returns>
+        public static int Count<T>(this T[] items, Predicate<T> predicate)
+        {
+            var result = 0;
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (predicate(items[i]))
+                    result++;
+            }
+
+
+            return result;
         }
         #endregion
     }

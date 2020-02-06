@@ -1,69 +1,44 @@
-﻿using System;
-using Moq;
-using Xunit;
+﻿using Xunit;
 using System.Drawing;
 using KDParticleEngine;
+using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
+using Moq;
+using System;
+using KDParticleEngineTests.Fakes;
 
 namespace KDParticleEngineTests
 {
     /// <summary>
     /// Unit tests to test the <see cref="Particle{IFakeTexture}"/> class.
     /// </summary>
-    public class ParticleTests : IDisposable
+    public class ParticleTests
     {
         #region Private Fields
-        private Mock<IFakeTexture> _mockTexture;
+        private readonly TimeSpan _frameTime;
+        private readonly Mock<IBehavior> _mockBehavior;
         #endregion
 
 
         #region Constructors
-        public ParticleTests() => _mockTexture = new Mock<IFakeTexture>();
-        #endregion
-
-
-        #region Constructor Tests
-        [Fact]
-        public void Ctor_WhenInvoking_ProperlySetsUpObject()
+        /// <summary>
+        /// Creates a new instance of <see cref="ParticleTests"/>.
+        /// </summary>
+        public ParticleTests()
         {
-            //Arrange/Act
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(1234, 5678), new PointF(12,34), 11.11f, 22.22f, Color.FromArgb(11, 22, 33, 44), 33.33f, 44);
-
-            //Assert
-            Assert.NotNull(particle.Texture);
-            Assert.Equal(new PointF(1234, 5678), particle.Position);
-            Assert.Equal(new PointF(12, 34), particle.Velocity);
-            Assert.Equal(11.11f, particle.Angle);
-            Assert.Equal(22.22f, particle.AngularVelocity);
-            Assert.Equal(Color.FromArgb(11, 22, 33, 44), particle.TintColor);
-            Assert.Equal(33.33f, particle.Size);
-            Assert.Equal(44, particle.LifeTime);
+            _frameTime = new TimeSpan(0, 0, 0, 0, 16);
+            _mockBehavior = new Mock<IBehavior>();
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
         }
         #endregion
 
 
         #region Prop Tests
         [Fact]
-        public void Texture_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(null, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                Texture = _mockTexture.Object
-            };
-
-            //Act
-            var actual = particle.Texture;
-
-            //Assert
-            Assert.NotNull(actual);
-        }
-
-
-        [Fact]
         public void Position_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Position = new PointF(11, 22)
             };
@@ -77,27 +52,10 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void Velocity_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                Velocity = new PointF(33, 44)
-            };
-
-            //Act
-            var actual = particle.Velocity;
-
-            //Assert
-            Assert.Equal(new PointF(33, 44), actual);
-        }
-
-
-        [Fact]
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Angle = 1234f
             };
@@ -111,36 +69,19 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void AngularVelocity_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
-            {
-                AngularVelocity = 5678f
-            };
-
-            //Act
-            var actual = particle.AngularVelocity;
-
-            //Assert
-            Assert.Equal(5678f, actual);
-        }
-
-
-        [Fact]
         public void TintColor_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
-                TintColor = Color.FromArgb(11, 22, 33, 44)
+                TintColor = ParticleColor.FromArgb(11, 22, 33, 44)
             };
 
             //Act
             var actual = particle.TintColor;
 
             //Assert
-            Assert.Equal(Color.FromArgb(11, 22, 33, 44), actual);
+            Assert.Equal(ParticleColor.FromArgb(11, 22, 33, 44), actual);
         }
 
 
@@ -148,7 +89,7 @@ namespace KDParticleEngineTests
         public void Size_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 Size = 1019f
             };
@@ -165,7 +106,7 @@ namespace KDParticleEngineTests
         public void LifeTime_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 LifeTime = 7784
             };
@@ -182,7 +123,7 @@ namespace KDParticleEngineTests
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 IsAlive = true
             };
@@ -196,7 +137,7 @@ namespace KDParticleEngineTests
         public void IsDead_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(0, 0), 0f, 0f, Color.Empty, 0f, 0)
+            var particle = new Particle(new IBehavior[0])
             {
                 IsDead = false
             };
@@ -209,50 +150,319 @@ namespace KDParticleEngineTests
 
         #region Method Tests
         [Fact]
-        public void Update_WhenInvoked_UpdatesLifeTime()
+        public void Update_WithDisabledBehavior_BehaviorShouldNotUpdate()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(false);
+            var particle = new Particle(new[] { _mockBehavior.Object });
 
             //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
+            particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(15, particle.LifeTime);
+            _mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Never);
         }
 
 
         [Fact]
-        public void Update_WhenInvoked_UpdatesPositions()
+        public void Update_WithEnabledBehavior_BehaviorShouldUpdate()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
 
             //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
+            particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(new PointF(0.14999999f, 0.29999998f), particle.Position);
+            _mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Once());
         }
 
 
         [Fact]
-        public void Update_WhenInvoked_UpdatesAngle()
+        public void Update_WhenApplyingToXAttribute_UpdatesPositionX()
         {
             //Arrange
-            var particle = new Particle<IFakeTexture>(_mockTexture.Object, new PointF(0, 0), new PointF(10, 20), 0f, 6f, Color.Empty, 0f, 30);
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.X);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
 
             //Act
-            particle.Update(new TimeSpan(0, 0, 0, 0, 15));
+            particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(0.089999996f, particle.Angle);
+            Assert.Equal(123, particle.Position.X);
         }
-        #endregion
 
 
-        #region Public Methods
-        public void Dispose() => _mockTexture = null;
+        [Fact]
+        public void Update_WhenApplyingToYAttribute_UpdatesPositionY()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Y);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.Position.Y);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToAngleAttribute_UpdatesAngle()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Angle);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.Angle);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToSizeAttribute_UpdatesSize()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Size);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.Size);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToRedColorComponentAttribute_UpdatesRedColorComponent()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.RedColorComponent);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.TintColor.R);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToGreenColorComponentAttribute_UpdatesGreenColorComponent()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.GreenColorComponent);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.TintColor.G);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToBlueColorComponentAttribute_UpdatesBlueColorComponent()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.BlueColorComponent);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+            
+            //Assert
+            Assert.Equal(123, particle.TintColor.B);
+        }
+
+
+        [Fact]
+        public void Update_WhenApplyingToAlphaColorComponentAttribute_UpdatesAlphaColorComponent()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.AlphaColorComponent);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(123, particle.TintColor.A);
+        }
+
+
+        [Fact]
+        public void Reset_WhenInvoked_ResetsAllBehaviors()
+        {
+            //Arrange
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Reset();
+
+            //Assert
+            _mockBehavior.Verify(m => m.Reset(), Times.Once());
+        }
+
+
+        [Fact]
+        public void Reset_WhenInvoked_ResetsAngle()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Angle);
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+            particle.Reset();
+
+            //Assert
+            Assert.Equal(0, particle.Angle);
+        }
+
+
+        [Fact]
+        public void Reset_WhenInvoked_ResetsTintColor()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.RedColorComponent);
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+            particle.Reset();
+
+            //Assert
+            Assert.Equal(255, particle.TintColor.R);
+        }
+
+
+        [Fact]
+        public void Reset_WhenInvoked_ResetsLifeTime()
+        {
+            //Arrange
+            var particle = new Particle(new[] { _mockBehavior.Object })
+            {
+                LifeTime = 123
+            };
+
+            //Act
+            particle.Reset();
+
+            //Assert
+            Assert.Equal(0, particle.LifeTime);
+        }
+
+
+        [Fact]
+        public void Reset_WhenInvoked_ResetsIsAlive()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(false);
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(new TimeSpan(0, 0, 0, 10, 0));
+            particle.Reset();
+
+            //Assert
+            Assert.True(particle.IsAlive);
+        }
+
+
+        [Fact]
+        public void Equals_WithDifferentObjects_ReturnsFalse()
+        {
+            //Arrange
+            var particle = new Particle(It.IsAny<IBehavior[]>());
+            var obj = new object();
+
+            //Act
+            var actual = particle.Equals(obj);
+
+            //Assert
+            Assert.False(actual);
+        }
+
+
+        [Fact]
+        public void Equals_WithNonEqualObjects_ReturnsFalse()
+        {
+            //Arrange
+            var particleA = new Particle(It.IsAny<IBehavior[]>())
+            {
+                Size = 123f
+            };
+            var particleB = new Particle(It.IsAny<IBehavior[]>());
+
+            //Act
+            var actual = particleA.Equals(particleB);
+
+            //Assert
+            Assert.False(actual);
+        }
+
+
+        [Fact]
+        public void Equals_WithEqualObjects_ReturnsTrue()
+        {
+            //Arrange
+            var particleA = new Particle(It.IsAny<IBehavior[]>());
+            var particleB = new Particle(It.IsAny<IBehavior[]>());
+
+            //Act
+            var actual = particleA.Equals(particleB);
+
+            //Assert
+            Assert.True(actual);
+        }
+
+
+        [Fact]
+        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        {
+            //Arrange
+            var behaviors = new IBehavior[]
+            {
+                new FakeBehavior(It.IsAny<BehaviorSetting>(), It.IsAny<IRandomizerService>())
+            };
+            var particleA = new Particle(behaviors);
+            var particleB = new Particle(behaviors);
+
+            //Act
+            var actual = particleA.GetHashCode() == particleB.GetHashCode();
+
+            //Assert
+            Assert.True(actual);
+        }
         #endregion
     }
 }

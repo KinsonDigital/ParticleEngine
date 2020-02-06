@@ -1,3 +1,6 @@
 [submodule "FileIO"]
 	path = FileIO
 	url = https://KinsonDigital@dev.azure.com/KinsonDigital/FileIO/_git/FileIO
+[submodule "MathExpressionEngine"]
+	path = MathExpressionEngine
+	url = https://KinsonDigital@dev.azure.com/KinsonDigital/MathExpressionEngine/_git/MathExpressionEngine
