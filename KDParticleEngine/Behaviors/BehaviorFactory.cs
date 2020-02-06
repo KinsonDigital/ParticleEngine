@@ -9,10 +9,10 @@ namespace KDParticleEngine.Behaviors
     public class BehaviorFactory : IBehaviorFactory
     {
         /// <summary>
-        /// Creates all of the behaviors using the given <paramref name="randomService"/>.
+        /// Creates all of the behaviors using the given <paramref name="randomizerService"/>.
         /// </summary>
-        /// <param name="randomService">The random used to randomly generate values.</param>
-        public IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomService)
+        /// <param name="randomizerService">The random used to randomly generate values.</param>
+        public IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomizerService)
         {
             var behaviors = new List<IBehavior>();
 
@@ -23,12 +23,10 @@ namespace KDParticleEngine.Behaviors
                 switch (setting.TypeOfBehavior)
                 {
                     case BehaviorType.EaseOutBounce:
-                        behaviors.Add(new EaseOutBounceBehavior(setting, randomService));
+                        behaviors.Add(new EaseOutBounceBehavior(setting, randomizerService));
                         break;
                     case BehaviorType.EaseIn:
-                        behaviors.Add(new EaseInBehavior(setting, randomService));
-                        break;
-                    default:
+                        behaviors.Add(new EaseInBehavior(setting, randomizerService));
                         break;
                 }
             }

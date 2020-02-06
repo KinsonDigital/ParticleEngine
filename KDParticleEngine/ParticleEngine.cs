@@ -2,7 +2,6 @@
 using KDParticleEngine.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace KDParticleEngine
 {

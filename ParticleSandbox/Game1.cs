@@ -161,9 +161,9 @@ namespace ParticleSandbox
             var effectA = new ParticleEffect("Shape-A", settings)
             {
                 SpawnLocation = spawnLocation,
-                SpawnRateMin = 125,
-                SpawnRateMax = 500,
-                TotalParticlesAliveAtOnce = 100,
+                SpawnRateMin = 10,
+                SpawnRateMax = 10,
+                TotalParticlesAliveAtOnce = 2000,
                 TypeOfBehavior = BehaviorType.EaseOutBounce,
                 ApplyBehaviorTo = ParticleAttribute.Y
             };
