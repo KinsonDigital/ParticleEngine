@@ -130,6 +130,14 @@ namespace KDParticleEngine
                 _particles.Count == pool.Particles.Length &&
                 Effect == pool.Effect;
         }
+
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() =>
+            HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
         #endregion
 
 

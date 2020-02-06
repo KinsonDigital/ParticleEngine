@@ -329,6 +329,45 @@ namespace KDParticleEngineTests
             //Assert
             Assert.False(actual);
         }
+
+
+        [Fact]
+        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        {
+            //Arrange
+            var settings = new BehaviorSetting[]
+            {
+                new BehaviorSetting()
+            };
+            var effect = new ParticleEffect("texture-name", settings)
+            {
+                ApplyBehaviorTo = ParticleAttribute.Angle,
+                TypeOfBehavior = BehaviorType.EaseIn,
+                SpawnLocation = new PointF(11, 22),
+                SpawnRateMin = 33,
+                SpawnRateMax = 44,
+                TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) },
+                TotalParticlesAliveAtOnce = 99,
+                UseColorsFromList = true
+            };
+
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(new object());
+            var poolA = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolB = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            
+            poolA.LoadTexture();
+            poolB.LoadTexture();
+
+            //Act
+
+            var hashA = poolA.GetHashCode();
+            var hashB = poolB.GetHashCode();
+
+            var actual = poolA.GetHashCode() == poolB.GetHashCode();
+
+            //Assert
+            Assert.True(actual);
+        }
         #endregion
     }
 }

@@ -27,7 +27,6 @@ namespace ParticleSandbox
         private readonly TrueRandomizerService _randomService;
         private readonly ParticleEngine<Texture2D> _engine;
         private readonly ITextureLoader<Texture2D> _textureLoader;
-        private Texture2D _easeTexture;
         private readonly FrameCounter _frameCounter = new FrameCounter();
 
 
@@ -61,7 +60,6 @@ namespace ParticleSandbox
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _easeTexture = Content.Load<Texture2D>("Shape-A");
             _gameFont = Content.Load<SpriteFont>("GameFont");
 
             var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, 50);
@@ -186,10 +184,6 @@ namespace ParticleSandbox
 
         protected override void Draw(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.TotalSeconds >= 50)
-            {
-            }
-
             _frameCounter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             GraphicsDevice.Clear(XNAColor.CornflowerBlue);

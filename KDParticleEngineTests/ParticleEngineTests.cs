@@ -94,31 +94,6 @@ namespace KDParticleEngineTests
 
         #region Method Tests
         [Fact]
-        public void CreatePool_WhenInvoked_CreatesParticlePool()
-        {
-            ////Arrange
-            //var settings = new BehaviorSetting[]
-            //{
-            //    new BehaviorSetting()
-            //};
-            //var effect = new ParticleEffect(It.IsAny<string>(), settings);
-            //var expected = new ParticlePool[]
-            //{
-            //    new ParticlePool<object>(effect, _mockRandomizerService.Object)
-            //};
-
-            ////Act
-            //_engine.CreatePool(effect);
-            //var actual = _engine.ParticlePools;
-
-            ////Assert
-            //Assert.Single(actual);
-            ////TODO: Setup equals comparison for ParticlePool
-            //Assert.Equal(expected, actual);
-        }
-
-
-        [Fact]
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
             //Arrange
@@ -136,18 +111,6 @@ namespace KDParticleEngineTests
 
             //Assert
             _mockTextureLoader.Verify(m => m.LoadTexture("texture-name"), Times.Once());
-        }
-
-
-        [Fact]
-        public void Equals_WhenBothEqual_ReturnsTrue()
-        {
-            //Arrange
-            //var poolA = new ParticlePool()
-
-            //Act
-
-            //Assert
         }
 
 
