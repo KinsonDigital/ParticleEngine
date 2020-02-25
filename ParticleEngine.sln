@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		azure.pipelines.develop.yml = azure.pipelines.develop.yml
 		LICENSE.md = LICENSE.md
 		ParticleEngine.runsettings = ParticleEngine.runsettings
+		README.md = README.md
 		RELEASENOTES.md = RELEASENOTES.md
 	EndProjectSection
 EndProject
