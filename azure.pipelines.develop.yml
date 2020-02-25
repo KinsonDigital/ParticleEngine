@@ -1,0 +1,18 @@
+trigger:
+- develop
+
+
+pool:
+  name: 'KinsonDigital'
+
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x64'
+  buildConfiguration: 'Debug'
+  coverageReportDirName: 'CoverageReport'
+  appName: 'ParticleEngine'
+
+
+steps:
+- task: NuGetToolInstaller@1
