@@ -162,7 +162,6 @@ namespace ParticleSandbox
                 SpawnRateMin = 10,
                 SpawnRateMax = 10,
                 TotalParticlesAliveAtOnce = 2000,
-                TypeOfBehavior = BehaviorType.EaseOutBounce,
                 ApplyBehaviorTo = ParticleAttribute.Y
             };
 

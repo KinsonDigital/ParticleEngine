@@ -237,7 +237,6 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect("texture-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -268,7 +267,6 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect("texture-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -299,7 +297,6 @@ namespace KDParticleEngineTests
             var effectA = new ParticleEffect("texture-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -311,7 +308,6 @@ namespace KDParticleEngineTests
             var effectB = new ParticleEffect("texture-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -342,7 +338,6 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect("texture-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,

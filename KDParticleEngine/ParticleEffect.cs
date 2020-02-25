@@ -30,11 +30,6 @@ namespace KDParticleEngine
         public string ParticleTextureName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of behavior that this particle effect will have.
-        /// </summary>
-        public BehaviorType TypeOfBehavior { get; set; }
-
-        /// <summary>
         /// Gets or sets the particle attribute to apply the behavior to.
         /// </summary>
         public ParticleAttribute ApplyBehaviorTo { get; set; }
@@ -109,7 +104,6 @@ namespace KDParticleEngine
 
 
             return ParticleTextureName == effect.ParticleTextureName &&
-                TypeOfBehavior == effect.TypeOfBehavior &&
                 ApplyBehaviorTo == effect.ApplyBehaviorTo &&
                 SpawnLocation == effect.SpawnLocation &&
                 colorsAreSame &&
@@ -130,7 +124,6 @@ namespace KDParticleEngine
             var hash = new HashCode();
 
             hash.Add(ParticleTextureName);
-            hash.Add(TypeOfBehavior);
             hash.Add(ApplyBehaviorTo);
             hash.Add(SpawnLocation);
 
