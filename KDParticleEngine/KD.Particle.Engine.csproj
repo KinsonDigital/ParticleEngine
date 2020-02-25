@@ -34,9 +34,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MathExpressionEngine\MathExpressionEngine\MathExpressionEngine.csproj" />
-  </ItemGroup>
-
 </Project>
