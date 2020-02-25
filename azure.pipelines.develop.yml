@@ -1,0 +1,50 @@
+trigger:
+- develop
+
+
+pool:
+  name: 'KinsonDigital'
+
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x64'
+  buildConfiguration: 'Debug'
+  coverageReportDirName: 'CoverageReport'
+  appName: 'KDParticleEngine'
+
+
+steps:
+- task: NuGetToolInstaller@1
+
+
+- task: NuGetCommand@2
+  displayName: Restore Packages
+  inputs:
+    restoreSolution: '$(solution)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: "Run Tests & Collect Code Coverage"
+  inputs:
+    command: 'test'
+    projects: '**\*[Tt]ests\*.csproj'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+    publishTestResults: true
+    testRunTitle: 'Project Unit Test Results'
+
+
+- task: reportgenerator@4
+  displayName: "Generate Code Coverage Reports"
+  inputs:
+    reports: '**\*.cobertura.xml'
+    targetdir: 'CoverageReport'
+    sourcedirs: '$(System.DefaultWorkingDirectory)\$(appName)'
+
+
+- task: PublishCodeCoverageResults@1
+  displayName: "Publish Code Coverage Results"
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)\Cobertura.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)'
