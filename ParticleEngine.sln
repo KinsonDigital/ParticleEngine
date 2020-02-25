@@ -7,7 +7,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine", "KDPar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49C662-51F3-4D0F-892A-60079135A5DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine.Tests", "KDParticleEngineTests\KD.Particle.Engine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KDParticleEngine.Tests", "KDParticleEngineTests\KDParticleEngine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSandbox", "ParticleSandbox\ParticleSandbox.csproj", "{2FB03CD2-D6C7-46A5-BC93-85D10168B753}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{50929C0D-9986-4846-97CC-5038F3F51D91}"
+	ProjectSection(SolutionItems) = preProject
+		azure.pipelines.develop.yml = azure.pipelines.develop.yml
+		LICENSE.md = LICENSE.md
+		ParticleEngine.runsettings = ParticleEngine.runsettings
+		README.md = README.md
+		RELEASENOTES.md = RELEASENOTES.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +44,14 @@ Global
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x64.Build.0 = Release|x64
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x86.ActiveCfg = Release|x86
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}.Release|x86.Build.0 = Release|x86
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Debug|x64.ActiveCfg = Debug|x64
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Debug|x64.Build.0 = Debug|x64
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Debug|x86.ActiveCfg = Debug|x86
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Debug|x86.Build.0 = Debug|x86
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Release|x64.ActiveCfg = Release|x64
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Release|x64.Build.0 = Release|x64
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Release|x86.ActiveCfg = Release|x86
+		{2FB03CD2-D6C7-46A5-BC93-85D10168B753}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
