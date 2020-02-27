@@ -51,21 +51,6 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void TypoeOfBehavior_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<BehaviorSetting[]>());
-
-            //Act
-            effect.TypeOfBehavior = BehaviorType.EaseIn;
-            var actual = effect.TypeOfBehavior;
-
-            //Assert
-            Assert.Equal(BehaviorType.EaseIn, actual);
-        }
-
-
-        [Fact]
         public void ApplyBehaviorTo_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
@@ -194,7 +179,6 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -234,7 +218,6 @@ namespace KDParticleEngineTests
             var effectA = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -246,7 +229,6 @@ namespace KDParticleEngineTests
             var effectB = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -285,7 +267,6 @@ namespace KDParticleEngineTests
             var effectA = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -297,7 +278,6 @@ namespace KDParticleEngineTests
             var effectB = new ParticleEffect("effect-bee", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.GreenColorComponent,
-                TypeOfBehavior = BehaviorType.EaseOutBounce,
                 SpawnLocation = new PointF(99, 88),
                 SpawnRateMin = 77,
                 SpawnRateMax = 66,
@@ -336,7 +316,6 @@ namespace KDParticleEngineTests
             var effectA = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -348,7 +327,6 @@ namespace KDParticleEngineTests
             var effectB = new ParticleEffect("effect-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -387,7 +365,6 @@ namespace KDParticleEngineTests
             var effectA = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -399,7 +376,6 @@ namespace KDParticleEngineTests
             var effectB = new ParticleEffect("test-name", settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
-                TypeOfBehavior = BehaviorType.EaseIn,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
