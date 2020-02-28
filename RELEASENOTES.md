@@ -33,3 +33,10 @@
 ## **Developer Related Items**
 
 1. Simple cleanup
+
+
+# **Version 0.9.3**
+
+## **Developer Related Items**
+
+1. Update nuget package information

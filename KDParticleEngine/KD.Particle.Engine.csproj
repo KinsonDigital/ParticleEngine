@@ -4,15 +4,19 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>x86;x64</Platforms>
     <AssemblyTitle>ParticleEngine</AssemblyTitle>
-    <Product>Kinson Digital - Particle Engine</Product>
-    <Copyright>Copyright © 2018</Copyright>
     <Company>Kinson Digital</Company>
     <RootNamespace>KDParticleEngine</RootNamespace>
     <AssemblyName>ParticleEngine</AssemblyName>
     <Nullable>enable</Nullable>
-    <Version>0.9.2</Version>
-    <FileVersion>0.9.2</FileVersion>
-    <AssemblyVersion>0.9.2</AssemblyVersion>
+    <Product>Particle Engine</Product>
+    <Copyright>Copyright © 2020 - Calvin Wilkinson</Copyright>
+    <PackageId>KinsonDigital.ParticleEngine</PackageId>
+    <Description>A particle engine used for creating 2D particles for 2D games.</Description>
+    <PackageTags>particle, engine, 2D</PackageTags>
+    <Authors>Calvin Wilkinson</Authors>
+    <Version>0.9.3</Version>
+    <FileVersion>0.9.3</FileVersion>
+    <AssemblyVersion>0.9.3</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
