@@ -13,11 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSandbox", "Particle
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{50929C0D-9986-4846-97CC-5038F3F51D91}"
 	ProjectSection(SolutionItems) = preProject
-		azure.pipelines.develop.yml = azure.pipelines.develop.yml
 		LICENSE.md = LICENSE.md
 		ParticleEngine.runsettings = ParticleEngine.runsettings
 		README.md = README.md
 		RELEASENOTES.md = RELEASENOTES.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDevOps", "AzureDevOps", "{43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-develop.yml = azure-pipelines-develop.yml
+		azure-pipelines-master.yml = azure-pipelines-master.yml
 	EndProjectSection
 EndProject
 Global
