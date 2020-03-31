@@ -1,6 +1,24 @@
 # **Particle Engine Release Notes**
 
 
+# **Version 0.9.3**
+
+## **Developer Related Items**
+
+1. Update nuget package information
+
+
+# **Version 0.9.2**
+
+## **What's New**
+1. N/A
+
+
+## **Developer Related Items**
+
+1. Simple cleanup
+
+
 # **Version 0.9.0**
 
 ## **What's New**
@@ -22,21 +40,3 @@
    * Refer to this very file that you are currently reading!!
 6. Added a readme file to the solution/project.
    * Refer to the **README.md** file for info
-
-
-# **Version 0.9.2**
-
-## **What's New**
-1. N/A
-
-
-## **Developer Related Items**
-
-1. Simple cleanup
-
-
-# **Version 0.9.3**
-
-## **Developer Related Items**
-
-1. Update nuget package information
