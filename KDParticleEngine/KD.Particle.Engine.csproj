@@ -8,6 +8,7 @@
     <RootNamespace>KDParticleEngine</RootNamespace>
     <AssemblyName>ParticleEngine</AssemblyName>
     <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
     <Product>Particle Engine</Product>
     <Copyright>Copyright © 2020 - Calvin Wilkinson</Copyright>
     <PackageId>KinsonDigital.ParticleEngine</PackageId>
