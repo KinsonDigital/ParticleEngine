@@ -3,21 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KD.Particle.Engine", "KDParticleEngine\KD.Particle.Engine.csproj", "{501B6CD1-1CB1-4993-8CA2-88E4DCBC66DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KDParticleEngine", "KDParticleEngine\KDParticleEngine.csproj", "{501B6CD1-1CB1-4993-8CA2-88E4DCBC66DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49C662-51F3-4D0F-892A-60079135A5DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KDParticleEngine.Tests", "KDParticleEngineTests\KDParticleEngine.Tests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KDParticleEngineTests", "KDParticleEngineTests\KDParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSandbox", "ParticleSandbox\ParticleSandbox.csproj", "{2FB03CD2-D6C7-46A5-BC93-85D10168B753}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{50929C0D-9986-4846-97CC-5038F3F51D91}"
 	ProjectSection(SolutionItems) = preProject
-		azure.pipelines.develop.yml = azure.pipelines.develop.yml
 		LICENSE.md = LICENSE.md
 		ParticleEngine.runsettings = ParticleEngine.runsettings
 		README.md = README.md
 		RELEASENOTES.md = RELEASENOTES.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDevOps", "AzureDevOps", "{43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-develop.yml = azure-pipelines-develop.yml
+		azure-pipelines-master.yml = azure-pipelines-master.yml
 	EndProjectSection
 EndProject
 Global

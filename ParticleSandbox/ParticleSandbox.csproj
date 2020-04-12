@@ -17,11 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KDParticleEngine\KD.Particle.Engine.csproj" />
+    <Folder Include="Content\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\" />
+    <ProjectReference Include="..\KDParticleEngine\KDParticleEngine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
