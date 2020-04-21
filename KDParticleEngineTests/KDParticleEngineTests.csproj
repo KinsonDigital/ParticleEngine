@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KDParticleEngine\KD.Particle.Engine.csproj" />
+    <ProjectReference Include="..\KDParticleEngine\KDParticleEngine.csproj" />
   </ItemGroup>
 
 </Project>

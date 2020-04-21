@@ -1,5 +1,10 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
 trigger:
-- develop
+- master
 
 
 pool:
@@ -9,7 +14,7 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
-  buildConfiguration: 'Debug'
+  buildConfiguration: 'Release'
   coverageReportDirName: 'CoverageReport'
   appName: 'KDParticleEngine'
 
@@ -19,13 +24,13 @@ steps:
 
 
 - task: NuGetCommand@2
-  displayName: Restore Packages
+  displayName: Restore $(appName) Packages
   inputs:
     restoreSolution: '$(solution)'
 
 
 - task: DotNetCoreCLI@2
-  displayName: "Run Tests & Collect Code Coverage"
+  displayName: "Run $(appName) Tests & Collect Code Coverage"
   inputs:
     command: 'test'
     projects: '**\*[Tt]ests\*.csproj'
@@ -35,7 +40,7 @@ steps:
 
 
 - task: reportgenerator@4
-  displayName: "Generate Code Coverage Reports"
+  displayName: "Generate $(appName) Code Coverage Reports"
   inputs:
     reports: '**\*.cobertura.xml'
     targetdir: 'CoverageReport'
@@ -43,8 +48,25 @@ steps:
 
 
 - task: PublishCodeCoverageResults@1
-  displayName: "Publish Code Coverage Results"
+  displayName: "Publish $(appName) Code Coverage Results"
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)\Cobertura.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: 'Create $(appName) Nuget Package Artifact'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(System.DefaultWorkingDirectory)\$(appName)\$(appName).csproj'
+    configuration: '$(buildConfiguration)'
+    versioningScheme: 'off'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish $(appName) Build Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

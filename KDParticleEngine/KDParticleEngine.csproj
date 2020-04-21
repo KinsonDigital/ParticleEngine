@@ -8,15 +8,16 @@
     <RootNamespace>KDParticleEngine</RootNamespace>
     <AssemblyName>ParticleEngine</AssemblyName>
     <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
     <Product>Particle Engine</Product>
     <Copyright>Copyright © 2020 - Calvin Wilkinson</Copyright>
     <PackageId>KinsonDigital.ParticleEngine</PackageId>
     <Description>A particle engine used for creating 2D particles for 2D games.</Description>
     <PackageTags>particle, engine, 2D</PackageTags>
     <Authors>Calvin Wilkinson</Authors>
-    <Version>0.9.3</Version>
-    <FileVersion>0.9.3</FileVersion>
-    <AssemblyVersion>0.9.3</AssemblyVersion>
+    <Version>0.10.0</Version>
+    <FileVersion>0.10.0</FileVersion>
+    <AssemblyVersion>0.10.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
