@@ -1,32 +1,44 @@
 # **Particle Engine Release Notes**
 
 
-# **Version 0.9.3**
+## **Version 0.10.0**
 
-## **Developer Related Items**
+### **Developer Related Items**
+
+1. Set all solution projects to use **C# v8.0**
+2. Simple updates to build pipelines via YAML files
+3. Made layout improvements to **RELEASE NOTES** document
+
+---
+
+## **Version 0.9.3**
+
+### **Developer Related Items**
 
 1. Update nuget package information
 
+---
 
-# **Version 0.9.2**
+## **Version 0.9.2**
 
-## **What's New**
+### **What's New**
 1. N/A
 
 
-## **Developer Related Items**
+### **Developer Related Items**
 
 1. Simple cleanup
 
+---
 
-# **Version 0.9.0**
+## **Version 0.9.0**
 
-## **What's New**
+### **What's New**
 
 1. Everything is new.  This is the first initial release notes
 
 
-## **Developer Related Items**
+### **Developer Related Items**
 
 1. Added an assembly version tag to the project file.
    * This will help with versioning of the nuget package
