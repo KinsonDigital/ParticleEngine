@@ -1,5 +1,15 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.10.1**
+
+### **Developer Related Items**
+
+1. Added a **CONTRIBUTING.md** file to the project.
+   * This will enable developers to be able to know how to contribute to the project.
+2. Improved **develop** and **master** build pipelines
+   * This involved changing the **YAML** files to split various parts of the build process into stages and jobs.
+
+---
 
 ## **Version 0.10.0**
 
