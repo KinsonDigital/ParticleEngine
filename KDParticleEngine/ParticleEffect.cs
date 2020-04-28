@@ -13,6 +13,12 @@ namespace KDParticleEngine
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEffect"/>.
         /// </summary>
+        public ParticleEffect() { }
+
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ParticleEffect"/>.
+        /// </summary>
         /// <param name="particleTextureName">The name of the texture used in the particle effect.</param>
         /// <param name="settings">The settings used to setup the particle effect.</param>
         public ParticleEffect(string particleTextureName, BehaviorSetting[] settings)
@@ -27,7 +33,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the name of the particle texture used in the particle effect.
         /// </summary>
-        public string ParticleTextureName { get; private set; }
+        public string ParticleTextureName { get; private set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the particle attribute to apply the behavior to.
@@ -69,7 +75,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
-        public BehaviorSetting[] BehaviorSettings { get; }
+        public BehaviorSetting[] BehaviorSettings { get; } = new BehaviorSetting[0];
         #endregion
 
 
