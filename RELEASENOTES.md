@@ -1,5 +1,12 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.10.2**
+
+1. Add a parameter-less constructor to the **ParticleEffect** class.
+   * This was required to allow JSON serialization and deserialization for further development of the **Particle Maker** application
+
+---
+
 ## **Version 0.10.1**
 
 ### **Developer Related Items**
