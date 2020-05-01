@@ -9,7 +9,7 @@ namespace KDParticleEngine
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
     /// how all of the <see cref="Particle"/>s behave and look on the screen.
     /// </summary>
-    public class ParticleEngine
+    public class ParticleEngine : IDisposable
     {
         #region Private Fields
         private readonly List<ParticlePool<IParticleTexture>> _particlePools = new List<ParticlePool<IParticleTexture>>();
@@ -17,6 +17,7 @@ namespace KDParticleEngine
         private readonly IRandomizerService _randomizer;
         private bool _enabled = true;
         private bool _texturesLoaded;
+        private bool _disposedValue = false;
         #endregion
 
 
@@ -99,6 +100,35 @@ namespace KDParticleEngine
                 return;
 
             _particlePools.ForEach(p => p.Update(timeElapsed));
+        }
+
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
+        /// </summary>
+        public void Dispose() => Dispose(true);
+        #endregion
+
+
+        #region Protected Methods
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
+        /// <paramref name="disposing">If true, will dispose of managed resources.</paramref>
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    foreach (var pool in ParticlePools)
+                        pool.Dispose();
+                }
+
+                _disposedValue = true;
+            }
         }
         #endregion
     }
