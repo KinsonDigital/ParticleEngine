@@ -152,9 +152,6 @@ namespace KDParticleEngine
 
 
         #region Protected Methods
-        //TODO: See if you can unit test this?  The idea is that we will Mock a ParticlePool instance and the only
-        //thing that will be mockable is the interface implementations that this class inherits..allowing us to check
-        //for things
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
