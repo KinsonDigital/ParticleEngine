@@ -13,7 +13,7 @@ namespace KDParticleEngineTests
     {
         #region Private Fields
         private readonly Mock<IRandomizerService> _mockRandomizerService;
-        private readonly Mock<ITextureLoader<object>> _mockTextureLoader;
+        private readonly Mock<ITextureLoader<IParticleTexture>> _mockTextureLoader;
         private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
         #endregion
 
@@ -22,7 +22,7 @@ namespace KDParticleEngineTests
         public ParticlePoolTests()
         {
             _mockRandomizerService = new Mock<IRandomizerService>();
-            _mockTextureLoader = new Mock<ITextureLoader<object>>();
+            _mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
             _mockBehaviorFactory = new Mock<IBehaviorFactory>();
         }
         #endregion
@@ -40,7 +40,7 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
 
             //Act
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Assert
             Assert.Equal(effect, pool.Effect);
@@ -61,7 +61,7 @@ namespace KDParticleEngineTests
             };
 
             //Act
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Assert
             Assert.Equal(10, pool.Particles.Length);
@@ -88,7 +88,7 @@ namespace KDParticleEngineTests
                 {
                     return new IBehavior[] { new FakeBehavior(settings[0], _mockRandomizerService.Object) };
                 });
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -117,7 +117,7 @@ namespace KDParticleEngineTests
                 {
                     return new IBehavior[] { new FakeBehavior(settings[0], _mockRandomizerService.Object) };
                 });
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -142,7 +142,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = rateMax
             };
 
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<object>>(), effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), effect, _mockRandomizerService.Object);
 
             //Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -171,7 +171,7 @@ namespace KDParticleEngineTests
                 {
                     return new IBehavior[] { new FakeBehavior(settings[0], _mockRandomizerService.Object) };
                 });
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<object>>(), effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), effect, _mockRandomizerService.Object);
 
             //Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -200,7 +200,7 @@ namespace KDParticleEngineTests
                 {
                     return new IBehavior[] { new FakeBehavior(settings[0], _mockRandomizerService.Object) };
                 });
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<object>>(), effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), effect, _mockRandomizerService.Object);
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             //Act
@@ -216,7 +216,7 @@ namespace KDParticleEngineTests
         {
             //Arrange
             var effect = new ParticleEffect("texture-name", It.IsAny<BehaviorSetting[]>());
-            var pool = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Act
             pool.LoadTexture();
@@ -245,7 +245,7 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            var poolA = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
             var otherObj = new object();
 
             //Act
@@ -275,8 +275,8 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            var poolA = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
 
             //Act
             var actual = poolA.Equals(poolB);
@@ -316,8 +316,8 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            var poolA = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectA, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectB, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectA, _mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectB, _mockRandomizerService.Object);
 
             //Act
             var actual = poolA.Equals(poolB);
@@ -346,22 +346,47 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(new object());
-            var poolA = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<object>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effect, _mockRandomizerService.Object);
             
             poolA.LoadTexture();
             poolB.LoadTexture();
 
             //Act
-
-            var hashA = poolA.GetHashCode();
-            var hashB = poolB.GetHashCode();
-
             var actual = poolA.GetHashCode() == poolB.GetHashCode();
 
             //Assert
             Assert.True(actual);
+        }
+
+
+        [Fact]
+        public void Dispose_WhenInvoked_ProperlyFreesManagedResources()
+        {
+            //Arrange
+            var effect = new ParticleEffect();
+            var mockTexture = new Mock<IParticleTexture>();
+            
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) => 
+            {
+                return mockTexture.Object;
+            });
+
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object,
+                _mockTextureLoader.Object,
+                effect,
+                _mockRandomizerService.Object);
+
+            pool.LoadTexture();
+
+            //Call this twice to verify that the disposable pattern is implemented correctly.
+            //You should be able to call this method twice and not throw an exception
+            //Act
+            pool.Dispose();
+            pool.Dispose();
+
+            //Assert
+            mockTexture.Verify(m => m.Dispose(), Times.Once());
         }
         #endregion
     }

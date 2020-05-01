@@ -8,7 +8,7 @@ namespace KDParticleEngine
     /// <summary>
     /// Contains a number of resusable particles with a given particle effect applied to them.
     /// </summary>
-    public class ParticlePool<Texture> where Texture : class
+    public class ParticlePool<Texture> : IDisposable where Texture : class, IParticleTexture
     {
         #region Public Events
         /// <summary>
@@ -20,9 +20,10 @@ namespace KDParticleEngine
 
 
         #region Private Fields
-        private readonly List<Particle> _particles = new List<Particle>();
+        private List<Particle> _particles = new List<Particle>();
         private readonly IRandomizerService _randomService;
         private readonly ITextureLoader<Texture> _textureLoader;
+        private bool _disposedValue = false;
         private int _spawnRate;
         private int _spawnRateElapsed = 0;
         #endregion
@@ -140,6 +141,41 @@ namespace KDParticleEngine
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
             HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
+
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
+        /// </summary>
+        public void Dispose() => Dispose(true);
+        #endregion
+
+
+        #region Protected Methods
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
+        /// <paramref name="disposing">If true, will dispose of managed resources.</paramref>
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposedValue)
+                return;
+
+            //Dispose of managed resources
+            if (disposing)
+            {
+                if (!(PoolTexture is null))
+                    PoolTexture.Dispose();
+
+                _disposedValue = false;
+                _spawnRate = 0;
+                _spawnRateElapsed = 0;
+                _particles = new List<Particle>();
+            }
+
+            _disposedValue = true;
+        }
         #endregion
 
 

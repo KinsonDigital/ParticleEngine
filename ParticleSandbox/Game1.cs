@@ -25,8 +25,8 @@ namespace ParticleSandbox
         private SpriteBatch _spriteBatch;
         private SpriteFont _gameFont;
         private readonly TrueRandomizerService _randomService;
-        private readonly ParticleEngine<Texture2D> _engine;
-        private readonly ITextureLoader<Texture2D> _textureLoader;
+        private readonly ParticleEngine _engine;
+        private readonly ITextureLoader<IParticleTexture> _textureLoader;
         private readonly FrameCounter _frameCounter = new FrameCounter();
 
 
@@ -38,8 +38,8 @@ namespace ParticleSandbox
             IsFixedTimeStep = true;
 
             _randomService = new TrueRandomizerService();
-            _textureLoader = new Texture2DLoader(Content);
-            _engine = new ParticleEngine<Texture2D>(_textureLoader, _randomService);
+            _textureLoader = new TextureLoader(Content);
+            _engine = new ParticleEngine(_textureLoader, _randomService);
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 
@@ -200,7 +200,9 @@ namespace ParticleSandbox
                     {
                         var destRect = new Rectangle((int)particle.Position.X, (int)particle.Position.Y, (int)(pool.PoolTexture.Width * particle.Size), (int)(pool.PoolTexture.Height * particle.Size));
 
-                        _spriteBatch.Draw(pool.PoolTexture, destRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
+                        var monoTexture = (pool.PoolTexture as Texture).MonoTexture;
+
+                        _spriteBatch.Draw(monoTexture, destRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
                     }
                 }
             }
