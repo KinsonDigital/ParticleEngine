@@ -358,6 +358,36 @@ namespace KDParticleEngineTests
             //Assert
             Assert.True(actual);
         }
+
+
+        [Fact]
+        public void Dispose_WhenInvoked_ProperlyFreesManagedResources()
+        {
+            //Arrange
+            var effect = new ParticleEffect();
+            var mockTexture = new Mock<IParticleTexture>();
+            
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) => 
+            {
+                return mockTexture.Object;
+            });
+
+            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object,
+                _mockTextureLoader.Object,
+                effect,
+                _mockRandomizerService.Object);
+
+            pool.LoadTexture();
+
+            //Call this twice to verify that the disposable pattern is implemented correctly.
+            //You should be able to call this method twice and not throw an exception
+            //Act
+            pool.Dispose();
+            pool.Dispose();
+
+            //Assert
+            mockTexture.Verify(m => m.Dispose(), Times.Once());
+        }
         #endregion
     }
 }
