@@ -1,5 +1,12 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.11.0 (HotFix)**
+
+1. Added ability to use an **IParticleTexture** to help introduce the ability to be able to implement proper disposal of managed and unmanaged resources
+2. Added proper disposal pattern across code base
+
+---
+
 ## **Version 0.10.2**
 
 1. Add a parameter-less constructor to the **ParticleEffect** class.

@@ -15,8 +15,8 @@ namespace KDParticleEngineTests
     {
         #region Private Fields
         private Mock<IRandomizerService> _mockRandomizerService;
-        private ParticleEngine<IFakeTexture> _engine;
-        private readonly Mock<ITextureLoader<IFakeTexture>> _mockTextureLoader;
+        private ParticleEngine _engine;
+        private readonly Mock<ITextureLoader<IParticleTexture>> _mockTextureLoader;
         private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
         #endregion
 
@@ -25,10 +25,10 @@ namespace KDParticleEngineTests
         public ParticleEngineTests()
         {
             _mockRandomizerService = new Mock<IRandomizerService>();
-            _mockTextureLoader = new Mock<ITextureLoader<IFakeTexture>>();
+            _mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
             _mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
-            _engine = new ParticleEngine<IFakeTexture>(_mockTextureLoader.Object, _mockRandomizerService.Object);
+            _engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
         }
         #endregion
 
@@ -69,6 +69,49 @@ namespace KDParticleEngineTests
 
 
         #region Method Tests
+        [Fact]
+        public void ClearPools_WhenInvoked_DisposesOfManagedResources()
+        {
+            //Arrange
+            var mockPool1Texture = new Mock<IParticleTexture>();
+            var mockPool2Texture = new Mock<IParticleTexture>();
+            var textureALoaded = false;
+
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
+            {
+                //Load the correct texture depending on the pool.
+                //All pools use the same istance of texture loader so we have
+                //to mock out the correct texture to go with the correct pool,
+                //so we can verify that each pool is disposing of there textures
+                if (textureALoaded)
+                {
+                    return mockPool2Texture.Object;
+                }
+                else
+                {
+                    textureALoaded = true;
+                    return mockPool1Texture.Object;
+                }
+            });
+
+            var effect = new ParticleEffect();
+            var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+
+            //Create 2 pools
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.LoadTextures();
+
+            //Act
+            engine.ClearPools();
+
+            //Assert
+            mockPool1Texture.Verify(m => m.Dispose(), Times.Once());
+            mockPool2Texture.Verify(m => m.Dispose(), Times.Once());
+            Assert.Empty(engine.ParticlePools);
+        }
+
+
         [Fact]
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
@@ -154,6 +197,49 @@ namespace KDParticleEngineTests
 
             //Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Exactly(3));
+        }
+
+
+        [Fact]
+        public void Dispose_WhenInvoked_DisposesOfManagedResources()
+        {
+            //Arrange
+            var mockPool1Texture = new Mock<IParticleTexture>();
+            var mockPool2Texture = new Mock<IParticleTexture>();
+            var textureALoaded = false;
+
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
+            {
+                //Load the correct texture depending on the pool.
+                //All pools use the same istance of texture loader so we have
+                //to mock out the correct texture to go with the correct pool,
+                //so we can verify that each pool is disposing of there textures
+                if (textureALoaded)
+                {
+                    return mockPool2Texture.Object;
+                }
+                else
+                {
+                    textureALoaded = true;
+                    return mockPool1Texture.Object;
+                }
+            });
+
+            var effect = new ParticleEffect();
+            var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+
+            //Create 2 pools
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.LoadTextures();
+
+            //Act
+            engine.Dispose();
+            engine.Dispose();
+
+            //Assert
+            mockPool1Texture.Verify(m => m.Dispose(), Times.Once());
+            mockPool2Texture.Verify(m => m.Dispose(), Times.Once());
         }
         #endregion
 
