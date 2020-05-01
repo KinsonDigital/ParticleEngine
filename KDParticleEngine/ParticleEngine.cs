@@ -9,11 +9,11 @@ namespace KDParticleEngine
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
     /// how all of the <see cref="Particle"/>s behave and look on the screen.
     /// </summary>
-    public class ParticleEngine<Texture> where Texture : class
+    public class ParticleEngine
     {
         #region Private Fields
-        private readonly List<ParticlePool<Texture>> _particlePools = new List<ParticlePool<Texture>>();
-        private readonly ITextureLoader<Texture> _textureLoader;
+        private readonly List<ParticlePool<IParticleTexture>> _particlePools = new List<ParticlePool<IParticleTexture>>();
+        private readonly ITextureLoader<IParticleTexture> _textureLoader;
         private readonly IRandomizerService _randomizer;
         private bool _enabled = true;
         private bool _texturesLoaded;
@@ -24,7 +24,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngine"/>.
         /// </summary>
-        public ParticleEngine(ITextureLoader<Texture> textureLoader, IRandomizerService randomizer)
+        public ParticleEngine(ITextureLoader<IParticleTexture> textureLoader, IRandomizerService randomizer)
         {
             _textureLoader = textureLoader;
             _randomizer = randomizer;
@@ -36,7 +36,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ParticlePool<Texture>[] ParticlePools => _particlePools.ToArray();
+        public ParticlePool<IParticleTexture>[] ParticlePools => _particlePools.ToArray();
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
@@ -62,7 +62,7 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
         /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
-        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<Texture>(behaviorFactory, _textureLoader, effect, _randomizer));
+        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, _textureLoader, effect, _randomizer));
 
 
         /// <summary>

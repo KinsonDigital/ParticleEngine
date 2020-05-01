@@ -15,8 +15,8 @@ namespace KDParticleEngineTests
     {
         #region Private Fields
         private Mock<IRandomizerService> _mockRandomizerService;
-        private ParticleEngine<IFakeTexture> _engine;
-        private readonly Mock<ITextureLoader<IFakeTexture>> _mockTextureLoader;
+        private ParticleEngine _engine;
+        private readonly Mock<ITextureLoader<IParticleTexture>> _mockTextureLoader;
         private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
         #endregion
 
@@ -25,10 +25,10 @@ namespace KDParticleEngineTests
         public ParticleEngineTests()
         {
             _mockRandomizerService = new Mock<IRandomizerService>();
-            _mockTextureLoader = new Mock<ITextureLoader<IFakeTexture>>();
+            _mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
             _mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
-            _engine = new ParticleEngine<IFakeTexture>(_mockTextureLoader.Object, _mockRandomizerService.Object);
+            _engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
         }
         #endregion
 

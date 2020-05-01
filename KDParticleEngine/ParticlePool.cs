@@ -8,7 +8,7 @@ namespace KDParticleEngine
     /// <summary>
     /// Contains a number of resusable particles with a given particle effect applied to them.
     /// </summary>
-    public class ParticlePool<Texture> where Texture : class
+    public class ParticlePool<Texture> where Texture : class, IParticleTexture
     {
         #region Public Events
         /// <summary>
