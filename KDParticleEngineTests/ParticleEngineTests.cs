@@ -70,6 +70,49 @@ namespace KDParticleEngineTests
 
         #region Method Tests
         [Fact]
+        public void ClearPools_WhenInvoked_DisposesOfManagedResources()
+        {
+            //Arrange
+            var mockPool1Texture = new Mock<IParticleTexture>();
+            var mockPool2Texture = new Mock<IParticleTexture>();
+            var textureALoaded = false;
+
+            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
+            {
+                //Load the correct texture depending on the pool.
+                //All pools use the same istance of texture loader so we have
+                //to mock out the correct texture to go with the correct pool,
+                //so we can verify that each pool is disposing of there textures
+                if (textureALoaded)
+                {
+                    return mockPool2Texture.Object;
+                }
+                else
+                {
+                    textureALoaded = true;
+                    return mockPool1Texture.Object;
+                }
+            });
+
+            var effect = new ParticleEffect();
+            var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+
+            //Create 2 pools
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.CreatePool(effect, _mockBehaviorFactory.Object);
+            engine.LoadTextures();
+
+            //Act
+            engine.ClearPools();
+
+            //Assert
+            mockPool1Texture.Verify(m => m.Dispose(), Times.Once());
+            mockPool2Texture.Verify(m => m.Dispose(), Times.Once());
+            Assert.Empty(engine.ParticlePools);
+        }
+
+
+        [Fact]
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
             //Arrange

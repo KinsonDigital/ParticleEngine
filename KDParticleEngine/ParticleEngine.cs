@@ -67,6 +67,19 @@ namespace KDParticleEngine
 
 
         /// <summary>
+        /// Clears all of the current existing pools.
+        /// </summary>
+        /// <remarks>This will properly dispose of the texture for each pool.</remarks>
+        public void ClearPools()
+        {
+            foreach (var pool in _particlePools)
+                pool.Dispose();
+
+            _particlePools.Clear();
+        }
+
+
+        /// <summary>
         /// Loads all of the textures for each <see cref="ParticlePool"/>
         /// in the engine.
         /// </summary>
