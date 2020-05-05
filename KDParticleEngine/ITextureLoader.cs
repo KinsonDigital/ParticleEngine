@@ -8,11 +8,11 @@
     {
         #region Methods
         /// <summary>
-        /// Loads and returns a texture with the given <paramref name="textureName"/>.
+        /// Loads and returns a texture with the given <paramref name="imageFilePath"/>.
         /// </summary>
-        /// <param name="textureName">The name of the texture to load.</param>
+        /// <param name="imageFilePath">The file path of the image to load.</param>
         /// <returns></returns>
-        T LoadTexture(string textureName);
+        T LoadTexture(string imageFilePath);
         #endregion
     }
 }
