@@ -13,7 +13,7 @@ namespace KDParticleEngine.Behaviors
         /// </summary>
         /// <param name="settings">The list of settings used to create each behavior.</param>
         /// <param name="randomizerService">The random used to randomly generate values.</param>
-        IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomService);
+        IBehavior[] CreateBehaviors(BehaviorSettings[] settings, IRandomizerService randomService);
         #endregion
     }
 }

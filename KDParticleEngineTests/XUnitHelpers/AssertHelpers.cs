@@ -1,31 +1,24 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace KDParticleEngineTests.XUnitHelpers
 {
     /// <summary>
-    /// Provides simple helpers for unit testing assertions.
+    /// Provides helper methods for the <see cref="XUnit"/>'s <see cref="Assert"/> class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class AssertHelpers
     {
         #region Public Methods
         /// <summary>
-        /// Asserts the the exception thrown in the given <paramref name="testCode"/> action
-        /// will have an exception message that matches the <paramref name="expectedMessage"/>.
+        /// Verifies that the exact exception is thrown (and not a derived exception type) and that
+        /// the exception message matches the given <paramref name="expectedMessage"/>.
         /// </summary>
-        /// <param name="testCode">The code that throws the expected exception.</param>
-        /// <param name="expectedMessage">The expected exception message.</param>
-        public static void ExceptionHasMessage(Action testCode, string expectedMessage)
-        {
-            try
-            {
-                testCode();
-            }
-            catch (Exception ex)
-            {
-                Assert.Equal(expectedMessage, ex.Message);
-            }
-        }
+        /// <typeparam name="T">The type of exception that the test is verifying.</typeparam>
+        /// <param name="testCode">The code that will be be throwing the expected exception.</param>
+        /// <param name="expectedMessage">The expected message of the exception.</param>
+        public static void ThrowsWithMessage<T>(Action testCode, string expectedMessage) where T : Exception => Assert.Equal(expectedMessage, Assert.Throws<T>(testCode).Message);
         #endregion
     }
 }

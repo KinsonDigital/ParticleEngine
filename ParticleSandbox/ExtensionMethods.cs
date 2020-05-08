@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Drawing;
 using XNARect = Microsoft.Xna.Framework.Rectangle;
 using XNAColor = Microsoft.Xna.Framework.Color;

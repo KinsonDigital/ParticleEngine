@@ -1,13 +1,18 @@
-﻿using KDParticleEngine.Services;
-using System;
+﻿using System;
+using KDParticleEngine.Services;
 
 namespace KDParticleEngine.Behaviors
 {
-    public abstract class EasingBehavior : IBehavior
+    /// <summary>
+    /// A behavior that can be applied to a particle that uses an easing function
+    /// to dictate the value of a particle attribute.
+    /// </summary>
+    public abstract class EasingBehavior : Behavior
     {
         #region Private Fields
-        private readonly BehaviorSetting _setting;
+        private readonly EasingBehaviorSettings _setting;
         private readonly IRandomizerService _randomizer;
+        private protected double _lifeTime;
         #endregion
 
 
@@ -15,11 +20,12 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehavior"/>.
         /// </summary>
-        /// <param name="randomizer"></param>
-        public EasingBehavior(BehaviorSetting setting, IRandomizerService randomizer)
+        /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
+        public EasingBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
         {
-            _setting = setting;
+            _setting = settings;
             _randomizer = randomizer;
+            ApplyRandomization();
         }
         #endregion
 
@@ -34,32 +40,6 @@ namespace KDParticleEngine.Behaviors
         /// Gets or sets the amount of change to apply to the behavior value over time.
         /// </summary>
         public double Change { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total amount of time to change the <see cref="Value"/>
-        /// dictated by the <see cref="Change"/> amount.
-        /// </summary>
-        public double TotalTime { get; set; }
-
-        /// <summary>
-        /// Gets the current value of the behavior.
-        /// </summary>
-        public double Value { get; set; }
-
-        /// <summary>
-        /// Gets the current amount of time that has elapsed for the behavior in seconds.
-        /// </summary>
-        public double ElapsedTime { get; private set; }
-
-        /// <summary>
-        /// Gets the attribute to apply the behavior value to.
-        /// </summary>
-        public ParticleAttribute ApplyToAttribute => _setting.ApplyToAttribute;
-
-        /// <summary>
-        /// Gets a value indicating if the behavior is enabled.
-        /// </summary>
-        public bool Enabled { get; private set; } = true;
         #endregion
 
 
@@ -68,25 +48,34 @@ namespace KDParticleEngine.Behaviors
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
-        public virtual void Update(TimeSpan timeElapsed)
+        public override void Update(TimeSpan timeElapsed)
         {
-            ElapsedTime += timeElapsed.TotalSeconds;
-
-            Enabled = ElapsedTime < TotalTime;
+            base.Update(timeElapsed);
+            Enabled = ElapsedTime < _lifeTime;
         }
 
 
         /// <summary>
         /// Resets the behavior.
         /// </summary>
-        public void Reset()
+        public override void Reset()
         {
-            Value = 0;
+            ApplyRandomization();
+            base.Reset();
+        }
+        #endregion
+
+
+        #region Private Methods
+        /// <summary>
+        /// Generates random values based on the <see cref="EasingBehaviorSettings"/>
+        /// and applies them.
+        /// </summary>
+        private void ApplyRandomization()
+        {
             Start = _randomizer.GetValue(_setting.StartMin, _setting.StartMax);
             Change = _randomizer.GetValue(_setting.ChangeMin, _setting.ChangeMax);
-            TotalTime = _randomizer.GetValue(_setting.TotalTimeMin, _setting.TotalTimeMax);
-            ElapsedTime = 0;
-            Enabled = true;
+            _lifeTime = _randomizer.GetValue(_setting.TotalTimeMin, _setting.TotalTimeMax);
         }
         #endregion
     }

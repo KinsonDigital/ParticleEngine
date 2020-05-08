@@ -49,9 +49,9 @@ namespace KDParticleEngineTests
         public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
         {
             //Arrange
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             _engine.CreatePool(effect, _mockBehaviorFactory.Object);
@@ -116,9 +116,9 @@ namespace KDParticleEngineTests
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
             //Arrange
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect("texture-name", settings);
             _engine.CreatePool(effect, _mockBehaviorFactory.Object);
@@ -137,7 +137,7 @@ namespace KDParticleEngineTests
         public void Update_WithTexturesNotLoaded_ThrowsException()
         {
             //Act & Assert
-            AssertHelpers.ExceptionHasMessage(() =>
+            AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
                 _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
             }, "The textures must be loaded first.");
@@ -148,9 +148,9 @@ namespace KDParticleEngineTests
         public void Update_WhenDisabled_DoesNotUpdateParticles()
         {
             //Arrange
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             var mockBehavior = new Mock<IBehavior>();
@@ -173,9 +173,9 @@ namespace KDParticleEngineTests
         public void Update_WhenEnabled_UpdatesAllParticles()
         {
             //Arrange
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings)
             {
@@ -183,6 +183,7 @@ namespace KDParticleEngineTests
             };
             var mockBehavior = new Mock<IBehavior>();
             mockBehavior.SetupGet(p => p.Enabled).Returns(true);
+            mockBehavior.SetupGet(p => p.Value).Returns("0");
 
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(16);
             _mockBehaviorFactory.Setup(m => m.CreateBehaviors(settings, _mockRandomizerService.Object))

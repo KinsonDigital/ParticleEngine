@@ -170,6 +170,20 @@ namespace KDParticleEngineTests
             //Assert
             Assert.True(actual);
         }
+
+
+        [Fact]
+        public void ToString_WhenInvoked_ReturnsCorrectValue()
+        {
+            //Arrange
+            var color = new ParticleColor(10, 20, 30, 40);
+
+            //Act
+            var actual = color.ToString();
+
+            //Assert
+            Assert.Equal("A = 10, R = 20, G = 30, B = 40", actual);
+        }
         #endregion
 
 

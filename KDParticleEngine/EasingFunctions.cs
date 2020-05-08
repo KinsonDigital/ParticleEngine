@@ -9,13 +9,16 @@
         /// <summary>
         /// Ease out bounce easing function.
         /// </summary>
-        /// <param name="t">The current time/step.</param>
+        /// <param name="t">The current time/step in milliseconds.</param>
         /// <param name="b">The starting value.</param>
         /// <param name="c">The amount of change. (end - start)</param>
-        /// <param name="d">The total amount of time/steps.</param>
+        /// <param name="d">The total amount of time(milliseconds)/steps.</param>
         /// <returns></returns>
         public static double EaseOutBounce(double t, double b, double c, double d)
         {
+            t /= 1000.0;//Convert to seconds
+            d /= 1000.0;//Convert to seconds
+
             if ((t /= d) < 0.36363636363636363636363636363636)
             {
                 return c * (7.5625 * t * t) + b;
@@ -41,10 +44,13 @@
         /// <param name="t">The current time/step.</param>
         /// <param name="b">The starting value.</param>
         /// <param name="c">The amount of change. (end - start)</param>
-        /// <param name="d">The total amount of time/steps.</param>
+        /// <param name="d">The total amount of time(milliseconds)/steps.</param>
         /// <returns></returns>
         public static double EaseInQuad(double t, double b, double c, double d)
         {
+            t /= 1000.0;//Convert to seconds
+            d /= 1000.0;//Convert to seconds
+
             t /= d;
 
             return c * t * t + b;

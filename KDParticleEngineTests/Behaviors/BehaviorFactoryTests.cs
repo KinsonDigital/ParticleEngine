@@ -16,9 +16,9 @@ namespace KDParticleEngineTests.Behaviors
         {
             //Arrange
             var mockRandomizerService = new Mock<IRandomizerService>();
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
                 {
                     TypeOfBehavior = behaviorType
                 }

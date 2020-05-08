@@ -1,5 +1,5 @@
-﻿using KDParticleEngine.Services;
-using System;
+﻿using System;
+using KDParticleEngine.Services;
 
 namespace KDParticleEngine.Behaviors
 {
@@ -12,9 +12,9 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Creates a new instance of <see cref="EaseInBehavior"/>.
         /// </summary>
-        /// <param name="setting">The behavior settings of the behavior.</param>
+        /// <param name="settings">The behavior settings of the behavior.</param>
         /// <param name="randomizer">The randomizer used for ther setting value.</param>
-        public EaseInBehavior(BehaviorSetting setting, IRandomizerService randomizer) : base(setting, randomizer) { }
+        public EaseInBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings, randomizer) { }
         #endregion
 
 
@@ -25,8 +25,7 @@ namespace KDParticleEngine.Behaviors
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public override void Update(TimeSpan timeElapsed)
         {
-            Value = EasingFunctions.EaseInQuad(ElapsedTime, Start, Change, TotalTime);
-
+            Value = EasingFunctions.EaseInQuad(ElapsedTime, Start, Change, _lifeTime).ToString();
             base.Update(timeElapsed);
         }
         #endregion

@@ -11,7 +11,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Gets the current value of the behavior.
         /// </summary>
-        double Value { get; }
+        string Value { get; }
 
         /// <summary>
         /// Gets the current amount of time that has elapsed for the behavior.

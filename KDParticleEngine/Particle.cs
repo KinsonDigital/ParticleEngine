@@ -1,6 +1,6 @@
-﻿using KDParticleEngine.Behaviors;
-using System;
+﻿using System;
 using System.Drawing;
+using KDParticleEngine.Behaviors;
 
 namespace KDParticleEngine
 {
@@ -45,12 +45,6 @@ namespace KDParticleEngine
         public float Size { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time in milliseconds that the <see cref="Particle"/> will stay alive.
-        /// </summary>
-        //TODO: Add the ability to kill off the particles with this property OR when all of the behaviors have finished.
-        public int LifeTime { get; set; }
-
-        /// <summary>
         /// Gets or sets if the <see cref="Particle"/> is alive or dead.
         /// </summary>
         public bool IsAlive { get; set; } = false;
@@ -75,6 +69,11 @@ namespace KDParticleEngine
         {
             IsDead = true;
 
+            static byte ClampClrValue(float value)
+            {
+                return (byte)(value < 0 ? 0 : value);
+            }
+
             //Apply the behavior values to the particle attributes
             for (int i = 0; i < _behaviors.Length; i++)
             {
@@ -83,36 +82,59 @@ namespace KDParticleEngine
                     _behaviors[i].Update(timeElapsed);
                     IsAlive = true;
 
-                    static byte ClampClrValue(float value)
-                    {
-                        return (byte)(value < 0 ? 0 : value);
-                    }
 
                     switch (_behaviors[i].ApplyToAttribute)
                     {
                         case ParticleAttribute.X:
-                            Position = new PointF((float)_behaviors[i].Value, Position.Y);
+                            var parsedValue = float.Parse(_behaviors[i].Value);
+
+                            Position = new PointF(float.Parse(_behaviors[i].Value), Position.Y);
                             break;
                         case ParticleAttribute.Y:
-                            Position = new PointF(Position.X, (float)_behaviors[i].Value);
+                            Position = new PointF(Position.X, float.Parse(_behaviors[i].Value));
                             break;
                         case ParticleAttribute.Angle:
-                            Angle = (float)_behaviors[i].Value;
+                            Angle = float.Parse(_behaviors[i].Value);
                             break;
                         case ParticleAttribute.Size:
-                            Size = (float)_behaviors[i].Value;
+                            Size = float.Parse(_behaviors[i].Value);
+                            break;
+                        case ParticleAttribute.Color:
+                            //Parse the string data into color components to create a color from
+
+                            //Example Data: clr:10,20,30,40
+
+                            //Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
+                            //Section 1 => clr
+                            //Section 2 => 10,20,30,40
+                            var valueSections = _behaviors[i].Value.Split(':');
+
+                            //Split the color components to separate each number
+                            //Section 1 => 10
+                            //Section 2 => 20
+                            //Section 3 => 30
+                            //Section 4 => 40
+                            var clrComponents = valueSections[1].Split(',');
+
+                            //Create the color
+                            var tintColor = new ParticleColor(byte.Parse(clrComponents[0]),
+                                                              byte.Parse(clrComponents[1]),
+                                                              byte.Parse(clrComponents[2]),
+                                                              byte.Parse(clrComponents[3]));
+
+                            TintColor = tintColor;
                             break;
                         case ParticleAttribute.RedColorComponent:
-                            TintColor.R = ClampClrValue((float)_behaviors[i].Value);
+                            TintColor.R = ClampClrValue(float.Parse(_behaviors[i].Value));
                             break;
                         case ParticleAttribute.GreenColorComponent:
-                            TintColor.G = ClampClrValue((float)_behaviors[i].Value);
+                            TintColor.G = ClampClrValue(float.Parse(_behaviors[i].Value));
                             break;
                         case ParticleAttribute.BlueColorComponent:
-                            TintColor.B = ClampClrValue((float)_behaviors[i].Value);
+                            TintColor.B = ClampClrValue(float.Parse(_behaviors[i].Value));
                             break;
                         case ParticleAttribute.AlphaColorComponent:
-                            TintColor.A = ClampClrValue((float)_behaviors[i].Value);
+                            TintColor.A = ClampClrValue(float.Parse(_behaviors[i].Value));
                             break;
                     }
                 }
@@ -133,7 +155,6 @@ namespace KDParticleEngine
 
             Angle = 0;
             TintColor = ParticleColor.White;
-            LifeTime = 0;
             IsAlive = true;
         }
 
@@ -153,7 +174,6 @@ namespace KDParticleEngine
                 Angle == particle.Angle &&
                 TintColor == particle.TintColor &&
                 Size == particle.Size &&
-                LifeTime == particle.LifeTime &&
                 IsAlive == particle.IsAlive &&
                 IsDead == particle.IsDead;
         }
@@ -164,7 +184,7 @@ namespace KDParticleEngine
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
-            HashCode.Combine(_behaviors, Position, Angle, TintColor, Size, LifeTime, IsAlive, IsDead);
+            HashCode.Combine(_behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
         #endregion
     }
 }

@@ -818,6 +818,13 @@ namespace KDParticleEngine
 
 
         /// <summary>
+        /// Returns the string representation of the <see cref="ParticleColor"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() => $"A = {A}, R = {R}, G = {G}, B = {B}";
+
+
+        /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
