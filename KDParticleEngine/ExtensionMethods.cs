@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Linq;
 
 namespace KDParticleEngine
 {
@@ -10,6 +11,11 @@ namespace KDParticleEngine
     /// </summary>
     public static class ExtensionMethods
     {
+        #region Private Fields
+        private static readonly char[] _validHexSymbols = new[] { '#', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        #endregion
+
+
         #region Public Methods
         /// <summary>
         /// Returns a random value between the given <paramref name="minValue"/> and <paramref name="maxValue"/>.
@@ -19,17 +25,17 @@ namespace KDParticleEngine
         /// <param name="maxValue">The maximum value that the result will be.</param>
         /// <returns></returns>
         public static float Next(this Random random, float minValue, float maxValue)
-        {
-            var minValueAsInt = (int)(minValue * 1000);
-            var maxValueAsInt = (int)(maxValue * 1000);
+                {
+                    var minValueAsInt = (int)(minValue * 1000);
+                    var maxValueAsInt = (int)(maxValue * 1000);
 
-            if (minValueAsInt > maxValueAsInt)
-                return maxValue;
+                    if (minValueAsInt > maxValueAsInt)
+                        return maxValue;
 
-            var randomResult = random.Next(minValueAsInt, maxValueAsInt);
+                    var randomResult = random.Next(minValueAsInt, maxValueAsInt);
 
-            return randomResult / 1000f;
-        }
+                    return randomResult / 1000f;
+                }
 
 
         /// <summary>

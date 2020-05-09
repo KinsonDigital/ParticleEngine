@@ -9,11 +9,11 @@ namespace KDParticleEngine.Behaviors
     {
         #region Methods
         /// <summary>
-        /// Creates all of the behaviors using the given <paramref name="randomizerService"/>.
+        /// Creates all of the behaviors using the given <paramref name="settings"/> and <paramref name="randomizerService"/>.
         /// </summary>
         /// <param name="settings">The list of settings used to create each behavior.</param>
-        /// <param name="randomizerService">The random used to randomly generate values.</param>
-        IBehavior[] CreateBehaviors(BehaviorSetting[] settings, IRandomizerService randomService);
+        /// <param name="randomizerService">Used to generate random values from the given <paramref name="settings"/> param.</param>
+        IBehavior[] CreateBehaviors(BehaviorSettings[] settings, IRandomizerService randomService);
         #endregion
     }
 }

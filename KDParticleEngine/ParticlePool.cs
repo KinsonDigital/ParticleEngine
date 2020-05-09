@@ -25,7 +25,7 @@ namespace KDParticleEngine
         private readonly ITextureLoader<Texture> _textureLoader;
         private bool _disposedValue = false;
         private int _spawnRate;
-        private int _spawnRateElapsed = 0;
+        private double _spawnRateElapsed = 0;
         #endregion
 
 
@@ -83,7 +83,7 @@ namespace KDParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            _spawnRateElapsed += (int)timeElapsed.TotalMilliseconds;
+            _spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
             //If the amount of time to spawn a new particle has passed
             if (_spawnRateElapsed >= _spawnRate)

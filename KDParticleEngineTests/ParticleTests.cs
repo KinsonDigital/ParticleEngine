@@ -10,7 +10,7 @@ using KDParticleEngineTests.Fakes;
 namespace KDParticleEngineTests
 {
     /// <summary>
-    /// Unit tests to test the <see cref="Particle{IFakeTexture}"/> class.
+    /// Holds tests for the <see cref="Particle"/> class.
     /// </summary>
     public class ParticleTests
     {
@@ -103,23 +103,6 @@ namespace KDParticleEngineTests
 
 
         [Fact]
-        public void LifeTime_WhenSettingValue_ReturnsCorrectValue()
-        {
-            //Arrange
-            var particle = new Particle(new IBehavior[0])
-            {
-                LifeTime = 7784
-            };
-
-            //Act
-            var actual = particle.LifeTime;
-
-            //Assert
-            Assert.Equal(7784, actual);
-        }
-
-
-        [Fact]
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
             //Arrange
@@ -153,7 +136,7 @@ namespace KDParticleEngineTests
         public void Update_WithDisabledBehavior_BehaviorShouldNotUpdate()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.Enabled).Returns(false);
             var particle = new Particle(new[] { _mockBehavior.Object });
 
@@ -169,7 +152,7 @@ namespace KDParticleEngineTests
         public void Update_WithEnabledBehavior_BehaviorShouldUpdate()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
 
             var particle = new Particle(new[] { _mockBehavior.Object });
 
@@ -185,7 +168,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToXAttribute_UpdatesPositionX()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.X);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -194,7 +177,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.Position.X);
+            Assert.Equal("123", particle.Position.X.ToString());
         }
 
 
@@ -202,7 +185,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToYAttribute_UpdatesPositionY()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Y);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -211,7 +194,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.Position.Y);
+            Assert.Equal("123", particle.Position.Y.ToString());
         }
 
 
@@ -219,7 +202,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToAngleAttribute_UpdatesAngle()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Angle);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -228,7 +211,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.Angle);
+            Assert.Equal("123", particle.Angle.ToString());
         }
 
 
@@ -236,7 +219,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToSizeAttribute_UpdatesSize()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Size);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -245,7 +228,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.Size);
+            Assert.Equal("123", particle.Size.ToString());
         }
 
 
@@ -253,7 +236,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToRedColorComponentAttribute_UpdatesRedColorComponent()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.RedColorComponent);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -262,7 +245,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.TintColor.R);
+            Assert.Equal("123", particle.TintColor.R.ToString());
         }
 
 
@@ -270,7 +253,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToGreenColorComponentAttribute_UpdatesGreenColorComponent()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.GreenColorComponent);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -279,7 +262,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.TintColor.G);
+            Assert.Equal("123", particle.TintColor.G.ToString());
         }
 
 
@@ -287,7 +270,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToBlueColorComponentAttribute_UpdatesBlueColorComponent()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.BlueColorComponent);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -296,7 +279,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
             
             //Assert
-            Assert.Equal(123, particle.TintColor.B);
+            Assert.Equal("123", particle.TintColor.B.ToString());
         }
 
 
@@ -304,7 +287,7 @@ namespace KDParticleEngineTests
         public void Update_WhenApplyingToAlphaColorComponentAttribute_UpdatesAlphaColorComponent()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.AlphaColorComponent);
 
             var particle = new Particle(new[] { _mockBehavior.Object });
@@ -313,7 +296,7 @@ namespace KDParticleEngineTests
             particle.Update(_frameTime);
 
             //Assert
-            Assert.Equal(123, particle.TintColor.A);
+            Assert.Equal("123", particle.TintColor.A.ToString());
         }
 
 
@@ -335,7 +318,7 @@ namespace KDParticleEngineTests
         public void Reset_WhenInvoked_ResetsAngle()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Angle);
             var particle = new Particle(new[] { _mockBehavior.Object });
 
@@ -352,7 +335,7 @@ namespace KDParticleEngineTests
         public void Reset_WhenInvoked_ResetsTintColor()
         {
             //Arrange
-            _mockBehavior.SetupGet(p => p.Value).Returns(123);
+            _mockBehavior.SetupGet(p => p.Value).Returns("123");
             _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.RedColorComponent);
             var particle = new Particle(new[] { _mockBehavior.Object });
 
@@ -362,23 +345,6 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(255, particle.TintColor.R);
-        }
-
-
-        [Fact]
-        public void Reset_WhenInvoked_ResetsLifeTime()
-        {
-            //Arrange
-            var particle = new Particle(new[] { _mockBehavior.Object })
-            {
-                LifeTime = 123
-            };
-
-            //Act
-            particle.Reset();
-
-            //Assert
-            Assert.Equal(0, particle.LifeTime);
         }
 
 
@@ -452,7 +418,7 @@ namespace KDParticleEngineTests
             //Arrange
             var behaviors = new IBehavior[]
             {
-                new FakeBehavior(It.IsAny<BehaviorSetting>(), It.IsAny<IRandomizerService>())
+                _mockBehavior.Object
             };
             var particleA = new Particle(behaviors);
             var particleB = new Particle(behaviors);

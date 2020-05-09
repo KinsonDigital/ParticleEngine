@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace KDParticleEngineTests
 {
     /// <summary>
-    /// Provides extensions to various things to help make better code.
+    /// Holds tests for the <see cref="ExtensionMethods"/> class
     /// </summary>
     public class ExtensionMethodsTests
     {
