@@ -92,7 +92,7 @@ namespace KDParticleEngineTests.Behaviors
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             //Assert
-            Assert.Equal(0.016, behavior.ElapsedTime);
+            Assert.Equal(16, behavior.ElapsedTime);
         }
 
         //TODO: Fix this unit test
