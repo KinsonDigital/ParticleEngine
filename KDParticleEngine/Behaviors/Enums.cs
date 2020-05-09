@@ -16,6 +16,10 @@
         /// <summary>
         /// Ease in easing function behavior.
         /// </summary>
-        EaseIn
+        EaseIn,
+        /// <summary>
+        /// Random choice behavior.
+        /// </summary>
+        RandomChoice
     }
 }

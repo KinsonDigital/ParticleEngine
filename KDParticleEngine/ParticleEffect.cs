@@ -21,7 +21,7 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="particleTextureName">The name of the texture used in the particle effect.</param>
         /// <param name="settings">The settings used to setup the particle effect.</param>
-        public ParticleEffect(string particleTextureName, BehaviorSetting[] settings)
+        public ParticleEffect(string particleTextureName, BehaviorSettings[] settings)
         {
             ParticleTextureName = particleTextureName;
             BehaviorSettings = settings;
@@ -75,7 +75,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
-        public BehaviorSetting[] BehaviorSettings { get; } = new BehaviorSetting[0];
+        public BehaviorSettings[] BehaviorSettings { get; } = new BehaviorSettings[0];
         #endregion
 
 

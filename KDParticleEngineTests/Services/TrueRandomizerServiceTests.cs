@@ -4,10 +4,11 @@ using Xunit;
 namespace KDParticleEngineTests.Services
 {
     /// <summary>
-    /// Provides methods for randomizing numbers.
+    /// Holds tests for the <see cref="TrueRandomizerService"/> class.
     /// </summary>
     public class TrueRandomizerServiceTests
     {
+        #region Method Tests
         [Theory]
         [InlineData(1, 2)]
         [InlineData(1, 4)]
@@ -153,5 +154,6 @@ namespace KDParticleEngineTests.Services
                 Assert.InRange(result, minValue - 0.001, maxValue + 0.001);
             }
         }
+        #endregion
     }
 }

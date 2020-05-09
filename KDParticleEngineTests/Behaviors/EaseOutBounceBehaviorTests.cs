@@ -6,20 +6,37 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+    /// <summary>
+    /// Holds tests for the <see cref="EaseOutBounceBehavior"/> class.
+    /// </summary>
     public class EaseOutBounceBehaviorTests
     {
+        #region Private Fields
+        private readonly Mock<IRandomizerService> _mockRandomizerService;
+        #endregion
+
+
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance of <see cref="EaseOutBounceBehaviorTests"/>.
+        /// </summary>
+        public EaseOutBounceBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
+        #endregion
+
+
         #region Method Tets
         [Fact]
         public void Update_WhenInvoked_UpdatesValueProp()
         {
             //Arrange
-            var behavior = new EaseOutBounceBehavior(It.IsAny<BehaviorSetting>(), It.IsAny<IRandomizerService>());
+            var settings = new EasingBehaviorSettings();
+            var behavior = new EaseOutBounceBehavior(settings, _mockRandomizerService.Object);
 
             //Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             //Assert
-            Assert.NotEqual(0, behavior.Value);
+            Assert.NotEqual("0", behavior.Value);
         }
 
 
@@ -27,13 +44,14 @@ namespace KDParticleEngineTests.Behaviors
         public void Update_WhenInvoked_UpdatesElapsedTime()
         {
             //Arrange
-            var behavior = new EaseOutBounceBehavior(It.IsAny<BehaviorSetting>(), It.IsAny<IRandomizerService>());
+            var settings = new EasingBehaviorSettings();
+            var behavior = new EaseOutBounceBehavior(settings, _mockRandomizerService.Object);
 
             //Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             //Assert
-            Assert.Equal(0.016, behavior.ElapsedTime);
+            Assert.Equal(16, behavior.ElapsedTime);
         }
         #endregion
     }

@@ -5,19 +5,9 @@ namespace KDParticleEngine.Behaviors
     /// <summary>
     /// Stores settings for creating an <see cref="EasingBehavior"/>.
     /// </summary>
-    public class BehaviorSetting
+    public class EasingBehaviorSettings : BehaviorSettings
     {
         #region Props
-        /// <summary>
-        /// Gets or sets the type of behavior to be created.
-        /// </summary>
-        public BehaviorType TypeOfBehavior { get; set; }
-
-        /// <summary>
-        /// The particle attribute to set the behavior value to.
-        /// </summary>
-        public ParticleAttribute ApplyToAttribute { get; set; }
-
         /// <summary>
         /// The minimum starting value used in randomization.
         /// </summary>
@@ -39,12 +29,12 @@ namespace KDParticleEngine.Behaviors
         public float ChangeMax { get; set; }
 
         /// <summary>
-        /// The minimum total amount of time to complete the behavior.
+        /// The minimum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMin { get; set; }
 
         /// <summary>
-        /// The maximum total amount of time to complete the behavior.
+        /// The maximum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMax { get; set; }
         #endregion
@@ -58,7 +48,7 @@ namespace KDParticleEngine.Behaviors
         /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object? obj)
         {
-            if (!(obj is BehaviorSetting setting))
+            if (!(obj is EasingBehaviorSettings setting))
                 return false;
 
 

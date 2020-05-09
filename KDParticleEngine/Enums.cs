@@ -22,6 +22,10 @@
         /// </summary>
         Size,
         /// <summary>
+        /// The entire color of a particle.
+        /// </summary>
+        Color,
+        /// <summary>
         /// The red color component of a particle color.
         /// </summary>
         RedColorComponent,

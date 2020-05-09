@@ -1,6 +1,6 @@
-﻿using KDParticleEngine.Behaviors;
+﻿using System.Diagnostics.CodeAnalysis;
+using KDParticleEngine.Behaviors;
 using KDParticleEngine.Services;
-using System.Diagnostics.CodeAnalysis;
 
 namespace KDParticleEngineTests.Fakes
 {
@@ -8,15 +8,15 @@ namespace KDParticleEngineTests.Fakes
     /// Used for testing purposes only.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class FakeBehavior : Behavior
+    public class FakeEasingBehavior : EasingBehavior
     {
         #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="FakeBehavior"/>.
+        /// Creates a new instance of <see cref="FakeEasingBehavior"/>.
         /// </summary>
         /// <param name="setting">The settings for the behavior.</param>
-        public FakeBehavior(EasingBehaviorSettings setting) :
-            base(setting) { }
+        public FakeEasingBehavior(EasingBehaviorSettings setting, IRandomizerService randomizerService) :
+            base(setting, randomizerService) { }
         #endregion
     }
 }

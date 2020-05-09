@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+    /// <summary>
+    /// Holds tests for the <see cref="BehaviorFactory"/> class.
+    /// </summary>
     public class BehaviorFactoryTests
     {
         #region Method Tests
@@ -16,9 +19,9 @@ namespace KDParticleEngineTests.Behaviors
         {
             //Arrange
             var mockRandomizerService = new Mock<IRandomizerService>();
-            var settings = new BehaviorSetting[]
+            var settings = new EasingBehaviorSettings[]
             {
-                new BehaviorSetting()
+                new EasingBehaviorSettings()
                 {
                     TypeOfBehavior = behaviorType
                 }
