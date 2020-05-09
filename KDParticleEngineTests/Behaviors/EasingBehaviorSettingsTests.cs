@@ -5,9 +5,9 @@ using Xunit;
 namespace KDParticleEngineTests.Behaviors
 {
     /// <summary>
-    /// Holds tests for the <see cref="BehaviorSettings"/> class.
+    /// Holds tests for the <see cref="EasingBehaviorSettings"/> class.
     /// </summary>
-    public class BehaviorSettingTests
+    public class EasingBehaviorSettingsTests
     {
         #region Prop Tests
         [Fact]

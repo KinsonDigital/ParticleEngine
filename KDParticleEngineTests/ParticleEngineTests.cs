@@ -22,6 +22,9 @@ namespace KDParticleEngineTests
 
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of <see cref="ParticleEngineTests"/>.
+        /// </summary>
         public ParticleEngineTests()
         {
             _mockRandomizerService = new Mock<IRandomizerService>();
