@@ -1,18 +1,28 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.12.0**
+
+### **New**
+
+1. Added new particle behavior that allows the ability to choose from a list of random colors to apply to a particle for the lifetime of a particle.
+   * Use the **RandomColorBehavior** class to give a particle this behavior.
+
+### **Misc**
+
+1. Updated copyright license to **Kinson Digital**
+2. Changed param name of the **TextureLoader.LoadTexture()** method from **textureName** to **imageFilePath**
+
 ## **Version 0.11.0 (HotFix)**
 
 1. Added ability to use an **IParticleTexture** to help introduce the ability to be able to implement proper disposal of managed and unmanaged resources
 2. Added proper disposal pattern across code base
 
----
 
 ## **Version 0.10.2**
 
 1. Add a parameter-less constructor to the **ParticleEffect** class.
    * This was required to allow JSON serialization and deserialization for further development of the **Particle Maker** application
 
----
 
 ## **Version 0.10.1**
 
@@ -23,7 +33,6 @@
 2. Improved **develop** and **master** build pipelines
    * This involved changing the **YAML** files to split various parts of the build process into stages and jobs.
 
----
 
 ## **Version 0.10.0**
 
@@ -33,7 +42,6 @@
 2. Simple updates to build pipelines via YAML files
 3. Made layout improvements to **RELEASE NOTES** document
 
----
 
 ## **Version 0.9.3**
 
@@ -41,7 +49,6 @@
 
 1. Update nuget package information
 
----
 
 ## **Version 0.9.2**
 
@@ -53,7 +60,6 @@
 
 1. Simple cleanup
 
----
 
 ## **Version 0.9.0**
 
