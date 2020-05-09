@@ -12,6 +12,7 @@
 1. Updated copyright license to **Kinson Digital**
 2. Changed param name of the **TextureLoader.LoadTexture()** method from **textureName** to **imageFilePath**
 
+
 ## **Version 0.11.0 (HotFix)**
 
 1. Added ability to use an **IParticleTexture** to help introduce the ability to be able to implement proper disposal of managed and unmanaged resources
