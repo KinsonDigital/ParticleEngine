@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests
 {
+    /// <summary>
+    /// Holds tests for the <see cref="ParticleEffect"/> class.
+    /// </summary>
     public class ParticleEffectTests
     {
         #region Constructor Tests

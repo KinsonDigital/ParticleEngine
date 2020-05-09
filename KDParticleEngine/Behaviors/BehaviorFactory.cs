@@ -19,8 +19,7 @@ namespace KDParticleEngine.Behaviors
         {
             var behaviors = new List<IBehavior>();
 
-            //Each particle with the given ID will get every single behavior
-            //dictated by the behavior setups
+            //Creates all of the behaviors using the given settings
             foreach (var setting in settings)
             {
                 switch (setting.TypeOfBehavior)

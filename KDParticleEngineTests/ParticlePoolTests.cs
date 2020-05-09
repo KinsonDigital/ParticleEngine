@@ -8,6 +8,9 @@ using Xunit;
 
 namespace KDParticleEngineTests
 {
+    /// <summary>
+    /// Holds tests for the <see cref="ParticlePool{Texture}"/> class.
+    /// </summary>
     public class ParticlePoolTests
     {
         #region Private Fields
@@ -22,6 +25,9 @@ namespace KDParticleEngineTests
 
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of <see cref="ParticlePoolTests"/>.
+        /// </summary>
         public ParticlePoolTests()
         {
             _settings = new EasingBehaviorSettings[]

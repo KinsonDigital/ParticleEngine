@@ -95,7 +95,7 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(16, behavior.ElapsedTime);
         }
 
-        //TODO: Fix this unit test
+
         [Fact]
         public void Update_WithLifeTimeNotElapsed_IsEnabledAfterUpdate()
         {
@@ -182,6 +182,9 @@ namespace KDParticleEngineTests.Behaviors
 
 
         #region Public Methods
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose() => _mockRandomizerService = null;
         #endregion
     }

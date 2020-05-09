@@ -9,7 +9,7 @@ using Xunit;
 namespace KDParticleEngineTests
 {
     /// <summary>
-    /// Unit tests to test the <see cref="KDParticleEngine.ParticleEngine{Texture}"/> class.
+    /// Holds tests for the <see cref="ParticleEngine"/> class.
     /// </summary>
     public class ParticleEngineTests : IDisposable
     {
@@ -270,6 +270,9 @@ namespace KDParticleEngineTests
         }
 
 
+        /// <summary>
+        ///  Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _mockRandomizerService = null;

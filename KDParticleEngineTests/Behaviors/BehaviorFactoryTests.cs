@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+    /// <summary>
+    /// Holds tests for the <see cref="BehaviorFactory"/> class.
+    /// </summary>
     public class BehaviorFactoryTests
     {
         #region Method Tests

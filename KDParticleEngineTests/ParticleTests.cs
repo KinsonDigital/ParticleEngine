@@ -10,7 +10,7 @@ using KDParticleEngineTests.Fakes;
 namespace KDParticleEngineTests
 {
     /// <summary>
-    /// Unit tests to test the <see cref="Particle{IFakeTexture}"/> class.
+    /// Holds tests for the <see cref="Particle"/> class.
     /// </summary>
     public class ParticleTests
     {

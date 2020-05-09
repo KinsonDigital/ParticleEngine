@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+    /// <summary>
+    /// Holds tests for the <see cref="EaseOutBounceBehavior"/> class.
+    /// </summary>
     public class EaseOutBounceBehaviorTests
     {
         #region Private Fields

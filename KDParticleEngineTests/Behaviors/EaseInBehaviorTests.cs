@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+    /// <summary>
+    /// Holds tests for the <see cref="EaseInBehavior"/> class.
+    /// </summary>
     public class EaseInBehaviorTests
     {
         #region Private Fields

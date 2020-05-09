@@ -86,8 +86,6 @@ namespace KDParticleEngine
                     switch (_behaviors[i].ApplyToAttribute)
                     {
                         case ParticleAttribute.X:
-                            var parsedValue = float.Parse(_behaviors[i].Value);
-
                             Position = new PointF(float.Parse(_behaviors[i].Value), Position.Y);
                             break;
                         case ParticleAttribute.Y:

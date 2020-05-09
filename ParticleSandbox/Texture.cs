@@ -1,12 +1,17 @@
 ﻿using KDParticleEngine;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace ParticleSandbox
 {
+    /// <summary>
+    /// Represents a texture that can be rendered.
+    /// </summary>
     public class Texture : IParticleTexture
     {
         #region Private Fields
         private readonly Texture2D _texture2D;
+        private bool _disposedValue;
         #endregion
 
 
@@ -30,7 +35,23 @@ namespace ParticleSandbox
         #region Public Methods
         public void Dispose()
         {
-            //TODO: Add disposable pattern
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
+
+        #region Protected Methods
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposedValue)
+                return;
+
+            if (disposing)
+                _texture2D.Dispose();
+
+
+            _disposedValue = true;
         }
         #endregion
     }

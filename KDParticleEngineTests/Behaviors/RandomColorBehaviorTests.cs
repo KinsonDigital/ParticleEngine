@@ -6,6 +6,9 @@ using Xunit;
 
 namespace KDParticleEngineTests.Behaviors
 {
+	/// <summary>
+	/// Holds the tets for the <see cref="RandomColorBehavior"/> class.
+	/// </summary>
 	public class RandomColorBehaviorTests
     {
 		#region Constructor Tests

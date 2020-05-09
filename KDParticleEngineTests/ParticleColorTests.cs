@@ -7,6 +7,9 @@ using Xunit;
 
 namespace KDParticleEngineTests
 {
+    /// <summary>
+    /// Holds tests for the <see cref="ParticleColor"/> class.
+    /// </summary>
     public class ParticleColorTests
     {
         #region Prop Tests

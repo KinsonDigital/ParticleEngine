@@ -33,7 +33,7 @@ namespace KDParticleEngine.Behaviors
         public double ElapsedTime { get; protected set; }
 
         /// <summary>
-        /// Gets the attribute to apply the behavior value to.
+        /// Gets the particle attribute to apply the behavior value to.
         /// </summary>
         public ParticleAttribute ApplyToAttribute => _setting.ApplyToAttribute;
 

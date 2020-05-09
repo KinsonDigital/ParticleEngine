@@ -3,7 +3,7 @@
 namespace KDParticleEngine.Behaviors
 {
     /// <summary>
-    /// Represents a behavior over time.
+    /// Represents a behavior that can be applied to a particle.
     /// </summary>
     public interface IBehavior
     {

@@ -2,22 +2,27 @@
 
 namespace KDParticleEngine.Behaviors
 {
-    //TODO: Add code docs
+    /// <summary>
+    /// Various settings for behaviors that choose values randomly from a list of choices.
+    /// </summary>
     public class RandomChoiceBehaviorSettings : BehaviorSettings
     {
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of <see cref="RandomChoiceBehaviorSettings"/>.
+        /// </summary>
         public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
         #endregion
 
 
         #region Props
         /// <summary>
-        /// Holds data for the use by a <see cref="IBehavior"/> implementation.
+        /// Holds data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
         public string[]? Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the amount of time that the <see cref="RandomColorBehavior"/> should be enabled.
+        /// Gets or sets the amount of time that the behavior should be enabled.
         /// </summary>
         public double LifeTime { get; set; }
         #endregion

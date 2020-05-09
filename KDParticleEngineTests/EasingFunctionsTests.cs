@@ -3,6 +3,9 @@ using Xunit;
 
 namespace KDParticleEngineTests
 {
+    /// <summary>
+    /// Holds tests for the <see cref="EasingFunctions"/> class.
+    /// </summary>
     public class EasingFunctionsTests
     {
         #region Method Tests
