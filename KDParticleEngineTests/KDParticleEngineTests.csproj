@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Platforms>x86;x64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <AssemblyTitle>ParticleEngineTests</AssemblyTitle>
     <Product>Kinson Digital - Particle Engine Tests</Product>
     <Copyright>Copyright © 2018</Copyright>

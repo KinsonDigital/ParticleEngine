@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Platforms>x64;x86</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
