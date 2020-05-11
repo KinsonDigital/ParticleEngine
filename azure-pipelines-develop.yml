@@ -7,44 +7,70 @@ pool:
 
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'x64'
-  buildConfiguration: 'Debug'
-  coverageReportDirName: 'CoverageReport'
-  appName: 'KDParticleEngine'
+  - name: solution
+    value: '**/*.sln'
+  - name:  buildPlatform
+    value: 'any cpu'
+  - name: buildConfiguration
+    value: 'Debug'
+  - name: coverageReportDirName
+    value: 'CoverageReport'
+  - name: appName
+    value: 'ParticleEngine'
+  - name: pool
+    value: 'KinsonDigital'
 
 
-steps:
-- task: NuGetToolInstaller@1
+stages:
+- stage: Init_Build_Stage
+  displayName: 'Init & Build'
+  pool: '$(pool)'
+  jobs:
+  - job: 'Init_Build_Job'
+    displayName: 'Init & Build Job'
+    steps:
+    - task: NuGetToolInstaller@1
+
+    - task: NuGetCommand@2
+      displayName: Restore $(appName) Packages
+      inputs:
+        restoreSolution: '$(solution)'
+
+    - task: VSBuild@1
+      displayName: Build $(appName) Solution
+      inputs:
+        solution: '**\*Engine.csproj'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+        clean: true
 
 
-- task: NuGetCommand@2
-  displayName: Restore $(appName) Packages
-  inputs:
-    restoreSolution: '$(solution)'
+- stage: 'Testing_Stage'
+  displayName: 'Testing'
+  pool: '$(pool)'
+  jobs:
+  - job: 'Testing_Job'
+    displayName: 'Testing'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: "Run $(appName) Tests & Collect Code Coverage"
+      inputs:
+        command: 'test'
+        projects: '**\*[Tt]ests\*.csproj'
+        arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+        publishTestResults: true
+        testRunTitle: 'Project Unit Test Results'
 
+    - task: reportgenerator@4
+      displayName: "Generate $(appName) Code Coverage Reports"
+      inputs:
+        reports: '**\*.cobertura.xml'
+        targetdir: 'CoverageReport'
+        sourcedirs: '$(System.DefaultWorkingDirectory)\$(appName)'
 
-- task: DotNetCoreCLI@2
-  displayName: "Run $(appName) Tests & Collect Code Coverage"
-  inputs:
-    command: 'test'
-    projects: '**\*[Tt]ests\*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
-    publishTestResults: true
-    testRunTitle: 'Project Unit Test Results'
-
-
-- task: reportgenerator@4
-  displayName: "Generate $(appName) Code Coverage Reports"
-  inputs:
-    reports: '**\*.cobertura.xml'
-    targetdir: 'CoverageReport'
-    sourcedirs: '$(System.DefaultWorkingDirectory)\$(appName)'
-
-
-- task: PublishCodeCoverageResults@1
-  displayName: "Publish $(appName) Code Coverage Results"
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)\Cobertura.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)'
+    - task: PublishCodeCoverageResults@1
+      displayName: "Publish $(appName) Code Coverage Results"
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)\Cobertura.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)\$(coverageReportDirName)'
