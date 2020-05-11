@@ -2,7 +2,7 @@
 using System.Drawing;
 using XNARect = Microsoft.Xna.Framework.Rectangle;
 using XNAColor = Microsoft.Xna.Framework.Color;
-using KDParticleEngine;
+using ParticleEngine;
 
 namespace ParticleSandbox
 {
