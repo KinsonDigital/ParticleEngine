@@ -2,7 +2,6 @@ using ParticleEngine;
 using ParticleEngine.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using XNAColor = Microsoft.Xna.Framework.Color;
 using NETPointF = System.Drawing.PointF;
 using System;

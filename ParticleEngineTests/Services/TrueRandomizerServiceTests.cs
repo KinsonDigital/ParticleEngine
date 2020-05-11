@@ -1,4 +1,5 @@
-﻿using ParticleEngine.Services;
+﻿using KDParticleEngineTests.XUnitHelpers;
+using ParticleEngine.Services;
 using Xunit;
 
 namespace KDParticleEngineTests.Services
