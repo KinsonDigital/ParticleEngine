@@ -1,5 +1,13 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.13.0**
+
+### **Developer Related Items**
+
+1. Change build pipelines by changing **YAML** files to use stages with jobs and tasks.
+
+---
+
 ## **Version 0.12.0**
 
 ### **New**
