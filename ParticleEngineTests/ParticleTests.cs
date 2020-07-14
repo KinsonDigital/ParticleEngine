@@ -2,10 +2,9 @@
 using System.Drawing;
 using ParticleEngine;
 using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
 using Moq;
 using System;
-using KDParticleEngineTests.Fakes;
+using KDParticleEngineTests.XUnitHelpers;
 
 namespace KDParticleEngineTests
 {
@@ -132,6 +131,77 @@ namespace KDParticleEngineTests
 
 
         #region Method Tests
+
+        [Fact]
+        public void Update_WithFailedParse_ThrowsException()
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns("12z3");
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+
+            //Act & Assert
+            AssertHelpers.ThrowsWithMessage<Exception>(() =>
+            {
+                particle.Update(_frameTime);
+            }, $"Particle.Update Exception:\n\tParsing the behavior value '12z3' failed.\n\tValue must be a number.");
+        }
+
+
+        [Theory]
+        [InlineData("clr:300,0,0,255", "Particle.Update Exception:\n\tParsing the behavior alpha color component value '300' failed.")]
+        [InlineData("clr:255,301,0,255", "Particle.Update Exception:\n\tParsing the behavior red color component value '301' failed.")]
+        [InlineData("clr:255,0,302,255", "Particle.Update Exception:\n\tParsing the behavior green color component value '302' failed.")]
+        [InlineData("clr:255,0,0,303", "Particle.Update Exception:\n\tParsing the behavior blue color component value '303' failed.")]
+        [InlineData("clr:1z0,0,0,255", "Particle.Update Exception:\n\tParsing the behavior alpha color component value '1z0' failed.")]
+        [InlineData("clr:255,1z1,0,255", "Particle.Update Exception:\n\tParsing the behavior red color component value '1z1' failed.")]
+        [InlineData("clr:255,0,1z2,255", "Particle.Update Exception:\n\tParsing the behavior green color component value '1z2' failed.")]
+        [InlineData("clr:255,0,0,1z3", "Particle.Update Exception:\n\tParsing the behavior blue color component value '1z3' failed.")]
+        [InlineData("clr:,0,0,255", "Particle.Update Exception:\n\tParsing the behavior alpha color component value '' failed.")]
+        [InlineData("clr:255,,0,255", "Particle.Update Exception:\n\tParsing the behavior red color component value '' failed.")]
+        [InlineData("clr:255,0,,255", "Particle.Update Exception:\n\tParsing the behavior green color component value '' failed.")]
+        [InlineData("clr:255,0,0,", "Particle.Update Exception:\n\tParsing the behavior blue color component value '' failed.")]
+        [InlineData("clr255,0,0,0", "Particle.Update Exception:\n\tInvalid random color syntax.  Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(":255,0,0,0", "Particle.Update Exception:\n\tInvalid random color syntax.  Missing 'clr'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        public void Update_WhenUsingWrongRandomColorValue_ThrowsException(string value, string expectedMessage)
+        {
+            //Arrange
+            _mockBehavior.SetupGet(p => p.Value).Returns(value);
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Color);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+
+            //Act & Assert
+            AssertHelpers.ThrowsWithMessage<Exception>(() =>
+            {
+                particle.Update(_frameTime);
+            }, expectedMessage);
+        }
+
+
+        [Fact]
+        public void Update_WhenUsingRandomColorBehavior_SetsTintColor()
+        {
+            //Arrange
+            var expected = new ParticleColor(255, 0, 0, 255);
+
+            _mockBehavior.SetupGet(p => p.Value).Returns("clr:255,0,0,255");
+            _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
+            _mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Color);
+
+            var particle = new Particle(new[] { _mockBehavior.Object });
+
+            //Act
+            particle.Update(_frameTime);
+
+            //Assert
+            Assert.Equal(expected, particle.TintColor);
+        }
+
+
         [Fact]
         public void Update_WithDisabledBehavior_BehaviorShouldNotUpdate()
         {

@@ -79,6 +79,15 @@ namespace ParticleEngine
             {
                 if (_behaviors[i].Enabled)
                 {
+                    var value = 0f;
+
+                    var parseSuccess = _behaviors[i].ApplyToAttribute != ParticleAttribute.Color
+                        ? float.TryParse(string.IsNullOrEmpty(_behaviors[i].Value) ? "0" : _behaviors[i].Value, out value)
+                        : true;
+
+                    if (!parseSuccess)
+                        throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{_behaviors[i].Value}' failed.\n\tValue must be a number.");
+
                     _behaviors[i].Update(timeElapsed);
                     IsAlive = true;
 
@@ -86,58 +95,90 @@ namespace ParticleEngine
                     switch (_behaviors[i].ApplyToAttribute)
                     {
                         case ParticleAttribute.X:
-                            Position = new PointF(float.Parse(_behaviors[i].Value), Position.Y);
+                            Position = new PointF(value, Position.Y);
                             break;
                         case ParticleAttribute.Y:
-                            Position = new PointF(Position.X, float.Parse(_behaviors[i].Value));
+                            Position = new PointF(Position.X, value);
                             break;
                         case ParticleAttribute.Angle:
-                            Angle = float.Parse(_behaviors[i].Value);
+                            Angle = value;
                             break;
                         case ParticleAttribute.Size:
-                            Size = float.Parse(_behaviors[i].Value);
+                            Size = value;
                             break;
                         case ParticleAttribute.Color:
-                            //Parse the string data into color components to create a color from
-
-                            //Example Data: clr:10,20,30,40
-
-                            //Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
-                            //Section 1 => clr
-                            //Section 2 => 10,20,30,40
-                            var valueSections = _behaviors[i].Value.Split(':');
-
-                            //Split the color components to separate each number
-                            //Section 1 => 10
-                            //Section 2 => 20
-                            //Section 3 => 30
-                            //Section 4 => 40
-                            var clrComponents = valueSections[1].Split(',');
-
                             //Create the color
-                            var tintColor = new ParticleColor(byte.Parse(clrComponents[0]),
-                                                              byte.Parse(clrComponents[1]),
-                                                              byte.Parse(clrComponents[2]),
-                                                              byte.Parse(clrComponents[3]));
-
-                            TintColor = tintColor;
+                            TintColor = ParseToParticleColor(_behaviors[i].Value);
                             break;
                         case ParticleAttribute.RedColorComponent:
-                            TintColor.R = ClampClrValue(float.Parse(_behaviors[i].Value));
+                            TintColor.R = ClampClrValue(value);
                             break;
                         case ParticleAttribute.GreenColorComponent:
-                            TintColor.G = ClampClrValue(float.Parse(_behaviors[i].Value));
+                            TintColor.G = ClampClrValue(value);
                             break;
                         case ParticleAttribute.BlueColorComponent:
-                            TintColor.B = ClampClrValue(float.Parse(_behaviors[i].Value));
+                            TintColor.B = ClampClrValue(value);
                             break;
                         case ParticleAttribute.AlphaColorComponent:
-                            TintColor.A = ClampClrValue(float.Parse(_behaviors[i].Value));
+                            TintColor.A = ClampClrValue(value);
                             break;
                     }
                 }
             }
         }
+
+
+        private byte ParseColorComponent(string clrComponent, string value)
+        {
+            var parseSuccess = int.TryParse(value, out int result);
+
+            if (parseSuccess)
+            {
+                if (result < 0 || result > 255)
+                    throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
+
+                return (byte)result;
+            }
+
+
+            throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
+        }
+
+
+        private ParticleColor ParseToParticleColor(string colorValue)
+        {
+            /*Parse the string data into color components to create a color from
+             * Example Data: clr:10,20,30,40
+            */
+
+            if (!colorValue.Contains(':'))
+                throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
+
+            //Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
+            //Section 1 => clr
+            //Section 2 => 10,20,30,40
+            var valueSections = colorValue.Split(':');
+
+            if (valueSections.Length >= 1 && string.IsNullOrEmpty(valueSections[0]))
+                throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing 'clr'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
+
+            //Split the color components to separate each number
+            //Section 1 => 10
+            //Section 2 => 20
+            //Section 3 => 30
+            //Section 4 => 40
+            var clrComponents = valueSections[1].Split(',');
+
+            var alpha = ParseColorComponent("alpha", clrComponents[0]);
+            var red = ParseColorComponent("red", clrComponents[1]);
+            var green = ParseColorComponent("green", clrComponents[2]);
+            var blue = ParseColorComponent("blue", clrComponents[3]);
+
+
+            //Create the color
+            return new ParticleColor(alpha, red, green, blue);
+        }
+
 
 
         /// <summary>
