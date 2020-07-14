@@ -1,5 +1,11 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.14.0**
+
+1. Refactored how a Particle object is updated to properly parse values in a way that improves debugging and to throw proper exceptions with parsing issues.
+
+---
+
 ## **Version 0.13.0**
 
 ### **Developer Related Items**

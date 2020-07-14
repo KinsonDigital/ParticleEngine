@@ -103,7 +103,7 @@ namespace ParticleSandbox
                     ApplyToAttribute = ParticleAttribute.Color,
                     TypeOfBehavior = BehaviorType.RandomChoice,
                     Data = new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" },
-                    LifeTime = 8000
+                    LifeTime = 6000
                 },
                 //new EasingBehaviorSettings()//Red channel setup
                 //{
