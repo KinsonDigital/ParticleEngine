@@ -12,7 +12,6 @@ namespace ParticleEngine
     {
         private static readonly char[] _validHexSymbols = new[] { '#', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-
         /// <summary>
         /// Returns a random value between the given <paramref name="minValue"/> and <paramref name="maxValue"/>.
         /// </summary>
@@ -33,7 +32,6 @@ namespace ParticleEngine
                     return randomResult / 1000f;
                 }
 
-
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
         /// </summary>
@@ -41,7 +39,6 @@ namespace ParticleEngine
         /// <returns></returns>
         [ExcludeFromCodeCoverage]
         public static bool FlipCoin(this Random random) => random.NextDouble() <= 0.5f;
-
 
         /// <summary>
         /// Adds the given <paramref name="pointB"/>'s X and Y components to this point and returns the result.
@@ -54,10 +51,8 @@ namespace ParticleEngine
             pointA.X += pointB.X;
             pointA.Y += pointB.Y;
 
-
             return pointA;
         }
-
 
         /// <summary>
         /// Multiplies the components of this <see cref="PointF"/>
@@ -71,10 +66,8 @@ namespace ParticleEngine
             point.X *= (float)scalar;
             point.Y *= (float)scalar;
 
-
             return point;
         }
-
 
         /// <summary>
         /// Counts the given <paramref name="items"/> based on given <paramref name="predicate"/> returning true.
@@ -93,10 +86,8 @@ namespace ParticleEngine
                     result++;
             }
 
-
             return result;
         }
-
 
         /// <summary>
         /// Counts the given <paramref name="items"/> based on given <paramref name="predicate"/> returning true.
@@ -114,7 +105,6 @@ namespace ParticleEngine
                 if (predicate(items[i]))
                     result++;
             }
-
 
             return result;
         }

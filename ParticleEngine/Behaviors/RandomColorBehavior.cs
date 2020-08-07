@@ -13,7 +13,6 @@ namespace ParticleEngine.Behaviors
         private readonly IRandomizerService _randomizer;
         private bool _isColorChosen;
 
-
         /// <summary>
         /// Creates a new instance of <see cref="RandomColorBehavior"/>.
         /// </summary>
@@ -24,7 +23,6 @@ namespace ParticleEngine.Behaviors
             _settings = settings;
             _randomizer = randomizer;
         }
-
 
         /// <summary>
         /// Updates the behavior.
@@ -47,7 +45,6 @@ namespace ParticleEngine.Behaviors
 
             _isColorChosen = true;
         }
-
 
         /// <summary>
         /// Resets the behavior.

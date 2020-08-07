@@ -22,7 +22,6 @@ namespace ParticleEngine
             B = b;
         }
 
-
         /// <summary>
         /// Creates a new <see cref="ParticleColor"/> using the given color component values.
         /// </summary>
@@ -32,7 +31,6 @@ namespace ParticleEngine
         /// <param name="b">The blue component of the color.</param>
         /// <returns></returns>
         public static ParticleColor FromArgb(byte a, byte r, byte g, byte b) => new ParticleColor(a, r, g, b);
-
 
         /// <summary>
         /// Gets or sets the red component of the color.
@@ -749,7 +747,6 @@ namespace ParticleEngine
         /// </summary>
         public static ParticleColor YellowGreen => new ParticleColor(255, 154, 205, 50);
 
-
         /// <summary>
         /// Gets the brightness value of the <see cref="ParticleColor"/>.
         /// </summary>
@@ -759,10 +756,8 @@ namespace ParticleEngine
             var min = Math.Min(Math.Min(R, G), B);
             var max = Math.Max(Math.Max(R, G), B);
 
-
             return (max + min) / (byte.MaxValue * 2f) * 100f;
         }
-
 
         /// <summary>
         /// Gets the hue value of the <see cref="ParticleColor"/>.
@@ -791,10 +786,8 @@ namespace ParticleEngine
             if (hue < 0f)
                 hue += 360f;
 
-
             return hue;
         }
-
 
         /// <summary>
         /// Gets the saturation value of the <see cref="ParticleColor"/>.
@@ -805,17 +798,14 @@ namespace ParticleEngine
             var r = R / 255f;
             var b = B / 255f;
 
-
             return (b - r) / (b + r) * 100f;
         }
-
 
         /// <summary>
         /// Returns the string representation of the <see cref="ParticleColor"/>.
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $"A = {A}, R = {R}, G = {G}, B = {B}";
-
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -832,17 +822,14 @@ namespace ParticleEngine
             var greenSame = G == color.G;
             var blueSame = B == color.B;
 
-
             return alphaSame && redSame && greenSame && blueSame;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(R, G, B, A);
-
 
         /// <summary>
         /// Returns a value indicating if the given colors are equal.
@@ -851,7 +838,6 @@ namespace ParticleEngine
         /// <param name="clrB">The second color to compare.</param>
         /// <returns></returns>
         public static bool operator == (ParticleColor clrA, ParticleColor clrB) => clrA.Equals(clrB);
-
 
         /// <summary>
         /// Returns a value indicating if the given colors are not equal.

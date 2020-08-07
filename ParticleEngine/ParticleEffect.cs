@@ -14,7 +14,6 @@ namespace ParticleEngine
         /// </summary>
         public ParticleEffect() { }
 
-
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEffect"/>.
         /// </summary>
@@ -25,7 +24,6 @@ namespace ParticleEngine
             ParticleTextureName = particleTextureName;
             BehaviorSettings = settings;
         }
-
 
         /// <summary>
         /// Gets the name of the particle texture used in the particle effect.
@@ -74,7 +72,6 @@ namespace ParticleEngine
         /// </summary>
         public BehaviorSettings[] BehaviorSettings { get; } = new BehaviorSettings[0];
 
-
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -103,7 +100,6 @@ namespace ParticleEngine
                 colorsAreSame = false;
             }
 
-
             return ParticleTextureName == effect.ParticleTextureName &&
                 ApplyBehaviorTo == effect.ApplyBehaviorTo &&
                 SpawnLocation == effect.SpawnLocation &&
@@ -114,7 +110,6 @@ namespace ParticleEngine
                 UseColorsFromList == effect.UseColorsFromList &&
                 BehaviorSettings == effect.BehaviorSettings;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
@@ -142,7 +137,6 @@ namespace ParticleEngine
             hash.Add(UseColorsFromList);
             hash.Add(BehaviorSettings);
 
-            
             return hash.ToHashCode();
         }
     }

@@ -44,7 +44,6 @@ namespace ParticleEngine.Behaviors
                 }
             }
 
-
             return behaviors.ToArray();
         }
     }

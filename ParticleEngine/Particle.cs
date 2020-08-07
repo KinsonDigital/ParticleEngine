@@ -12,12 +12,10 @@ namespace ParticleEngine
     {
         private readonly IBehavior[] _behaviors;
 
-
         /// <summary>
         /// Creates a new instance of <see cref="Particle"/>.
         /// </summary>
         public Particle(IBehavior[] behaviors) => _behaviors = behaviors;
-
 
         /// <summary>
         /// Gets or sets the position of the <see cref="Particle"/>.
@@ -53,7 +51,6 @@ namespace ParticleEngine
             set => IsAlive = !value;
         }
 
-
         /// <summary>
         /// Updates the particle.
         /// </summary>
@@ -83,7 +80,6 @@ namespace ParticleEngine
 
                     _behaviors[i].Update(timeElapsed);
                     IsAlive = true;
-
 
                     switch (_behaviors[i].ApplyToAttribute)
                     {
@@ -120,7 +116,6 @@ namespace ParticleEngine
             }
         }
 
-
         private byte ParseColorComponent(string clrComponent, string value)
         {
             var parseSuccess = int.TryParse(value, out int result);
@@ -133,10 +128,8 @@ namespace ParticleEngine
                 return (byte)result;
             }
 
-
             throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
         }
-
 
         private ParticleColor ParseToParticleColor(string colorValue)
         {
@@ -167,12 +160,9 @@ namespace ParticleEngine
             var green = ParseColorComponent("green", clrComponents[2]);
             var blue = ParseColorComponent("blue", clrComponents[3]);
 
-
             //Create the color
             return new ParticleColor(alpha, red, green, blue);
         }
-
-
 
         /// <summary>
         /// Resets the particle.
@@ -190,7 +180,6 @@ namespace ParticleEngine
             IsAlive = true;
         }
 
-
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -201,7 +190,6 @@ namespace ParticleEngine
             if (!(obj is Particle particle))
                 return false;
 
-            
             return Position == particle.Position &&
                 Angle == particle.Angle &&
                 TintColor == particle.TintColor &&
@@ -209,7 +197,6 @@ namespace ParticleEngine
                 IsAlive == particle.IsAlive &&
                 IsDead == particle.IsDead;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.

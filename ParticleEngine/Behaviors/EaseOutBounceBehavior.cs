@@ -15,7 +15,6 @@ namespace ParticleEngine.Behaviors
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
         public EaseOutBounceBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base (settings, randomizer) { }
 
-
         /// <summary>
         /// Updates the behavior.
         /// </summary>

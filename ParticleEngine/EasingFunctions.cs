@@ -36,7 +36,6 @@
             }
         }
 
-
         /// <summary>
         /// Ease in quad easing function.
         /// </summary>

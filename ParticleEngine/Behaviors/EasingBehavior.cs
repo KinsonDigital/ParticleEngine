@@ -13,7 +13,6 @@ namespace ParticleEngine.Behaviors
         private readonly IRandomizerService _randomizer;
         private protected double _lifeTime;
 
-
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehavior"/>.
         /// </summary>
@@ -25,7 +24,6 @@ namespace ParticleEngine.Behaviors
             ApplyRandomization();
         }
 
-
         /// <summary>
         /// Gets or sets the starting value of the easing behavior.
         /// </summary>
@@ -35,7 +33,6 @@ namespace ParticleEngine.Behaviors
         /// Gets or sets the amount of change to apply to the behavior value over time.
         /// </summary>
         public double Change { get; set; }
-
 
         /// <summary>
         /// Updates the behavior.
@@ -47,7 +44,6 @@ namespace ParticleEngine.Behaviors
             Enabled = ElapsedTime < _lifeTime;
         }
 
-
         /// <summary>
         /// Resets the behavior.
         /// </summary>
@@ -56,7 +52,6 @@ namespace ParticleEngine.Behaviors
             ApplyRandomization();
             base.Reset();
         }
-
 
         /// <summary>
         /// Generates random values based on the <see cref="EasingBehaviorSettings"/>

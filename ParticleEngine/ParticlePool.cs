@@ -23,7 +23,6 @@ namespace ParticleEngine
         private int _spawnRate;
         private double _spawnRateElapsed = 0;
 
-
         /// <summary>
         /// Creates a new instance of <see cref="ParticlePool"/>.
         /// </summary>
@@ -39,7 +38,6 @@ namespace ParticleEngine
 
             CreateAllParticles(behaviorFactory);
         }
-
 
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
@@ -65,7 +63,6 @@ namespace ParticleEngine
         /// Gets or sets the texture of the particles in the pool.
         /// </summary>
         public Texture? PoolTexture { get; private set; }
-
 
         /// <summary>
         /// Updates the particle pool.
@@ -94,18 +91,15 @@ namespace ParticleEngine
             }
         }
 
-
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
         public void KillAllParticles() => _particles.ForEach(p => p.IsDead = true);
 
-
         /// <summary>
         /// Loads the texture for the pool to use for rendering the particles.
         /// </summary>
         public void LoadTexture() => PoolTexture = _textureLoader.LoadTexture(Effect.ParticleTextureName);
-
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -117,13 +111,11 @@ namespace ParticleEngine
             if (!(obj is ParticlePool<Texture> pool))
                 return false;
 
-
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
                 _particles.Count == pool.Particles.Length &&
                 Effect == pool.Effect;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
@@ -132,13 +124,11 @@ namespace ParticleEngine
         public override int GetHashCode() =>
             HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
 
-
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
         /// </summary>
         public void Dispose() => Dispose(true);
-
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
@@ -165,7 +155,6 @@ namespace ParticleEngine
             _disposedValue = true;
         }
 
-
         /// <summary>
         /// Resets all of the particles.
         /// </summary>
@@ -182,7 +171,6 @@ namespace ParticleEngine
             }
         }
 
-
         /// <summary>
         /// Returns a random time in milliseconds that the <see cref="Particle"/> will be spawned next.
         /// </summary>
@@ -192,10 +180,8 @@ namespace ParticleEngine
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
                 return _randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
 
-
             return _randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }
-
 
         /// <summary>
         /// Generates all of the particles.

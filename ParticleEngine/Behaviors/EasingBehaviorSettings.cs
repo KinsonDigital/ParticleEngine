@@ -37,7 +37,6 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         public float TotalTimeMax { get; set; }
 
-
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -48,7 +47,6 @@ namespace ParticleEngine.Behaviors
             if (!(obj is EasingBehaviorSettings setting))
                 return false;
 
-
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute &&
                 StartMin == setting.StartMin &&
@@ -58,7 +56,6 @@ namespace ParticleEngine.Behaviors
                 TotalTimeMin == setting.TotalTimeMin &&
                 TotalTimeMax == setting.TotalTimeMax;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.

@@ -12,7 +12,6 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
 
-
         /// <summary>
         /// Holds data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
@@ -22,7 +21,6 @@ namespace ParticleEngine.Behaviors
         /// Gets or sets the amount of time that the behavior should be enabled.
         /// </summary>
         public double LifeTime { get; set; }
-
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -34,11 +32,9 @@ namespace ParticleEngine.Behaviors
             if (!(obj is RandomChoiceBehaviorSettings setting))
                 return false;
 
-
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.

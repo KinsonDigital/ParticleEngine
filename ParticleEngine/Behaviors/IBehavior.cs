@@ -27,13 +27,11 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         bool Enabled { get; }
 
-
         /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         void Update(TimeSpan timeElapsed);
-
 
         /// <summary>
         /// Resets the behavior.

@@ -18,7 +18,6 @@ namespace ParticleEngine
         private bool _texturesLoaded;
         private bool _disposedValue = false;
 
-
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngine"/>.
         /// </summary>
@@ -27,7 +26,6 @@ namespace ParticleEngine
             _textureLoader = textureLoader;
             _randomizer = randomizer;
         }
-
 
         /// <summary>
         /// Gets all of the particle pools.
@@ -50,14 +48,12 @@ namespace ParticleEngine
             }
         }
 
-
         /// <summary>
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
         /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
         public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, _textureLoader, effect, _randomizer));
-
 
         /// <summary>
         /// Clears all of the current existing pools.
@@ -70,7 +66,6 @@ namespace ParticleEngine
 
             _particlePools.Clear();
         }
-
 
         /// <summary>
         /// Loads all of the textures for each <see cref="ParticlePool"/>
@@ -86,12 +81,10 @@ namespace ParticleEngine
             _texturesLoaded = true;
         }
 
-
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
         public void KillAllParticles() => _particlePools.ForEach(p => p.KillAllParticles());
-
 
         /// <summary>
         /// Updates all of the <see cref="Particle"/>s.
@@ -108,13 +101,11 @@ namespace ParticleEngine
             _particlePools.ForEach(p => p.Update(timeElapsed));
         }
 
-
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
         /// </summary>
         public void Dispose() => Dispose(true);
-
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting

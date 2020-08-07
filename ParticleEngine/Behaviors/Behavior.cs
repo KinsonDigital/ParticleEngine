@@ -9,13 +9,11 @@ namespace ParticleEngine.Behaviors
     {
         private readonly BehaviorSettings _setting;
 
-
         /// <summary>
         /// Creates a new instance of behavior.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
         public Behavior(BehaviorSettings settings) => _setting = settings;
-
 
         /// <summary>
         /// Gets the current value of the behavior.
@@ -37,13 +35,11 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         public bool Enabled { get; protected set; } = true;
 
-
         /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public virtual void Update(TimeSpan timeElapsed) => ElapsedTime += timeElapsed.TotalMilliseconds;
-
 
         /// <summary>
         /// Resets the behvior.

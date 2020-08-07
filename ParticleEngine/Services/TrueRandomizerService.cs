@@ -12,12 +12,10 @@ namespace ParticleEngine.Services
         private readonly RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
         private readonly byte[] _uint32Buffer = new byte[4];
 
-
         /// <summary>
         /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
         /// </summary>
         public TrueRandomizerService() { }
-
 
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
@@ -25,7 +23,6 @@ namespace ParticleEngine.Services
         /// <returns></returns>
         [ExcludeFromCodeCoverage]
         public bool FlipCoin() => GetValue(0f, 1f) <= 0.5f;
-
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
@@ -50,7 +47,6 @@ namespace ParticleEngine.Services
             }
         }
 
-
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
         /// A random value will be chosen between the min and max values no matter which value is less than 
@@ -62,7 +58,6 @@ namespace ParticleEngine.Services
         public double GetValue(double minValue, double maxValue) =>
             //Add 0.001 so that way the max value is inclusive.
             GetValue((float)minValue, (float)maxValue);
-
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.

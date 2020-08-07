@@ -15,7 +15,6 @@ namespace ParticleEngine.Behaviors
         /// <param name="randomizer">The randomizer used for ther setting value.</param>
         public EaseInBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings, randomizer) { }
 
-
         /// <summary>
         /// Updates the behavior.
         /// </summary>
