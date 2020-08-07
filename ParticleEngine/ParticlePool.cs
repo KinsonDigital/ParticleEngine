@@ -17,7 +17,7 @@ namespace ParticleEngine
         /// <summary>
         /// Occurs every time the total amount of living particles has changed.
         /// </summary>
-        //TODO: Implement code to make use of invoking this event.
+        // TODO: Implement code to make use of invoking this event.
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
 
         private List<Particle> _particles = new List<Particle>();
@@ -76,7 +76,7 @@ namespace ParticleEngine
         {
             _spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
-            //If the amount of time to spawn a new particle has passed
+            // If the amount of time to spawn a new particle has passed
             if (_spawnRateElapsed >= _spawnRate)
             {
                 _spawnRate = GetRandomSpawnRate();
@@ -144,7 +144,7 @@ namespace ParticleEngine
             if (_disposedValue)
                 return;
 
-            //Dispose of managed resources
+            // Dispose of managed resources
             if (disposing)
             {
                 if (!(PoolTexture is null))

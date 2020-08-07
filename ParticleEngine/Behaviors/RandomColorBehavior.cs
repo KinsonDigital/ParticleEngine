@@ -36,13 +36,13 @@ namespace ParticleEngine.Behaviors
         {
             base.Update(timeElapsed);
 
-            //If the amount of time has passed, disable the behavor
+            // If the amount of time has passed, disable the behavor
             Enabled = ElapsedTime < _settings.LifeTime;
 
             if (_isColorChosen)
                 return;
 
-            //Randomly choose a color and set the value to a floating point number that represents that color
+            // Randomly choose a color and set the value to a floating point number that represents that color
             var randomIndex = _randomizer.GetValue(0, _settings.Data is null ? 0 : _settings.Data.Length - 1);
 
             Value = _settings.Data is null ? "clr:255,255,255,255" : _settings.Data[randomIndex];

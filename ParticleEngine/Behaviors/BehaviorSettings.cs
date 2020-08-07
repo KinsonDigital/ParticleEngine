@@ -6,7 +6,7 @@ namespace ParticleEngine.Behaviors
 {
     using System;
 
-    //TODO: Add code docs
+    // TODO: Add code docs
     public abstract class BehaviorSettings
     {
         /// <summary>

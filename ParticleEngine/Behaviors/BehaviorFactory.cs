@@ -22,7 +22,7 @@ namespace ParticleEngine.Behaviors
         {
             var behaviors = new List<IBehavior>();
 
-            //Creates all of the behaviors using the given settings
+            // Creates all of the behaviors using the given settings
             foreach (var setting in settings)
             {
                 switch (setting.TypeOfBehavior)

@@ -19,8 +19,8 @@ namespace ParticleEngine
         /// <returns></returns>
         public static double EaseOutBounce(double t, double b, double c, double d)
         {
-            t /= 1000.0;//Convert to seconds
-            d /= 1000.0;//Convert to seconds
+            t /= 1000.0;// Convert to seconds
+            d /= 1000.0;// Convert to seconds
 
             if ((t /= d) < 0.36363636363636363636363636363636)
             {
@@ -50,8 +50,8 @@ namespace ParticleEngine
         /// <returns></returns>
         public static double EaseInQuad(double t, double b, double c, double d)
         {
-            t /= 1000.0;//Convert to seconds
-            d /= 1000.0;//Convert to seconds
+            t /= 1000.0;// Convert to seconds
+            d /= 1000.0;// Convert to seconds
 
             t /= d;
 

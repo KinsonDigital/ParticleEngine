@@ -68,7 +68,7 @@ namespace ParticleEngine
                 return (byte)(value < 0 ? 0 : value);
             }
 
-            //Apply the behavior values to the particle attributes
+            // Apply the behavior values to the particle attributes
             for (int i = 0; i < _behaviors.Length; i++)
             {
                 if (_behaviors[i].Enabled)
@@ -100,7 +100,7 @@ namespace ParticleEngine
                             Size = value;
                             break;
                         case ParticleAttribute.Color:
-                            //Create the color
+                            // Create the color
                             TintColor = ParseToParticleColor(_behaviors[i].Value);
                             break;
                         case ParticleAttribute.RedColorComponent:
@@ -144,19 +144,19 @@ namespace ParticleEngine
             if (!colorValue.Contains(':'))
                 throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
 
-            //Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
-            //Section 1 => clr
-            //Section 2 => 10,20,30,40
+            // Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
+            // Section 1 => clr
+            // Section 2 => 10,20,30,40
             var valueSections = colorValue.Split(':');
 
             if (valueSections.Length >= 1 && string.IsNullOrEmpty(valueSections[0]))
                 throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing 'clr'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
 
-            //Split the color components to separate each number
-            //Section 1 => 10
-            //Section 2 => 20
-            //Section 3 => 30
-            //Section 4 => 40
+            // Split the color components to separate each number
+            // Section 1 => 10
+            // Section 2 => 20
+            // Section 3 => 30
+            // Section 4 => 40
             var clrComponents = valueSections[1].Split(',');
 
             var alpha = ParseColorComponent("alpha", clrComponents[0]);
@@ -164,7 +164,7 @@ namespace ParticleEngine
             var green = ParseColorComponent("green", clrComponents[2]);
             var blue = ParseColorComponent("blue", clrComponents[3]);
 
-            //Create the color
+            // Create the color
             return new ParticleColor(alpha, red, green, blue);
         }
 

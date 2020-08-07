@@ -60,7 +60,6 @@ namespace ParticleEngine.Services
         /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
         /// <returns></returns>
         public double GetValue(double minValue, double maxValue) =>
-            //Add 0.001 so that way the max value is inclusive.
             GetValue((float)minValue, (float)maxValue);
 
         /// <summary>
@@ -73,8 +72,8 @@ namespace ParticleEngine.Services
         /// <returns></returns>
         public int GetValue(int minValue, int maxValue)
         {
-            //If the min value is greater than the max,
-            //swap the values.
+            // If the min value is greater than the max,
+            // swap the values.
             if (minValue > maxValue)
             {
                 var valueTemp = minValue;

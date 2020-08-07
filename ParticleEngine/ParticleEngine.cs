@@ -46,7 +46,7 @@ namespace ParticleEngine
             {
                 _enabled = value;
 
-                //If the engine is disabled, kill all the particles
+                // If the engine is disabled, kill all the particles
                 if (!_enabled)
                     KillAllParticles();
             }
