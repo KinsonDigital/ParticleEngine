@@ -7,6 +7,9 @@ namespace KDParticleEngine
 {
     using System;
     using System.Drawing;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
     using KDParticleEngine.Behaviors;
 
     /// <summary>
@@ -103,18 +106,16 @@ namespace KDParticleEngine
                             break;
                         case ParticleAttribute.Color:
                             // Create the color
-                            var clrParseSuccess = TryParse(this.behaviors[i].Value, out ParticleColor result);
+                            var (clrParseSuccess, componentValue, parseFailReason) = TryParse(this.behaviors[i].Value, out ParticleColor result);
 
-                            if (clrParseSuccess)
+                            if (!clrParseSuccess)
                             {
-                                TintColor = result;
-                            }
-                            else
-                            {
-                                // TODO: Improve this exception and test for it
-                                throw new Exception($"Parsing of the color '{this.behaviors[i].Value}' failed.");
+                                var exceptionLocation = $"Particle.Update Exception: {parseFailReason}";
+
+                                throw new Exception($"{exceptionLocation}");
                             }
 
+                            TintColor = result;
                             break;
                         case ParticleAttribute.RedColorComponent:
                             TintColor.R = ClampClrValue(value);
@@ -175,66 +176,78 @@ namespace KDParticleEngine
             HashCode.Combine(this.behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
 
         /// <summary>
-        /// Parses the given <paramref name="value"/> to a color component byte value.
-        /// </summary>
-        /// <param name="clrComponent">The name of the component being parsed.</param>
-        /// <param name="value">The value to be parsed.</param>
-        /// <returns>A parsed byte result.</returns>
-        private static byte ParseColorComponent(string clrComponent, string value)
-        {
-            var parseSuccess = int.TryParse(value, out var result);
-
-            if (parseSuccess)
-            {
-                if (result < 0 || result > 255)
-                    throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
-
-                return (byte)result;
-            }
-
-            throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
-        }
-
-        /// <summary>
         /// Parses the <paramref name="colorValue"/> string into a <see cref="ParticleColor"/> type.
         /// </summary>
         /// <param name="colorValue">The color string to parse.</param>
         /// <returns>True if the parse was successful.</returns>
-        private static bool TryParse(string colorValue, out ParticleColor color)
+        private static (bool success, string componentValue, string parseFailReason) TryParse(string colorValue, out ParticleColor color)
         {
             color = new ParticleColor(0, 0, 0, 0);
 
             /*Parse the string data into color components to create a color from
              * Example Data: clr:10,20,30,40
             */
+            const string syntaxAsFollowsMsg = "\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>";
 
+            // Check to make sure that the 'clr' prefix exists
+            if (!colorValue.Contains("clr", StringComparison.InvariantCulture))
+                return (false, "all", $"Error #900. Invalid Syntax. Missing 'clr' prefix.{syntaxAsFollowsMsg}");
+
+            // Check to make sure the ':' character exists
             if (!colorValue.Contains(':', StringComparison.OrdinalIgnoreCase))
-                return false;
+                return (false, "all", $"Error #1000. Invalid Syntax. Missing ':'.{syntaxAsFollowsMsg}");
 
             // Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
             // Section 1 => clr
             // Section 2 => 10,20,30,40
             var valueSections = colorValue.Split(':');
 
-            if (valueSections.Length >= 1 && string.IsNullOrEmpty(valueSections[0]))
-                return false;
-
             // Split the color components to separate each number
-            // Section 1 => 10
-            // Section 2 => 20
-            // Section 3 => 30
-            // Section 4 => 40
-            var clrComponents = valueSections[1].Split(',');
+            // Section 1 => 10 (Alpha)
+            // Section 2 => 20 (Red)
+            // Section 3 => 30 (Green)
+            // Section 4 => 40 (Blue)
+            var clrComponents = valueSections[1].Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-            var alpha = ParseColorComponent("alpha", clrComponents[0]);
-            var red = ParseColorComponent("red", clrComponents[1]);
-            var green = ParseColorComponent("green", clrComponents[2]);
-            var blue = ParseColorComponent("blue", clrComponents[3]);
+            // Check if any of the color components are missing
+            if (clrComponents.Length != 4)
+                return (false, "all", "Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
+
+            // Check for non number digits contained in the components
+            if (clrComponents[0].ContainsNonNumberCharacters())
+                return (false, clrComponents[0].ToString(CultureInfo.InvariantCulture), $"Error #1200. Invalid Syntax. Alpha color component must only contain numbers.");
+
+            if (clrComponents[1].ContainsNonNumberCharacters())
+                return (false, clrComponents[1].ToString(CultureInfo.InvariantCulture), $"Error #1300. Invalid Syntax. Alpha color component must only contain numbers.");
+
+            if (clrComponents[2].ContainsNonNumberCharacters())
+                return (false, clrComponents[2].ToString(CultureInfo.InvariantCulture), $"Error #1400. Invalid Syntax. Alpha color component must only contain numbers.");
+
+            if (clrComponents[3].ContainsNonNumberCharacters())
+                return (false, clrComponents[3].ToString(CultureInfo.InvariantCulture), $"Error #1500. Invalid Syntax. Alpha color component must only contain numbers.");
+
+            // Parse values and check for values out of the range of 0-255
+            var alphaParseSuccess = byte.TryParse(clrComponents[0], out var alpha);
+            var redParseSuccess = byte.TryParse(clrComponents[1], out var red);
+            var greenParseSuccess = byte.TryParse(clrComponents[2], out var green);
+            var blueParseSuccess = byte.TryParse(clrComponents[3], out var blue);
+
+            if (!alphaParseSuccess)
+                return (false, clrComponents[0].ToString(CultureInfo.InvariantCulture), "Error #1500. Invalid Syntax. Alpha color component out of range.");
+
+            if (!redParseSuccess)
+                return (false, clrComponents[1].ToString(CultureInfo.InvariantCulture), "Error #1600. Invalid Syntax. Red color component out of range.");
+
+            if (!greenParseSuccess)
+                return (false, clrComponents[2].ToString(CultureInfo.InvariantCulture), "Error #1700. Invalid Syntax. Green color component out of range.");
+
+            if (!blueParseSuccess)
+                return (false, clrComponents[3].ToString(CultureInfo.InvariantCulture), "Error #1800. Invalid Syntax. Blue color component out of range.");
 
             // Create the color
             color = new ParticleColor(alpha, red, green, blue);
 
-            return true;
+            return (true, string.Empty, string.Empty);
         }
     }
 }
