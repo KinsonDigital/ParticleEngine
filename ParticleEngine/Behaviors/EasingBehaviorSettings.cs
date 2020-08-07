@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
 
@@ -66,9 +66,14 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
-            HashCode.Combine(TypeOfBehavior, ApplyToAttribute,
-                             StartMin, StartMax,
-                             ChangeMin, ChangeMax,
-                             TotalTimeMin, TotalTimeMax);
+            HashCode.Combine(
+                TypeOfBehavior,
+                ApplyToAttribute,
+                StartMin,
+                StartMax,
+                ChangeMin,
+                ChangeMax,
+                TotalTimeMin,
+                TotalTimeMax);
     }
 }

@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     /// <summary>
     /// Represents different types of behaviors that can be applied to a <see cref="Particle"/>.
@@ -13,17 +13,20 @@ namespace ParticleEngine.Behaviors
         /// An unknown behavior.
         /// </summary>
         Unknown,
+
         /// <summary>
-        /// Ease out bounce easing funtion behavior.
+        /// Ease out bounce easing function behavior.
         /// </summary>
         EaseOutBounce,
+
         /// <summary>
         /// Ease in easing function behavior.
         /// </summary>
         EaseIn,
+
         /// <summary>
         /// Random choice behavior.
         /// </summary>
-        RandomChoice
+        RandomChoice,
     }
 }

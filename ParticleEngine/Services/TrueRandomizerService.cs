@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Services
+namespace KDParticleEngine.Services
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -15,27 +15,20 @@ namespace ParticleEngine.Services
     {
         private readonly RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
         private readonly byte[] uint32Buffer = new byte[4];
+        private bool isDisposed;
 
         /// <summary>
-        /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
+        /// Initializes a new instance of the <see cref="TrueRandomizerService"/> class.
         /// </summary>
-        public TrueRandomizerService() { }
+        public TrueRandomizerService()
+        {
+        }
 
-        /// <summary>
-        /// Returns a true/false value that represents the flip of a coin.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public bool FlipCoin() => GetValue(0f, 1f) <= 0.5f;
 
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public float GetValue(float minValue, float maxValue)
         {
             var minValueAsInt = (int)(minValue * 1000);
@@ -51,25 +44,11 @@ namespace ParticleEngine.Services
             }
         }
 
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetValue(double minValue, double maxValue) =>
             GetValue((float)minValue, (float)maxValue);
 
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public int GetValue(int minValue, int maxValue)
         {
             // If the min value is greater than the max,
@@ -97,6 +76,30 @@ namespace ParticleEngine.Services
 
                 if (rand < max - remainder)
                     return (int)(minValue + (rand % diff));
+            }
+        }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.isDisposed)
+            {
+                if (disposing)
+                    this.provider.Dispose();
+
+                this.isDisposed = true;
             }
         }
     }

@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
 
@@ -14,7 +14,7 @@ namespace ParticleEngine.Behaviors
         private readonly BehaviorSettings setting;
 
         /// <summary>
-        /// Creates a new instance of behavior.
+        /// Initializes a new instance of the <see cref="Behavior"/> class.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
         public Behavior(BehaviorSettings settings) => this.setting = settings;

@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
 
@@ -12,12 +12,12 @@ namespace ParticleEngine.Behaviors
     public class RandomChoiceBehaviorSettings : BehaviorSettings
     {
         /// <summary>
-        /// Creates a new instance of <see cref="RandomChoiceBehaviorSettings"/>.
+        /// Initializes a new instance of the <see cref="RandomChoiceBehaviorSettings"/> class.
         /// </summary>
         public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
 
         /// <summary>
-        /// Holds data for the use by an <see cref="IBehavior"/> implementation.
+        /// Gets or sets the data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
         public string[]? Data { get; set; }
 

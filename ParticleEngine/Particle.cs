@@ -2,11 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+namespace KDParticleEngine
 {
     using System;
     using System.Drawing;
-    using ParticleEngine.Behaviors;
+    using KDParticleEngine.Behaviors;
 
     /// <summary>
     /// Represents a single particle with various properties that dictate how the <see cref="Particle"/>
@@ -17,8 +18,9 @@ namespace ParticleEngine
         private readonly IBehavior[] behaviors;
 
         /// <summary>
-        /// Creates a new instance of <see cref="Particle"/>.
+        /// Initializes a new instance of the <see cref="Particle"/> class.
         /// </summary>
+        /// <param name="behaviors">The list of behaviors to add to the <see cref="Particle"/>.</param>
         public Particle(IBehavior[] behaviors) => this.behaviors = behaviors;
 
         /// <summary>
@@ -42,12 +44,12 @@ namespace ParticleEngine
         public float Size { get; set; }
 
         /// <summary>
-        /// Gets or sets if the <see cref="Particle"/> is alive or dead.
+        /// Gets or sets a value indicating whether the <see cref="Particle"/> is alive or dead.
         /// </summary>
         public bool IsAlive { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets if the <see cref="Particle"/> is dead or alive.
+        /// Gets or sets a value indicating whether the <see cref="Particle"/> is dead or alive.
         /// </summary>
         public bool IsDead
         {
@@ -101,7 +103,18 @@ namespace ParticleEngine
                             break;
                         case ParticleAttribute.Color:
                             // Create the color
-                            TintColor = ParseToParticleColor(this.behaviors[i].Value);
+                            var clrParseSuccess = TryParse(this.behaviors[i].Value, out ParticleColor result);
+
+                            if (clrParseSuccess)
+                            {
+                                TintColor = result;
+                            }
+                            else
+                            {
+                                // TODO: Improve this exception and test for it
+                                throw new Exception($"Parsing of the color '{this.behaviors[i].Value}' failed.");
+                            }
+
                             break;
                         case ParticleAttribute.RedColorComponent:
                             TintColor.R = ClampClrValue(value);
@@ -118,54 +131,6 @@ namespace ParticleEngine
                     }
                 }
             }
-        }
-
-        private byte ParseColorComponent(string clrComponent, string value)
-        {
-            var parseSuccess = int.TryParse(value, out var result);
-
-            if (parseSuccess)
-            {
-                if (result < 0 || result > 255)
-                    throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
-
-                return (byte)result;
-            }
-
-            throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
-        }
-
-        private ParticleColor ParseToParticleColor(string colorValue)
-        {
-            /*Parse the string data into color components to create a color from
-             * Example Data: clr:10,20,30,40
-            */
-
-            if (!colorValue.Contains(':'))
-                throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
-
-            // Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
-            // Section 1 => clr
-            // Section 2 => 10,20,30,40
-            var valueSections = colorValue.Split(':');
-
-            if (valueSections.Length >= 1 && string.IsNullOrEmpty(valueSections[0]))
-                throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tInvalid random color syntax.  Missing 'clr'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
-
-            // Split the color components to separate each number
-            // Section 1 => 10
-            // Section 2 => 20
-            // Section 3 => 30
-            // Section 4 => 40
-            var clrComponents = valueSections[1].Split(',');
-
-            var alpha = ParseColorComponent("alpha", clrComponents[0]);
-            var red = ParseColorComponent("red", clrComponents[1]);
-            var green = ParseColorComponent("green", clrComponents[2]);
-            var blue = ParseColorComponent("blue", clrComponents[3]);
-
-            // Create the color
-            return new ParticleColor(alpha, red, green, blue);
         }
 
         /// <summary>
@@ -208,5 +173,68 @@ namespace ParticleEngine
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
             HashCode.Combine(this.behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
+
+        /// <summary>
+        /// Parses the given <paramref name="value"/> to a color component byte value.
+        /// </summary>
+        /// <param name="clrComponent">The name of the component being parsed.</param>
+        /// <param name="value">The value to be parsed.</param>
+        /// <returns>A parsed byte result.</returns>
+        private static byte ParseColorComponent(string clrComponent, string value)
+        {
+            var parseSuccess = int.TryParse(value, out var result);
+
+            if (parseSuccess)
+            {
+                if (result < 0 || result > 255)
+                    throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
+
+                return (byte)result;
+            }
+
+            throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior {clrComponent} color component value '{value}' failed.");
+        }
+
+        /// <summary>
+        /// Parses the <paramref name="colorValue"/> string into a <see cref="ParticleColor"/> type.
+        /// </summary>
+        /// <param name="colorValue">The color string to parse.</param>
+        /// <returns>True if the parse was successful.</returns>
+        private static bool TryParse(string colorValue, out ParticleColor color)
+        {
+            color = new ParticleColor(0, 0, 0, 0);
+
+            /*Parse the string data into color components to create a color from
+             * Example Data: clr:10,20,30,40
+            */
+
+            if (!colorValue.Contains(':', StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
+            // Section 1 => clr
+            // Section 2 => 10,20,30,40
+            var valueSections = colorValue.Split(':');
+
+            if (valueSections.Length >= 1 && string.IsNullOrEmpty(valueSections[0]))
+                return false;
+
+            // Split the color components to separate each number
+            // Section 1 => 10
+            // Section 2 => 20
+            // Section 3 => 30
+            // Section 4 => 40
+            var clrComponents = valueSections[1].Split(',');
+
+            var alpha = ParseColorComponent("alpha", clrComponents[0]);
+            var red = ParseColorComponent("red", clrComponents[1]);
+            var green = ParseColorComponent("green", clrComponents[2]);
+            var blue = ParseColorComponent("blue", clrComponents[3]);
+
+            // Create the color
+            color = new ParticleColor(alpha, red, green, blue);
+
+            return true;
+        }
     }
 }

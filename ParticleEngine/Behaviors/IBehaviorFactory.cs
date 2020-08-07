@@ -2,9 +2,9 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
-    using ParticleEngine.Services;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// Creates behaviors using behavior settings.

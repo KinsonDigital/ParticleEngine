@@ -2,12 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine
+namespace KDParticleEngine
 {
     using System;
     using System.Collections.Generic;
-    using ParticleEngine.Behaviors;
-    using ParticleEngine.Services;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
@@ -23,8 +23,10 @@ namespace ParticleEngine
         private bool disposedValue = false;
 
         /// <summary>
-        /// Creates a new instance of <see cref="ParticleEngine"/>.
+        /// Initializes a new instance of the <see cref="ParticleEngine"/> class.
         /// </summary>
+        /// <param name="textureLoader">Loads particle textures.</param>
+        /// <param name="randomizer">Randomizes numbers.</param>
         public ParticleEngine(ITextureLoader<IParticleTexture> textureLoader, IRandomizerService randomizer)
         {
             this.textureLoader = textureLoader;
@@ -37,7 +39,7 @@ namespace ParticleEngine
         public ParticlePool<IParticleTexture>[] ParticlePools => this.particlePools.ToArray();
 
         /// <summary>
-        /// Gets or sets a value indicating if the engine is enabled or disabled.
+        /// Gets or sets a value indicating whether the engine is enabled or disabled.
         /// </summary>
         public bool Enabled
         {
@@ -105,17 +107,17 @@ namespace ParticleEngine
             this.particlePools.ForEach(p => p.Update(timeElapsed));
         }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
-        /// </summary>
-        public void Dispose() => Dispose(true);
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
-        /// <paramref name="disposing">If true, will dispose of managed resources.</paramref>
+        /// <inheritdoc/>
         /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposedValue)

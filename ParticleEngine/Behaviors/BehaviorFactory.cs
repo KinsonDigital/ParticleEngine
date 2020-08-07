@@ -2,11 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
     using System.Collections.Generic;
-    using ParticleEngine.Services;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// Creates behaviors using behavior settings.
@@ -18,8 +18,12 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         /// <param name="settings">The list of settings used to create each behavior.</param>
         /// <param name="randomizerService">The random used to randomly generate values.</param>
+        /// <returns>A list of behaviors.</returns>
         public IBehavior[] CreateBehaviors(BehaviorSettings[] settings, IRandomizerService randomizerService)
         {
+            if (settings is null)
+                throw new ArgumentNullException(nameof(settings), "The param must not be null.");
+
             var behaviors = new List<IBehavior>();
 
             // Creates all of the behaviors using the given settings

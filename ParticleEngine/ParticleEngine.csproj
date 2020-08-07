@@ -5,8 +5,8 @@
     <Platforms>AnyCPU</Platforms>
     <AssemblyTitle>ParticleEngine</AssemblyTitle>
     <Company>Kinson Digital</Company>
-    <RootNamespace>ParticleEngine</RootNamespace>
-    <AssemblyName>ParticleEngine</AssemblyName>
+    <RootNamespace>KDParticleEngine</RootNamespace>
+    <AssemblyName>KDParticleEngine</AssemblyName>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <Product>Particle Engine</Product>

@@ -2,46 +2,53 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+namespace KDParticleEngine
 {
     using System;
     using System.Collections.Generic;
-    using ParticleEngine.Behaviors;
-    using ParticleEngine.Services;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
 
     /// <summary>
-    /// Contains a number of resusable particles with a given particle effect applied to them.
+    /// Contains a number of reusable particles with a given particle effect applied to them.
     /// </summary>
-    public class ParticlePool<Texture> : IDisposable where Texture : class, IParticleTexture
+    /// <typeparam name="TTexture">The texture for the particles in the pool.</typeparam>
+    public class ParticlePool<TTexture> : IDisposable
+        where TTexture : class, IParticleTexture
     {
-        /// <summary>
-        /// Occurs every time the total amount of living particles has changed.
-        /// </summary>
-        // TODO: Implement code to make use of invoking this event.
-        public event EventHandler<EventArgs>? LivingParticlesCountChanged;
-
-        private List<Particle> particles = new List<Particle>();
         private readonly IRandomizerService randomService;
-        private readonly ITextureLoader<Texture> textureLoader;
+        private readonly ITextureLoader<TTexture> textureLoader;
+        private List<Particle> particles = new List<Particle>();
         private bool disposedValue = false;
         private int spawnRate;
         private double spawnRateElapsed = 0;
 
         /// <summary>
-        /// Creates a new instance of <see cref="ParticlePool"/>.
+        /// Initializes a new instance of the <see cref="ParticlePool{Texture}"/> class.
         /// </summary>
         /// <param name="behaviorFactory">The factory used for creating new behaviors for each particle.</param>
-        /// <param name="textureLoader">Loads the textures for the <see cref="ParticlePool{Texture}"/></param>
+        /// <param name="textureLoader">Loads the textures for the <see cref="ParticlePool{Texture}"/>.</param>
         /// <param name="effect">The particle effect to be applied to all of the particles in the pool.</param>
         /// <param name="randomizer">Used for generating random values when a particle is spawned.</param>
-        public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
+        public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<TTexture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
+            if (behaviorFactory is null)
+                throw new ArgumentNullException(nameof(behaviorFactory), "The parameter must not be null.");
+
             this.textureLoader = textureLoader;
             Effect = effect;
             this.randomService = randomizer;
 
             CreateAllParticles(behaviorFactory);
         }
+
+        // TODO: Implement code to make use of invoking this event.
+
+        /// <summary>
+        /// Occurs every time the total amount of living particles has changed.
+        /// </summary>
+        public event EventHandler<EventArgs>? LivingParticlesCountChanged;
 
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
@@ -64,9 +71,9 @@ namespace ParticleEngine
         public ParticleEffect Effect { get; private set; }
 
         /// <summary>
-        /// Gets or sets the texture of the particles in the pool.
+        /// Gets the texture of the particles in the pool.
         /// </summary>
-        public Texture? PoolTexture { get; private set; }
+        public TTexture? PoolTexture { get; private set; }
 
         /// <summary>
         /// Updates the particle pool.
@@ -112,7 +119,7 @@ namespace ParticleEngine
         /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object? obj)
         {
-            if (!(obj is ParticlePool<Texture> pool))
+            if (!(obj is ParticlePool<TTexture> pool))
                 return false;
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
@@ -129,16 +136,14 @@ namespace ParticleEngine
             HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose() => Dispose(true);
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
-        /// <paramref name="disposing">If true, will dispose of managed resources.</paramref>
+        /// <inheritdoc/>
         /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposedValue)
@@ -178,7 +183,7 @@ namespace ParticleEngine
         /// <summary>
         /// Returns a random time in milliseconds that the <see cref="Particle"/> will be spawned next.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A randomized spawn rate.</returns>
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)

@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
-    using ParticleEngine.Services;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// A behavior that can be applied to a particle that uses an easing function
@@ -15,13 +15,14 @@ namespace ParticleEngine.Behaviors
     {
         private readonly EasingBehaviorSettings setting;
         private readonly IRandomizerService randomizer;
-        private protected double lifeTime;
 
         /// <summary>
-        /// Creates a new instance of <see cref="EasingBehavior"/>.
+        /// Initializes a new instance of the <see cref="EasingBehavior"/> class.
         /// </summary>
+        /// <param name="settings">The behavior settings to add to the behavior.</param>
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
-        public EasingBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
+        public EasingBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer)
+            : base(settings)
         {
             this.setting = settings;
             this.randomizer = randomizer;
@@ -39,13 +40,18 @@ namespace ParticleEngine.Behaviors
         public double Change { get; set; }
 
         /// <summary>
+        /// Gets the life time of the behavior.
+        /// </summary>
+        protected double LifeTime { get; private set; }
+
+        /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
         public override void Update(TimeSpan timeElapsed)
         {
             base.Update(timeElapsed);
-            Enabled = ElapsedTime < this.lifeTime;
+            Enabled = ElapsedTime < LifeTime;
         }
 
         /// <summary>
@@ -65,7 +71,7 @@ namespace ParticleEngine.Behaviors
         {
             Start = this.randomizer.GetValue(this.setting.StartMin, this.setting.StartMax);
             Change = this.randomizer.GetValue(this.setting.ChangeMin, this.setting.ChangeMax);
-            this.lifeTime = this.randomizer.GetValue(this.setting.TotalTimeMin, this.setting.TotalTimeMax);
+            LifeTime = this.randomizer.GetValue(this.setting.TotalTimeMin, this.setting.TotalTimeMax);
         }
     }
 }

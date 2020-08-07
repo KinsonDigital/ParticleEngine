@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
-    using ParticleEngine.Services;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// Randomly chooses colors from a list of colors that will be applied to a particle.
@@ -13,16 +13,17 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class RandomColorBehavior : Behavior
     {
-        private RandomChoiceBehaviorSettings settings;
+        private readonly RandomChoiceBehaviorSettings settings;
         private readonly IRandomizerService randomizer;
         private bool isColorChosen;
 
         /// <summary>
-        /// Creates a new instance of <see cref="RandomColorBehavior"/>.
+        /// Initializes a new instance of the <see cref="RandomColorBehavior"/> class.
         /// </summary>
         /// <param name="settings">The behavior settings.</param>
         /// <param name="randomizer">The randomizer used to randomly choose a color from a list of colors.</param>
-        public RandomColorBehavior(RandomChoiceBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
+        public RandomColorBehavior(RandomChoiceBehaviorSettings settings, IRandomizerService randomizer)
+            : base(settings)
         {
             this.settings = settings;
             this.randomizer = randomizer;

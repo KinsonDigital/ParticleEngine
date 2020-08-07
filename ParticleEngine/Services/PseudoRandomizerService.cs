@@ -1,8 +1,8 @@
-// <copyright file="PseudoRandomizerService.cs" company="KinsonDigital">
+﻿// <copyright file="PseudoRandomizerService.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Services
+namespace KDParticleEngine.Services
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -13,27 +13,18 @@ namespace ParticleEngine.Services
     public class PseudoRandomizerService : IRandomizerService
     {
         private readonly Random random;
+        private bool isDisposed;
 
         /// <summary>
-        /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
+        /// Initializes a new instance of the <see cref="PseudoRandomizerService"/> class.
         /// </summary>
         public PseudoRandomizerService() => this.random = new Random();
 
-        /// <summary>
-        /// Returns a true/false value that represents the flip of a coin.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public bool FlipCoin() => this.random.NextDouble() <= 0.5;
 
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public float GetValue(float minValue, float maxValue)
         {
             var minValueAsInt = (int)((minValue + 0.001f) * 1000);
@@ -49,32 +40,33 @@ namespace ParticleEngine.Services
             }
         }
 
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetValue(double minValue, double maxValue) =>
-            // Add 0.001 so that way the max value is inclusive.
             GetValue((float)minValue, (float)maxValue);
 
+        /// <inheritdoc/>
+        public int GetValue(int minValue, int maxValue) =>
+            minValue > maxValue
+                ? this.random.Next(maxValue, minValue + 1)
+                : this.random.Next(minValue, maxValue + 1);
+
         /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than
-        /// or greater than the other.
+        /// <inheritdoc/>
         /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
-        public int GetValue(int minValue, int maxValue)
+        public void Dispose()
         {
-            // Add 1 so that way the max value is inclusive.
-            return minValue > maxValue ?
-                this.random.Next(maxValue, minValue + 1) :
-                this.random.Next(minValue, maxValue + 1);
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.isDisposed)
+                this.isDisposed = true;
         }
     }
 }

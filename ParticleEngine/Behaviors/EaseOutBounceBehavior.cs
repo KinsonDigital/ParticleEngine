@@ -2,10 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
     using System;
-    using ParticleEngine.Services;
+    using System.Globalization;
+    using KDParticleEngine.Services;
 
     /// <summary>
     /// Represents an ease out bounce type of easing function behavior.
@@ -13,11 +14,14 @@ namespace ParticleEngine.Behaviors
     public class EaseOutBounceBehavior : EasingBehavior
     {
         /// <summary>
-        /// Creates a new instance of <see cref="EaseOutBounceBehavior"/>.
+        /// Initializes a new instance of the <see cref="EaseOutBounceBehavior"/> class.
         /// </summary>
         /// <param name="settings">The behavior settings of the behavior.</param>
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
-        public EaseOutBounceBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base (settings, randomizer) { }
+        public EaseOutBounceBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer)
+            : base(settings, randomizer)
+        {
+        }
 
         /// <summary>
         /// Updates the behavior.
@@ -25,7 +29,7 @@ namespace ParticleEngine.Behaviors
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public override void Update(TimeSpan timeElapsed)
         {
-            Value = EasingFunctions.EaseOutBounce(ElapsedTime, Start, Change, this.lifeTime).ToString();
+            Value = EasingFunctions.EaseOutBounce(ElapsedTime, Start, Change, LifeTime).ToString(CultureInfo.InvariantCulture);
             base.Update(timeElapsed);
         }
     }
