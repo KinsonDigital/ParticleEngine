@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using Xunit;
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
+using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 
 namespace KDParticleEngineTests.Behaviors
 {

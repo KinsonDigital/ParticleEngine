@@ -6,7 +6,7 @@
     <AssemblyTitle>ParticleEngine</AssemblyTitle>
     <Company>Kinson Digital</Company>
     <RootNamespace>KDParticleEngine</RootNamespace>
-    <AssemblyName>KDParticleEngine</AssemblyName>
+    <AssemblyName>ParticleEngine</AssemblyName>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <Product>Particle Engine</Product>

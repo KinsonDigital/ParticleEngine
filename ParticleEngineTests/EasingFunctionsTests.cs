@@ -1,4 +1,4 @@
-﻿using ParticleEngine;
+﻿using KDParticleEngine;
 using Xunit;
 
 namespace KDParticleEngineTests

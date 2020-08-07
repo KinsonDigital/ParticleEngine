@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
+using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 
 namespace KDParticleEngineTests.Fakes
 {

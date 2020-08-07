@@ -1,5 +1,5 @@
-﻿using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
+﻿using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 using Moq;
 using System;
 using Xunit;

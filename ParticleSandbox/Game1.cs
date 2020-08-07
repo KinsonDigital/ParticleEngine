@@ -1,11 +1,11 @@
-using ParticleEngine;
-using ParticleEngine.Services;
+using KDParticleEngine;
+using KDParticleEngine.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNAColor = Microsoft.Xna.Framework.Color;
 using NETPointF = System.Drawing.PointF;
 using System;
-using ParticleEngine.Behaviors;
+using KDParticleEngine.Behaviors;
 
 /*Easing Functino Resources
  * 1. http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
@@ -24,7 +24,7 @@ namespace ParticleSandbox
         private SpriteBatch _spriteBatch;
         private SpriteFont _gameFont;
         private readonly TrueRandomizerService _randomService;
-        private readonly ParticleEngine.ParticleEngine _engine;
+        private readonly ParticleEngine _engine;
         private readonly ITextureLoader<IParticleTexture> _textureLoader;
         private readonly FrameCounter _frameCounter = new FrameCounter();
 
@@ -38,7 +38,7 @@ namespace ParticleSandbox
 
             _randomService = new TrueRandomizerService();
             _textureLoader = new TextureLoader(Content);
-            _engine = new ParticleEngine.ParticleEngine(_textureLoader, _randomService);
+            _engine = new ParticleEngine(_textureLoader, _randomService);
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 

@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using System.Drawing;
-using ParticleEngine;
-using ParticleEngine.Behaviors;
+using KDParticleEngine;
+using KDParticleEngine.Behaviors;
 using Moq;
 using System;
 using KDParticleEngineTests.XUnitHelpers;

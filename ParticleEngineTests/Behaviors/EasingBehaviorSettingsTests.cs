@@ -1,5 +1,5 @@
-﻿using ParticleEngine;
-using ParticleEngine.Behaviors;
+﻿using KDParticleEngine;
+using KDParticleEngine.Behaviors;
 using Xunit;
 
 namespace KDParticleEngineTests.Behaviors

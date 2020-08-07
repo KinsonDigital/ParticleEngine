@@ -1,7 +1,7 @@
 ﻿using System;
-using ParticleEngine;
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
+using KDParticleEngine;
+using KDParticleEngine.Behaviors;
+using KDParticleEngine.Services;
 using KDParticleEngineTests.XUnitHelpers;
 using Moq;
 using Xunit;
@@ -15,7 +15,7 @@ namespace KDParticleEngineTests
     {
         #region Private Fields
         private Mock<IRandomizerService> _mockRandomizerService;
-        private ParticleEngine.ParticleEngine _engine;
+        private ParticleEngine _engine;
         private readonly Mock<ITextureLoader<IParticleTexture>> _mockTextureLoader;
         private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
         #endregion
@@ -31,7 +31,7 @@ namespace KDParticleEngineTests
             _mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
             _mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
-            _engine = new ParticleEngine.ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+            _engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
         }
         #endregion
 
@@ -98,7 +98,7 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine.ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+            var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
 
             //Create 2 pools
             engine.CreatePool(effect, _mockBehaviorFactory.Object);
@@ -230,7 +230,7 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine.ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
+            var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
 
             //Create 2 pools
             engine.CreatePool(effect, _mockBehaviorFactory.Object);

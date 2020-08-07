@@ -1,8 +1,8 @@
-﻿using ParticleEngine;
+﻿using KDParticleEngine;
 using Xunit;
 using System;
 using System.Drawing;
-using ParticleEngine.Behaviors;
+using KDParticleEngine.Behaviors;
 using Moq;
 using System.Collections.Generic;
 

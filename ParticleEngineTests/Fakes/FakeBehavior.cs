@@ -1,4 +1,4 @@
-﻿using ParticleEngine.Behaviors;
+﻿using KDParticleEngine.Behaviors;
 using System.Diagnostics.CodeAnalysis;
 
 namespace KDParticleEngineTests.Fakes
