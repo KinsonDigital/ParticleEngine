@@ -1,4 +1,8 @@
-﻿namespace ParticleEngine
+﻿// <copyright file="ITextureLoader.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace ParticleEngine
 {
     /// <summary>
     /// Loads textures.

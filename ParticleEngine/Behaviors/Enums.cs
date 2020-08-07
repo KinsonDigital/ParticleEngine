@@ -1,4 +1,8 @@
-﻿namespace ParticleEngine.Behaviors
+﻿// <copyright file="Enums.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace ParticleEngine.Behaviors
 {
     /// <summary>
     /// Represents different types of behaviors that can be applied to a <see cref="Particle"/>.

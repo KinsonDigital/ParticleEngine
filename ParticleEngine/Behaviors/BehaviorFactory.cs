@@ -1,4 +1,8 @@
-﻿using ParticleEngine.Services;
+﻿// <copyright file="BehaviorFactory.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using ParticleEngine.Services;
 using System;
 using System.Collections.Generic;
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="Particle.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using System;
 using System.Drawing;
 using ParticleEngine.Behaviors;
 

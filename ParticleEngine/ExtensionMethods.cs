@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ExtensionMethods.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;

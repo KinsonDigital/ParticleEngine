@@ -1,4 +1,8 @@
-﻿using ParticleEngine.Behaviors;
+﻿// <copyright file="ParticleEffect.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using ParticleEngine.Behaviors;
 using System;
 using System.Drawing;
 

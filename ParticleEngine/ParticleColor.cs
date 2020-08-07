@@ -1,3 +1,7 @@
+// <copyright file="ParticleColor.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
 using System;
 
 namespace ParticleEngine

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="RandomColorBehavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using System;
 using ParticleEngine.Services;
 
 namespace ParticleEngine.Behaviors

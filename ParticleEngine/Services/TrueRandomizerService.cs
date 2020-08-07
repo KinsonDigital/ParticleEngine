@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="TrueRandomizerService.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 

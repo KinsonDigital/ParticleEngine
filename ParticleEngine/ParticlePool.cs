@@ -1,4 +1,8 @@
-﻿using ParticleEngine.Behaviors;
+﻿// <copyright file="ParticlePool.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+using ParticleEngine.Behaviors;
 using ParticleEngine.Services;
 using System;
 using System.Collections.Generic;

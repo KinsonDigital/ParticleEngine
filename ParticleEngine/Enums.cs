@@ -1,4 +1,8 @@
-﻿namespace ParticleEngine
+﻿// <copyright file="Enums.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace ParticleEngine
 {
     /// <summary>
     /// Represents the different types of particle attributes that a behavior can be applied to.

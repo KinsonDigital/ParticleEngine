@@ -1,4 +1,8 @@
-﻿namespace ParticleEngine.Services
+﻿// <copyright file="IRandomizerService.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace ParticleEngine.Services
 {
     /// <summary>
     /// Provides methods for randomizing numbers.
