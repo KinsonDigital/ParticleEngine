@@ -3,7 +3,7 @@
 // </copyright>
 
 namespace ParticleEngine.Services
-{ 
+{
     using System;
     using System.Diagnostics.CodeAnalysis;
 
@@ -28,7 +28,7 @@ namespace ParticleEngine.Services
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
+        /// A random value will be chosen between the min and max values no matter which value is less than
         /// or greater than the other.
         /// </summary>
         /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
@@ -51,7 +51,7 @@ namespace ParticleEngine.Services
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
+        /// A random value will be chosen between the min and max values no matter which value is less than
         /// or greater than the other.
         /// </summary>
         /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
@@ -63,7 +63,7 @@ namespace ParticleEngine.Services
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
+        /// A random value will be chosen between the min and max values no matter which value is less than
         /// or greater than the other.
         /// </summary>
         /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
