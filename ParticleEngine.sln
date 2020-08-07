@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49
 		ParticleEngine.runsettings = ParticleEngine.runsettings
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "Testing\ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSandbox", "ParticleSandbox\ParticleSandbox.csproj", "{2FB03CD2-D6C7-46A5-BC93-85D10168B753}"
 EndProject

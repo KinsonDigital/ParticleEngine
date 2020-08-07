@@ -35,6 +35,6 @@
 
   
   <ItemGroup>
-    <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj" />
+    <ProjectReference Include="..\..\ParticleEngine\ParticleEngine.csproj" />
   </ItemGroup>
 </Project>
