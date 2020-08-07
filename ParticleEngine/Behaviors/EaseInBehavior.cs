@@ -25,7 +25,7 @@ namespace ParticleEngine.Behaviors
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public override void Update(TimeSpan timeElapsed)
         {
-            Value = EasingFunctions.EaseInQuad(ElapsedTime, Start, Change, _lifeTime).ToString();
+            Value = EasingFunctions.EaseInQuad(ElapsedTime, Start, Change, this._lifeTime).ToString();
             base.Update(timeElapsed);
         }
     }

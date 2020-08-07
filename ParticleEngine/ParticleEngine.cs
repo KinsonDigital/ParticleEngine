@@ -27,27 +27,27 @@ namespace ParticleEngine
         /// </summary>
         public ParticleEngine(ITextureLoader<IParticleTexture> textureLoader, IRandomizerService randomizer)
         {
-            _textureLoader = textureLoader;
-            _randomizer = randomizer;
+            this._textureLoader = textureLoader;
+            this._randomizer = randomizer;
         }
 
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ParticlePool<IParticleTexture>[] ParticlePools => _particlePools.ToArray();
+        public ParticlePool<IParticleTexture>[] ParticlePools => this._particlePools.ToArray();
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
         /// </summary>
         public bool Enabled
         {
-            get => _enabled;
+            get => this._enabled;
             set
             {
-                _enabled = value;
+                this._enabled = value;
 
                 // If the engine is disabled, kill all the particles
-                if (!_enabled)
+                if (!this._enabled)
                     KillAllParticles();
             }
         }
@@ -57,7 +57,7 @@ namespace ParticleEngine
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
         /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
-        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => _particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, _textureLoader, effect, _randomizer));
+        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => this._particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, this._textureLoader, effect, this._randomizer));
 
         /// <summary>
         /// Clears all of the current existing pools.
@@ -65,10 +65,10 @@ namespace ParticleEngine
         /// <remarks>This will properly dispose of the texture for each pool.</remarks>
         public void ClearPools()
         {
-            foreach (var pool in _particlePools)
+            foreach (var pool in this._particlePools)
                 pool.Dispose();
 
-            _particlePools.Clear();
+            this._particlePools.Clear();
         }
 
         /// <summary>
@@ -77,18 +77,18 @@ namespace ParticleEngine
         /// </summary>
         public void LoadTextures()
         {
-            foreach (var pool in _particlePools)
+            foreach (var pool in this._particlePools)
             {
                 pool.LoadTexture();
             }
 
-            _texturesLoaded = true;
+            this._texturesLoaded = true;
         }
 
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
-        public void KillAllParticles() => _particlePools.ForEach(p => p.KillAllParticles());
+        public void KillAllParticles() => this._particlePools.ForEach(p => p.KillAllParticles());
 
         /// <summary>
         /// Updates all of the <see cref="Particle"/>s.
@@ -96,13 +96,13 @@ namespace ParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            if (!_texturesLoaded)
+            if (!this._texturesLoaded)
                 throw new Exception("The textures must be loaded first.");
 
             if (!Enabled)
                 return;
 
-            _particlePools.ForEach(p => p.Update(timeElapsed));
+            this._particlePools.ForEach(p => p.Update(timeElapsed));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace ParticleEngine
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!this._disposedValue)
             {
                 if (disposing)
                 {
@@ -126,7 +126,7 @@ namespace ParticleEngine
                         pool.Dispose();
                 }
 
-                _disposedValue = true;
+                this._disposedValue = true;
             }
         }
     }

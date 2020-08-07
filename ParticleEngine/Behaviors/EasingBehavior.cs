@@ -23,8 +23,8 @@ namespace ParticleEngine.Behaviors
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
         public EasingBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
         {
-            _setting = settings;
-            _randomizer = randomizer;
+            this._setting = settings;
+            this._randomizer = randomizer;
             ApplyRandomization();
         }
 
@@ -45,7 +45,7 @@ namespace ParticleEngine.Behaviors
         public override void Update(TimeSpan timeElapsed)
         {
             base.Update(timeElapsed);
-            Enabled = ElapsedTime < _lifeTime;
+            Enabled = ElapsedTime < this._lifeTime;
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         private void ApplyRandomization()
         {
-            Start = _randomizer.GetValue(_setting.StartMin, _setting.StartMax);
-            Change = _randomizer.GetValue(_setting.ChangeMin, _setting.ChangeMax);
-            _lifeTime = _randomizer.GetValue(_setting.TotalTimeMin, _setting.TotalTimeMax);
+            Start = this._randomizer.GetValue(this._setting.StartMin, this._setting.StartMax);
+            Change = this._randomizer.GetValue(this._setting.ChangeMin, this._setting.ChangeMax);
+            this._lifeTime = this._randomizer.GetValue(this._setting.TotalTimeMin, this._setting.TotalTimeMax);
         }
     }
 }

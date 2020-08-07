@@ -19,7 +19,7 @@ namespace ParticleEngine
         /// <summary>
         /// Creates a new instance of <see cref="Particle"/>.
         /// </summary>
-        public Particle(IBehavior[] behaviors) => _behaviors = behaviors;
+        public Particle(IBehavior[] behaviors) => this._behaviors = behaviors;
 
         /// <summary>
         /// Gets or sets the position of the <see cref="Particle"/>.
@@ -69,23 +69,23 @@ namespace ParticleEngine
             }
 
             // Apply the behavior values to the particle attributes
-            for (int i = 0; i < _behaviors.Length; i++)
+            for (int i = 0; i < this._behaviors.Length; i++)
             {
-                if (_behaviors[i].Enabled)
+                if (this._behaviors[i].Enabled)
                 {
                     var value = 0f;
 
-                    var parseSuccess = _behaviors[i].ApplyToAttribute != ParticleAttribute.Color
-                        ? float.TryParse(string.IsNullOrEmpty(_behaviors[i].Value) ? "0" : _behaviors[i].Value, out value)
+                    var parseSuccess = this._behaviors[i].ApplyToAttribute != ParticleAttribute.Color
+                        ? float.TryParse(string.IsNullOrEmpty(this._behaviors[i].Value) ? "0" : this._behaviors[i].Value, out value)
                         : true;
 
                     if (!parseSuccess)
-                        throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{_behaviors[i].Value}' failed.\n\tValue must be a number.");
+                        throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{this._behaviors[i].Value}' failed.\n\tValue must be a number.");
 
-                    _behaviors[i].Update(timeElapsed);
+                    this._behaviors[i].Update(timeElapsed);
                     IsAlive = true;
 
-                    switch (_behaviors[i].ApplyToAttribute)
+                    switch (this._behaviors[i].ApplyToAttribute)
                     {
                         case ParticleAttribute.X:
                             Position = new PointF(value, Position.Y);
@@ -101,7 +101,7 @@ namespace ParticleEngine
                             break;
                         case ParticleAttribute.Color:
                             // Create the color
-                            TintColor = ParseToParticleColor(_behaviors[i].Value);
+                            TintColor = ParseToParticleColor(this._behaviors[i].Value);
                             break;
                         case ParticleAttribute.RedColorComponent:
                             TintColor.R = ClampClrValue(value);
@@ -173,10 +173,10 @@ namespace ParticleEngine
         /// </summary>
         public void Reset()
         {
-            if (!(_behaviors is null))
+            if (!(this._behaviors is null))
             {
-                for (int i = 0; i < _behaviors.Length; i++)
-                    _behaviors[i].Reset();
+                for (int i = 0; i < this._behaviors.Length; i++)
+                    this._behaviors[i].Reset();
             }
 
             Angle = 0;
@@ -207,6 +207,6 @@ namespace ParticleEngine
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
-            HashCode.Combine(_behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
+            HashCode.Combine(this._behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
     }
 }

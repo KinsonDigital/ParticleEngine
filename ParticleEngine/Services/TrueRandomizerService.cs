@@ -89,9 +89,9 @@ namespace ParticleEngine.Services
 
             while (true)
             {
-                _provider.GetBytes(_uint32Buffer);
+                this._provider.GetBytes(this._uint32Buffer);
 
-                var rand = Math.Abs((int)BitConverter.ToUInt32(_uint32Buffer, 0));
+                var rand = Math.Abs((int)BitConverter.ToUInt32(this._uint32Buffer, 0));
                 var max = 1 + (long)int.MaxValue;
                 var remainder = max % diff;
 

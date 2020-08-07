@@ -36,9 +36,9 @@ namespace ParticleEngine
         /// <param name="randomizer">Used for generating random values when a particle is spawned.</param>
         public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
-            _textureLoader = textureLoader;
+            this._textureLoader = textureLoader;
             Effect = effect;
-            _randomService = randomizer;
+            this._randomService = randomizer;
 
             CreateAllParticles(behaviorFactory);
         }
@@ -46,17 +46,17 @@ namespace ParticleEngine
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
-        public int TotalLivingParticles => _particles.Count(p => p.IsAlive);
+        public int TotalLivingParticles => this._particles.Count(p => p.IsAlive);
 
         /// <summary>
         /// Gets the current total number of dead <see cref="Particle"/>s.
         /// </summary>
-        public int TotalDeadParticles => _particles.Count(p => p.IsDead);
+        public int TotalDeadParticles => this._particles.Count(p => p.IsDead);
 
         /// <summary>
         /// Gets the list of particle in the pool.
         /// </summary>
-        public Particle[] Particles => _particles.ToArray();
+        public Particle[] Particles => this._particles.ToArray();
 
         /// <summary>
         /// Gets the particle effect of the pool.
@@ -74,36 +74,36 @@ namespace ParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            _spawnRateElapsed += timeElapsed.TotalMilliseconds;
+            this._spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
             // If the amount of time to spawn a new particle has passed
-            if (_spawnRateElapsed >= _spawnRate)
+            if (this._spawnRateElapsed >= this._spawnRate)
             {
-                _spawnRate = GetRandomSpawnRate();
+                this._spawnRate = GetRandomSpawnRate();
 
                 SpawnNewParticle();
 
-                _spawnRateElapsed = 0;
+                this._spawnRateElapsed = 0;
             }
 
-            for (int i = 0; i < _particles.Count; i++)
+            for (int i = 0; i < this._particles.Count; i++)
             {
-                if (_particles[i].IsDead)
+                if (this._particles[i].IsDead)
                     continue;
 
-                _particles[i].Update(timeElapsed);
+                this._particles[i].Update(timeElapsed);
             }
         }
 
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
-        public void KillAllParticles() => _particles.ForEach(p => p.IsDead = true);
+        public void KillAllParticles() => this._particles.ForEach(p => p.IsDead = true);
 
         /// <summary>
         /// Loads the texture for the pool to use for rendering the particles.
         /// </summary>
-        public void LoadTexture() => PoolTexture = _textureLoader.LoadTexture(Effect.ParticleTextureName);
+        public void LoadTexture() => PoolTexture = this._textureLoader.LoadTexture(Effect.ParticleTextureName);
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -117,7 +117,7 @@ namespace ParticleEngine
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
-                _particles.Count == pool.Particles.Length &&
+                this._particles.Count == pool.Particles.Length &&
                 Effect == pool.Effect;
         }
 
@@ -141,7 +141,7 @@ namespace ParticleEngine
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposedValue)
+            if (this._disposedValue)
                 return;
 
             // Dispose of managed resources
@@ -150,13 +150,13 @@ namespace ParticleEngine
                 if (!(PoolTexture is null))
                     PoolTexture.Dispose();
 
-                _disposedValue = false;
-                _spawnRate = 0;
-                _spawnRateElapsed = 0;
-                _particles = new List<Particle>();
+                this._disposedValue = false;
+                this._spawnRate = 0;
+                this._spawnRateElapsed = 0;
+                this._particles = new List<Particle>();
             }
 
-            _disposedValue = true;
+            this._disposedValue = true;
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace ParticleEngine
         /// </summary>
         private void SpawnNewParticle()
         {
-            for (int i = 0; i < _particles.Count; i++)
+            for (int i = 0; i < this._particles.Count; i++)
             {
-                if (_particles[i].IsDead)
+                if (this._particles[i].IsDead)
                 {
-                    _particles[i].Position = Effect.SpawnLocation;
-                    _particles[i].Reset();
+                    this._particles[i].Position = Effect.SpawnLocation;
+                    this._particles[i].Reset();
                     break;
                 }
             }
@@ -182,9 +182,9 @@ namespace ParticleEngine
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
-                return _randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+                return this._randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
 
-            return _randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
+            return this._randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace ParticleEngine
         /// </summary>
         private void CreateAllParticles(IBehaviorFactory behaviorFactory)
         {
-            _particles.Clear();
+            this._particles.Clear();
 
             for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                _particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
+                this._particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, this._randomService)));
             }
         }
     }

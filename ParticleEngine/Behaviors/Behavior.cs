@@ -17,7 +17,7 @@ namespace ParticleEngine.Behaviors
         /// Creates a new instance of behavior.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
-        public Behavior(BehaviorSettings settings) => _setting = settings;
+        public Behavior(BehaviorSettings settings) => this._setting = settings;
 
         /// <summary>
         /// Gets the current value of the behavior.
@@ -32,7 +32,7 @@ namespace ParticleEngine.Behaviors
         /// <summary>
         /// Gets the particle attribute to apply the behavior value to.
         /// </summary>
-        public ParticleAttribute ApplyToAttribute => _setting.ApplyToAttribute;
+        public ParticleAttribute ApplyToAttribute => this._setting.ApplyToAttribute;
 
         /// <summary>
         /// Gets a value indicating if the behavior is enabled.
