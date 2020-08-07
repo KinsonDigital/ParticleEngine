@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace ParticleEngine
 {
+    using System;
+
     /// <summary>
     /// Represents a color for a particle.
     /// </summary>

@@ -2,13 +2,13 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
-using System;
-using System.Collections.Generic;
-
 namespace ParticleEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using ParticleEngine.Behaviors;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
     /// how all of the <see cref="Particle"/>s behave and look on the screen.

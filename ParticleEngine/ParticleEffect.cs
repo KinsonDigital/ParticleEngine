@@ -2,12 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using ParticleEngine.Behaviors;
-using System;
-using System.Drawing;
-
 namespace ParticleEngine
 {
+    using System;
+    using System.Drawing;
+    using ParticleEngine.Behaviors;
+
     /// <summary>
     /// Holds the particle setup settings data for the <see cref="ParticleEngine"/> to consume.
     /// </summary>

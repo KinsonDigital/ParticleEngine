@@ -2,12 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using ParticleEngine.Services;
-using System;
-using System.Collections.Generic;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+    using System.Collections.Generic;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Creates behaviors using behavior settings.
     /// </summary>

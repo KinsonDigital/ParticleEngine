@@ -2,11 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-
 namespace ParticleEngine.Services
 { 
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Provides methods for randomizing numbers.
     /// </summary>

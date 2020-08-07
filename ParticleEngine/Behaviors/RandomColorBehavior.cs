@@ -2,11 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using ParticleEngine.Services;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Randomly chooses colors from a list of colors that will be applied to a particle.
     /// Used to randomly set the tint color of a particle for its entire lifetime.

@@ -2,12 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using System.Drawing;
-using ParticleEngine.Behaviors;
-
 namespace ParticleEngine
 {
+    using System;
+    using System.Drawing;
+    using ParticleEngine.Behaviors;
+
     /// <summary>
     /// Represents a single particle with various properties that dictate how the <see cref="Particle"/>
     /// behaves and looks on the screen.

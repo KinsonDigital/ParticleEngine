@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Various settings for behaviors that choose values randomly from a list of choices.
     /// </summary>

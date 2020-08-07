@@ -2,12 +2,12 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography;
-
 namespace ParticleEngine.Services
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Security.Cryptography;
+
     /// <summary>
     /// Provides methods for randomizing numbers.
     /// </summary>

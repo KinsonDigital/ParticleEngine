@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace ParticleEngine
 {
+    using System;
+
     /// <summary>
     /// Represents a single texture for a particle to be rendered.
     /// </summary>

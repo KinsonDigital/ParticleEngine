@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Stores settings for creating an <see cref="EasingBehavior"/>.
     /// </summary>

@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Represents a behavior that can be applied to a particle.
     /// </summary>

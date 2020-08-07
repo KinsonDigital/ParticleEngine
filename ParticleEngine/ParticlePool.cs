@@ -2,13 +2,13 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
-using System;
-using System.Collections.Generic;
-
 namespace ParticleEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using ParticleEngine.Behaviors;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Contains a number of resusable particles with a given particle effect applied to them.
     /// </summary>

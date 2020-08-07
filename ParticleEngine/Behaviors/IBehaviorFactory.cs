@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using ParticleEngine.Services;
-
 namespace ParticleEngine.Behaviors
 {
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Creates behaviors using behavior settings.
     /// </summary>

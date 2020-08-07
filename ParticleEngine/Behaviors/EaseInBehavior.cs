@@ -2,11 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using ParticleEngine.Services;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// Represents an ease in function type of behavior.
     /// </summary>

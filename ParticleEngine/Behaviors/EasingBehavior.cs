@@ -2,11 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using ParticleEngine.Services;
-
 namespace ParticleEngine.Behaviors
 {
+    using System;
+    using ParticleEngine.Services;
+
     /// <summary>
     /// A behavior that can be applied to a particle that uses an easing function
     /// to dictate the value of a particle attribute.
