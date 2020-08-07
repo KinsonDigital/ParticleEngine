@@ -84,7 +84,7 @@ namespace ParticleEngine
         {
             var result = 0;
 
-            for (int i = 0; i < items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
                 if (predicate(items[i]))
                     result++;
@@ -104,7 +104,7 @@ namespace ParticleEngine
         {
             var result = 0;
 
-            for (int i = 0; i < items.Length; i++)
+            for (var i = 0; i < items.Length; i++)
             {
                 if (predicate(items[i]))
                     result++;

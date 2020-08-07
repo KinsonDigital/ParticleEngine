@@ -86,7 +86,7 @@ namespace ParticleEngine
                 this.spawnRateElapsed = 0;
             }
 
-            for (int i = 0; i < this.particles.Count; i++)
+            for (var i = 0; i < this.particles.Count; i++)
             {
                 if (this.particles[i].IsDead)
                     continue;
@@ -164,7 +164,7 @@ namespace ParticleEngine
         /// </summary>
         private void SpawnNewParticle()
         {
-            for (int i = 0; i < this.particles.Count; i++)
+            for (var i = 0; i < this.particles.Count; i++)
             {
                 if (this.particles[i].IsDead)
                 {
@@ -194,7 +194,7 @@ namespace ParticleEngine
         {
             this.particles.Clear();
 
-            for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
+            for (var i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
                 this.particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, this.randomService)));
             }

@@ -69,7 +69,7 @@ namespace ParticleEngine
             }
 
             // Apply the behavior values to the particle attributes
-            for (int i = 0; i < this.behaviors.Length; i++)
+            for (var i = 0; i < this.behaviors.Length; i++)
             {
                 if (this.behaviors[i].Enabled)
                 {
@@ -122,7 +122,7 @@ namespace ParticleEngine
 
         private byte ParseColorComponent(string clrComponent, string value)
         {
-            var parseSuccess = int.TryParse(value, out int result);
+            var parseSuccess = int.TryParse(value, out var result);
 
             if (parseSuccess)
             {
@@ -175,7 +175,7 @@ namespace ParticleEngine
         {
             if (!(this.behaviors is null))
             {
-                for (int i = 0; i < this.behaviors.Length; i++)
+                for (var i = 0; i < this.behaviors.Length; i++)
                     this.behaviors[i].Reset();
             }
 

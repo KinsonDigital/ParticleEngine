@@ -90,7 +90,7 @@ namespace ParticleEngine
 
             if (TintColors.Length == effect.TintColors.Length)
             {
-                for (int i = 0; i < TintColors.Length; i++)
+                for (var i = 0; i < TintColors.Length; i++)
                 {
                     if (TintColors[i] != effect.TintColors[i])
                     {
