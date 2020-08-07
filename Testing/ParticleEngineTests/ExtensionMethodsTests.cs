@@ -5,6 +5,7 @@ using System.Drawing;
 using KDParticleEngine.Behaviors;
 using Moq;
 using System.Collections.Generic;
+using Xunit.Sdk;
 
 namespace KDParticleEngineTests
 {
@@ -115,6 +116,19 @@ namespace KDParticleEngineTests
 
             //Assert
             Assert.Equal(9, actual);
+        }
+
+        [Theory]
+        [InlineData("123", false)]
+        [InlineData("-123", false)]
+        [InlineData("12T3", true)]
+        public void ContainsNonNumberCharacters_WhenInvoked_ReturnsCorrectResult(string valueToCheck, bool exepcted)
+        {
+            // Act
+            var actual = valueToCheck.ContainsNonNumberCharacters();
+
+            // Assert
+            Assert.Equal(exepcted, actual);
         }
         #endregion
     }

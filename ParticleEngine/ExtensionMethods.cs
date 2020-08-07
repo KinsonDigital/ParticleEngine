@@ -9,12 +9,15 @@ namespace KDParticleEngine
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
 
     /// <summary>
     /// Provides extensions to various things to help make better code.
     /// </summary>
     public static class ExtensionMethods
     {
+        private static char[] validNumChars = new char[] { '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
         /// <summary>
         /// Returns a random value between the given <paramref name="minValue"/> and <paramref name="maxValue"/>.
         /// </summary>
@@ -120,5 +123,12 @@ namespace KDParticleEngine
 
             return result;
         }
+
+        /// <summary>
+        /// Returns a value indicating if the given string <paramref name="value"/> is a valid number.
+        /// </summary>
+        /// <param name="value">The value to check.</param>
+        /// <returns>True if the string contains non number characters.</returns>
+        public static bool ContainsNonNumberCharacters(this string value) => value.ToCharArray().Any(c => !validNumChars.Contains(c));
     }
 }
