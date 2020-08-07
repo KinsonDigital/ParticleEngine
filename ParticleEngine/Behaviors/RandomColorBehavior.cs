@@ -13,9 +13,9 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class RandomColorBehavior : Behavior
     {
-        private RandomChoiceBehaviorSettings _settings;
-        private readonly IRandomizerService _randomizer;
-        private bool _isColorChosen;
+        private RandomChoiceBehaviorSettings settings;
+        private readonly IRandomizerService randomizer;
+        private bool isColorChosen;
 
         /// <summary>
         /// Creates a new instance of <see cref="RandomColorBehavior"/>.
@@ -24,8 +24,8 @@ namespace ParticleEngine.Behaviors
         /// <param name="randomizer">The randomizer used to randomly choose a color from a list of colors.</param>
         public RandomColorBehavior(RandomChoiceBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
         {
-            this._settings = settings;
-            this._randomizer = randomizer;
+            this.settings = settings;
+            this.randomizer = randomizer;
         }
 
         /// <summary>
@@ -37,17 +37,17 @@ namespace ParticleEngine.Behaviors
             base.Update(timeElapsed);
 
             // If the amount of time has passed, disable the behavor
-            Enabled = ElapsedTime < this._settings.LifeTime;
+            Enabled = ElapsedTime < this.settings.LifeTime;
 
-            if (this._isColorChosen)
+            if (this.isColorChosen)
                 return;
 
             // Randomly choose a color and set the value to a floating point number that represents that color
-            var randomIndex = this._randomizer.GetValue(0, this._settings.Data is null ? 0 : this._settings.Data.Length - 1);
+            var randomIndex = this.randomizer.GetValue(0, this.settings.Data is null ? 0 : this.settings.Data.Length - 1);
 
-            Value = this._settings.Data is null ? "clr:255,255,255,255" : this._settings.Data[randomIndex];
+            Value = this.settings.Data is null ? "clr:255,255,255,255" : this.settings.Data[randomIndex];
 
-            this._isColorChosen = true;
+            this.isColorChosen = true;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         public override void Reset()
         {
-            this._isColorChosen = false;
+            this.isColorChosen = false;
             base.Reset();
         }
     }

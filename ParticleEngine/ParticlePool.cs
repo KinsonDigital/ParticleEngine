@@ -20,12 +20,12 @@ namespace ParticleEngine
         // TODO: Implement code to make use of invoking this event.
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
 
-        private List<Particle> _particles = new List<Particle>();
-        private readonly IRandomizerService _randomService;
-        private readonly ITextureLoader<Texture> _textureLoader;
-        private bool _disposedValue = false;
-        private int _spawnRate;
-        private double _spawnRateElapsed = 0;
+        private List<Particle> particles = new List<Particle>();
+        private readonly IRandomizerService randomService;
+        private readonly ITextureLoader<Texture> textureLoader;
+        private bool disposedValue = false;
+        private int spawnRate;
+        private double spawnRateElapsed = 0;
 
         /// <summary>
         /// Creates a new instance of <see cref="ParticlePool"/>.
@@ -36,9 +36,9 @@ namespace ParticleEngine
         /// <param name="randomizer">Used for generating random values when a particle is spawned.</param>
         public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
-            this._textureLoader = textureLoader;
+            this.textureLoader = textureLoader;
             Effect = effect;
-            this._randomService = randomizer;
+            this.randomService = randomizer;
 
             CreateAllParticles(behaviorFactory);
         }
@@ -46,17 +46,17 @@ namespace ParticleEngine
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
-        public int TotalLivingParticles => this._particles.Count(p => p.IsAlive);
+        public int TotalLivingParticles => this.particles.Count(p => p.IsAlive);
 
         /// <summary>
         /// Gets the current total number of dead <see cref="Particle"/>s.
         /// </summary>
-        public int TotalDeadParticles => this._particles.Count(p => p.IsDead);
+        public int TotalDeadParticles => this.particles.Count(p => p.IsDead);
 
         /// <summary>
         /// Gets the list of particle in the pool.
         /// </summary>
-        public Particle[] Particles => this._particles.ToArray();
+        public Particle[] Particles => this.particles.ToArray();
 
         /// <summary>
         /// Gets the particle effect of the pool.
@@ -74,36 +74,36 @@ namespace ParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            this._spawnRateElapsed += timeElapsed.TotalMilliseconds;
+            this.spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
             // If the amount of time to spawn a new particle has passed
-            if (this._spawnRateElapsed >= this._spawnRate)
+            if (this.spawnRateElapsed >= this.spawnRate)
             {
-                this._spawnRate = GetRandomSpawnRate();
+                this.spawnRate = GetRandomSpawnRate();
 
                 SpawnNewParticle();
 
-                this._spawnRateElapsed = 0;
+                this.spawnRateElapsed = 0;
             }
 
-            for (int i = 0; i < this._particles.Count; i++)
+            for (int i = 0; i < this.particles.Count; i++)
             {
-                if (this._particles[i].IsDead)
+                if (this.particles[i].IsDead)
                     continue;
 
-                this._particles[i].Update(timeElapsed);
+                this.particles[i].Update(timeElapsed);
             }
         }
 
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
-        public void KillAllParticles() => this._particles.ForEach(p => p.IsDead = true);
+        public void KillAllParticles() => this.particles.ForEach(p => p.IsDead = true);
 
         /// <summary>
         /// Loads the texture for the pool to use for rendering the particles.
         /// </summary>
-        public void LoadTexture() => PoolTexture = this._textureLoader.LoadTexture(Effect.ParticleTextureName);
+        public void LoadTexture() => PoolTexture = this.textureLoader.LoadTexture(Effect.ParticleTextureName);
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -117,7 +117,7 @@ namespace ParticleEngine
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
-                this._particles.Count == pool.Particles.Length &&
+                this.particles.Count == pool.Particles.Length &&
                 Effect == pool.Effect;
         }
 
@@ -141,7 +141,7 @@ namespace ParticleEngine
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (this._disposedValue)
+            if (this.disposedValue)
                 return;
 
             // Dispose of managed resources
@@ -150,13 +150,13 @@ namespace ParticleEngine
                 if (!(PoolTexture is null))
                     PoolTexture.Dispose();
 
-                this._disposedValue = false;
-                this._spawnRate = 0;
-                this._spawnRateElapsed = 0;
-                this._particles = new List<Particle>();
+                this.disposedValue = false;
+                this.spawnRate = 0;
+                this.spawnRateElapsed = 0;
+                this.particles = new List<Particle>();
             }
 
-            this._disposedValue = true;
+            this.disposedValue = true;
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace ParticleEngine
         /// </summary>
         private void SpawnNewParticle()
         {
-            for (int i = 0; i < this._particles.Count; i++)
+            for (int i = 0; i < this.particles.Count; i++)
             {
-                if (this._particles[i].IsDead)
+                if (this.particles[i].IsDead)
                 {
-                    this._particles[i].Position = Effect.SpawnLocation;
-                    this._particles[i].Reset();
+                    this.particles[i].Position = Effect.SpawnLocation;
+                    this.particles[i].Reset();
                     break;
                 }
             }
@@ -182,9 +182,9 @@ namespace ParticleEngine
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
-                return this._randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+                return this.randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
 
-            return this._randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
+            return this.randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }
 
         /// <summary>
@@ -192,11 +192,11 @@ namespace ParticleEngine
         /// </summary>
         private void CreateAllParticles(IBehaviorFactory behaviorFactory)
         {
-            this._particles.Clear();
+            this.particles.Clear();
 
             for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                this._particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, this._randomService)));
+                this.particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, this.randomService)));
             }
         }
     }

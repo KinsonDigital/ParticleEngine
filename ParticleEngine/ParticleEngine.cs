@@ -15,39 +15,39 @@ namespace ParticleEngine
     /// </summary>
     public class ParticleEngine : IDisposable
     {
-        private readonly List<ParticlePool<IParticleTexture>> _particlePools = new List<ParticlePool<IParticleTexture>>();
-        private readonly ITextureLoader<IParticleTexture> _textureLoader;
-        private readonly IRandomizerService _randomizer;
-        private bool _enabled = true;
-        private bool _texturesLoaded;
-        private bool _disposedValue = false;
+        private readonly List<ParticlePool<IParticleTexture>> particlePools = new List<ParticlePool<IParticleTexture>>();
+        private readonly ITextureLoader<IParticleTexture> textureLoader;
+        private readonly IRandomizerService randomizer;
+        private bool enabled = true;
+        private bool texturesLoaded;
+        private bool disposedValue = false;
 
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngine"/>.
         /// </summary>
         public ParticleEngine(ITextureLoader<IParticleTexture> textureLoader, IRandomizerService randomizer)
         {
-            this._textureLoader = textureLoader;
-            this._randomizer = randomizer;
+            this.textureLoader = textureLoader;
+            this.randomizer = randomizer;
         }
 
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ParticlePool<IParticleTexture>[] ParticlePools => this._particlePools.ToArray();
+        public ParticlePool<IParticleTexture>[] ParticlePools => this.particlePools.ToArray();
 
         /// <summary>
         /// Gets or sets a value indicating if the engine is enabled or disabled.
         /// </summary>
         public bool Enabled
         {
-            get => this._enabled;
+            get => this.enabled;
             set
             {
-                this._enabled = value;
+                this.enabled = value;
 
                 // If the engine is disabled, kill all the particles
-                if (!this._enabled)
+                if (!this.enabled)
                     KillAllParticles();
             }
         }
@@ -57,7 +57,7 @@ namespace ParticleEngine
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
         /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
-        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => this._particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, this._textureLoader, effect, this._randomizer));
+        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => this.particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, this.textureLoader, effect, this.randomizer));
 
         /// <summary>
         /// Clears all of the current existing pools.
@@ -65,10 +65,10 @@ namespace ParticleEngine
         /// <remarks>This will properly dispose of the texture for each pool.</remarks>
         public void ClearPools()
         {
-            foreach (var pool in this._particlePools)
+            foreach (var pool in this.particlePools)
                 pool.Dispose();
 
-            this._particlePools.Clear();
+            this.particlePools.Clear();
         }
 
         /// <summary>
@@ -77,18 +77,18 @@ namespace ParticleEngine
         /// </summary>
         public void LoadTextures()
         {
-            foreach (var pool in this._particlePools)
+            foreach (var pool in this.particlePools)
             {
                 pool.LoadTexture();
             }
 
-            this._texturesLoaded = true;
+            this.texturesLoaded = true;
         }
 
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
-        public void KillAllParticles() => this._particlePools.ForEach(p => p.KillAllParticles());
+        public void KillAllParticles() => this.particlePools.ForEach(p => p.KillAllParticles());
 
         /// <summary>
         /// Updates all of the <see cref="Particle"/>s.
@@ -96,13 +96,13 @@ namespace ParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            if (!this._texturesLoaded)
+            if (!this.texturesLoaded)
                 throw new Exception("The textures must be loaded first.");
 
             if (!Enabled)
                 return;
 
-            this._particlePools.ForEach(p => p.Update(timeElapsed));
+            this.particlePools.ForEach(p => p.Update(timeElapsed));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace ParticleEngine
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._disposedValue)
+            if (!this.disposedValue)
             {
                 if (disposing)
                 {
@@ -126,7 +126,7 @@ namespace ParticleEngine
                         pool.Dispose();
                 }
 
-                this._disposedValue = true;
+                this.disposedValue = true;
             }
         }
     }

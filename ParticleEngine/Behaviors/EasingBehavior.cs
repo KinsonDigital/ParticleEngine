@@ -13,9 +13,9 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public abstract class EasingBehavior : Behavior
     {
-        private readonly EasingBehaviorSettings _setting;
-        private readonly IRandomizerService _randomizer;
-        private protected double _lifeTime;
+        private readonly EasingBehaviorSettings setting;
+        private readonly IRandomizerService randomizer;
+        private protected double lifeTime;
 
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehavior"/>.
@@ -23,8 +23,8 @@ namespace ParticleEngine.Behaviors
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
         public EasingBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
         {
-            this._setting = settings;
-            this._randomizer = randomizer;
+            this.setting = settings;
+            this.randomizer = randomizer;
             ApplyRandomization();
         }
 
@@ -45,7 +45,7 @@ namespace ParticleEngine.Behaviors
         public override void Update(TimeSpan timeElapsed)
         {
             base.Update(timeElapsed);
-            Enabled = ElapsedTime < this._lifeTime;
+            Enabled = ElapsedTime < this.lifeTime;
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         private void ApplyRandomization()
         {
-            Start = this._randomizer.GetValue(this._setting.StartMin, this._setting.StartMax);
-            Change = this._randomizer.GetValue(this._setting.ChangeMin, this._setting.ChangeMax);
-            this._lifeTime = this._randomizer.GetValue(this._setting.TotalTimeMin, this._setting.TotalTimeMax);
+            Start = this.randomizer.GetValue(this.setting.StartMin, this.setting.StartMax);
+            Change = this.randomizer.GetValue(this.setting.ChangeMin, this.setting.ChangeMax);
+            this.lifeTime = this.randomizer.GetValue(this.setting.TotalTimeMin, this.setting.TotalTimeMax);
         }
     }
 }

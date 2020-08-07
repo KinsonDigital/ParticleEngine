@@ -13,8 +13,8 @@ namespace ParticleEngine.Services
     /// </summary>
     public class TrueRandomizerService : IRandomizerService
     {
-        private readonly RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
-        private readonly byte[] _uint32Buffer = new byte[4];
+        private readonly RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+        private readonly byte[] uint32Buffer = new byte[4];
 
         /// <summary>
         /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
@@ -89,9 +89,9 @@ namespace ParticleEngine.Services
 
             while (true)
             {
-                this._provider.GetBytes(this._uint32Buffer);
+                this.provider.GetBytes(this.uint32Buffer);
 
-                var rand = Math.Abs((int)BitConverter.ToUInt32(this._uint32Buffer, 0));
+                var rand = Math.Abs((int)BitConverter.ToUInt32(this.uint32Buffer, 0));
                 var max = 1 + (long)int.MaxValue;
                 var remainder = max % diff;
 

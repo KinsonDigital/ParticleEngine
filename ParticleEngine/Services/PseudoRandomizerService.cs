@@ -12,19 +12,19 @@ namespace ParticleEngine.Services
     /// </summary>
     public class PseudoRandomizerService : IRandomizerService
     {
-        private readonly Random _random;
+        private readonly Random random;
 
         /// <summary>
         /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
         /// </summary>
-        public PseudoRandomizerService() => this._random = new Random();
+        public PseudoRandomizerService() => this.random = new Random();
 
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
         /// </summary>
         /// <returns></returns>
         [ExcludeFromCodeCoverage]
-        public bool FlipCoin() => this._random.NextDouble() <= 0.5;
+        public bool FlipCoin() => this.random.NextDouble() <= 0.5;
 
         /// <summary>
         /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
@@ -41,11 +41,11 @@ namespace ParticleEngine.Services
 
             if (minValueAsInt > maxValueAsInt)
             {
-                return (float)Math.Round(this._random.Next(maxValueAsInt, minValueAsInt) / 1000f, 3);
+                return (float)Math.Round(this.random.Next(maxValueAsInt, minValueAsInt) / 1000f, 3);
             }
             else
             {
-                return (float)Math.Round(this._random.Next(minValueAsInt, maxValueAsInt) / 1000f, 3);
+                return (float)Math.Round(this.random.Next(minValueAsInt, maxValueAsInt) / 1000f, 3);
             }
         }
 
@@ -73,8 +73,8 @@ namespace ParticleEngine.Services
         {
             // Add 1 so that way the max value is inclusive.
             return minValue > maxValue ?
-                this._random.Next(maxValue, minValue + 1) :
-                this._random.Next(minValue, maxValue + 1);
+                this.random.Next(maxValue, minValue + 1) :
+                this.random.Next(minValue, maxValue + 1);
         }
     }
 }

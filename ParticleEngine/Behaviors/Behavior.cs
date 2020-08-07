@@ -11,13 +11,13 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public abstract class Behavior : IBehavior
     {
-        private readonly BehaviorSettings _setting;
+        private readonly BehaviorSettings setting;
 
         /// <summary>
         /// Creates a new instance of behavior.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
-        public Behavior(BehaviorSettings settings) => this._setting = settings;
+        public Behavior(BehaviorSettings settings) => this.setting = settings;
 
         /// <summary>
         /// Gets the current value of the behavior.
@@ -32,7 +32,7 @@ namespace ParticleEngine.Behaviors
         /// <summary>
         /// Gets the particle attribute to apply the behavior value to.
         /// </summary>
-        public ParticleAttribute ApplyToAttribute => this._setting.ApplyToAttribute;
+        public ParticleAttribute ApplyToAttribute => this.setting.ApplyToAttribute;
 
         /// <summary>
         /// Gets a value indicating if the behavior is enabled.
