@@ -5,7 +5,6 @@
     /// </summary>
     public interface IRandomizerService
     {
-        #region Methods
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
         /// </summary>
@@ -44,6 +43,5 @@
         /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
         /// <returns></returns>
         int GetValue(int minValue, int maxValue);
-        #endregion
     }
 }

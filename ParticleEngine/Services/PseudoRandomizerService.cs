@@ -8,20 +8,15 @@ namespace ParticleEngine.Services
     /// </summary>
     public class PseudoRandomizerService : IRandomizerService
     {
-        #region Private Fields
         private readonly Random _random;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
         /// </summary>
         public PseudoRandomizerService() => _random = new Random();
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
         /// </summary>
@@ -82,6 +77,5 @@ namespace ParticleEngine.Services
                 _random.Next(maxValue, minValue + 1) :
                 _random.Next(minValue, maxValue + 1);
         }
-        #endregion
     }
 }

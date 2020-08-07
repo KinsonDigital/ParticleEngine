@@ -7,7 +7,6 @@ namespace ParticleEngine
     /// </summary>
     public class ParticleColor
     {
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticleColor"/>.
         /// </summary>
@@ -22,10 +21,8 @@ namespace ParticleEngine
             G = g;
             B = b;
         }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Creates a new <see cref="ParticleColor"/> using the given color component values.
         /// </summary>
@@ -35,10 +32,8 @@ namespace ParticleEngine
         /// <param name="b">The blue component of the color.</param>
         /// <returns></returns>
         public static ParticleColor FromArgb(byte a, byte r, byte g, byte b) => new ParticleColor(a, r, g, b);
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets or sets the red component of the color.
         /// </summary>
@@ -753,10 +748,8 @@ namespace ParticleEngine
         /// Get the color YelloGreen.
         /// </summary>
         public static ParticleColor YellowGreen => new ParticleColor(255, 154, 205, 50);
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Gets the brightness value of the <see cref="ParticleColor"/>.
         /// </summary>
@@ -849,10 +842,8 @@ namespace ParticleEngine
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(R, G, B, A);
-        #endregion
 
 
-        #region Overloaded Operators
         /// <summary>
         /// Returns a value indicating if the given colors are equal.
         /// </summary>
@@ -869,6 +860,5 @@ namespace ParticleEngine
         /// <param name="clrB">The second color to compare.</param>
         /// <returns></returns>
         public static bool operator !=(ParticleColor clrA, ParticleColor clrB) => !(clrA == clrB);
-        #endregion
     }
 }

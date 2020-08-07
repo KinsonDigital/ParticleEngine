@@ -10,26 +10,20 @@ namespace ParticleEngine
     /// </summary>
     public class ParticlePool<Texture> : IDisposable where Texture : class, IParticleTexture
     {
-        #region Public Events
         /// <summary>
         /// Occurs every time the total amount of living particles has changed.
         /// </summary>
         //TODO: Implement code to make use of invoking this event.
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
-        #endregion
 
-
-        #region Private Fields
         private List<Particle> _particles = new List<Particle>();
         private readonly IRandomizerService _randomService;
         private readonly ITextureLoader<Texture> _textureLoader;
         private bool _disposedValue = false;
         private int _spawnRate;
         private double _spawnRateElapsed = 0;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticlePool"/>.
         /// </summary>
@@ -45,10 +39,8 @@ namespace ParticleEngine
 
             CreateAllParticles(behaviorFactory);
         }
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
@@ -73,10 +65,8 @@ namespace ParticleEngine
         /// Gets or sets the texture of the particles in the pool.
         /// </summary>
         public Texture? PoolTexture { get; private set; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the particle pool.
         /// </summary>
@@ -148,10 +138,8 @@ namespace ParticleEngine
         /// unmanaged resources.
         /// </summary>
         public void Dispose() => Dispose(true);
-        #endregion
 
 
-        #region Protected Methods
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
@@ -176,10 +164,8 @@ namespace ParticleEngine
 
             _disposedValue = true;
         }
-        #endregion
 
 
-        #region Private Methods
         /// <summary>
         /// Resets all of the particles.
         /// </summary>
@@ -223,6 +209,5 @@ namespace ParticleEngine
                 _particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
             }
         }
-        #endregion
     }
 }

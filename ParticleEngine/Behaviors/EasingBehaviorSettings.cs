@@ -7,7 +7,6 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class EasingBehaviorSettings : BehaviorSettings
     {
-        #region Props
         /// <summary>
         /// The minimum starting value used in randomization.
         /// </summary>
@@ -37,10 +36,8 @@ namespace ParticleEngine.Behaviors
         /// The maximum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMax { get; set; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -72,6 +69,5 @@ namespace ParticleEngine.Behaviors
                              StartMin, StartMax,
                              ChangeMin, ChangeMax,
                              TotalTimeMin, TotalTimeMax);
-        #endregion
     }
 }

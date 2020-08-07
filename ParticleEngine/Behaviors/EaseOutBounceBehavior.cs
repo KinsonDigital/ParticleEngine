@@ -8,17 +8,14 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class EaseOutBounceBehavior : EasingBehavior
     {
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="EaseOutBounceBehavior"/>.
         /// </summary>
         /// <param name="settings">The behavior settings of the behavior.</param>
         /// <param name="randomizer">The randomizer used for choosing values between the various setting ranges.</param>
         public EaseOutBounceBehavior(EasingBehaviorSettings settings, IRandomizerService randomizer) : base (settings, randomizer) { }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -28,6 +25,5 @@ namespace ParticleEngine.Behaviors
             Value = EasingFunctions.EaseOutBounce(ElapsedTime, Start, Change, _lifeTime).ToString();
             base.Update(timeElapsed);
         }
-        #endregion
     }
 }

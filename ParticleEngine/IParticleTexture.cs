@@ -7,7 +7,6 @@ namespace ParticleEngine
     /// </summary>
     public interface IParticleTexture : IDisposable
     {
-        #region Props
         /// <summary>
         /// Gets or sets the width of the texture.
         /// </summary>
@@ -17,6 +16,5 @@ namespace ParticleEngine
         /// Gets or sets the height of the texture.
         /// </summary>
         public int Height { get; }
-        #endregion
     }
 }

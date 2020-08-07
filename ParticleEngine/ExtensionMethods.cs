@@ -10,12 +10,9 @@ namespace ParticleEngine
     /// </summary>
     public static class ExtensionMethods
     {
-        #region Private Fields
         private static readonly char[] _validHexSymbols = new[] { '#', 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Returns a random value between the given <paramref name="minValue"/> and <paramref name="maxValue"/>.
         /// </summary>
@@ -121,6 +118,5 @@ namespace ParticleEngine
 
             return result;
         }
-        #endregion
     }
 }

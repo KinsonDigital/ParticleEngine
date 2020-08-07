@@ -5,7 +5,6 @@
     /// </summary>
     public static class EasingFunctions
     {
-        #region Public Methods
         /// <summary>
         /// Ease out bounce easing function.
         /// </summary>
@@ -55,6 +54,5 @@
 
             return c * t * t + b;
         }
-        #endregion
     }
 }

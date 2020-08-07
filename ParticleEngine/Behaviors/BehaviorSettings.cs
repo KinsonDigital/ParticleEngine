@@ -5,7 +5,6 @@ namespace ParticleEngine.Behaviors
     //TODO: Add code docs
     public abstract class BehaviorSettings
     {
-        #region Props
         /// <summary>
         /// Gets or sets the type of behavior to be created.
         /// </summary>
@@ -15,10 +14,8 @@ namespace ParticleEngine.Behaviors
         /// The particle attribute to set the behavior value to.
         /// </summary>
         public ParticleAttribute ApplyToAttribute { get; set; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -40,6 +37,5 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(TypeOfBehavior, ApplyToAttribute);
-        #endregion
     }
 }

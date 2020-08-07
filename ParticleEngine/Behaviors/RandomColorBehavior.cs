@@ -9,14 +9,11 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class RandomColorBehavior : Behavior
     {
-        #region Private Fields
         private RandomChoiceBehaviorSettings _settings;
         private readonly IRandomizerService _randomizer;
         private bool _isColorChosen;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="RandomColorBehavior"/>.
         /// </summary>
@@ -27,10 +24,8 @@ namespace ParticleEngine.Behaviors
             _settings = settings;
             _randomizer = randomizer;
         }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -62,6 +57,5 @@ namespace ParticleEngine.Behaviors
             _isColorChosen = false;
             base.Reset();
         }
-        #endregion
     }
 }

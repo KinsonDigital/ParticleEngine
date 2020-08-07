@@ -7,7 +7,6 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public interface IBehavior
     {
-        #region Props
         /// <summary>
         /// Gets the current value of the behavior.
         /// </summary>
@@ -27,10 +26,8 @@ namespace ParticleEngine.Behaviors
         /// Gets a value indicating if the behavior is enabled.
         /// </summary>
         bool Enabled { get; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -42,6 +39,5 @@ namespace ParticleEngine.Behaviors
         /// Resets the behavior.
         /// </summary>
         void Reset();
-        #endregion
     }
 }

@@ -7,15 +7,12 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class RandomChoiceBehaviorSettings : BehaviorSettings
     {
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="RandomChoiceBehaviorSettings"/>.
         /// </summary>
         public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Holds data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
@@ -25,10 +22,8 @@ namespace ParticleEngine.Behaviors
         /// Gets or sets the amount of time that the behavior should be enabled.
         /// </summary>
         public double LifeTime { get; set; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -50,6 +45,5 @@ namespace ParticleEngine.Behaviors
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(Data);
-        #endregion
     }
 }

@@ -9,21 +9,16 @@ namespace ParticleEngine.Services
     /// </summary>
     public class TrueRandomizerService : IRandomizerService
     {
-        #region Private Fields
         private readonly RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
         private readonly byte[] _uint32Buffer = new byte[4];
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
         /// </summary>
         public TrueRandomizerService() { }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Returns a true/false value that represents the flip of a coin.
         /// </summary>
@@ -106,6 +101,5 @@ namespace ParticleEngine.Services
                     return (int)(minValue + (rand % diff));
             }
         }
-        #endregion
     }
 }

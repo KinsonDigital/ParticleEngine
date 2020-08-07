@@ -11,17 +11,14 @@ namespace ParticleEngine
     /// </summary>
     public class ParticleEngine : IDisposable
     {
-        #region Private Fields
         private readonly List<ParticlePool<IParticleTexture>> _particlePools = new List<ParticlePool<IParticleTexture>>();
         private readonly ITextureLoader<IParticleTexture> _textureLoader;
         private readonly IRandomizerService _randomizer;
         private bool _enabled = true;
         private bool _texturesLoaded;
         private bool _disposedValue = false;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngine"/>.
         /// </summary>
@@ -30,10 +27,8 @@ namespace ParticleEngine
             _textureLoader = textureLoader;
             _randomizer = randomizer;
         }
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
@@ -54,10 +49,8 @@ namespace ParticleEngine
                     KillAllParticles();
             }
         }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
@@ -121,10 +114,8 @@ namespace ParticleEngine
         /// unmanaged resources.
         /// </summary>
         public void Dispose() => Dispose(true);
-        #endregion
 
 
-        #region Protected Methods
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
@@ -143,6 +134,5 @@ namespace ParticleEngine
                 _disposedValue = true;
             }
         }
-        #endregion
     }
 }

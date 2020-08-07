@@ -9,14 +9,11 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public abstract class EasingBehavior : Behavior
     {
-        #region Private Fields
         private readonly EasingBehaviorSettings _setting;
         private readonly IRandomizerService _randomizer;
         private protected double _lifeTime;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehavior"/>.
         /// </summary>
@@ -27,10 +24,8 @@ namespace ParticleEngine.Behaviors
             _randomizer = randomizer;
             ApplyRandomization();
         }
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets or sets the starting value of the easing behavior.
         /// </summary>
@@ -40,10 +35,8 @@ namespace ParticleEngine.Behaviors
         /// Gets or sets the amount of change to apply to the behavior value over time.
         /// </summary>
         public double Change { get; set; }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -63,10 +56,8 @@ namespace ParticleEngine.Behaviors
             ApplyRandomization();
             base.Reset();
         }
-        #endregion
 
 
-        #region Private Methods
         /// <summary>
         /// Generates random values based on the <see cref="EasingBehaviorSettings"/>
         /// and applies them.
@@ -77,6 +68,5 @@ namespace ParticleEngine.Behaviors
             Change = _randomizer.GetValue(_setting.ChangeMin, _setting.ChangeMax);
             _lifeTime = _randomizer.GetValue(_setting.TotalTimeMin, _setting.TotalTimeMax);
         }
-        #endregion
     }
 }

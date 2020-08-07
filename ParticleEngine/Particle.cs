@@ -10,20 +10,15 @@ namespace ParticleEngine
     /// </summary>
     public class Particle
     {
-        #region Private Fields
         private readonly IBehavior[] _behaviors;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="Particle"/>.
         /// </summary>
         public Particle(IBehavior[] behaviors) => _behaviors = behaviors;
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets or sets the position of the <see cref="Particle"/>.
         /// </summary>
@@ -57,10 +52,8 @@ namespace ParticleEngine
             get => !IsAlive;
             set => IsAlive = !value;
         }
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the particle.
         /// </summary>
@@ -224,6 +217,5 @@ namespace ParticleEngine
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
             HashCode.Combine(_behaviors, Position, Angle, TintColor, Size, IsAlive, IsDead);
-        #endregion
     }
 }

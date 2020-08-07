@@ -9,7 +9,6 @@ namespace ParticleEngine
     /// </summary>
     public class ParticleEffect
     {
-        #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEffect"/>.
         /// </summary>
@@ -26,10 +25,8 @@ namespace ParticleEngine
             ParticleTextureName = particleTextureName;
             BehaviorSettings = settings;
         }
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets the name of the particle texture used in the particle effect.
         /// </summary>
@@ -76,10 +73,8 @@ namespace ParticleEngine
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
         public BehaviorSettings[] BehaviorSettings { get; } = new BehaviorSettings[0];
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -150,6 +145,5 @@ namespace ParticleEngine
             
             return hash.ToHashCode();
         }
-        #endregion
     }
 }

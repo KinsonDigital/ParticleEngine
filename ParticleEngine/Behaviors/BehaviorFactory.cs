@@ -9,7 +9,6 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public class BehaviorFactory : IBehaviorFactory
     {
-        #region Public Methods
         /// <summary>
         /// Creates all of the behaviors using the given <paramref name="randomizerService"/>.
         /// </summary>
@@ -48,6 +47,5 @@ namespace ParticleEngine.Behaviors
 
             return behaviors.ToArray();
         }
-        #endregion
     }
 }

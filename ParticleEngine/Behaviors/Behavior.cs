@@ -7,21 +7,16 @@ namespace ParticleEngine.Behaviors
     /// </summary>
     public abstract class Behavior : IBehavior
     {
-        #region Private Fields
         private readonly BehaviorSettings _setting;
-        #endregion
 
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of behavior.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
         public Behavior(BehaviorSettings settings) => _setting = settings;
-        #endregion
 
 
-        #region Props
         /// <summary>
         /// Gets the current value of the behavior.
         /// </summary>
@@ -41,10 +36,8 @@ namespace ParticleEngine.Behaviors
         /// Gets a value indicating if the behavior is enabled.
         /// </summary>
         public bool Enabled { get; protected set; } = true;
-        #endregion
 
 
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -61,6 +54,5 @@ namespace ParticleEngine.Behaviors
             ElapsedTime = 0;
             Enabled = true;
         }
-        #endregion
     }
 }
