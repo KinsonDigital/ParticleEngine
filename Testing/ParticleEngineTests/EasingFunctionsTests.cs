@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests
+﻿// <copyright file="EasingFunctionsTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests
 {
     using KDParticleEngine;
     using Xunit;

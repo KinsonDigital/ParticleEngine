@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests.Behaviors
+﻿// <copyright file="EasingBehaviorSettingsTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests.Behaviors
 {
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;

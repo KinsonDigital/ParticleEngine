@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests.Services
+﻿// <copyright file="PseudoRandomizerServiceTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests.Services
 {
     using KDParticleEngine.Services;
     using KDParticleEngineTests.XUnitHelpers;

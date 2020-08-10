@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests.Behaviors
+﻿// <copyright file="EaseOutBounceBehaviorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests.Behaviors
 {
     using System;
     using KDParticleEngine.Behaviors;

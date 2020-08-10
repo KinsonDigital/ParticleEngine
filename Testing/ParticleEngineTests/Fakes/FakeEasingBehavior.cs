@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests.Fakes
+﻿// <copyright file="FakeEasingBehavior.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests.Fakes
 {
     using System.Diagnostics.CodeAnalysis;
     using KDParticleEngine.Behaviors;

@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngineTests
+﻿// <copyright file="ParticleColorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngineTests
 {
     using System;
     using System.Drawing;
