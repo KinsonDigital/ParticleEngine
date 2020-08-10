@@ -13,14 +13,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void TypeOfBehavior_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.TypeOfBehavior = BehaviorType.EaseIn;
             var actual = setting.TypeOfBehavior;
 
-            //Assert
+            // Assert
             Assert.Equal(BehaviorType.EaseIn, actual);
         }
 
@@ -28,14 +28,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void ApplyToAttribute_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.ApplyToAttribute = ParticleAttribute.Angle;
             var actual = setting.ApplyToAttribute;
 
-            //Assert
+            // Assert
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
 
@@ -43,14 +43,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void StartMin_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.StartMin = 1234f;
             var actual = setting.StartMin;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
 
@@ -58,14 +58,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void StartMax_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.StartMax = 1234f;
             var actual = setting.StartMax;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
 
@@ -73,14 +73,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void ChangeMin_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.ChangeMin = 1234f;
             var actual = setting.ChangeMin;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
 
@@ -88,14 +88,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void ChangeMax_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.ChangeMax = 1234f;
             var actual = setting.ChangeMax;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
 
@@ -103,14 +103,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void TotalTimeMin_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.TotalTimeMin = 1234f;
             var actual = setting.TotalTimeMin;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
 
@@ -118,14 +118,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void TotalTimeMax_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
 
-            //Act
+            // Act
             setting.TotalTimeMax = 1234f;
             var actual = setting.TotalTimeMax;
 
-            //Assert
+            // Assert
             Assert.Equal(1234f, actual);
         }
         #endregion
@@ -135,7 +135,7 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings()
             {
                 TypeOfBehavior = BehaviorType.EaseIn,
@@ -149,10 +149,10 @@ namespace KDParticleEngineTests.Behaviors
             };
             var otherObj = new object();
 
-            //Act
+            // Act
             var actual = setting.Equals(otherObj);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
 
@@ -160,7 +160,7 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
-            //Arrange
+            // Arrange
             var settingA = new EasingBehaviorSettings()
             {
                 TypeOfBehavior = BehaviorType.EaseIn,
@@ -185,10 +185,10 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 60
             };
 
-            //Act
+            // Act
             var actual = settingA.Equals(settingB);
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
 
@@ -196,7 +196,7 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var settingA = new EasingBehaviorSettings()
             {
                 TypeOfBehavior = BehaviorType.Unknown,
@@ -221,10 +221,10 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 60
             };
 
-            //Act
+            // Act
             var actual = settingA.Equals(settingB);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
 
@@ -232,7 +232,7 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settingA = new EasingBehaviorSettings()
             {
                 TypeOfBehavior = BehaviorType.EaseIn,
@@ -257,11 +257,11 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 60
             };
 
-            //Act
+            // Act
             var settingAHashCode = settingA.GetHashCode();
             var settingBHashCode = settingB.GetHashCode();
 
-            //Assert
+            // Assert
             Assert.Equal(settingAHashCode, settingBHashCode);
         }
         #endregion

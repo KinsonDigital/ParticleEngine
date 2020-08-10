@@ -18,15 +18,15 @@ namespace KDParticleEngineTests
         [Fact]
         public void Next_WhenInvokedWithMinLessThanMax_ReturnsValueWithinMinAndMax()
         {
-            //Arrange
+            // Arrange
             var random = new Random();
             var expected = true;
 
-            //Act
+            // Act
             var randomNum = random.Next(50f, 100f);
             var actual = randomNum >= 50f && randomNum <= 100f;
 
-            //Assert
+            // Assert
             Assert.Equal(expected, actual);
         }
 
@@ -34,14 +34,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void Next_WhenInvokedWithMinMoreThanMax_ReturnsMaxValue()
         {
-            //Arrange
+            // Arrange
             var random = new Random();
             var expected = 98f;
 
-            //Act
+            // Act
             var actual = random.Next(124f, 98f);
 
-            //Assert
+            // Assert
             Assert.Equal(expected, actual);
         }
 
@@ -49,14 +49,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void Add_WhenInvoking_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var pointA = new PointF(10, 20);
             var pointB = new PointF(5, 3);
 
-            //Act
+            // Act
             var result = pointA.Add(pointB);
 
-            //Assert
+            // Assert
             Assert.Equal(new PointF(15f, 23f), result);
         }
 
@@ -64,13 +64,13 @@ namespace KDParticleEngineTests
         [Fact]
         public void Mult_WhenInvoking_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var point = new PointF(10, 20);
 
-            //Act
+            // Act
             var result = point.Mult(2);
 
-            //Assert
+            // Assert
             Assert.Equal(new PointF(20f, 40f), result);
         }
 
@@ -78,7 +78,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Count_WhenInvokingListVersion_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var mockBehavior = new Mock<IBehavior>();
 
             var particles = new List<Particle>();
@@ -88,10 +88,10 @@ namespace KDParticleEngineTests
                 particles.Add(new Particle(new IBehavior[] { mockBehavior.Object }) { IsAlive = i > 10 });
             }
 
-            //Act
+            // Act
             var actual = particles.Count(p => p.IsAlive);
 
-            //Assert
+            // Assert
             Assert.Equal(9, actual);
         }
 
@@ -99,7 +99,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Count_WhenInvokingArrayVersion_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var mockBehavior = new Mock<IBehavior>();
 
             Particle[] particles;
@@ -111,10 +111,10 @@ namespace KDParticleEngineTests
             }
             particles = tempList.ToArray();
 
-            //Act
+            // Act
             var actual = particles.Count(p => p.IsAlive);
 
-            //Assert
+            // Assert
             Assert.Equal(9, actual);
         }
 

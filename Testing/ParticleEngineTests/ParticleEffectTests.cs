@@ -15,10 +15,10 @@ namespace KDParticleEngineTests
         [Fact]
         public void Ctor_WhenInvoked_SetsParticleTextureName()
         {
-            //Act
+            // Act
             var effect = new ParticleEffect("effect-name", It.IsAny<EasingBehaviorSettings[]>());
 
-            //Assert
+            // Assert
             Assert.Equal("effect-name", effect.ParticleTextureName);
         }
 
@@ -26,7 +26,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Ctor_WhenInvoked_SetsBehaviorSettings()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -43,10 +43,10 @@ namespace KDParticleEngineTests
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
 
-            //Act
+            // Act
             var actual = effect.BehaviorSettings;
 
-            //Assert
+            // Assert
             Assert.Equal(settings[0], actual[0]);
         }
         #endregion
@@ -56,14 +56,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void ApplyBehaviorTo_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             var actual = effect.ApplyBehaviorTo;
 
-            //Assert
+            // Assert
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
 
@@ -71,14 +71,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void SpawnLocation_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.SpawnLocation = new PointF(11, 22);
             var actual = effect.SpawnLocation;
 
-            //Assert
+            // Assert
             Assert.Equal(new PointF(11, 22), actual);
         }
 
@@ -86,14 +86,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void TintColors_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) };
             var actual = effect.TintColors;
 
-            //Assert
+            // Assert
             Assert.Equal(new ParticleColor(11, 22, 33, 44), actual[0]);
         }
 
@@ -101,14 +101,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.TotalParticlesAliveAtOnce = 1234;
             var actual = effect.TotalParticlesAliveAtOnce;
 
-            //Assert
+            // Assert
             Assert.Equal(1234, actual);
         }
 
@@ -116,14 +116,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void SpawnRateMin_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.SpawnRateMin = 1234;
             var actual = effect.SpawnRateMin;
 
-            //Assert
+            // Assert
             Assert.Equal(1234, actual);
         }
 
@@ -131,14 +131,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void SpawnRateMax_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.SpawnRateMax = 1234;
             var actual = effect.SpawnRateMax;
 
-            //Assert
+            // Assert
             Assert.Equal(1234, actual);
         }
 
@@ -146,14 +146,14 @@ namespace KDParticleEngineTests
         [Fact]
         public void UseColorsFromList_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
-            //Act
+            // Act
             effect.UseColorsFromList = true;
             var actual = effect.UseColorsFromList;
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
         #endregion
@@ -163,7 +163,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Equals_WithDifferentObjects_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -191,10 +191,10 @@ namespace KDParticleEngineTests
             };
             var otherObj = new object();
 
-            //Act
+            // Act
             var actual = effect.Equals(otherObj);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
 
@@ -202,7 +202,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -240,10 +240,10 @@ namespace KDParticleEngineTests
                 TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
             };
 
-            //Act
+            // Act
             var actual = effectA.Equals(effectB);
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
 
@@ -251,7 +251,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -289,10 +289,10 @@ namespace KDParticleEngineTests
                 TintColors = new ParticleColor[] { new ParticleColor(99, 88, 77, 66) }
             };
 
-            //Act
+            // Act
             var actual = effectA.Equals(effectB);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
 
@@ -300,7 +300,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Equals_WithDifferentTintColorTotals_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -338,10 +338,10 @@ namespace KDParticleEngineTests
                 TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44), new ParticleColor(11, 22, 33, 44) }
             };
 
-            //Act
+            // Act
             var actual = effectA.Equals(effectB);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
 
@@ -349,7 +349,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -387,10 +387,10 @@ namespace KDParticleEngineTests
                 TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
             };
 
-            //Act
+            // Act
             var actual = effectA.GetHashCode() == effectB.GetHashCode();
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
         #endregion

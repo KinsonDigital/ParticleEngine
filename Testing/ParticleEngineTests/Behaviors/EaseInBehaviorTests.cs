@@ -28,14 +28,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Update_WhenInvoked_UpdatesValueProp()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
             var behavior = new EaseInBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.NotEqual("0", behavior.Value);
         }
 
@@ -43,14 +43,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Update_WhenInvoked_UpdatesElapsedTime()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
             var behavior = new EaseInBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.Equal(16, behavior.ElapsedTime);
         }
         #endregion

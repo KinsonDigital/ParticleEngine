@@ -15,16 +15,16 @@ namespace KDParticleEngineTests.Behaviors
 		[Fact]
 		public void Update_WhenInvokedAfterFirstInvoke_OnlyUpdatesValueOnFirstInvoke()
 		{
-			//Arrange
+			// Arrange
 			var mockRandomizerService = new Mock<IRandomizerService>();
 			var settings = new RandomChoiceBehaviorSettings();
 			var behavior = new RandomColorBehavior(settings, mockRandomizerService.Object);
 
-			//Act
+			// Act
 			behavior.Update(It.IsAny<TimeSpan>());
 			behavior.Update(It.IsAny<TimeSpan>());
 
-			//Assert
+			// Assert
 			mockRandomizerService.Verify(m => m.GetValue(0, 0), Times.Once());
 		}
 
@@ -32,15 +32,15 @@ namespace KDParticleEngineTests.Behaviors
 		[Fact]
 		public void Update_WhenInvokedWithNullSettingsData_UsesDefaultWhiteColor()
 		{
-			//Arrange
+			// Arrange
 			var mockRandomizerService = new Mock<IRandomizerService>();
 			var settings = new RandomChoiceBehaviorSettings();
 			var behavior = new RandomColorBehavior(settings, mockRandomizerService.Object);
 
-			//Act
+			// Act
 			behavior.Update(It.IsAny<TimeSpan>());
 
-			//Assert
+			// Assert
 			Assert.Equal("clr:255,255,255,255", behavior.Value);
 		}
 
@@ -48,7 +48,7 @@ namespace KDParticleEngineTests.Behaviors
 		[Fact]
 		public void Update_WhenInvokedWithSettingsData_RandomlyChoosesSecondColor()
 		{
-			//Arrange
+			// Arrange
 			var mockRandomizerService = new Mock<IRandomizerService>();
 			mockRandomizerService.Setup(m => m.GetValue(0, 1)).Returns(1);
 
@@ -59,10 +59,10 @@ namespace KDParticleEngineTests.Behaviors
 
 			var behavior = new RandomColorBehavior(settings, mockRandomizerService.Object);
 
-			//Act
+			// Act
 			behavior.Update(It.IsAny<TimeSpan>());
 
-			//Assert
+			// Assert
 			Assert.Equal("clr:255,0,255,0", behavior.Value);
 		}
 
@@ -70,17 +70,17 @@ namespace KDParticleEngineTests.Behaviors
 		[Fact]
 		public void Update_WhenResetAfterInvoked_ChoosesAnotherColor()
 		{
-			//Arrange
+			// Arrange
 			var mockRandomizerService = new Mock<IRandomizerService>();
 			var settings = new RandomChoiceBehaviorSettings();
 			var behavior = new RandomColorBehavior(settings, mockRandomizerService.Object);
 
-			//Act
+			// Act
 			behavior.Update(It.IsAny<TimeSpan>());
 			behavior.Reset();
 			behavior.Update(It.IsAny<TimeSpan>());
 
-			//Assert
+			// Assert
 			mockRandomizerService.Verify(m => m.GetValue(0, 0), Times.Exactly(2));
 		}
 		#endregion

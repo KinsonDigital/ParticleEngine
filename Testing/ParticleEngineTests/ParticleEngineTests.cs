@@ -40,10 +40,10 @@ namespace KDParticleEngineTests
         [Fact]
         public void Enabled_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             _engine.Enabled = false;
 
-            //Assert
+            // Assert
             Assert.False(_engine.Enabled);
         }
 
@@ -51,7 +51,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -61,10 +61,10 @@ namespace KDParticleEngineTests
             _engine.LoadTextures();
             _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Act
+            // Act
             var actual = _engine.ParticlePools;
 
-            //Assert
+            // Assert
             Assert.Single(actual);
             Assert.Equal(effect, _engine.ParticlePools[0].Effect);
         }
@@ -75,17 +75,17 @@ namespace KDParticleEngineTests
         [Fact]
         public void ClearPools_WhenInvoked_DisposesOfManagedResources()
         {
-            //Arrange
+            // Arrange
             var mockPool1Texture = new Mock<IParticleTexture>();
             var mockPool2Texture = new Mock<IParticleTexture>();
             var textureALoaded = false;
 
             _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
-                //Load the correct texture depending on the pool.
-                //All pools use the same istance of texture loader so we have
-                //to mock out the correct texture to go with the correct pool,
-                //so we can verify that each pool is disposing of there textures
+                // Load the correct texture depending on the pool.
+                // All pools use the same istance of texture loader so we have
+                // to mock out the correct texture to go with the correct pool,
+                // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
                 {
                     return mockPool2Texture.Object;
@@ -100,15 +100,15 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect();
             var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
 
-            //Create 2 pools
+            // Create 2 pools
             engine.CreatePool(effect, _mockBehaviorFactory.Object);
             engine.CreatePool(effect, _mockBehaviorFactory.Object);
             engine.LoadTextures();
 
-            //Act
+            // Act
             engine.ClearPools();
 
-            //Assert
+            // Assert
             mockPool1Texture.Verify(m => m.Dispose(), Times.Once());
             mockPool2Texture.Verify(m => m.Dispose(), Times.Once());
             Assert.Empty(engine.ParticlePools);
@@ -118,7 +118,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -128,10 +128,10 @@ namespace KDParticleEngineTests
             _engine.LoadTextures();
             _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Act
+            // Act
             var actual = _engine.ParticlePools;
 
-            //Assert
+            // Assert
             _mockTextureLoader.Verify(m => m.LoadTexture("texture-name"), Times.Once());
         }
 
@@ -139,7 +139,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Update_WithTexturesNotLoaded_ThrowsException()
         {
-            //Act & Assert
+            // Act & Assert
             AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
                 _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -150,7 +150,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Update_WhenDisabled_DoesNotUpdateParticles()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -164,10 +164,10 @@ namespace KDParticleEngineTests
             _engine.CreatePool(effect, _mockBehaviorFactory.Object);
             _engine.LoadTextures();
 
-            //Act
+            // Act
             _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Never());
         }
 
@@ -175,7 +175,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void Update_WhenEnabled_UpdatesAllParticles()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
@@ -195,11 +195,11 @@ namespace KDParticleEngineTests
             _engine.CreatePool(effect, _mockBehaviorFactory.Object);
             _engine.LoadTextures();
 
-            //Act
+            // Act
             _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
             _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Exactly(3));
         }
 
@@ -207,17 +207,17 @@ namespace KDParticleEngineTests
         [Fact]
         public void Dispose_WhenInvoked_DisposesOfManagedResources()
         {
-            //Arrange
+            // Arrange
             var mockPool1Texture = new Mock<IParticleTexture>();
             var mockPool2Texture = new Mock<IParticleTexture>();
             var textureALoaded = false;
 
             _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
-                //Load the correct texture depending on the pool.
-                //All pools use the same istance of texture loader so we have
-                //to mock out the correct texture to go with the correct pool,
-                //so we can verify that each pool is disposing of there textures
+                // Load the correct texture depending on the pool.
+                // All pools use the same istance of texture loader so we have
+                // to mock out the correct texture to go with the correct pool,
+                // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
                 {
                     return mockPool2Texture.Object;
@@ -232,16 +232,16 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect();
             var engine = new ParticleEngine(_mockTextureLoader.Object, _mockRandomizerService.Object);
 
-            //Create 2 pools
+            // Create 2 pools
             engine.CreatePool(effect, _mockBehaviorFactory.Object);
             engine.CreatePool(effect, _mockBehaviorFactory.Object);
             engine.LoadTextures();
 
-            //Act
+            // Act
             engine.Dispose();
             engine.Dispose();
 
-            //Assert
+            // Assert
             mockPool1Texture.Verify(m => m.Dispose(), Times.Once());
             mockPool2Texture.Verify(m => m.Dispose(), Times.Once());
         }

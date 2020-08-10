@@ -16,10 +16,10 @@ namespace KDParticleEngineTests
         [InlineData(1.0, 2.0, 3.0, 1.0, 5.090511363636364)]
         public void EaseOutBounce_WhenInvoked_ReturnsCorrectValue(double t, double b, double c, double d, double expected)
         {
-            //Act
+            // Act
             var actual = EasingFunctions.EaseOutBounce(t, b, c, d);
 
-            //Assert
+            // Assert
             Assert.Equal(expected, actual);
         }
 
@@ -27,13 +27,13 @@ namespace KDParticleEngineTests
         [Fact]
         public void EaseInQuad_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var expected = 30.444444444444443;
 
-            //Act
+            // Act
             var actual = EasingFunctions.EaseInQuad(16, 2.0, 4.0, 6.0);
 
-            //Assert
+            // Assert
             Assert.Equal(expected, actual);
         }
         #endregion

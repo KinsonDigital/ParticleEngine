@@ -30,17 +30,17 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Ctor_WhenInvoked_SetsSetting()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings()
             {
                 ApplyToAttribute = ParticleAttribute.Angle
             };
             var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             var actual = behavior.ApplyToAttribute;
 
-            //Assert
+            // Assert
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
         #endregion
@@ -50,15 +50,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Start_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
             var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Start = 123;
             var actual = behavior.Start;
 
-            //Assert
+            // Assert
             Assert.Equal(123, actual);
         }
 
@@ -66,15 +66,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Change_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
             var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Change = 123;
             var actual = behavior.Change;
 
-            //Assert
+            // Assert
             Assert.Equal(123, actual);
         }
         #endregion
@@ -84,14 +84,14 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Update_WhenInvoked_UpdatesElapsedTime()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
             var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.Equal(16, behavior.ElapsedTime);
         }
 
@@ -99,7 +99,7 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Update_WithLifeTimeNotElapsed_IsEnabledAfterUpdate()
         {
-            //Arrange
+            // Arrange
             _mockRandomizerService.Setup(m => m.GetValue(0f, 1000f)).Returns(500f);
             var settings = new EasingBehaviorSettings()
             {
@@ -108,10 +108,10 @@ namespace KDParticleEngineTests.Behaviors
             };
             var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.True(behavior.Enabled);
         }
 
@@ -119,15 +119,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Reset_WhenInvoked_ResetsStartProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
             var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(123, behavior.Start);
         }
 
@@ -135,15 +135,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Reset_WhenInvoked_ResetsChangeProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
             _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
             var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(123, behavior.Change);
         }
 
@@ -151,15 +151,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Reset_WhenInvoked_ResetsElapsedTimeProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
             var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(0, behavior.ElapsedTime);
         }
 
@@ -167,15 +167,15 @@ namespace KDParticleEngineTests.Behaviors
         [Fact]
         public void Reset_WhenInvoked_ResetsEnabledProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
             var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 45));
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.True(behavior.Enabled);
         }
         #endregion
