@@ -27,7 +27,6 @@ namespace KDParticleEngineTests
         private const string PARTICLE_TEXTURE_NAME = "particle-texture";
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticlePoolTests"/>.
@@ -56,7 +55,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Constructor Tests
         [Fact]
         public void Ctor_WhenInvoked_SetsEffectProp()
@@ -67,7 +65,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(_effect, pool.Effect);
         }
-
 
         [Fact]
         public void Ctor_WhenInvoked_CreatesParticles()
@@ -81,7 +78,6 @@ namespace KDParticleEngineTests
             Assert.Equal(10, pool.Particles.Length);
         }
         #endregion
-
 
         #region Prop Tests
         [Fact]
@@ -98,7 +94,6 @@ namespace KDParticleEngineTests
             Assert.Equal(1, actual);
         }
 
-
         [Fact]
         public void TotalDeadParticles_WhenGettingValue_ReturnsCorrectValue()
         {
@@ -114,7 +109,6 @@ namespace KDParticleEngineTests
             Assert.Equal(9, actual);
         }
         #endregion
-
 
         #region Method Tests
         [Theory]
@@ -134,7 +128,6 @@ namespace KDParticleEngineTests
             _mockRandomizerService.Verify(m => m.GetValue(rateMin < rateMax ? rateMin : rateMax, rateMax > rateMin ? rateMax : rateMin), Times.Once());
         }
 
-
         [Fact]
         public void Update_WhenInvoked_SpawnsNewParticle()
         {
@@ -147,7 +140,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(1, pool.TotalLivingParticles);
         }
-
 
         [Fact]
         public void KillAllParticles_WhenInvoked_KillsAllParticles()
@@ -162,7 +154,6 @@ namespace KDParticleEngineTests
             Assert.Equal(0, pool.TotalLivingParticles);
         }
 
-
         [Fact]
         public void LoadTexture_WhenInvoked_LoadsTextureWithEffectTextureName()
         {
@@ -175,7 +166,6 @@ namespace KDParticleEngineTests
             // Assert
             _mockTextureLoader.Verify(m => m.LoadTexture(PARTICLE_TEXTURE_NAME), Times.Once());
         }
-
 
         [Fact]
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
@@ -199,7 +189,6 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
 
-
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
@@ -221,7 +210,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
@@ -259,7 +247,6 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
 
-
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
@@ -284,7 +271,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void Dispose_WhenInvoked_ProperlyFreesManagedResources()

@@ -19,14 +19,12 @@ namespace KDParticleEngineTests.Behaviors
         private readonly Mock<IRandomizerService> _mockRandomizerService;
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="EaseOutBounceBehaviorTests"/>.
         /// </summary>
         public EaseOutBounceBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
         #endregion
-
 
         #region Method Tets
         [Fact]
@@ -42,7 +40,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.NotEqual("0", behavior.Value);
         }
-
 
         [Fact]
         public void Update_WhenInvoked_UpdatesElapsedTime()

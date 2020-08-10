@@ -23,7 +23,6 @@ namespace KDParticleEngineTests
             // Arrange
             var propsToTest = GetColorPropNames();
 
-
             foreach (var prop in propsToTest)
             {
                 var expected = Color.FromName(prop);
@@ -36,7 +35,6 @@ namespace KDParticleEngineTests
             }
         }
         #endregion
-
 
         #region Method Tests
         [Fact]
@@ -51,7 +49,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(27.843138f, actual);
         }
-
 
         [Theory]
         [InlineData(118, 98, 118, 300f)]
@@ -70,7 +67,6 @@ namespace KDParticleEngineTests
             Assert.Equal(result, actual);
         }
 
-
         [Fact]
         public void GetSaturation_WhenInvoked_ReturnsCorrectValue()
         {
@@ -83,7 +79,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(66.19718, Math.Round(actual, 5));
         }
-
 
         [Theory]
         [InlineData(255, 255, 255, 255, true)]
@@ -101,7 +96,6 @@ namespace KDParticleEngineTests
             Assert.Equal(expectedResult, actual);
         }
 
-
         [Theory]
         [InlineData(255, 255, 255, 255, false)]
         [InlineData(11, 22, 33, 44, true)]
@@ -118,7 +112,6 @@ namespace KDParticleEngineTests
             Assert.Equal(expectedResult, actual);
         }
 
-
         [Fact]
         public void Equals_WithTwoDifferentObjectTypes_ReturnsFalse()
         {
@@ -132,7 +125,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithTwoNonMatchingObject_ReturnsFalse()
@@ -148,7 +140,6 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
 
-
         [Fact]
         public void Equals_WithTwoMatchingObject_ReturnsTrue()
         {
@@ -162,7 +153,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
@@ -178,7 +168,6 @@ namespace KDParticleEngineTests
             Assert.True(actual);
         }
 
-
         [Fact]
         public void ToString_WhenInvoked_ReturnsCorrectValue()
         {
@@ -193,7 +182,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Private Methods
         /// <summary>
         /// Returns all of the names of the <see cref="ParticleColor"/> color property names.
@@ -201,7 +189,6 @@ namespace KDParticleEngineTests
         /// <returns></returns>
         private string[] GetColorPropNames() => typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor)).Select(p => p.Name).ToArray();
-
 
         /// <summary>
         /// Gets the <see cref="ParticleColor"/> property value that matches the given <paramref name="name"/>.
@@ -212,7 +199,6 @@ namespace KDParticleEngineTests
         {
             var foundProp = typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor) && p.Name == name).FirstOrDefault();
-
 
             return foundProp.GetValue(null, null) as ParticleColor;
         }

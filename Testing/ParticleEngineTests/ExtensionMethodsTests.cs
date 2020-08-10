@@ -34,7 +34,6 @@ namespace KDParticleEngineTests
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public void Next_WhenInvokedWithMinMoreThanMax_ReturnsMaxValue()
         {
@@ -48,7 +47,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(expected, actual);
         }
-
 
         [Fact]
         public void Add_WhenInvoking_ReturnsCorrectValue()
@@ -64,7 +62,6 @@ namespace KDParticleEngineTests
             Assert.Equal(new PointF(15f, 23f), result);
         }
 
-
         [Fact]
         public void Mult_WhenInvoking_ReturnsCorrectValue()
         {
@@ -77,7 +74,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(new PointF(20f, 40f), result);
         }
-
 
         [Fact]
         public void Count_WhenInvokingListVersion_ReturnsCorrectValue()
@@ -98,7 +94,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(9, actual);
         }
-
 
         [Fact]
         public void Count_WhenInvokingArrayVersion_ReturnsCorrectValue()

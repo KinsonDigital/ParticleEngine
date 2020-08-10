@@ -32,7 +32,6 @@ namespace KDParticleEngineTests.Behaviors
 			mockRandomizerService.Verify(m => m.GetValue(0, 0), Times.Once());
 		}
 
-
 		[Fact]
 		public void Update_WhenInvokedWithNullSettingsData_UsesDefaultWhiteColor()
 		{
@@ -47,7 +46,6 @@ namespace KDParticleEngineTests.Behaviors
 			// Assert
 			Assert.Equal("clr:255,255,255,255", behavior.Value);
 		}
-
 
 		[Fact]
 		public void Update_WhenInvokedWithSettingsData_RandomlyChoosesSecondColor()
@@ -69,7 +67,6 @@ namespace KDParticleEngineTests.Behaviors
 			// Assert
 			Assert.Equal("clr:255,0,255,0", behavior.Value);
 		}
-
 
 		[Fact]
 		public void Update_WhenResetAfterInvoked_ChoosesAnotherColor()

@@ -21,14 +21,12 @@ namespace KDParticleEngineTests.Behaviors
         private Mock<IRandomizerService> _mockRandomizerService;
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehaviorTests"/>
         /// </summary>
         public EasingBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
         #endregion
-
 
         #region Constructor Tests
         [Fact]
@@ -49,7 +47,6 @@ namespace KDParticleEngineTests.Behaviors
         }
         #endregion
 
-
         #region Prop Tests
         [Fact]
         public void Start_WhenSettingValue_ReturnsCorrectValue()
@@ -65,7 +62,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(123, actual);
         }
-
 
         [Fact]
         public void Change_WhenSettingValue_ReturnsCorrectValue()
@@ -83,7 +79,6 @@ namespace KDParticleEngineTests.Behaviors
         }
         #endregion
 
-
         #region Method Tests
         [Fact]
         public void Update_WhenInvoked_UpdatesElapsedTime()
@@ -98,7 +93,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(16, behavior.ElapsedTime);
         }
-
 
         [Fact]
         public void Update_WithLifeTimeNotElapsed_IsEnabledAfterUpdate()
@@ -119,7 +113,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.True(behavior.Enabled);
         }
 
-
         [Fact]
         public void Reset_WhenInvoked_ResetsStartProp()
         {
@@ -134,7 +127,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(123, behavior.Start);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsChangeProp()
@@ -151,7 +143,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(123, behavior.Change);
         }
 
-
         [Fact]
         public void Reset_WhenInvoked_ResetsElapsedTimeProp()
         {
@@ -166,7 +157,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(0, behavior.ElapsedTime);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsEnabledProp()
@@ -183,7 +173,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.True(behavior.Enabled);
         }
         #endregion
-
 
         #region Public Methods
         /// <summary>

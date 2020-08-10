@@ -34,7 +34,6 @@ namespace KDParticleEngineTests.Services
             }
         }
 
-
         [Theory]
         [InlineData(1, 12)]
         [InlineData(1, 42)]
@@ -54,7 +53,6 @@ namespace KDParticleEngineTests.Services
                 AssertExt.WithinRange(result, minValue, maxValue);
             }
         }
-
 
         [Theory]
         [InlineData(1.001f, 2.001f)]
@@ -77,7 +75,6 @@ namespace KDParticleEngineTests.Services
             }
         }
 
-
         [Theory]
         [InlineData(1.000f, 2.123f)]
         [InlineData(1.987f, 4.456f)]
@@ -99,7 +96,6 @@ namespace KDParticleEngineTests.Services
             }
         }
 
-
         [Theory]
         [InlineData(1.001, 2.001)]
         [InlineData(1.001, 4.001)]
@@ -120,7 +116,6 @@ namespace KDParticleEngineTests.Services
                 Assert.InRange(result, minValue - 0.001, maxValue + 0.001);
             }
         }
-
 
         [Theory]
         [InlineData(1.000, 2.123)]

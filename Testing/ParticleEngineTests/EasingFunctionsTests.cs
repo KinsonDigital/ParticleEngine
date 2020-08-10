@@ -27,7 +27,6 @@ namespace KDParticleEngineTests
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public void EaseInQuad_WhenInvoked_ReturnsCorrectValue()
         {

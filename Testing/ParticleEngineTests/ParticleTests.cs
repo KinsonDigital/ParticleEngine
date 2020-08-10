@@ -22,7 +22,6 @@ namespace KDParticleEngineTests
         private readonly Mock<IBehavior> _mockBehavior;
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticleTests"/>.
@@ -34,7 +33,6 @@ namespace KDParticleEngineTests
             _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
         }
         #endregion
-
 
         #region Prop Tests
         [Fact]
@@ -53,7 +51,6 @@ namespace KDParticleEngineTests
             Assert.Equal(new PointF(11, 22), actual);
         }
 
-
         [Fact]
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -69,7 +66,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(1234f, actual);
         }
-
 
         [Fact]
         public void TintColor_WhenSettingValue_ReturnsCorrectValue()
@@ -87,7 +83,6 @@ namespace KDParticleEngineTests
             Assert.Equal(ParticleColor.FromArgb(11, 22, 33, 44), actual);
         }
 
-
         [Fact]
         public void Size_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -104,7 +99,6 @@ namespace KDParticleEngineTests
             Assert.Equal(1019f, actual);
         }
 
-
         [Fact]
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -117,7 +111,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.True(particle.IsAlive);
         }
-
 
         [Fact]
         public void IsDead_WhenSettingValue_ReturnsCorrectValue()
@@ -133,7 +126,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Method Tests
 
         [Fact]
@@ -144,14 +136,12 @@ namespace KDParticleEngineTests
             _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
             var particle = new Particle(new[] { _mockBehavior.Object });
 
-
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
                 particle.Update(_frameTime);
             }, $"Particle.Update Exception:\n\tParsing the behavior value '12z3' failed.\n\tValue must be a number.");
         }
-
 
         [Theory]
         [InlineData("clr:300,0,0,255", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component out of range.")]
@@ -178,14 +168,12 @@ namespace KDParticleEngineTests
 
             var particle = new Particle(new[] { _mockBehavior.Object });
 
-
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
                 particle.Update(_frameTime);
             }, expectedMessage);
         }
-
 
         [Fact]
         public void Update_WhenUsingRandomColorBehavior_SetsTintColor()
@@ -206,7 +194,6 @@ namespace KDParticleEngineTests
             Assert.Equal(expected, particle.TintColor);
         }
 
-
         [Fact]
         public void Update_WithDisabledBehavior_BehaviorShouldNotUpdate()
         {
@@ -222,7 +209,6 @@ namespace KDParticleEngineTests
             _mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Never);
         }
 
-
         [Fact]
         public void Update_WithEnabledBehavior_BehaviorShouldUpdate()
         {
@@ -237,7 +223,6 @@ namespace KDParticleEngineTests
             // Assert
             _mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Once());
         }
-
 
         [Fact]
         public void Update_WhenApplyingToXAttribute_UpdatesPositionX()
@@ -255,7 +240,6 @@ namespace KDParticleEngineTests
             Assert.Equal("123", particle.Position.X.ToString());
         }
 
-
         [Fact]
         public void Update_WhenApplyingToYAttribute_UpdatesPositionY()
         {
@@ -271,7 +255,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal("123", particle.Position.Y.ToString());
         }
-
 
         [Fact]
         public void Update_WhenApplyingToAngleAttribute_UpdatesAngle()
@@ -289,7 +272,6 @@ namespace KDParticleEngineTests
             Assert.Equal("123", particle.Angle.ToString());
         }
 
-
         [Fact]
         public void Update_WhenApplyingToSizeAttribute_UpdatesSize()
         {
@@ -305,7 +287,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal("123", particle.Size.ToString());
         }
-
 
         [Fact]
         public void Update_WhenApplyingToRedColorComponentAttribute_UpdatesRedColorComponent()
@@ -323,7 +304,6 @@ namespace KDParticleEngineTests
             Assert.Equal("123", particle.TintColor.R.ToString());
         }
 
-
         [Fact]
         public void Update_WhenApplyingToGreenColorComponentAttribute_UpdatesGreenColorComponent()
         {
@@ -339,7 +319,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal("123", particle.TintColor.G.ToString());
         }
-
 
         [Fact]
         public void Update_WhenApplyingToBlueColorComponentAttribute_UpdatesBlueColorComponent()
@@ -357,7 +336,6 @@ namespace KDParticleEngineTests
             Assert.Equal("123", particle.TintColor.B.ToString());
         }
 
-
         [Fact]
         public void Update_WhenApplyingToAlphaColorComponentAttribute_UpdatesAlphaColorComponent()
         {
@@ -374,7 +352,6 @@ namespace KDParticleEngineTests
             Assert.Equal("123", particle.TintColor.A.ToString());
         }
 
-
         [Fact]
         public void Reset_WhenInvoked_ResetsAllBehaviors()
         {
@@ -387,7 +364,6 @@ namespace KDParticleEngineTests
             // Assert
             _mockBehavior.Verify(m => m.Reset(), Times.Once());
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsAngle()
@@ -405,7 +381,6 @@ namespace KDParticleEngineTests
             Assert.Equal(0, particle.Angle);
         }
 
-
         [Fact]
         public void Reset_WhenInvoked_ResetsTintColor()
         {
@@ -422,7 +397,6 @@ namespace KDParticleEngineTests
             Assert.Equal(255, particle.TintColor.R);
         }
 
-
         [Fact]
         public void Reset_WhenInvoked_ResetsIsAlive()
         {
@@ -438,7 +412,6 @@ namespace KDParticleEngineTests
             Assert.True(particle.IsAlive);
         }
 
-
         [Fact]
         public void Equals_WithDifferentObjects_ReturnsFalse()
         {
@@ -452,7 +425,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
@@ -471,7 +443,6 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
 
-
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
@@ -485,7 +456,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()

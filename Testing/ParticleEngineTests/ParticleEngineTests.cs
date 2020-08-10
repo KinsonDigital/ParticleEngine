@@ -24,7 +24,6 @@ namespace KDParticleEngineTests
         private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="ParticleEngineTests"/>.
@@ -39,7 +38,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Prop Tests
         [Fact]
         public void Enabled_WhenSettingValue_ReturnsCorrectValue()
@@ -50,7 +48,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(_engine.Enabled);
         }
-
 
         [Fact]
         public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
@@ -73,7 +70,6 @@ namespace KDParticleEngineTests
             Assert.Equal(effect, _engine.ParticlePools[0].Effect);
         }
         #endregion
-
 
         #region Method Tests
         [Fact]
@@ -118,7 +114,6 @@ namespace KDParticleEngineTests
             Assert.Empty(engine.ParticlePools);
         }
 
-
         [Fact]
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
@@ -139,7 +134,6 @@ namespace KDParticleEngineTests
             _mockTextureLoader.Verify(m => m.LoadTexture("texture-name"), Times.Once());
         }
 
-
         [Fact]
         public void Update_WithTexturesNotLoaded_ThrowsException()
         {
@@ -149,7 +143,6 @@ namespace KDParticleEngineTests
                 _engine.Update(new TimeSpan(0, 0, 0, 0, 16));
             }, "The textures must be loaded first.");
         }
-
 
         [Fact]
         public void Update_WhenDisabled_DoesNotUpdateParticles()
@@ -174,7 +167,6 @@ namespace KDParticleEngineTests
             // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Never());
         }
-
 
         [Fact]
         public void Update_WhenEnabled_UpdatesAllParticles()
@@ -206,7 +198,6 @@ namespace KDParticleEngineTests
             // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Exactly(3));
         }
-
 
         [Fact]
         public void Dispose_WhenInvoked_DisposesOfManagedResources()
@@ -251,7 +242,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Private Methods
         /// <summary>
         /// Asserts if an action does not throw a null reference exception.
@@ -275,7 +265,6 @@ namespace KDParticleEngineTests
                 }
             }
         }
-
 
         /// <summary>
         ///  Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

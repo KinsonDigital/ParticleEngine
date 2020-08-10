@@ -28,7 +28,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(BehaviorType.EaseIn, actual);
         }
 
-
         [Fact]
         public void ApplyToAttribute_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -42,7 +41,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
-
 
         [Fact]
         public void StartMin_WhenSettingValue_ReturnsCorrectValue()
@@ -58,7 +56,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(1234f, actual);
         }
 
-
         [Fact]
         public void StartMax_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -72,7 +69,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(1234f, actual);
         }
-
 
         [Fact]
         public void ChangeMin_WhenSettingValue_ReturnsCorrectValue()
@@ -88,7 +84,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(1234f, actual);
         }
 
-
         [Fact]
         public void ChangeMax_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -102,7 +97,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.Equal(1234f, actual);
         }
-
 
         [Fact]
         public void TotalTimeMin_WhenSettingValue_ReturnsCorrectValue()
@@ -118,7 +112,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(1234f, actual);
         }
 
-
         [Fact]
         public void TotalTimeMax_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -133,7 +126,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.Equal(1234f, actual);
         }
         #endregion
-
 
         #region Method Tests
         [Fact]
@@ -159,7 +151,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
@@ -196,7 +187,6 @@ namespace KDParticleEngineTests.Behaviors
             Assert.True(actual);
         }
 
-
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
@@ -231,7 +221,6 @@ namespace KDParticleEngineTests.Behaviors
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()

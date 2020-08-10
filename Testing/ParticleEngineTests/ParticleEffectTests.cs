@@ -26,7 +26,6 @@ namespace KDParticleEngineTests
             Assert.Equal("effect-name", effect.ParticleTextureName);
         }
 
-
         [Fact]
         public void Ctor_WhenInvoked_SetsBehaviorSettings()
         {
@@ -55,7 +54,6 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Prop Tests
         [Fact]
         public void ApplyBehaviorTo_WhenSettingValue_ReturnsCorrectValue()
@@ -71,7 +69,6 @@ namespace KDParticleEngineTests
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
 
-
         [Fact]
         public void SpawnLocation_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -85,7 +82,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(new PointF(11, 22), actual);
         }
-
 
         [Fact]
         public void TintColors_WhenSettingValue_ReturnsCorrectValue()
@@ -101,7 +97,6 @@ namespace KDParticleEngineTests
             Assert.Equal(new ParticleColor(11, 22, 33, 44), actual[0]);
         }
 
-
         [Fact]
         public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -115,7 +110,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(1234, actual);
         }
-
 
         [Fact]
         public void SpawnRateMin_WhenSettingValue_ReturnsCorrectValue()
@@ -131,7 +125,6 @@ namespace KDParticleEngineTests
             Assert.Equal(1234, actual);
         }
 
-
         [Fact]
         public void SpawnRateMax_WhenSettingValue_ReturnsCorrectValue()
         {
@@ -145,7 +138,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(1234, actual);
         }
-
 
         [Fact]
         public void UseColorsFromList_WhenSettingValue_ReturnsCorrectValue()
@@ -161,7 +153,6 @@ namespace KDParticleEngineTests
             Assert.True(actual);
         }
         #endregion
-
 
         #region Method Tests
         [Fact]
@@ -201,7 +192,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithEqualObjects_ReturnsTrue()
@@ -251,7 +241,6 @@ namespace KDParticleEngineTests
             Assert.True(actual);
         }
 
-
         [Fact]
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
@@ -300,7 +289,6 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
 
-
         [Fact]
         public void Equals_WithDifferentTintColorTotals_ReturnsFalse()
         {
@@ -348,7 +336,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
