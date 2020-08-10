@@ -10,28 +10,28 @@ namespace ParticleSandbox
         private readonly List<double> _timings = new List<double>();
 
 
-        public double Performance => _timings.Count <= 0 ? 0 : _timings.Average();
+        public double Performance => this._timings.Count <= 0 ? 0 : this._timings.Average();
 
 
         public int TotalRecordings { get; set; } = 10;
 
 
-        public void Start() => _timer.Start();
+        public void Start() => this._timer.Start();
 
         
         public void LogPerf()
         {
             Stop();
-            _timings.Add(_timer.Elapsed.TotalMilliseconds);
+            this._timings.Add(this._timer.Elapsed.TotalMilliseconds);
 
-            if (_timings.Count >= TotalRecordings + 1)
-                _timings.RemoveAt(0);
+            if (this._timings.Count >= TotalRecordings + 1)
+                this._timings.RemoveAt(0);
 
-            _timer.Reset();
+            this._timer.Reset();
             Start();
         }
 
 
-        public void Stop() => _timer.Stop();
+        public void Stop() => this._timer.Stop();
     }
 }

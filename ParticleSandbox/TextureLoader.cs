@@ -20,7 +20,7 @@ namespace ParticleSandbox
         /// Creates a new instance of <see cref="TextureLoader"/>.
         /// </summary>
         /// <param name="content">The content manager used to load images.</param>
-        public TextureLoader(ContentManager content) => _content = content;
+        public TextureLoader(ContentManager content) => this._content = content;
         #endregion
 
 
@@ -32,7 +32,7 @@ namespace ParticleSandbox
         /// <returns></returns>
         public IParticleTexture LoadTexture(string imageFilePath)
         {
-            var texture2D = _content.Load<Texture2D>(imageFilePath);
+            var texture2D = this._content.Load<Texture2D>(imageFilePath);
 
 
             return new Texture(texture2D);
