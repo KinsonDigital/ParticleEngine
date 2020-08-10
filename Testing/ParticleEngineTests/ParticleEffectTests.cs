@@ -4,6 +4,7 @@
 
 namespace KDParticleEngineTests
 {
+    using System.Collections.ObjectModel;
     using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
@@ -90,7 +91,7 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
 
             // Act
-            effect.TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) };
+            effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) });
             var actual = effect.TintColors;
 
             // Assert
@@ -182,7 +183,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
             var otherObj = new object();
 
@@ -220,7 +221,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             var effectB = new ParticleEffect("test-name", settings)
@@ -231,7 +232,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             // Act
@@ -268,7 +269,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             var effectB = new ParticleEffect("effect-bee", settings)
@@ -279,7 +280,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 66,
                 TotalParticlesAliveAtOnce = 55,
                 UseColorsFromList = false,
-                TintColors = new ParticleColor[] { new ParticleColor(99, 88, 77, 66) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(99, 88, 77, 66) }),
             };
 
             // Act
@@ -316,7 +317,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             var effectB = new ParticleEffect("effect-name", settings)
@@ -327,7 +328,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44), new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44), new ParticleColor(11, 22, 33, 44) }),
             };
 
             // Act
@@ -364,7 +365,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             var effectB = new ParticleEffect("test-name", settings)
@@ -375,7 +376,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
             };
 
             // Act

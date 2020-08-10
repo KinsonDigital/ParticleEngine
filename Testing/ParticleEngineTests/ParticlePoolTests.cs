@@ -5,6 +5,7 @@
 namespace KDParticleEngineTests
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
@@ -73,7 +74,7 @@ namespace KDParticleEngineTests
             var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Assert
-            Assert.Equal(10, pool.Particles.Length);
+            Assert.Equal(10, pool.Particles.Count);
         }
         #endregion
 
@@ -173,7 +174,7 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -195,7 +196,7 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -219,7 +220,7 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 99,
                 UseColorsFromList = true,
             };
@@ -230,7 +231,7 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) },
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 100,
                 UseColorsFromList = true,
             };
@@ -253,7 +254,7 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 

@@ -102,7 +102,7 @@ namespace ParticleSandbox
                 {
                     ApplyToAttribute = ParticleAttribute.Color,
                     TypeOfBehavior = BehaviorType.RandomChoice,
-                    Data = new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" },
+                    Data = new ReadOnlyCollection<string>(new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" }),
                     LifeTime = 6000
                 },
                 //new EasingBehaviorSettings()//Red channel setup
@@ -165,11 +165,11 @@ namespace ParticleSandbox
             var effectA = new ParticleEffect("Shape-A", settings)
             {
                 UseColorsFromList = true,//THIS WILL LIKELY BE REMOVED
-                TintColors = new ParticleColor[]//THIS WILL LIKELY BE REMOVED
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[]//THIS WILL LIKELY BE REMOVED
                 {
                     new ParticleColor(255, 255, 0, 0),
                     new ParticleColor(255, 0, 255, 0)
-                },
+                }),
                 SpawnLocation = spawnLocation,
                 SpawnRateMin = 10,
                 SpawnRateMax = 10,

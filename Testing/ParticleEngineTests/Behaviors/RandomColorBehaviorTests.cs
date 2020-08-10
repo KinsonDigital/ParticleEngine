@@ -5,6 +5,7 @@
 namespace KDParticleEngineTests.Behaviors
 {
     using System;
+    using System.Collections.ObjectModel;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
     using Moq;
@@ -56,7 +57,7 @@ namespace KDParticleEngineTests.Behaviors
 
             var settings = new RandomChoiceBehaviorSettings()
             {
-                Data = new[] { "clr:255,255,0,0", "clr:255,0,255,0" },
+                Data = new ReadOnlyCollection<string>(new[] { "clr:255,255,0,0", "clr:255,0,255,0" }),
             };
 
             var behavior = new RandomColorBehavior(settings, mockRandomizerService.Object);

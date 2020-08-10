@@ -5,6 +5,7 @@
 namespace KDParticleEngine.Behaviors
 {
     using System;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Various settings for behaviors that choose values randomly from a list of choices.
@@ -19,7 +20,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Gets or sets the data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
-        public string[]? Data { get; set; }
+        public ReadOnlyCollection<string>? Data { get; set; }
 
         /// <summary>
         /// Gets or sets the amount of time that the behavior should be enabled.

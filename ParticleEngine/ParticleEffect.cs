@@ -5,6 +5,7 @@
 namespace KDParticleEngine
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Drawing;
     using KDParticleEngine.Behaviors;
 
@@ -28,7 +29,7 @@ namespace KDParticleEngine
         public ParticleEffect(string particleTextureName, BehaviorSettings[] settings)
         {
             ParticleTextureName = particleTextureName;
-            BehaviorSettings = settings;
+            BehaviorSettings = new ReadOnlyCollection<BehaviorSettings>(settings);
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace KDParticleEngine
         /// randomly choose from when spawning a new <see cref="Particle"/>.
         /// Only used if the <see cref="UseColorsFromList"/> is set to true.
         /// </summary>
-        public ParticleColor[] TintColors { get; set; } = Array.Empty<ParticleColor>();
+        public ReadOnlyCollection<ParticleColor> TintColors { get; set; } = new ReadOnlyCollection<ParticleColor>(Array.Empty<ParticleColor>());
 
         /// <summary>
         /// Gets or sets the total number of particles that can be alive at once.
@@ -76,7 +77,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
-        public BehaviorSettings[] BehaviorSettings { get; } = Array.Empty<BehaviorSettings>();
+        public ReadOnlyCollection<BehaviorSettings> BehaviorSettings { get; } = new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>());
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -90,9 +91,9 @@ namespace KDParticleEngine
 
             var colorsAreSame = true;
 
-            if (TintColors.Length == effect.TintColors.Length)
+            if (TintColors.Count == effect.TintColors.Count)
             {
-                for (var i = 0; i < TintColors.Length; i++)
+                for (var i = 0; i < TintColors.Count; i++)
                 {
                     if (TintColors[i] != effect.TintColors[i])
                     {

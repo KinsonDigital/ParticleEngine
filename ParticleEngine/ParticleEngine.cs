@@ -7,6 +7,7 @@ namespace KDParticleEngine
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
 
@@ -37,7 +38,8 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ParticlePool<IParticleTexture>[] ParticlePools => this.particlePools.ToArray();
+        public ReadOnlyCollection<ParticlePool<IParticleTexture>> ParticlePools
+            => new ReadOnlyCollection<ParticlePool<IParticleTexture>>(this.particlePools.ToArray());
 
         /// <summary>
         /// Gets or sets a value indicating whether the engine is enabled or disabled.

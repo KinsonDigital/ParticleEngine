@@ -7,6 +7,8 @@ namespace KDParticleEngine
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
 
@@ -63,7 +65,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets the list of particle in the pool.
         /// </summary>
-        public Particle[] Particles => this.particles.ToArray();
+        public ReadOnlyCollection<Particle> Particles => new ReadOnlyCollection<Particle>(this.particles.ToArray());
 
         /// <summary>
         /// Gets the particle effect of the pool.
@@ -124,7 +126,7 @@ namespace KDParticleEngine
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
-                this.particles.Count == pool.Particles.Length &&
+                this.particles.Count == pool.Particles.Count &&
                 Effect == pool.Effect;
         }
 
@@ -205,7 +207,7 @@ namespace KDParticleEngine
 
             for (var i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                this.particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, this.randomService)));
+                this.particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings.ToArray(), this.randomService)));
             }
         }
     }
