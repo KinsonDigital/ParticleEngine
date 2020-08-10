@@ -138,7 +138,11 @@ namespace KDParticleEngine
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public void Dispose() => Dispose(true);
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// <inheritdoc/>

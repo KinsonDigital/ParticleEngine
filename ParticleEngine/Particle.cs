@@ -80,9 +80,8 @@ namespace KDParticleEngine
                 {
                     var value = 0f;
 
-                    var parseSuccess = this.behaviors[i].ApplyToAttribute != ParticleAttribute.Color
-                        ? float.TryParse(string.IsNullOrEmpty(this.behaviors[i].Value) ? "0" : this.behaviors[i].Value, out value)
-                        : true;
+                    var parseSuccess = this.behaviors[i].ApplyToAttribute == ParticleAttribute.Color
+                        || float.TryParse(string.IsNullOrEmpty(this.behaviors[i].Value) ? "0" : this.behaviors[i].Value, out value);
 
                     if (!parseSuccess)
                         throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{this.behaviors[i].Value}' failed.\n\tValue must be a number.");

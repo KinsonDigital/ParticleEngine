@@ -16,7 +16,7 @@ namespace KDParticleEngine
     /// </summary>
     public static class ExtensionMethods
     {
-        private static char[] validNumChars = new char[] { '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        private static readonly char[] ValidNumChars = new char[] { '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
         /// <summary>
         /// Returns a random value between the given <paramref name="minValue"/> and <paramref name="maxValue"/>.
@@ -129,6 +129,12 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="value">The value to check.</param>
         /// <returns>True if the string contains non number characters.</returns>
-        public static bool ContainsNonNumberCharacters(this string value) => value.ToCharArray().Any(c => !validNumChars.Contains(c));
+        public static bool ContainsNonNumberCharacters(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return false;
+
+            return value.ToCharArray().Any(c => !ValidNumChars.Contains(c));
+        }
     }
 }
