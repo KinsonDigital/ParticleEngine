@@ -7,11 +7,12 @@ namespace KDParticleEngineTests
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using Castle.Core.Logging;
+    using global::ParticleEngineTests.Fakes;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Moq;
     using Xunit;
-    using Xunit.Sdk;
 
     /// <summary>
     /// Tests the <see cref="ExtensionMethods"/> class.
@@ -122,6 +123,7 @@ namespace KDParticleEngineTests
         [InlineData("123", false)]
         [InlineData("-123", false)]
         [InlineData("12T3", true)]
+        [InlineData(null, false)]
         public void ContainsNonNumberCharacters_WhenInvoked_ReturnsCorrectResult(string valueToCheck, bool exepcted)
         {
             // Act
@@ -129,6 +131,64 @@ namespace KDParticleEngineTests
 
             // Assert
             Assert.Equal(exepcted, actual);
+        }
+
+        [Theory]
+        [InlineData(null, null, true)]
+        [InlineData(null, new string[] { "item" }, false)]
+        [InlineData(new string[] { "item" }, null, false)]
+        [InlineData(new string[] { "item" }, new string[] { "item", "item" }, false)]
+        [InlineData(new string[] { "item" }, new string[] { "item" }, true)]
+        [InlineData(new string[] { "item" }, new string[] { "other-item" }, false)]
+        public void ItemsAreEqual_WhenInvoked_ReturnsCorrectResult(string[] listA, string[] listB, bool expected)
+        {
+            // Act
+            var actual = listA.ItemsAreEqual(listB);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ItemsAreEqual_WhenInvokedEqualObjects_ReturnsTrue()
+        {
+            // Arrange
+            var itemsA = new[]
+            {
+                new TestItem() { Number = 10 },
+            };
+
+            var itemsB = new[]
+            {
+                new TestItem() { Number = 10 },
+            };
+
+            // Act
+            var actual = itemsA.ItemsAreEqual(itemsB);
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void ItemsAreEqual_WhenInvokedNonEqualObjects_ReturnsFalse()
+        {
+            // Arrange
+            var itemsA = new[]
+            {
+                new TestItem() { Number = 10 },
+            };
+
+            var itemsB = new[]
+            {
+                new TestItem() { Number = 20 },
+            };
+
+            // Act
+            var actual = itemsA.ItemsAreEqual(itemsB);
+
+            // Assert
+            Assert.False(actual);
         }
         #endregion
     }

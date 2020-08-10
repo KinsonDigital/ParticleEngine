@@ -5,8 +5,13 @@
 namespace KDParticleEngine
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
+    using System.Reflection.Metadata.Ecma335;
+    using System.Runtime.CompilerServices;
     using KDParticleEngine.Behaviors;
 
     /// <summary>
@@ -29,7 +34,9 @@ namespace KDParticleEngine
         public ParticleEffect(string particleTextureName, BehaviorSettings[] settings)
         {
             ParticleTextureName = particleTextureName;
-            BehaviorSettings = new ReadOnlyCollection<BehaviorSettings>(settings);
+            BehaviorSettings = settings is null
+                ? new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>())
+                : new ReadOnlyCollection<BehaviorSettings>(settings);
         }
 
         /// <summary>
@@ -115,13 +122,14 @@ namespace KDParticleEngine
                 SpawnRateMin == effect.SpawnRateMin &&
                 SpawnRateMax == effect.SpawnRateMax &&
                 UseColorsFromList == effect.UseColorsFromList &&
-                BehaviorSettings == effect.BehaviorSettings;
+                BehaviorSettings.ItemsAreEqual(effect.BehaviorSettings);
         }
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             var hash = default(HashCode);

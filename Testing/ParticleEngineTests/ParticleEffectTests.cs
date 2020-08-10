@@ -337,54 +337,6 @@ namespace KDParticleEngineTests
             // Assert
             Assert.False(actual);
         }
-
-        [Fact]
-        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
-        {
-            // Arrange
-            var settings = new EasingBehaviorSettings[]
-            {
-                new EasingBehaviorSettings()
-                {
-                    ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
-                    ChangeMin = 11,
-                    ChangeMax = 22,
-                    StartMin = 33,
-                    StartMax = 44,
-                    TotalTimeMin = 55,
-                    TotalTimeMax = 66,
-                },
-            };
-
-            var effectA = new ParticleEffect("test-name", settings)
-            {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
-                SpawnLocation = new PointF(11, 22),
-                SpawnRateMin = 11,
-                SpawnRateMax = 22,
-                TotalParticlesAliveAtOnce = 33,
-                UseColorsFromList = true,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
-            };
-
-            var effectB = new ParticleEffect("test-name", settings)
-            {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
-                SpawnLocation = new PointF(11, 22),
-                SpawnRateMin = 11,
-                SpawnRateMax = 22,
-                TotalParticlesAliveAtOnce = 33,
-                UseColorsFromList = true,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }),
-            };
-
-            // Act
-            var actual = effectA.GetHashCode() == effectB.GetHashCode();
-
-            // Assert
-            Assert.True(actual);
-        }
         #endregion
     }
 }

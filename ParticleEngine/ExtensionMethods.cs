@@ -136,5 +136,37 @@ namespace KDParticleEngine
 
             return value.ToCharArray().Any(c => !ValidNumChars.Contains(c));
         }
+
+        /// <summary>
+        /// Returns a value indicating if each item in a given list position is
+        /// equal to the items in the same position of th given <paramref name="compareItems"/> list.
+        /// </summary>
+        /// <typeparam name="T">The type of item in the lists.</typeparam>
+        /// <param name="items">The current instance of <see cref="IEnumerable{T}"/> items.</param>
+        /// <param name="compareItems">The items to compare to the this list of items.</param>
+        /// <returns>True if each arrays are equal.</returns>
+        public static bool ItemsAreEqual<T>(this IEnumerable<T> items, IEnumerable<T> compareItems)
+            where T : class
+        {
+            if (items is null && compareItems is null)
+                return true;
+
+            if (items is null && !(compareItems is null))
+                return false;
+
+            if (!(items is null) && compareItems is null)
+                return false;
+
+            if (items.Count() != compareItems.Count())
+                return false;
+
+            for (var i = 0; i < items.Count(); i++)
+            {
+                if (!items.ElementAt(i).Equals(compareItems.ElementAt(i)))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
