@@ -8,7 +8,7 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="EasingFunctions"/> class.
+    /// Tests the <see cref="EasingFunctions"/> class.
     /// </summary>
     public class EasingFunctionsTests
     {

@@ -13,13 +13,14 @@ namespace KDParticleEngineTests.Fakes
     [ExcludeFromCodeCoverage]
     public class FakeBehavior : Behavior
     {
-        #region Constructors
         /// <summary>
+        /// Initializes a new instance of the <see cref="FakeBehavior"/> class.
         /// Creates a new instance of <see cref="FakeBehavior"/>.
         /// </summary>
         /// <param name="setting">The settings for the behavior.</param>
-        public FakeBehavior(EasingBehaviorSettings setting) :
-            base(setting) { }
-        #endregion
+        public FakeBehavior(EasingBehaviorSettings setting)
+            : base(setting)
+        {
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace KDParticleEngineTests.Behaviors
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="EasingBehaviorSettings"/> class.
+    /// Tests the <see cref="EasingBehaviorSettings"/> class.
     /// </summary>
     public class EasingBehaviorSettingsTests
     {
@@ -141,7 +141,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
             var otherObj = new object();
 
@@ -165,7 +165,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
 
             var settingB = new EasingBehaviorSettings()
@@ -177,7 +177,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
 
             // Act
@@ -200,7 +200,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 300,
                 StartMax = 400,
                 TotalTimeMin = 500,
-                TotalTimeMax = 600
+                TotalTimeMax = 600,
             };
 
             var settingB = new EasingBehaviorSettings()
@@ -212,7 +212,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
 
             // Act
@@ -235,7 +235,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
 
             var settingB = new EasingBehaviorSettings()
@@ -247,7 +247,7 @@ namespace KDParticleEngineTests.Behaviors
                 StartMin = 30,
                 StartMax = 40,
                 TotalTimeMin = 50,
-                TotalTimeMax = 60
+                TotalTimeMax = 60,
             };
 
             // Act

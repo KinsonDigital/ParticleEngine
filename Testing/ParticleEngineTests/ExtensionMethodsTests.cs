@@ -14,7 +14,7 @@ namespace KDParticleEngineTests
     using Xunit.Sdk;
 
     /// <summary>
-    /// Holds tests for the <see cref="ExtensionMethods"/> class
+    /// Tests the <see cref="ExtensionMethods"/> class.
     /// </summary>
     public class ExtensionMethodsTests
     {
@@ -83,7 +83,7 @@ namespace KDParticleEngineTests
 
             var particles = new List<Particle>();
 
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
             {
                 particles.Add(new Particle(new IBehavior[] { mockBehavior.Object }) { IsAlive = i > 10 });
             }
@@ -104,10 +104,11 @@ namespace KDParticleEngineTests
             Particle[] particles;
 
             var tempList = new List<Particle>();
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
             {
                 tempList.Add(new Particle(new IBehavior[] { mockBehavior.Object }) { IsAlive = i > 10 });
             }
+
             particles = tempList.ToArray();
 
             // Act

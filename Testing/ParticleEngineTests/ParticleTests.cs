@@ -6,6 +6,7 @@ namespace KDParticleEngineTests
 {
     using System;
     using System.Drawing;
+    using System.Globalization;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngineTests.XUnitHelpers;
@@ -13,7 +14,7 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="Particle"/> class.
+    /// Tests the <see cref="Particle"/> class.
     /// </summary>
     public class ParticleTests
     {
@@ -22,9 +23,8 @@ namespace KDParticleEngineTests
         private readonly Mock<IBehavior> mockBehavior;
         #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="ParticleTests"/>.
+        /// Initializes a new instance of the <see cref="ParticleTests"/> class.
         /// </summary>
         public ParticleTests()
         {
@@ -32,16 +32,15 @@ namespace KDParticleEngineTests
             this.mockBehavior = new Mock<IBehavior>();
             this.mockBehavior.SetupGet(p => p.Enabled).Returns(true);
         }
-        #endregion
 
         #region Prop Tests
         [Fact]
         public void Position_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                Position = new PointF(11, 22)
+                Position = new PointF(11, 22),
             };
 
             // Act
@@ -55,9 +54,9 @@ namespace KDParticleEngineTests
         public void Angle_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                Angle = 1234f
+                Angle = 1234f,
             };
 
             // Act
@@ -71,9 +70,9 @@ namespace KDParticleEngineTests
         public void TintColor_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                TintColor = ParticleColor.FromArgb(11, 22, 33, 44)
+                TintColor = ParticleColor.FromArgb(11, 22, 33, 44),
             };
 
             // Act
@@ -87,9 +86,9 @@ namespace KDParticleEngineTests
         public void Size_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                Size = 1019f
+                Size = 1019f,
             };
 
             // Act
@@ -103,9 +102,9 @@ namespace KDParticleEngineTests
         public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                IsAlive = true
+                IsAlive = true,
             };
 
             // Assert
@@ -116,9 +115,9 @@ namespace KDParticleEngineTests
         public void IsDead_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var particle = new Particle(new IBehavior[0])
+            var particle = new Particle(Array.Empty<IBehavior>())
             {
-                IsDead = false
+                IsDead = false,
             };
 
             // Assert
@@ -237,7 +236,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.Position.X.ToString());
+            Assert.Equal("123", particle.Position.X.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -253,7 +252,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.Position.Y.ToString());
+            Assert.Equal("123", particle.Position.Y.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -269,7 +268,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.Angle.ToString());
+            Assert.Equal("123", particle.Angle.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -285,7 +284,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.Size.ToString());
+            Assert.Equal("123", particle.Size.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -301,7 +300,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.TintColor.R.ToString());
+            Assert.Equal("123", particle.TintColor.R.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -317,7 +316,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.TintColor.G.ToString());
+            Assert.Equal("123", particle.TintColor.G.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -331,9 +330,9 @@ namespace KDParticleEngineTests
 
             // Act
             particle.Update(this.frameTime);
-            
+
             // Assert
-            Assert.Equal("123", particle.TintColor.B.ToString());
+            Assert.Equal("123", particle.TintColor.B.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -349,7 +348,7 @@ namespace KDParticleEngineTests
             particle.Update(this.frameTime);
 
             // Assert
-            Assert.Equal("123", particle.TintColor.A.ToString());
+            Assert.Equal("123", particle.TintColor.A.ToString(CultureInfo.InvariantCulture));
         }
 
         [Fact]
@@ -432,7 +431,7 @@ namespace KDParticleEngineTests
             // Arrange
             var particleA = new Particle(It.IsAny<IBehavior[]>())
             {
-                Size = 123f
+                Size = 123f,
             };
             var particleB = new Particle(It.IsAny<IBehavior[]>());
 
@@ -463,7 +462,7 @@ namespace KDParticleEngineTests
             // Arrange
             var behaviors = new IBehavior[]
             {
-                this.mockBehavior.Object
+                this.mockBehavior.Object,
             };
             var particleA = new Particle(behaviors);
             var particleB = new Particle(behaviors);

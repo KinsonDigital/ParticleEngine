@@ -9,7 +9,7 @@ namespace KDParticleEngineTests.Services
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="TrueRandomizerService"/> class.
+    /// Tests the <see cref="TrueRandomizerService"/> class.
     /// </summary>
     public class TrueRandomizerServiceTests
     {
@@ -24,7 +24,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(minValue, maxValue);
@@ -44,7 +44,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(maxValue, minValue);
@@ -60,7 +60,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(10, 10);
@@ -80,7 +80,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(minValue, maxValue);
@@ -101,7 +101,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(maxValue, minValue);
@@ -122,7 +122,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(minValue, maxValue);
@@ -143,7 +143,7 @@ namespace KDParticleEngineTests.Services
             // Arrange
             var randomizer = new TrueRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 // Act
                 var result = randomizer.GetValue(maxValue, minValue);

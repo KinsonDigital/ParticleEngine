@@ -11,7 +11,7 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="ParticleEffect"/> class.
+    /// Tests the <see cref="ParticleEffect"/> class.
     /// </summary>
     public class ParticleEffectTests
     {
@@ -41,8 +41,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
 
@@ -170,8 +170,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
 
             var effect = new ParticleEffect("test-name", settings)
@@ -182,7 +182,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
             var otherObj = new object();
 
@@ -208,8 +208,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
 
             var effectA = new ParticleEffect("test-name", settings)
@@ -220,7 +220,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             var effectB = new ParticleEffect("test-name", settings)
@@ -231,7 +231,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             // Act
@@ -256,8 +256,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
 
             var effectA = new ParticleEffect("test-name", settings)
@@ -268,7 +268,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             var effectB = new ParticleEffect("effect-bee", settings)
@@ -279,7 +279,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 66,
                 TotalParticlesAliveAtOnce = 55,
                 UseColorsFromList = false,
-                TintColors = new ParticleColor[] { new ParticleColor(99, 88, 77, 66) }
+                TintColors = new ParticleColor[] { new ParticleColor(99, 88, 77, 66) },
             };
 
             // Act
@@ -304,8 +304,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
 
             var effectA = new ParticleEffect("test-name", settings)
@@ -316,7 +316,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             var effectB = new ParticleEffect("effect-name", settings)
@@ -327,7 +327,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44), new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44), new ParticleColor(11, 22, 33, 44) },
             };
 
             // Act
@@ -352,8 +352,8 @@ namespace KDParticleEngineTests
                     StartMin = 33,
                     StartMax = 44,
                     TotalTimeMin = 55,
-                    TotalTimeMax = 66
-                }
+                    TotalTimeMax = 66,
+                },
             };
 
             var effectA = new ParticleEffect("test-name", settings)
@@ -364,7 +364,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             var effectB = new ParticleEffect("test-name", settings)
@@ -375,7 +375,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 22,
                 TotalParticlesAliveAtOnce = 33,
                 UseColorsFromList = true,
-                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) }
+                TintColors = new ParticleColor[] { new ParticleColor(11, 22, 33, 44) },
             };
 
             // Act

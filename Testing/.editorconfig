@@ -37,3 +37,9 @@ dotnet_diagnostic.SA1124.severity = none
 
 # CA2000: Dispose objects before losing scope
 dotnet_diagnostic.CA2000.severity = none
+
+# IDE0017: Simplify object initialization
+dotnet_style_object_initializer = true:none
+
+# CA1063: Implement IDisposable Correctly
+dotnet_diagnostic.CA1063.severity = none

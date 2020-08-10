@@ -12,7 +12,7 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="ParticleColor"/> class.
+    /// Tests the <see cref="ParticleColor"/> class.
     /// </summary>
     public class ParticleColorTests
     {
@@ -182,26 +182,27 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-        #region Private Methods
         /// <summary>
         /// Returns all of the names of the <see cref="ParticleColor"/> color property names.
         /// </summary>
-        /// <returns></returns>
-        private string[] GetColorPropNames() => typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
+        /// <returns>A list of properties of the type <see cref="ParticleColor"/>.</returns>
+        private static string[] GetColorPropNames() => typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor)).Select(p => p.Name).ToArray();
 
         /// <summary>
         /// Gets the <see cref="ParticleColor"/> property value that matches the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the property.</param>
-        /// <returns></returns>
-        private ParticleColor GetColorPropValue(string name)
+        /// <returns>
+        ///     The value of a property that matches the given <paramref name="name"/>
+        ///     for the type <see cref="ParticleColor"/>.
+        /// </returns>
+        private static ParticleColor GetColorPropValue(string name)
         {
             var foundProp = typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor) && p.Name == name).FirstOrDefault();
 
             return foundProp.GetValue(null, null) as ParticleColor;
         }
-        #endregion
     }
 }

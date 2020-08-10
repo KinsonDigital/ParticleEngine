@@ -13,7 +13,7 @@ namespace KDParticleEngineTests.Behaviors
     using Xunit;
 
     /// <summary>
-    /// Holds tests for testing the <see cref="EasingBehavior"/> abstract class.
+    /// Tests testing the <see cref="EasingBehavior"/> abstract class.
     /// </summary>
     public class EasingBehaviorTests : IDisposable
     {
@@ -21,12 +21,10 @@ namespace KDParticleEngineTests.Behaviors
         private Mock<IRandomizerService> mockRandomizerService;
         #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="EasingBehaviorTests"/>
+        /// Initializes a new instance of the <see cref="EasingBehaviorTests"/> class.
         /// </summary>
         public EasingBehaviorTests() => this.mockRandomizerService = new Mock<IRandomizerService>();
-        #endregion
 
         #region Constructor Tests
         [Fact]
@@ -35,7 +33,7 @@ namespace KDParticleEngineTests.Behaviors
             // Arrange
             var setting = new EasingBehaviorSettings()
             {
-                ApplyToAttribute = ParticleAttribute.Angle
+                ApplyToAttribute = ParticleAttribute.Angle,
             };
             var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
@@ -102,7 +100,7 @@ namespace KDParticleEngineTests.Behaviors
             var settings = new EasingBehaviorSettings()
             {
                 TotalTimeMin = 0,
-                TotalTimeMax = 1000
+                TotalTimeMax = 1000,
             };
             var behavior = new FakeEasingBehavior(settings, this.mockRandomizerService.Object);
 
@@ -174,11 +172,13 @@ namespace KDParticleEngineTests.Behaviors
         }
         #endregion
 
-        #region Public Methods
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => this.mockRandomizerService = null;
-        #endregion
+        public void Dispose()
+        {
+            this.mockRandomizerService = null;
+            GC.SuppressFinalize(this);
+        }
     }
 }

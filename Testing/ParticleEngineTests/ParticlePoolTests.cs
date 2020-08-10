@@ -13,31 +13,30 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="ParticlePool{Texture}"/> class.
+    /// Tests the <see cref="ParticlePool{Texture}"/> class.
     /// </summary>
     public class ParticlePoolTests
     {
         #region Private Fields
+        private const string ParticleTextureName = "particle-texture";
         private readonly Mock<IRandomizerService> mockRandomizerService;
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         private readonly Mock<IBehavior> mockBehavior;
         private readonly EasingBehaviorSettings[] settings;
         private readonly ParticleEffect effect;
-        private const string PARTICLE_TEXTURE_NAME = "particle-texture";
         #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="ParticlePoolTests"/>.
+        /// Initializes a new instance of the <see cref="ParticlePoolTests"/> class.
         /// </summary>
         public ParticlePoolTests()
         {
             this.settings = new EasingBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingBehaviorSettings(),
             };
-            this.effect = new ParticleEffect(PARTICLE_TEXTURE_NAME, this.settings);
+            this.effect = new ParticleEffect(ParticleTextureName, this.settings);
 
             this.mockRandomizerService = new Mock<IRandomizerService>();
             this.mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
@@ -53,7 +52,6 @@ namespace KDParticleEngineTests
                     return new IBehavior[] { this.mockBehavior.Object };
                 });
         }
-        #endregion
 
         #region Constructor Tests
         [Fact]
@@ -82,7 +80,7 @@ namespace KDParticleEngineTests
         #region Prop Tests
         [Fact]
         public void TotalLivingParticles_WhenGettingValue_ReturnsCorrectValue()
-        { 
+        {
             // Arrange
             var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
@@ -164,7 +162,7 @@ namespace KDParticleEngineTests
             pool.LoadTexture();
 
             // Assert
-            this.mockTextureLoader.Verify(m => m.LoadTexture(PARTICLE_TEXTURE_NAME), Times.Once());
+            this.mockTextureLoader.Verify(m => m.LoadTexture(ParticleTextureName), Times.Once());
         }
 
         [Fact]
@@ -223,7 +221,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 44,
                 TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) },
                 TotalParticlesAliveAtOnce = 99,
-                UseColorsFromList = true
+                UseColorsFromList = true,
             };
 
             var effectB = new ParticleEffect("texture-name", this.settings)
@@ -234,7 +232,7 @@ namespace KDParticleEngineTests
                 SpawnRateMax = 44,
                 TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) },
                 TotalParticlesAliveAtOnce = 100,
-                UseColorsFromList = true
+                UseColorsFromList = true,
             };
 
             var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, effectA, this.mockRandomizerService.Object);
@@ -261,7 +259,7 @@ namespace KDParticleEngineTests
 
             var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
             var poolB = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
-            
+
             poolA.LoadTexture();
             poolB.LoadTexture();
 
@@ -276,17 +274,17 @@ namespace KDParticleEngineTests
         public void Dispose_WhenInvoked_ProperlyFreesManagedResources()
         {
             // Arrange
-            var _effect = new ParticleEffect();
+            var effect = new ParticleEffect();
             var mockTexture = new Mock<IParticleTexture>();
 
-            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) => 
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 return mockTexture.Object;
             });
 
             var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object,
                 this.mockTextureLoader.Object,
-                _effect,
+                effect,
                 this.mockRandomizerService.Object);
 
             pool.LoadTexture();

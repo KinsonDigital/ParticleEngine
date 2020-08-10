@@ -13,20 +13,19 @@ namespace KDParticleEngineTests
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="ParticleEngine"/> class.
+    /// Tests the <see cref="ParticleEngine"/> class.
     /// </summary>
     public class ParticleEngineTests : IDisposable
     {
         #region Private Fields
-        private Mock<IRandomizerService> mockRandomizerService;
-        private ParticleEngine engine;
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
+        private Mock<IRandomizerService> mockRandomizerService;
+        private ParticleEngine engine;
         #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="ParticleEngineTests"/>.
+        /// Initializes a new instance of the <see cref="ParticleEngineTests"/> class.
         /// </summary>
         public ParticleEngineTests()
         {
@@ -36,7 +35,6 @@ namespace KDParticleEngineTests
 
             this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
         }
-        #endregion
 
         #region Prop Tests
         [Fact]
@@ -55,7 +53,7 @@ namespace KDParticleEngineTests
             // Arrange
             var settings = new EasingBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -120,7 +118,7 @@ namespace KDParticleEngineTests
             // Arrange
             var settings = new EasingBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingBehaviorSettings(),
             };
             var effect = new ParticleEffect("texture-name", settings);
             this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -150,7 +148,7 @@ namespace KDParticleEngineTests
             // Arrange
             var settings = new EasingBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             var mockBehavior = new Mock<IBehavior>();
@@ -174,11 +172,11 @@ namespace KDParticleEngineTests
             // Arrange
             var settings = new EasingBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings)
             {
-                TotalParticlesAliveAtOnce = 2
+                TotalParticlesAliveAtOnce = 2,
             };
             var mockBehavior = new Mock<IBehavior>();
             mockBehavior.SetupGet(p => p.Enabled).Returns(true);
@@ -242,18 +240,30 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-        #region Private Methods
+        /// <summary>
+        ///  Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.mockRandomizerService = null;
+            this.engine.Dispose();
+            this.engine = null;
+            GC.SuppressFinalize(this);
+        }
+
         /// <summary>
         /// Asserts if an action does not throw a null reference exception.
         /// </summary>
         /// <param name="action">The action to catch the exception against.</param>
-        private void DoesNotThrowNullReference(Action action)
+        private static void DoesNotThrowNullReference(Action action)
         {
             try
             {
                 action();
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 if (ex.GetType() == typeof(NullReferenceException))
                 {
@@ -265,15 +275,5 @@ namespace KDParticleEngineTests
                 }
             }
         }
-
-        /// <summary>
-        ///  Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            this.mockRandomizerService = null;
-            this.engine = null;
-        }
-        #endregion
     }
 }

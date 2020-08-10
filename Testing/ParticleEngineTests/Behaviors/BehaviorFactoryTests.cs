@@ -11,7 +11,7 @@ namespace KDParticleEngineTests.Behaviors
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="BehaviorFactory"/> class.
+    /// Tests the <see cref="BehaviorFactory"/> class.
     /// </summary>
     public class BehaviorFactoryTests
     {
@@ -27,8 +27,8 @@ namespace KDParticleEngineTests.Behaviors
             {
                 new EasingBehaviorSettings()
                 {
-                    TypeOfBehavior = behaviorType
-                }
+                    TypeOfBehavior = behaviorType,
+                },
             };
             var factory = new BehaviorFactory();
 

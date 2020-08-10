@@ -14,13 +14,14 @@ namespace KDParticleEngineTests.Fakes
     [ExcludeFromCodeCoverage]
     public class FakeEasingBehavior : EasingBehavior
     {
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="FakeEasingBehavior"/>.
+        /// Initializes a new instance of the <see cref="FakeEasingBehavior"/> class.
         /// </summary>
         /// <param name="setting">The settings for the behavior.</param>
-        public FakeEasingBehavior(EasingBehaviorSettings setting, IRandomizerService randomizerService) :
-            base(setting, randomizerService) { }
-        #endregion
+        /// <param name="randomizerService">Generates random numbers.</param>
+        public FakeEasingBehavior(EasingBehaviorSettings setting, IRandomizerService randomizerService)
+            : base(setting, randomizerService)
+        {
+        }
     }
 }

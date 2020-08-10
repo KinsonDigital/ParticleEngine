@@ -11,7 +11,7 @@ namespace KDParticleEngineTests.Behaviors
     using Xunit;
 
     /// <summary>
-    /// Holds tests for the <see cref="EaseInBehavior"/> class.
+    /// Tests the <see cref="EaseInBehavior"/> class.
     /// </summary>
     public class EaseInBehaviorTests
     {
@@ -19,12 +19,10 @@ namespace KDParticleEngineTests.Behaviors
         private readonly Mock<IRandomizerService> mockRandomizerService;
         #endregion
 
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="EasingBehaviorTests"/>.
+        /// Initializes a new instance of the <see cref="EaseInBehaviorTests"/> class.
         /// </summary>
         public EaseInBehaviorTests() => this.mockRandomizerService = new Mock<IRandomizerService>();
-        #endregion
 
         #region Method Tets
         [Fact]
