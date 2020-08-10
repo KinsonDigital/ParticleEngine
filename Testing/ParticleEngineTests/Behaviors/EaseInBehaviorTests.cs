@@ -16,14 +16,14 @@ namespace KDParticleEngineTests.Behaviors
     public class EaseInBehaviorTests
     {
         #region Private Fields
-        private readonly Mock<IRandomizerService> _mockRandomizerService;
+        private readonly Mock<IRandomizerService> mockRandomizerService;
         #endregion
 
         #region Constructors
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehaviorTests"/>.
         /// </summary>
-        public EaseInBehaviorTests() => this._mockRandomizerService = new Mock<IRandomizerService>();
+        public EaseInBehaviorTests() => this.mockRandomizerService = new Mock<IRandomizerService>();
         #endregion
 
         #region Method Tets
@@ -32,7 +32,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new EaseInBehavior(settings, this._mockRandomizerService.Object);
+            var behavior = new EaseInBehavior(settings, this.mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -46,7 +46,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new EaseInBehavior(settings, this._mockRandomizerService.Object);
+            var behavior = new EaseInBehavior(settings, this.mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));

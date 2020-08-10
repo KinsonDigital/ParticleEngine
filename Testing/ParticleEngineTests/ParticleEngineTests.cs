@@ -18,10 +18,10 @@ namespace KDParticleEngineTests
     public class ParticleEngineTests : IDisposable
     {
         #region Private Fields
-        private Mock<IRandomizerService> _mockRandomizerService;
-        private ParticleEngine _engine;
-        private readonly Mock<ITextureLoader<IParticleTexture>> _mockTextureLoader;
-        private readonly Mock<IBehaviorFactory> _mockBehaviorFactory;
+        private Mock<IRandomizerService> mockRandomizerService;
+        private ParticleEngine engine;
+        private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
+        private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         #endregion
 
         #region Constructors
@@ -30,11 +30,11 @@ namespace KDParticleEngineTests
         /// </summary>
         public ParticleEngineTests()
         {
-            this._mockRandomizerService = new Mock<IRandomizerService>();
-            this._mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
-            this._mockBehaviorFactory = new Mock<IBehaviorFactory>();
+            this.mockRandomizerService = new Mock<IRandomizerService>();
+            this.mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
+            this.mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
-            this._engine = new ParticleEngine(this._mockTextureLoader.Object, this._mockRandomizerService.Object);
+            this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
         }
         #endregion
 
@@ -43,10 +43,10 @@ namespace KDParticleEngineTests
         public void Enabled_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            this._engine.Enabled = false;
+            this.engine.Enabled = false;
 
             // Assert
-            Assert.False(this._engine.Enabled);
+            Assert.False(this.engine.Enabled);
         }
 
         [Fact]
@@ -58,16 +58,16 @@ namespace KDParticleEngineTests
                 new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
-            this._engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            this._engine.LoadTextures();
-            this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            this.engine.LoadTextures();
+            this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Act
-            var actual = this._engine.ParticlePools;
+            var actual = this.engine.ParticlePools;
 
             // Assert
             Assert.Single(actual);
-            Assert.Equal(effect, this._engine.ParticlePools[0].Effect);
+            Assert.Equal(effect, this.engine.ParticlePools[0].Effect);
         }
         #endregion
 
@@ -80,7 +80,7 @@ namespace KDParticleEngineTests
             var mockPool2Texture = new Mock<IParticleTexture>();
             var textureALoaded = false;
 
-            this._mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
                 // All pools use the same istance of texture loader so we have
@@ -98,11 +98,11 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine(this._mockTextureLoader.Object, this._mockRandomizerService.Object);
+            var engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools
-            engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            engine.CreatePool(effect, this._mockBehaviorFactory.Object);
+            engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            engine.CreatePool(effect, this.mockBehaviorFactory.Object);
             engine.LoadTextures();
 
             // Act
@@ -123,15 +123,15 @@ namespace KDParticleEngineTests
                 new EasingBehaviorSettings()
             };
             var effect = new ParticleEffect("texture-name", settings);
-            this._engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            this._engine.LoadTextures();
-            this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            this.engine.LoadTextures();
+            this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Act
-            var actual = this._engine.ParticlePools;
+            var actual = this.engine.ParticlePools;
 
             // Assert
-            this._mockTextureLoader.Verify(m => m.LoadTexture("texture-name"), Times.Once());
+            this.mockTextureLoader.Verify(m => m.LoadTexture("texture-name"), Times.Once());
         }
 
         [Fact]
@@ -140,7 +140,7 @@ namespace KDParticleEngineTests
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
-                this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+                this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
             }, "The textures must be loaded first.");
         }
 
@@ -155,14 +155,14 @@ namespace KDParticleEngineTests
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             var mockBehavior = new Mock<IBehavior>();
 
-            this._mockBehaviorFactory.Setup(m => m.CreateBehaviors(settings, this._mockRandomizerService.Object))
+            this.mockBehaviorFactory.Setup(m => m.CreateBehaviors(settings, this.mockRandomizerService.Object))
                 .Returns(new IBehavior[] { mockBehavior.Object });
-            this._engine.Enabled = false;
-            this._engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            this._engine.LoadTextures();
+            this.engine.Enabled = false;
+            this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            this.engine.LoadTextures();
 
             // Act
-            this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Never());
@@ -184,16 +184,16 @@ namespace KDParticleEngineTests
             mockBehavior.SetupGet(p => p.Enabled).Returns(true);
             mockBehavior.SetupGet(p => p.Value).Returns("0");
 
-            this._mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(16);
-            this._mockBehaviorFactory.Setup(m => m.CreateBehaviors(settings, this._mockRandomizerService.Object))
+            this.mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(16);
+            this.mockBehaviorFactory.Setup(m => m.CreateBehaviors(settings, this.mockRandomizerService.Object))
                 .Returns(new IBehavior[] { mockBehavior.Object });
 
-            this._engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            this._engine.LoadTextures();
+            this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            this.engine.LoadTextures();
 
             // Act
-            this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
-            this._engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
+            this.engine.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Assert
             mockBehavior.Verify(m => m.Update(It.IsAny<TimeSpan>()), Times.Exactly(3));
@@ -207,7 +207,7 @@ namespace KDParticleEngineTests
             var mockPool2Texture = new Mock<IParticleTexture>();
             var textureALoaded = false;
 
-            this._mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
                 // All pools use the same istance of texture loader so we have
@@ -225,11 +225,11 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine(this._mockTextureLoader.Object, this._mockRandomizerService.Object);
+            var engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools
-            engine.CreatePool(effect, this._mockBehaviorFactory.Object);
-            engine.CreatePool(effect, this._mockBehaviorFactory.Object);
+            engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            engine.CreatePool(effect, this.mockBehaviorFactory.Object);
             engine.LoadTextures();
 
             // Act
@@ -271,8 +271,8 @@ namespace KDParticleEngineTests
         /// </summary>
         public void Dispose()
         {
-            this._mockRandomizerService = null;
-            this._engine = null;
+            this.mockRandomizerService = null;
+            this.engine = null;
         }
         #endregion
     }
