@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using Xunit;
-
-namespace KDParticleEngineTests.XUnitHelpers
+﻿namespace KDParticleEngineTests.XUnitHelpers
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using Xunit;
+
     /// <summary>
     /// Provides helper methods for the <see cref="XUnit"/>'s <see cref="Assert"/> class.
     /// </summary>

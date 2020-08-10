@@ -1,14 +1,14 @@
-﻿using KDParticleEngine;
-using Xunit;
-using System;
-using System.Drawing;
-using KDParticleEngine.Behaviors;
-using Moq;
-using System.Collections.Generic;
-using Xunit.Sdk;
-
-namespace KDParticleEngineTests
+﻿namespace KDParticleEngineTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using Moq;
+    using Xunit;
+    using Xunit.Sdk;
+
     /// <summary>
     /// Holds tests for the <see cref="ExtensionMethods"/> class
     /// </summary>

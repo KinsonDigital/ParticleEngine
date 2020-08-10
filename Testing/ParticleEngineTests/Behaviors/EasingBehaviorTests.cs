@@ -1,13 +1,13 @@
-﻿using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using KDParticleEngine.Services;
-using KDParticleEngineTests.Fakes;
-using Moq;
-using System;
-using Xunit;
-
-namespace KDParticleEngineTests.Behaviors
+﻿namespace KDParticleEngineTests.Behaviors
 {
+    using System;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using KDParticleEngineTests.Fakes;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for testing the <see cref="EasingBehavior"/> abstract class.
     /// </summary>

@@ -1,8 +1,8 @@
-﻿using KDParticleEngine;
-using Xunit;
-
-namespace KDParticleEngineTests
+﻿namespace KDParticleEngineTests
 {
+    using KDParticleEngine;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="EasingFunctions"/> class.
     /// </summary>

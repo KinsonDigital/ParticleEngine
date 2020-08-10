@@ -1,9 +1,9 @@
-﻿using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using Xunit;
-
-namespace KDParticleEngineTests.Behaviors
+﻿namespace KDParticleEngineTests.Behaviors
 {
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="EasingBehaviorSettings"/> class.
     /// </summary>

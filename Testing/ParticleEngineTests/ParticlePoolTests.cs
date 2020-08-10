@@ -1,13 +1,13 @@
-﻿using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using KDParticleEngine.Services;
-using Moq;
-using System;
-using System.Drawing;
-using Xunit;
-
-namespace KDParticleEngineTests
+﻿namespace KDParticleEngineTests
 {
+    using System;
+    using System.Drawing;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="ParticlePool{Texture}"/> class.
     /// </summary>

@@ -1,13 +1,13 @@
-﻿using System;
-using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using KDParticleEngine.Services;
-using KDParticleEngineTests.XUnitHelpers;
-using Moq;
-using Xunit;
-
-namespace KDParticleEngineTests
+﻿namespace KDParticleEngineTests
 {
+    using System;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using KDParticleEngineTests.XUnitHelpers;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="ParticleEngine"/> class.
     /// </summary>

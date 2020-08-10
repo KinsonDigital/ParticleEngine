@@ -1,11 +1,11 @@
-﻿using System;
-using Moq;
-using Xunit;
-using KDParticleEngine.Behaviors;
-using KDParticleEngine.Services;
-
-namespace KDParticleEngineTests.Behaviors
+﻿namespace KDParticleEngineTests.Behaviors
 {
+    using System;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="BehaviorFactory"/> class.
     /// </summary>

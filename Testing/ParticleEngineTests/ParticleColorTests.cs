@@ -1,12 +1,12 @@
-﻿using KDParticleEngine;
-using System;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using Xunit;
-
-namespace KDParticleEngineTests
+﻿namespace KDParticleEngineTests
 {
+    using System;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using KDParticleEngine;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="ParticleColor"/> class.
     /// </summary>

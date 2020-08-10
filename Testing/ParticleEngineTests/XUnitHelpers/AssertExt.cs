@@ -1,7 +1,7 @@
-﻿using Xunit;
-
-namespace KDParticleEngineTests.XUnitHelpers
+﻿namespace KDParticleEngineTests.XUnitHelpers
 {
+    using Xunit;
+
     /// <summary>
     /// Provides extensions to the <see cref="Assert"/> class.
     /// </summary>

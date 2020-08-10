@@ -1,11 +1,11 @@
-﻿using KDParticleEngine.Behaviors;
-using KDParticleEngine.Services;
-using Moq;
-using System;
-using Xunit;
-
-namespace KDParticleEngineTests.Behaviors
+﻿namespace KDParticleEngineTests.Behaviors
 {
+    using System;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="EaseInBehavior"/> class.
     /// </summary>

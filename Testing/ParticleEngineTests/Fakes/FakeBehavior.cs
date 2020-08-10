@@ -1,8 +1,8 @@
-﻿using KDParticleEngine.Behaviors;
-using System.Diagnostics.CodeAnalysis;
-
-namespace KDParticleEngineTests.Fakes
+﻿namespace KDParticleEngineTests.Fakes
 {
+    using System.Diagnostics.CodeAnalysis;
+    using KDParticleEngine.Behaviors;
+
     /// <summary>
     /// Used for testing purposes only.
     /// </summary>

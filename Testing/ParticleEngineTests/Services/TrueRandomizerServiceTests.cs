@@ -1,9 +1,9 @@
-﻿using KDParticleEngineTests.XUnitHelpers;
-using KDParticleEngine.Services;
-using Xunit;
-
-namespace KDParticleEngineTests.Services
+﻿namespace KDParticleEngineTests.Services
 {
+    using KDParticleEngine.Services;
+    using KDParticleEngineTests.XUnitHelpers;
+    using Xunit;
+
     /// <summary>
     /// Holds tests for the <see cref="TrueRandomizerService"/> class.
     /// </summary>
