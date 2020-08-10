@@ -1,68 +1,71 @@
-﻿using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
-using System;
-using System.Collections.Generic;
+﻿// <copyright file="ParticlePool.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
+namespace KDParticleEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+
     /// <summary>
-    /// Contains a number of resusable particles with a given particle effect applied to them.
+    /// Contains a number of reusable particles with a given particle effect applied to them.
     /// </summary>
-    public class ParticlePool<Texture> : IDisposable where Texture : class, IParticleTexture
+    /// <typeparam name="TTexture">The texture for the particles in the pool.</typeparam>
+    public class ParticlePool<TTexture> : IDisposable
+        where TTexture : class, IParticleTexture
     {
-        #region Public Events
+        private readonly IRandomizerService randomService;
+        private readonly ITextureLoader<TTexture> textureLoader;
+        private List<Particle> particles = new List<Particle>();
+        private bool disposedValue = false;
+        private int spawnRate;
+        private double spawnRateElapsed = 0;
+
         /// <summary>
-        /// Occurs every time the total amount of living particles has changed.
-        /// </summary>
-        //TODO: Implement code to make use of invoking this event.
-        public event EventHandler<EventArgs>? LivingParticlesCountChanged;
-        #endregion
-
-
-        #region Private Fields
-        private List<Particle> _particles = new List<Particle>();
-        private readonly IRandomizerService _randomService;
-        private readonly ITextureLoader<Texture> _textureLoader;
-        private bool _disposedValue = false;
-        private int _spawnRate;
-        private double _spawnRateElapsed = 0;
-        #endregion
-
-
-        #region Constructors
-        /// <summary>
-        /// Creates a new instance of <see cref="ParticlePool"/>.
+        /// Initializes a new instance of the <see cref="ParticlePool{Texture}"/> class.
         /// </summary>
         /// <param name="behaviorFactory">The factory used for creating new behaviors for each particle.</param>
-        /// <param name="textureLoader">Loads the textures for the <see cref="ParticlePool{Texture}"/></param>
+        /// <param name="textureLoader">Loads the textures for the <see cref="ParticlePool{Texture}"/>.</param>
         /// <param name="effect">The particle effect to be applied to all of the particles in the pool.</param>
         /// <param name="randomizer">Used for generating random values when a particle is spawned.</param>
-        public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<Texture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
+        public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<TTexture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
-            _textureLoader = textureLoader;
+            if (behaviorFactory is null)
+                throw new ArgumentNullException(nameof(behaviorFactory), "The parameter must not be null.");
+
+            this.textureLoader = textureLoader;
             Effect = effect;
-            _randomService = randomizer;
+            this.randomService = randomizer;
 
             CreateAllParticles(behaviorFactory);
         }
-        #endregion
 
+        // TODO: Implement code to make use of invoking this event.
 
-        #region Props
+        /// <summary>
+        /// Occurs every time the total amount of living particles has changed.
+        /// </summary>
+        public event EventHandler<EventArgs>? LivingParticlesCountChanged;
+
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
         /// </summary>
-        public int TotalLivingParticles => _particles.Count(p => p.IsAlive);
+        public int TotalLivingParticles => this.particles.Count(p => p.IsAlive);
 
         /// <summary>
         /// Gets the current total number of dead <see cref="Particle"/>s.
         /// </summary>
-        public int TotalDeadParticles => _particles.Count(p => p.IsDead);
+        public int TotalDeadParticles => this.particles.Count(p => p.IsDead);
 
         /// <summary>
         /// Gets the list of particle in the pool.
         /// </summary>
-        public Particle[] Particles => _particles.ToArray();
+        public ReadOnlyCollection<Particle> Particles => new ReadOnlyCollection<Particle>(this.particles.ToArray());
 
         /// <summary>
         /// Gets the particle effect of the pool.
@@ -70,52 +73,46 @@ namespace ParticleEngine
         public ParticleEffect Effect { get; private set; }
 
         /// <summary>
-        /// Gets or sets the texture of the particles in the pool.
+        /// Gets the texture of the particles in the pool.
         /// </summary>
-        public Texture? PoolTexture { get; private set; }
-        #endregion
+        public TTexture? PoolTexture { get; private set; }
 
-
-        #region Public Methods
         /// <summary>
         /// Updates the particle pool.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            _spawnRateElapsed += timeElapsed.TotalMilliseconds;
+            this.spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
-            //If the amount of time to spawn a new particle has passed
-            if (_spawnRateElapsed >= _spawnRate)
+            // If the amount of time to spawn a new particle has passed
+            if (this.spawnRateElapsed >= this.spawnRate)
             {
-                _spawnRate = GetRandomSpawnRate();
+                this.spawnRate = GetRandomSpawnRate();
 
                 SpawnNewParticle();
 
-                _spawnRateElapsed = 0;
+                this.spawnRateElapsed = 0;
             }
 
-            for (int i = 0; i < _particles.Count; i++)
+            for (var i = 0; i < this.particles.Count; i++)
             {
-                if (_particles[i].IsDead)
+                if (this.particles[i].IsDead)
                     continue;
 
-                _particles[i].Update(timeElapsed);
+                this.particles[i].Update(timeElapsed);
             }
         }
-
 
         /// <summary>
         /// Kills all of the particles.
         /// </summary>
-        public void KillAllParticles() => _particles.ForEach(p => p.IsDead = true);
-
+        public void KillAllParticles() => this.particles.ForEach(p => p.IsDead = true);
 
         /// <summary>
         /// Loads the texture for the pool to use for rendering the particles.
         /// </summary>
-        public void LoadTexture() => PoolTexture = _textureLoader.LoadTexture(Effect.ParticleTextureName);
-
+        public void LoadTexture() => PoolTexture = this.textureLoader.LoadTexture(Effect.ParticleTextureName);
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
@@ -124,16 +121,14 @@ namespace ParticleEngine
         /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object? obj)
         {
-            if (!(obj is ParticlePool<Texture> pool))
+            if (!(obj is ParticlePool<TTexture> pool))
                 return false;
-
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
-                _particles.Count == pool.Particles.Length &&
+                this.particles.Count == pool.Particles.Count &&
                 Effect == pool.Effect;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
@@ -142,87 +137,78 @@ namespace ParticleEngine
         public override int GetHashCode() =>
             HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
+        /// <inheritdoc/>
         /// </summary>
-        public void Dispose() => Dispose(true);
-        #endregion
-
-
-        #region Protected Methods
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting
-        /// unmanaged resources.
-        /// <paramref name="disposing">If true, will dispose of managed resources.</paramref>
-        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposedValue)
+            if (this.disposedValue)
                 return;
 
-            //Dispose of managed resources
+            // Dispose of managed resources
             if (disposing)
             {
                 if (!(PoolTexture is null))
                     PoolTexture.Dispose();
 
-                _disposedValue = false;
-                _spawnRate = 0;
-                _spawnRateElapsed = 0;
-                _particles = new List<Particle>();
+                this.disposedValue = false;
+                this.spawnRate = 0;
+                this.spawnRateElapsed = 0;
+                this.particles = new List<Particle>();
             }
 
-            _disposedValue = true;
+            this.disposedValue = true;
         }
-        #endregion
 
-
-        #region Private Methods
         /// <summary>
         /// Resets all of the particles.
         /// </summary>
         private void SpawnNewParticle()
         {
-            for (int i = 0; i < _particles.Count; i++)
+            for (var i = 0; i < this.particles.Count; i++)
             {
-                if (_particles[i].IsDead)
+                if (this.particles[i].IsDead)
                 {
-                    _particles[i].Position = Effect.SpawnLocation;
-                    _particles[i].Reset();
+                    this.particles[i].Position = Effect.SpawnLocation;
+                    this.particles[i].Reset();
                     break;
                 }
             }
         }
 
-
         /// <summary>
         /// Returns a random time in milliseconds that the <see cref="Particle"/> will be spawned next.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A randomized spawn rate.</returns>
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
-                return _randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+                return this.randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
 
-
-            return _randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
+            return this.randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }
-
 
         /// <summary>
         /// Generates all of the particles.
         /// </summary>
         private void CreateAllParticles(IBehaviorFactory behaviorFactory)
         {
-            _particles.Clear();
+            this.particles.Clear();
 
-            for (int i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
+            for (var i = 0; i < Effect.TotalParticlesAliveAtOnce; i++)
             {
-                _particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings, _randomService)));
+                this.particles.Add(new Particle(behaviorFactory.CreateBehaviors(Effect.BehaviorSettings.ToArray(), this.randomService)));
             }
         }
-        #endregion
     }
 }

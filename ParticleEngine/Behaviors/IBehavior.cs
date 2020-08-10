@@ -1,13 +1,16 @@
-﻿using System;
+﻿// <copyright file="IBehavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Represents a behavior that can be applied to a particle.
     /// </summary>
     public interface IBehavior
     {
-        #region Props
         /// <summary>
         /// Gets the current value of the behavior.
         /// </summary>
@@ -27,21 +30,16 @@ namespace ParticleEngine.Behaviors
         /// Gets a value indicating if the behavior is enabled.
         /// </summary>
         bool Enabled { get; }
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         void Update(TimeSpan timeElapsed);
 
-
         /// <summary>
         /// Resets the behavior.
         /// </summary>
         void Reset();
-        #endregion
     }
 }

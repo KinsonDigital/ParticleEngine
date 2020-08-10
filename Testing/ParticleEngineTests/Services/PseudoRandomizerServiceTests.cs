@@ -1,13 +1,17 @@
-﻿using KDParticleEngineTests.XUnitHelpers;
-using ParticleEngine.Services;
-using Xunit;
+﻿// <copyright file="PseudoRandomizerServiceTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace KDParticleEngineTests.Services
 {
+    using KDParticleEngine.Services;
+    using KDParticleEngineTests.XUnitHelpers;
+    using Xunit;
+
     /// <summary>
-    /// Holds tests for the <see cref="TrueRandomizerService"/> class.
+    /// Tests the <see cref="PseudoRandomizerService"/> class.
     /// </summary>
-    public class TrueRandomizerServiceTests
+    public class PseudoRandomizerServiceTests
     {
         #region Method Tests
         [Theory]
@@ -17,19 +21,18 @@ namespace KDParticleEngineTests.Services
         [InlineData(1, 16)]
         public void GetValue_WhenInvokingWithIntValuesAndMinIsLessThanMax_ReturnsWithinRange(int minValue, int maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(minValue, maxValue);
 
-                //Assert
+                // Assert
                 AssertExt.WithinRange(result, minValue, maxValue);
             }
         }
-
 
         [Theory]
         [InlineData(1, 12)]
@@ -38,36 +41,18 @@ namespace KDParticleEngineTests.Services
         [InlineData(1, 160)]
         public void GetValue_WhenInvokingWithIntValuesAndMinIsGreaterThanMax_ReturnsWithinRange(int minValue, int maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 1000; i++)
+            for (var i = 0; i < 1000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(maxValue, minValue);
 
-                //Assert
+                // Assert
                 AssertExt.WithinRange(result, minValue, maxValue);
             }
         }
-
-
-        [Fact]
-        public void GetValue_WhenInvokingWithIntValuesAndMinIsEqualToMax_ReturnsValueThatMatchesMinOrMax()
-        {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
-
-            for (int i = 0; i < 1000; i++)
-            {
-                //Act
-                var result = randomizer.GetValue(10, 10);
-
-                //Assert
-                Assert.Equal(10, result);
-            }
-        }
-
 
         [Theory]
         [InlineData(1.001f, 2.001f)]
@@ -76,20 +61,19 @@ namespace KDParticleEngineTests.Services
         [InlineData(1.001f, 16.001f)]
         public void GetValue_WhenInvokingWithFloatValuesAndMinIsLessThanMax_ReturnsWithinRange(float minValue, float maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(minValue, maxValue);
 
-                //Assert
-                //Assert with accuracy of +/- 0.001
+                // Assert
+                // Assert with accuracy of +/- 0.001
                 Assert.InRange(result, minValue - 0.001f, maxValue + 0.001f);
             }
         }
-
 
         [Theory]
         [InlineData(1.000f, 2.123f)]
@@ -98,20 +82,19 @@ namespace KDParticleEngineTests.Services
         [InlineData(1.321f, 16.000f)]
         public void GetValue_WhenInvokingWithFloatValuesAndMaxIsGreaterThanMin_ReturnsWithinRange(float minValue, float maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(maxValue, minValue);
 
-                //Assert
-                //Assert with accuracy of +/- 0.001
+                // Assert
+                // Assert with accuracy of +/- 0.001
                 Assert.InRange(result, minValue - 0.001f, maxValue + 0.001f);
             }
         }
-
 
         [Theory]
         [InlineData(1.001, 2.001)]
@@ -120,20 +103,19 @@ namespace KDParticleEngineTests.Services
         [InlineData(1.001, 16.001)]
         public void GetValue_WhenInvokingWithDoubleValuesAndMinIsLessThanMax_ReturnsWithinRange(double minValue, double maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(minValue, maxValue);
 
-                //Assert
-                //Assert with accuracy of +/- 0.001
+                // Assert
+                // Assert with accuracy of +/- 0.001
                 Assert.InRange(result, minValue - 0.001, maxValue + 0.001);
             }
         }
-
 
         [Theory]
         [InlineData(1.000, 2.123)]
@@ -142,16 +124,16 @@ namespace KDParticleEngineTests.Services
         [InlineData(1.321, 16.000)]
         public void GetValue_WhenInvokingWithDoubleValuesAndMaxIsGreaterThanMin_ReturnsWithinRange(double minValue, double maxValue)
         {
-            //Arrange
-            var randomizer = new TrueRandomizerService();
+            // Arrange
+            var randomizer = new PseudoRandomizerService();
 
-            for (int i = 0; i < 100000; i++)
+            for (var i = 0; i < 100000; i++)
             {
-                //Act
+                // Act
                 var result = randomizer.GetValue(maxValue, minValue);
 
-                //Assert
-                //Assert with accuracy of +/- 0.001
+                // Assert
+                // Assert with accuracy of +/- 0.001
                 Assert.InRange(result, minValue - 0.001, maxValue + 0.001);
             }
         }

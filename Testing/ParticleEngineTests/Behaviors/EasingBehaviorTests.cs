@@ -1,191 +1,184 @@
-﻿using ParticleEngine;
-using ParticleEngine.Behaviors;
-using ParticleEngine.Services;
-using KDParticleEngineTests.Fakes;
-using Moq;
-using System;
-using Xunit;
+﻿// <copyright file="EasingBehaviorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace KDParticleEngineTests.Behaviors
 {
+    using System;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using KDParticleEngine.Services;
+    using KDParticleEngineTests.Fakes;
+    using Moq;
+    using Xunit;
+
     /// <summary>
-    /// Holds tests for testing the <see cref="EasingBehavior"/> abstract class.
+    /// Tests testing the <see cref="EasingBehavior"/> abstract class.
     /// </summary>
     public class EasingBehaviorTests : IDisposable
     {
         #region Private Fields
-        private Mock<IRandomizerService> _mockRandomizerService;
+        private Mock<IRandomizerService> mockRandomizerService;
         #endregion
 
-
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="EasingBehaviorTests"/>
+        /// Initializes a new instance of the <see cref="EasingBehaviorTests"/> class.
         /// </summary>
-        public EasingBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
-        #endregion
-
+        public EasingBehaviorTests() => this.mockRandomizerService = new Mock<IRandomizerService>();
 
         #region Constructor Tests
         [Fact]
         public void Ctor_WhenInvoked_SetsSetting()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings()
             {
-                ApplyToAttribute = ParticleAttribute.Angle
+                ApplyToAttribute = ParticleAttribute.Angle,
             };
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             var actual = behavior.ApplyToAttribute;
 
-            //Assert
+            // Assert
             Assert.Equal(ParticleAttribute.Angle, actual);
         }
         #endregion
-
 
         #region Prop Tests
         [Fact]
         public void Start_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Start = 123;
             var actual = behavior.Start;
 
-            //Assert
+            // Assert
             Assert.Equal(123, actual);
         }
-
 
         [Fact]
         public void Change_WhenSettingValue_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Change = 123;
             var actual = behavior.Change;
 
-            //Assert
+            // Assert
             Assert.Equal(123, actual);
         }
         #endregion
-
 
         #region Method Tests
         [Fact]
         public void Update_WhenInvoked_UpdatesElapsedTime()
         {
-            //Arrange
+            // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.Equal(16, behavior.ElapsedTime);
         }
-
 
         [Fact]
         public void Update_WithLifeTimeNotElapsed_IsEnabledAfterUpdate()
         {
-            //Arrange
-            _mockRandomizerService.Setup(m => m.GetValue(0f, 1000f)).Returns(500f);
+            // Arrange
+            this.mockRandomizerService.Setup(m => m.GetValue(0f, 1000f)).Returns(500f);
             var settings = new EasingBehaviorSettings()
             {
                 TotalTimeMin = 0,
-                TotalTimeMax = 1000
+                TotalTimeMax = 1000,
             };
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
 
-            //Assert
+            // Assert
             Assert.True(behavior.Enabled);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsStartProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
-            _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            this.mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
+            var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(123, behavior.Start);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsChangeProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
-            _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            this.mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
+            var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(123, behavior.Change);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsElapsedTimeProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.Equal(0, behavior.ElapsedTime);
         }
-
 
         [Fact]
         public void Reset_WhenInvoked_ResetsEnabledProp()
         {
-            //Arrange
+            // Arrange
             var setting = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this.mockRandomizerService.Object);
 
-            //Act
+            // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 45));
             behavior.Reset();
 
-            //Assert
+            // Assert
             Assert.True(behavior.Enabled);
         }
         #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => _mockRandomizerService = null;
-        #endregion
+        public void Dispose()
+        {
+            this.mockRandomizerService = null;
+            GC.SuppressFinalize(this);
+        }
     }
 }

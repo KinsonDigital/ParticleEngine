@@ -1,11 +1,14 @@
-﻿using System;
+﻿// <copyright file="BehaviorSettings.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
-    //TODO: Add code docs
+    using System;
+
+    // TODO: Add code docs
     public abstract class BehaviorSettings
     {
-        #region Props
         /// <summary>
         /// Gets or sets the type of behavior to be created.
         /// </summary>
@@ -15,10 +18,7 @@ namespace ParticleEngine.Behaviors
         /// The particle attribute to set the behavior value to.
         /// </summary>
         public ParticleAttribute ApplyToAttribute { get; set; }
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -29,17 +29,14 @@ namespace ParticleEngine.Behaviors
             if (!(obj is BehaviorSettings setting))
                 return false;
 
-
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(TypeOfBehavior, ApplyToAttribute);
-        #endregion
     }
 }

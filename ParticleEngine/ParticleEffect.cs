@@ -1,35 +1,44 @@
-﻿using ParticleEngine.Behaviors;
-using System;
-using System.Drawing;
+﻿// <copyright file="ParticleEffect.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine
+namespace KDParticleEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection.Metadata.Ecma335;
+    using System.Runtime.CompilerServices;
+    using KDParticleEngine.Behaviors;
+
     /// <summary>
     /// Holds the particle setup settings data for the <see cref="ParticleEngine"/> to consume.
     /// </summary>
     public class ParticleEffect
     {
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="ParticleEffect"/>.
+        /// Initializes a new instance of the <see cref="ParticleEffect"/> class.
         /// </summary>
-        public ParticleEffect() { }
-
+        public ParticleEffect()
+        {
+        }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ParticleEffect"/>.
+        /// Initializes a new instance of the <see cref="ParticleEffect"/> class.
         /// </summary>
         /// <param name="particleTextureName">The name of the texture used in the particle effect.</param>
         /// <param name="settings">The settings used to setup the particle effect.</param>
         public ParticleEffect(string particleTextureName, BehaviorSettings[] settings)
         {
             ParticleTextureName = particleTextureName;
-            BehaviorSettings = settings;
+            BehaviorSettings = settings is null
+                ? new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>())
+                : new ReadOnlyCollection<BehaviorSettings>(settings);
         }
-        #endregion
 
-
-        #region Props
         /// <summary>
         /// Gets the name of the particle texture used in the particle effect.
         /// </summary>
@@ -50,7 +59,7 @@ namespace ParticleEngine
         /// randomly choose from when spawning a new <see cref="Particle"/>.
         /// Only used if the <see cref="UseColorsFromList"/> is set to true.
         /// </summary>
-        public ParticleColor[] TintColors { get; set; } = new ParticleColor[0];
+        public ReadOnlyCollection<ParticleColor> TintColors { get; set; } = new ReadOnlyCollection<ParticleColor>(Array.Empty<ParticleColor>());
 
         /// <summary>
         /// Gets or sets the total number of particles that can be alive at once.
@@ -68,18 +77,15 @@ namespace ParticleEngine
         public int SpawnRateMax { get; set; } = 1000;
 
         /// <summary>
-        /// Gets or sets a value indicating if the colors will be randomly chosen from a list.
+        /// Gets or sets a value indicating whether the colors will be randomly chosen from a list.
         /// </summary>
         public bool UseColorsFromList { get; set; }
 
         /// <summary>
         /// Gets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
-        public BehaviorSettings[] BehaviorSettings { get; } = new BehaviorSettings[0];
-        #endregion
+        public ReadOnlyCollection<BehaviorSettings> BehaviorSettings { get; } = new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>());
 
-
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -92,9 +98,9 @@ namespace ParticleEngine
 
             var colorsAreSame = true;
 
-            if (TintColors.Length == effect.TintColors.Length)
+            if (TintColors.Count == effect.TintColors.Count)
             {
-                for (int i = 0; i < TintColors.Length; i++)
+                for (var i = 0; i < TintColors.Count; i++)
                 {
                     if (TintColors[i] != effect.TintColors[i])
                     {
@@ -108,7 +114,6 @@ namespace ParticleEngine
                 colorsAreSame = false;
             }
 
-
             return ParticleTextureName == effect.ParticleTextureName &&
                 ApplyBehaviorTo == effect.ApplyBehaviorTo &&
                 SpawnLocation == effect.SpawnLocation &&
@@ -117,17 +122,17 @@ namespace ParticleEngine
                 SpawnRateMin == effect.SpawnRateMin &&
                 SpawnRateMax == effect.SpawnRateMax &&
                 UseColorsFromList == effect.UseColorsFromList &&
-                BehaviorSettings == effect.BehaviorSettings;
+                BehaviorSettings.ItemsAreEqual(effect.BehaviorSettings);
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
-            var hash = new HashCode();
+            var hash = default(HashCode);
 
             hash.Add(ParticleTextureName);
             hash.Add(ApplyBehaviorTo);
@@ -147,9 +152,7 @@ namespace ParticleEngine
             hash.Add(UseColorsFromList);
             hash.Add(BehaviorSettings);
 
-            
             return hash.ToHashCode();
         }
-        #endregion
     }
 }

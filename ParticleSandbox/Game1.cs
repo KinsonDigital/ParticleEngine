@@ -1,13 +1,14 @@
-using ParticleEngine;
-using ParticleEngine.Services;
+﻿using KDParticleEngine;
+using KDParticleEngine.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNAColor = Microsoft.Xna.Framework.Color;
 using NETPointF = System.Drawing.PointF;
 using System;
-using ParticleEngine.Behaviors;
+using KDParticleEngine.Behaviors;
+using System.Collections.ObjectModel;
 
-/*Easing Functino Resources
+/*Easing Function Resources
  * 1. http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
  * 2. http://kodhus.com/easings/
  * 3. https://joshondesign.com/2013/03/01/improvedEasingEquations
@@ -20,46 +21,43 @@ namespace ParticleSandbox
 {
     public class Game1 : Game
     {
-        private readonly GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private SpriteFont _gameFont;
-        private readonly TrueRandomizerService _randomService;
-        private readonly ParticleEngine.ParticleEngine _engine;
-        private readonly ITextureLoader<IParticleTexture> _textureLoader;
-        private readonly FrameCounter _frameCounter = new FrameCounter();
+        private readonly GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private SpriteFont gameFont;
+        private readonly TrueRandomizerService randomService;
+        private readonly ParticleEngine engine;
+        private readonly ITextureLoader<IParticleTexture> textureLoader;
+        private readonly FrameCounter frameCounter = new FrameCounter();
 
 
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            this.graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = true;
 
-            _randomService = new TrueRandomizerService();
-            _textureLoader = new TextureLoader(Content);
-            _engine = new ParticleEngine.ParticleEngine(_textureLoader, _randomService);
+            this.randomService = new TrueRandomizerService();
+            this.textureLoader = new TextureLoader(Content);
+            this.engine = new ParticleEngine(this.textureLoader, this.randomService);
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 
-            _graphics.PreparingDeviceSettings += (sender, e) =>
+            this.graphics.PreparingDeviceSettings += (sender, e) =>
             {
                 e.GraphicsDeviceInformation.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             };
         }
 
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
+        protected override void Initialize() => base.Initialize();
 
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _gameFont = Content.Load<SpriteFont>("GameFont");
+            this.gameFont = Content.Load<SpriteFont>("GameFont");
 
             var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, 50);
 
@@ -102,7 +100,7 @@ namespace ParticleSandbox
                 {
                     ApplyToAttribute = ParticleAttribute.Color,
                     TypeOfBehavior = BehaviorType.RandomChoice,
-                    Data = new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" },
+                    Data = new ReadOnlyCollection<string>(new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" }),
                     LifeTime = 6000
                 },
                 //new EasingBehaviorSettings()//Red channel setup
@@ -165,11 +163,11 @@ namespace ParticleSandbox
             var effectA = new ParticleEffect("Shape-A", settings)
             {
                 UseColorsFromList = true,//THIS WILL LIKELY BE REMOVED
-                TintColors = new ParticleColor[]//THIS WILL LIKELY BE REMOVED
+                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[]//THIS WILL LIKELY BE REMOVED
                 {
                     new ParticleColor(255, 255, 0, 0),
                     new ParticleColor(255, 0, 255, 0)
-                },
+                }),
                 SpawnLocation = spawnLocation,
                 SpawnRateMin = 10,
                 SpawnRateMax = 10,
@@ -179,15 +177,15 @@ namespace ParticleSandbox
 
             IBehaviorFactory factory = new BehaviorFactory();
 
-            _engine.CreatePool(effectA, factory);
+            this.engine.CreatePool(effectA, factory);
 
-            _engine.LoadTextures();
+            this.engine.LoadTextures();
         }
 
 
         protected override void Update(GameTime gameTime)
         {
-            _engine.Update(gameTime.ElapsedGameTime);
+            this.engine.Update(gameTime.ElapsedGameTime);
 
             base.Update(gameTime);
         }
@@ -195,16 +193,16 @@ namespace ParticleSandbox
 
         protected override void Draw(GameTime gameTime)
         {
-            _frameCounter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            this.frameCounter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             GraphicsDevice.Clear(XNAColor.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            this.spriteBatch.Begin();
 
             //Render the FPS
-            _spriteBatch.DrawString(_gameFont, $"FPS: {_frameCounter.AverageFramesPerSecond}", new Vector2(5, 5), XNAColor.Black);
+            this.spriteBatch.DrawString(this.gameFont, $"FPS: {this.frameCounter.AverageFramesPerSecond}", new Vector2(5, 5), XNAColor.Black);
 
-            foreach (var pool in _engine.ParticlePools)
+            foreach (var pool in this.engine.ParticlePools)
             {
                 foreach (var particle in pool.Particles)
                 {
@@ -214,12 +212,12 @@ namespace ParticleSandbox
 
                         var monoTexture = (pool.PoolTexture as Texture).MonoTexture;
 
-                        _spriteBatch.Draw(monoTexture, destRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
+                        this.spriteBatch.Draw(monoTexture, destRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
                     }
                 }
             }
 
-            _spriteBatch.End();
+            this.spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -229,7 +227,7 @@ namespace ParticleSandbox
         {
             const float PI = 3.14159265359f;
 
-            return (angle * PI) / 180f;
+            return angle * PI / 180f;
         }
     }
 }
