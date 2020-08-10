@@ -23,7 +23,7 @@ namespace KDParticleEngineTests.Behaviors
         /// <summary>
         /// Creates a new instance of <see cref="EaseOutBounceBehaviorTests"/>.
         /// </summary>
-        public EaseOutBounceBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
+        public EaseOutBounceBehaviorTests() => this._mockRandomizerService = new Mock<IRandomizerService>();
         #endregion
 
         #region Method Tets
@@ -32,7 +32,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new EaseOutBounceBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new EaseOutBounceBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -46,7 +46,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new EaseOutBounceBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new EaseOutBounceBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));

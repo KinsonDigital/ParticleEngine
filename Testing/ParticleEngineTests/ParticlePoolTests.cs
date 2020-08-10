@@ -33,24 +33,24 @@ namespace KDParticleEngineTests
         /// </summary>
         public ParticlePoolTests()
         {
-            _settings = new EasingBehaviorSettings[]
+            this._settings = new EasingBehaviorSettings[]
             {
                 new EasingBehaviorSettings()
             };
-            _effect = new ParticleEffect(PARTICLE_TEXTURE_NAME, _settings);
+            this._effect = new ParticleEffect(PARTICLE_TEXTURE_NAME, this._settings);
 
-            _mockRandomizerService = new Mock<IRandomizerService>();
-            _mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
+            this._mockRandomizerService = new Mock<IRandomizerService>();
+            this._mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
 
-            _mockBehavior = new Mock<IBehavior>();
-            _mockBehavior.SetupGet(p => p.Value).Returns("0");
-            _mockBehavior.SetupGet(p => p.Enabled).Returns(true);
+            this._mockBehavior = new Mock<IBehavior>();
+            this._mockBehavior.SetupGet(p => p.Value).Returns("0");
+            this._mockBehavior.SetupGet(p => p.Enabled).Returns(true);
 
-            _mockBehaviorFactory = new Mock<IBehaviorFactory>();
-            _mockBehaviorFactory.Setup(m => m.CreateBehaviors(_settings, _mockRandomizerService.Object))
+            this._mockBehaviorFactory = new Mock<IBehaviorFactory>();
+            this._mockBehaviorFactory.Setup(m => m.CreateBehaviors(this._settings, this._mockRandomizerService.Object))
                 .Returns(() =>
                 {
-                    return new IBehavior[] { _mockBehavior.Object };
+                    return new IBehavior[] { this._mockBehavior.Object };
                 });
         }
         #endregion
@@ -60,19 +60,19 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoked_SetsEffectProp()
         {
             // Act
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Assert
-            Assert.Equal(_effect, pool.Effect);
+            Assert.Equal(this._effect, pool.Effect);
         }
 
         [Fact]
         public void Ctor_WhenInvoked_CreatesParticles()
         {
             // Act
-            _effect.TotalParticlesAliveAtOnce = 10;
+            this._effect.TotalParticlesAliveAtOnce = 10;
 
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Assert
             Assert.Equal(10, pool.Particles.Length);
@@ -84,7 +84,7 @@ namespace KDParticleEngineTests
         public void TotalLivingParticles_WhenGettingValue_ReturnsCorrectValue()
         { 
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -98,8 +98,8 @@ namespace KDParticleEngineTests
         public void TotalDeadParticles_WhenGettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            _effect.TotalParticlesAliveAtOnce = 10;
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            this._effect.TotalParticlesAliveAtOnce = 10;
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -117,22 +117,22 @@ namespace KDParticleEngineTests
         public void Update_WhenGeneratingRandomSpawnRate_CorrectlyUsesMinAndMax(int rateMin, int rateMax)
         {
             // Arrange
-            _effect.SpawnRateMin = rateMin;
-            _effect.SpawnRateMax = rateMax;
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), _effect, _mockRandomizerService.Object);
+            this._effect.SpawnRateMin = rateMin;
+            this._effect.SpawnRateMax = rateMax;
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this._effect, this._mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Assert
-            _mockRandomizerService.Verify(m => m.GetValue(rateMin < rateMax ? rateMin : rateMax, rateMax > rateMin ? rateMax : rateMin), Times.Once());
+            this._mockRandomizerService.Verify(m => m.GetValue(rateMin < rateMax ? rateMin : rateMax, rateMax > rateMin ? rateMax : rateMin), Times.Once());
         }
 
         [Fact]
         public void Update_WhenInvoked_SpawnsNewParticle()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this._effect, this._mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -144,7 +144,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void KillAllParticles_WhenInvoked_KillsAllParticles()
         {
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this._effect, this._mockRandomizerService.Object);
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Act
@@ -158,28 +158,28 @@ namespace KDParticleEngineTests
         public void LoadTexture_WhenInvoked_LoadsTextureWithEffectTextureName()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Act
             pool.LoadTexture();
 
             // Assert
-            _mockTextureLoader.Verify(m => m.LoadTexture(PARTICLE_TEXTURE_NAME), Times.Once());
+            this._mockTextureLoader.Verify(m => m.LoadTexture(PARTICLE_TEXTURE_NAME), Times.Once());
         }
 
         [Fact]
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
         {
             // Arrange
-            _effect.ApplyBehaviorTo = ParticleAttribute.Angle;
-            _effect.SpawnLocation = new PointF(11, 22);
-            _effect.SpawnRateMin = 33;
-            _effect.SpawnRateMax = 44;
-            _effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
-            _effect.TotalParticlesAliveAtOnce = 99;
-            _effect.UseColorsFromList = true;
+            this._effect.ApplyBehaviorTo = ParticleAttribute.Angle;
+            this._effect.SpawnLocation = new PointF(11, 22);
+            this._effect.SpawnRateMin = 33;
+            this._effect.SpawnRateMax = 44;
+            this._effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this._effect.TotalParticlesAliveAtOnce = 99;
+            this._effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
             var otherObj = new object();
 
             // Act
@@ -193,16 +193,16 @@ namespace KDParticleEngineTests
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
             // Arrange
-            _effect.ApplyBehaviorTo = ParticleAttribute.Angle;
-            _effect.SpawnLocation = new PointF(11, 22);
-            _effect.SpawnRateMin = 33;
-            _effect.SpawnRateMax = 44;
-            _effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
-            _effect.TotalParticlesAliveAtOnce = 99;
-            _effect.UseColorsFromList = true;
+            this._effect.ApplyBehaviorTo = ParticleAttribute.Angle;
+            this._effect.SpawnLocation = new PointF(11, 22);
+            this._effect.SpawnRateMin = 33;
+            this._effect.SpawnRateMax = 44;
+            this._effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this._effect.TotalParticlesAliveAtOnce = 99;
+            this._effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
 
             // Act
             var actual = poolA.Equals(poolB);
@@ -215,7 +215,7 @@ namespace KDParticleEngineTests
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
             // Arrange
-            var effectA = new ParticleEffect("texture-name", _settings)
+            var effectA = new ParticleEffect("texture-name", this._settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
@@ -226,7 +226,7 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            var effectB = new ParticleEffect("texture-name", _settings)
+            var effectB = new ParticleEffect("texture-name", this._settings)
             {
                 ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
@@ -237,8 +237,8 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true
             };
 
-            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectA, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, effectB, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, effectA, this._mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, effectB, this._mockRandomizerService.Object);
 
             // Act
             var actual = poolA.Equals(poolB);
@@ -251,16 +251,16 @@ namespace KDParticleEngineTests
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
             // Arrange
-            _effect.ApplyBehaviorTo = ParticleAttribute.Angle;
-            _effect.SpawnLocation = new PointF(11, 22);
-            _effect.SpawnRateMin = 33;
-            _effect.SpawnRateMax = 44;
-            _effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
-            _effect.TotalParticlesAliveAtOnce = 99;
-            _effect.UseColorsFromList = true;
+            this._effect.ApplyBehaviorTo = ParticleAttribute.Angle;
+            this._effect.SpawnLocation = new PointF(11, 22);
+            this._effect.SpawnRateMin = 33;
+            this._effect.SpawnRateMax = 44;
+            this._effect.TintColors = new ParticleColor[] { new ParticleColor(55, 66, 77, 88) };
+            this._effect.TotalParticlesAliveAtOnce = 99;
+            this._effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object, _mockTextureLoader.Object, _effect, _mockRandomizerService.Object);
+            var poolA = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
+            var poolB = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object, this._mockTextureLoader.Object, this._effect, this._mockRandomizerService.Object);
             
             poolA.LoadTexture();
             poolB.LoadTexture();
@@ -278,16 +278,16 @@ namespace KDParticleEngineTests
             // Arrange
             var _effect = new ParticleEffect();
             var mockTexture = new Mock<IParticleTexture>();
-            
-            _mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) => 
+
+            this._mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) => 
             {
                 return mockTexture.Object;
             });
 
-            var pool = new ParticlePool<IParticleTexture>(_mockBehaviorFactory.Object,
-                _mockTextureLoader.Object,
+            var pool = new ParticlePool<IParticleTexture>(this._mockBehaviorFactory.Object,
+                this._mockTextureLoader.Object,
                 _effect,
-                _mockRandomizerService.Object);
+                this._mockRandomizerService.Object);
 
             pool.LoadTexture();
 

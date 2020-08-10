@@ -25,7 +25,7 @@ namespace KDParticleEngineTests.Behaviors
         /// <summary>
         /// Creates a new instance of <see cref="EasingBehaviorTests"/>
         /// </summary>
-        public EasingBehaviorTests() => _mockRandomizerService = new Mock<IRandomizerService>();
+        public EasingBehaviorTests() => this._mockRandomizerService = new Mock<IRandomizerService>();
         #endregion
 
         #region Constructor Tests
@@ -37,7 +37,7 @@ namespace KDParticleEngineTests.Behaviors
             {
                 ApplyToAttribute = ParticleAttribute.Angle
             };
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this._mockRandomizerService.Object);
 
             // Act
             var actual = behavior.ApplyToAttribute;
@@ -53,7 +53,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Start = 123;
@@ -68,7 +68,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Change = 123;
@@ -85,7 +85,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var settings = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -98,13 +98,13 @@ namespace KDParticleEngineTests.Behaviors
         public void Update_WithLifeTimeNotElapsed_IsEnabledAfterUpdate()
         {
             // Arrange
-            _mockRandomizerService.Setup(m => m.GetValue(0f, 1000f)).Returns(500f);
+            this._mockRandomizerService.Setup(m => m.GetValue(0f, 1000f)).Returns(500f);
             var settings = new EasingBehaviorSettings()
             {
                 TotalTimeMin = 0,
                 TotalTimeMax = 1000
             };
-            var behavior = new FakeEasingBehavior(settings, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(settings, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -118,8 +118,8 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var setting = new EasingBehaviorSettings();
-            _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            this._mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
+            var behavior = new FakeEasingBehavior(setting, this._mockRandomizerService.Object);
 
             // Act
             behavior.Reset();
@@ -133,8 +133,8 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var setting = new EasingBehaviorSettings();
-            _mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            this._mockRandomizerService.Setup(m => m.GetValue(It.IsAny<float>(), It.IsAny<float>())).Returns(123);
+            var behavior = new FakeEasingBehavior(setting, this._mockRandomizerService.Object);
 
             // Act
             behavior.Reset();
@@ -148,7 +148,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var setting = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -163,7 +163,7 @@ namespace KDParticleEngineTests.Behaviors
         {
             // Arrange
             var setting = new EasingBehaviorSettings();
-            var behavior = new FakeEasingBehavior(setting, _mockRandomizerService.Object);
+            var behavior = new FakeEasingBehavior(setting, this._mockRandomizerService.Object);
 
             // Act
             behavior.Update(new TimeSpan(0, 0, 0, 0, 45));
@@ -178,7 +178,7 @@ namespace KDParticleEngineTests.Behaviors
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => _mockRandomizerService = null;
+        public void Dispose() => this._mockRandomizerService = null;
         #endregion
     }
 }
