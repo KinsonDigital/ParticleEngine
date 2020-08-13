@@ -20,7 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		.editorconfig = .editorconfig
 		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE.md = LICENSE.md
-		pull_request_template.md = pull_request_template.md
 		README.md = README.md
 		RELEASENOTES.md = RELEASENOTES.md
 		stylecop.json = stylecop.json
@@ -30,6 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDevOps", "AzureDevOps"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines-develop.yml = azure-pipelines-develop.yml
 		azure-pipelines-master.yml = azure-pipelines-master.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequestTemplates", "PullRequestTemplates", "{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9}"
+	ProjectSection(SolutionItems) = preProject
+		pull_request_template\feature_to_develop.md = pull_request_template\feature_to_develop.md
+		pull_request_template\release_to_develop.md = pull_request_template\release_to_develop.md
+		pull_request_template\release_to_master.md = pull_request_template\release_to_master.md
 	EndProjectSection
 EndProject
 Global
@@ -56,6 +62,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956} = {7D49C662-51F3-4D0F-892A-60079135A5DF}
+		{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9} = {43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B5522DE-EC6C-4C93-9F87-F0C24E228B37}
