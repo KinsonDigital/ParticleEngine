@@ -1,27 +1,24 @@
-﻿using System;
+﻿// <copyright file="Behavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Represents a behavior that can be applied to a particle.
     /// </summary>
     public abstract class Behavior : IBehavior
     {
-        #region Private Fields
-        private readonly BehaviorSettings _setting;
-        #endregion
+        private readonly BehaviorSettings setting;
 
-
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of behavior.
+        /// Initializes a new instance of the <see cref="Behavior"/> class.
         /// </summary>
         /// <param name="settings">The settings used to dictate how the behavior makes a particle behave.</param>
-        public Behavior(BehaviorSettings settings) => _setting = settings;
-        #endregion
+        public Behavior(BehaviorSettings settings) => this.setting = settings;
 
-
-        #region Props
         /// <summary>
         /// Gets the current value of the behavior.
         /// </summary>
@@ -35,22 +32,18 @@ namespace ParticleEngine.Behaviors
         /// <summary>
         /// Gets the particle attribute to apply the behavior value to.
         /// </summary>
-        public ParticleAttribute ApplyToAttribute => _setting.ApplyToAttribute;
+        public ParticleAttribute ApplyToAttribute => this.setting.ApplyToAttribute;
 
         /// <summary>
         /// Gets a value indicating if the behavior is enabled.
         /// </summary>
         public bool Enabled { get; protected set; } = true;
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
         public virtual void Update(TimeSpan timeElapsed) => ElapsedTime += timeElapsed.TotalMilliseconds;
-
 
         /// <summary>
         /// Resets the behvior.
@@ -61,6 +54,5 @@ namespace ParticleEngine.Behaviors
             ElapsedTime = 0;
             Enabled = true;
         }
-        #endregion
     }
 }

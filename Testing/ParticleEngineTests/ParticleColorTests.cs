@@ -1,14 +1,18 @@
-﻿using ParticleEngine;
-using System;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using Xunit;
+﻿// <copyright file="ParticleColorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace KDParticleEngineTests
 {
+    using System;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using KDParticleEngine;
+    using Xunit;
+
     /// <summary>
-    /// Holds tests for the <see cref="ParticleColor"/> class.
+    /// Tests the <see cref="ParticleColor"/> class.
     /// </summary>
     public class ParticleColorTests
     {
@@ -16,9 +20,8 @@ namespace KDParticleEngineTests
         [Fact]
         public void ColorProps_WhenGettingValues_ReturnsCorrrectValue()
         {
-            //Arrange
+            // Arrange
             var propsToTest = GetColorPropNames();
-
 
             foreach (var prop in propsToTest)
             {
@@ -33,21 +36,19 @@ namespace KDParticleEngineTests
         }
         #endregion
 
-
         #region Method Tests
         [Fact]
         public void GetBrightness_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var color = new ParticleColor(255, 24, 98, 118);
 
-            //Act
+            // Act
             var actual = color.GetBrightness();
 
-            //Assert
+            // Assert
             Assert.Equal(27.843138f, actual);
         }
-
 
         [Theory]
         [InlineData(118, 98, 118, 300f)]
@@ -56,162 +57,152 @@ namespace KDParticleEngineTests
         [InlineData(24, 98, 118, 192.76596f)]
         public void GetHue_WhenInvoked_ReturnsCorrectValue(byte red, byte green, byte blue, float result)
         {
-            //Arrange
+            // Arrange
             var color = new ParticleColor(255, red, green, blue);
 
-            //Act
+            // Act
             var actual = color.GetHue();
 
-            //Assert
+            // Assert
             Assert.Equal(result, actual);
         }
-
 
         [Fact]
         public void GetSaturation_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var color = new ParticleColor(255, 24, 98, 118);
 
-            //Act
+            // Act
             var actual = color.GetSaturation();
 
-            //Assert
+            // Assert
             Assert.Equal(66.19718, Math.Round(actual, 5));
         }
-
 
         [Theory]
         [InlineData(255, 255, 255, 255, true)]
         [InlineData(11, 22, 33, 44, false)]
         public void EqualOperator_WithEqualColors_ReturnsTrue(byte alpha, byte red, byte green, byte blue, bool expectedResult)
         {
-            //Arrange
+            // Arrange
             var colorA = new ParticleColor(255, 255, 255, 255);
             var colorB = new ParticleColor(alpha, red, green, blue);
 
-            //Act
+            // Act
             var actual = colorA == colorB;
 
-            //Assert
+            // Assert
             Assert.Equal(expectedResult, actual);
         }
-
 
         [Theory]
         [InlineData(255, 255, 255, 255, false)]
         [InlineData(11, 22, 33, 44, true)]
         public void NotEqualOperator_WithNotEqualColors_ReturnsTrue(byte alpha, byte red, byte green, byte blue, bool expectedResult)
         {
-            //Arrange
+            // Arrange
             var colorA = new ParticleColor(255, 255, 255, 255);
             var colorB = new ParticleColor(alpha, red, green, blue);
 
-            //Act
+            // Act
             var actual = colorA != colorB;
 
-            //Assert
+            // Assert
             Assert.Equal(expectedResult, actual);
         }
-
 
         [Fact]
         public void Equals_WithTwoDifferentObjectTypes_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var color = new ParticleColor(11, 22, 33, 44);
             var otherObj = new object();
 
-            //Act
+            // Act
             var actual = color.Equals(otherObj);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithTwoNonMatchingObject_ReturnsFalse()
         {
-            //Arrange
+            // Arrange
             var clrA = new ParticleColor(11, 22, 33, 44);
             var clrB = new ParticleColor(11, 22, 33, 99);
 
-            //Act
+            // Act
             var actual = clrA.Equals(clrB);
 
-            //Assert
+            // Assert
             Assert.False(actual);
         }
-
 
         [Fact]
         public void Equals_WithTwoMatchingObject_ReturnsTrue()
         {
-            //Arrange
+            // Arrange
             var clrA = new ParticleColor(11, 22, 33, 44);
             var clrB = new ParticleColor(11, 22, 33, 44);
 
-            //Act
+            // Act
             var actual = clrA.Equals(clrB);
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var colorA = new ParticleColor(11, 22, 33, 44);
             var colorB = new ParticleColor(11, 22, 33, 44);
 
-            //Act
+            // Act
             var actual = colorA.GetHashCode() == colorB.GetHashCode();
 
-            //Assert
+            // Assert
             Assert.True(actual);
         }
-
 
         [Fact]
         public void ToString_WhenInvoked_ReturnsCorrectValue()
         {
-            //Arrange
+            // Arrange
             var color = new ParticleColor(10, 20, 30, 40);
 
-            //Act
+            // Act
             var actual = color.ToString();
 
-            //Assert
+            // Assert
             Assert.Equal("A = 10, R = 20, G = 30, B = 40", actual);
         }
         #endregion
 
-
-        #region Private Methods
         /// <summary>
         /// Returns all of the names of the <see cref="ParticleColor"/> color property names.
         /// </summary>
-        /// <returns></returns>
-        private string[] GetColorPropNames() => typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
+        /// <returns>A list of properties of the type <see cref="ParticleColor"/>.</returns>
+        private static string[] GetColorPropNames() => typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor)).Select(p => p.Name).ToArray();
-
 
         /// <summary>
         /// Gets the <see cref="ParticleColor"/> property value that matches the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the property.</param>
-        /// <returns></returns>
-        private ParticleColor GetColorPropValue(string name)
+        /// <returns>
+        ///     The value of a property that matches the given <paramref name="name"/>
+        ///     for the type <see cref="ParticleColor"/>.
+        /// </returns>
+        private static ParticleColor GetColorPropValue(string name)
         {
             var foundProp = typeof(ParticleColor).GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(p => p.PropertyType == typeof(ParticleColor) && p.Name == name).FirstOrDefault();
 
-
             return foundProp.GetValue(null, null) as ParticleColor;
         }
-        #endregion
     }
 }

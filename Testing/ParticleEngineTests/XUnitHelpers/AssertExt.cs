@@ -1,7 +1,11 @@
-﻿using Xunit;
+﻿// <copyright file="AssertExt.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace KDParticleEngineTests.XUnitHelpers
 {
+    using Xunit;
+
     /// <summary>
     /// Provides extensions to the <see cref="Assert"/> class.
     /// </summary>
@@ -22,7 +26,6 @@ namespace KDParticleEngineTests.XUnitHelpers
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
 
-
         /// <summary>
         /// Asserts that the given <paramref name="value"/> falls within the <paramref name="min"/> and <paramref name="max"/>.
         /// </summary>
@@ -36,7 +39,6 @@ namespace KDParticleEngineTests.XUnitHelpers
 
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
-
 
         /// <summary>
         /// Asserts that the given <paramref name="value"/> falls within the <paramref name="min"/> and <paramref name="max"/>.

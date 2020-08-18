@@ -22,12 +22,12 @@ namespace ParticleSandbox
         {
             CurrentFramesPerSecond = 1.0f / deltaTime;
 
-            _sampleBuffer.Enqueue(CurrentFramesPerSecond);
+            this._sampleBuffer.Enqueue(CurrentFramesPerSecond);
 
-            if (_sampleBuffer.Count > MAXIMUM_SAMPLES)
+            if (this._sampleBuffer.Count > MAXIMUM_SAMPLES)
             {
-                _sampleBuffer.Dequeue();
-                AverageFramesPerSecond = _sampleBuffer.Average(i => i);
+                this._sampleBuffer.Dequeue();
+                AverageFramesPerSecond = this._sampleBuffer.Average(i => i);
             }
             else
             {

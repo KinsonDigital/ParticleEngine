@@ -1,13 +1,16 @@
-﻿using System;
+﻿// <copyright file="IParticleTexture.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine
+namespace KDParticleEngine
 {
+    using System;
+
     /// <summary>
     /// Represents a single texture for a particle to be rendered.
     /// </summary>
     public interface IParticleTexture : IDisposable
     {
-        #region Props
         /// <summary>
         /// Gets or sets the width of the texture.
         /// </summary>
@@ -17,6 +20,5 @@ namespace ParticleEngine
         /// Gets or sets the height of the texture.
         /// </summary>
         public int Height { get; }
-        #endregion
     }
 }

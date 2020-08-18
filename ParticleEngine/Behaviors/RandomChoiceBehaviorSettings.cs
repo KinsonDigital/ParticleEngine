@@ -1,34 +1,32 @@
-﻿using System;
+﻿// <copyright file="RandomChoiceBehaviorSettings.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
+    using System;
+    using System.Collections.ObjectModel;
+
     /// <summary>
     /// Various settings for behaviors that choose values randomly from a list of choices.
     /// </summary>
     public class RandomChoiceBehaviorSettings : BehaviorSettings
     {
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="RandomChoiceBehaviorSettings"/>.
+        /// Initializes a new instance of the <see cref="RandomChoiceBehaviorSettings"/> class.
         /// </summary>
         public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
-        #endregion
 
-
-        #region Props
         /// <summary>
-        /// Holds data for the use by an <see cref="IBehavior"/> implementation.
+        /// Gets or sets the data for the use by an <see cref="IBehavior"/> implementation.
         /// </summary>
-        public string[]? Data { get; set; }
+        public ReadOnlyCollection<string>? Data { get; set; }
 
         /// <summary>
         /// Gets or sets the amount of time that the behavior should be enabled.
         /// </summary>
         public double LifeTime { get; set; }
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -39,17 +37,14 @@ namespace ParticleEngine.Behaviors
             if (!(obj is RandomChoiceBehaviorSettings setting))
                 return false;
 
-
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
-
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => HashCode.Combine(Data);
-        #endregion
     }
 }

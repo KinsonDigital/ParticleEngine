@@ -7,25 +7,35 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngine", "ParticleE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49C662-51F3-4D0F-892A-60079135A5DF}"
 	ProjectSection(SolutionItems) = preProject
+		Testing\.editorconfig = Testing\.editorconfig
 		ParticleEngine.runsettings = ParticleEngine.runsettings
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "Testing\ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSandbox", "ParticleSandbox\ParticleSandbox.csproj", "{2FB03CD2-D6C7-46A5-BC93-85D10168B753}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{50929C0D-9986-4846-97CC-5038F3F51D91}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		RELEASENOTES.md = RELEASENOTES.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDevOps", "AzureDevOps", "{43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines-develop.yml = azure-pipelines-develop.yml
 		azure-pipelines-master.yml = azure-pipelines-master.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequestTemplates", "PullRequestTemplates", "{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9}"
+	ProjectSection(SolutionItems) = preProject
+		pull_request_template\feature_to_develop.md = pull_request_template\feature_to_develop.md
+		pull_request_template\release_to_develop.md = pull_request_template\release_to_develop.md
+		pull_request_template\release_to_master.md = pull_request_template\release_to_master.md
 	EndProjectSection
 EndProject
 Global
@@ -52,6 +62,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956} = {7D49C662-51F3-4D0F-892A-60079135A5DF}
+		{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9} = {43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B5522DE-EC6C-4C93-9F87-F0C24E228B37}

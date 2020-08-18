@@ -1,36 +1,34 @@
-﻿using System;
-using ParticleEngine.Services;
+﻿// <copyright file="RandomColorBehavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
+    using System;
+    using KDParticleEngine.Services;
+
     /// <summary>
     /// Randomly chooses colors from a list of colors that will be applied to a particle.
     /// Used to randomly set the tint color of a particle for its entire lifetime.
     /// </summary>
     public class RandomColorBehavior : Behavior
     {
-        #region Private Fields
-        private RandomChoiceBehaviorSettings _settings;
-        private readonly IRandomizerService _randomizer;
-        private bool _isColorChosen;
-        #endregion
+        private readonly RandomChoiceBehaviorSettings settings;
+        private readonly IRandomizerService randomizer;
+        private bool isColorChosen;
 
-
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="RandomColorBehavior"/>.
+        /// Initializes a new instance of the <see cref="RandomColorBehavior"/> class.
         /// </summary>
         /// <param name="settings">The behavior settings.</param>
         /// <param name="randomizer">The randomizer used to randomly choose a color from a list of colors.</param>
-        public RandomColorBehavior(RandomChoiceBehaviorSettings settings, IRandomizerService randomizer) : base(settings)
+        public RandomColorBehavior(RandomChoiceBehaviorSettings settings, IRandomizerService randomizer)
+            : base(settings)
         {
-            _settings = settings;
-            _randomizer = randomizer;
+            this.settings = settings;
+            this.randomizer = randomizer;
         }
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Updates the behavior.
         /// </summary>
@@ -39,29 +37,27 @@ namespace ParticleEngine.Behaviors
         {
             base.Update(timeElapsed);
 
-            //If the amount of time has passed, disable the behavor
-            Enabled = ElapsedTime < _settings.LifeTime;
+            // If the amount of time has passed, disable the behavor
+            Enabled = ElapsedTime < this.settings.LifeTime;
 
-            if (_isColorChosen)
+            if (this.isColorChosen)
                 return;
 
-            //Randomly choose a color and set the value to a floating point number that represents that color
-            var randomIndex = _randomizer.GetValue(0, _settings.Data is null ? 0 : _settings.Data.Length - 1);
+            // Randomly choose a color and set the value to a floating point number that represents that color
+            var randomIndex = this.randomizer.GetValue(0, this.settings.Data is null ? 0 : this.settings.Data.Count - 1);
 
-            Value = _settings.Data is null ? "clr:255,255,255,255" : _settings.Data[randomIndex];
+            Value = this.settings.Data is null ? "clr:255,255,255,255" : this.settings.Data[randomIndex];
 
-            _isColorChosen = true;
+            this.isColorChosen = true;
         }
-
 
         /// <summary>
         /// Resets the behavior.
         /// </summary>
         public override void Reset()
         {
-            _isColorChosen = false;
+            this.isColorChosen = false;
             base.Reset();
         }
-        #endregion
     }
 }

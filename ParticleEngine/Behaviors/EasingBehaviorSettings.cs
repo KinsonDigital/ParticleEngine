@@ -1,13 +1,16 @@
-﻿using System;
+﻿// <copyright file="EasingBehaviorSettings.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Behaviors
+namespace KDParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Stores settings for creating an <see cref="EasingBehavior"/>.
     /// </summary>
     public class EasingBehaviorSettings : BehaviorSettings
     {
-        #region Props
         /// <summary>
         /// The minimum starting value used in randomization.
         /// </summary>
@@ -37,10 +40,7 @@ namespace ParticleEngine.Behaviors
         /// The maximum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMax { get; set; }
-        #endregion
 
-
-        #region Public Methods
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
@@ -50,7 +50,6 @@ namespace ParticleEngine.Behaviors
         {
             if (!(obj is EasingBehaviorSettings setting))
                 return false;
-
 
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute &&
@@ -62,16 +61,19 @@ namespace ParticleEngine.Behaviors
                 TotalTimeMax == setting.TotalTimeMax;
         }
 
-
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
-            HashCode.Combine(TypeOfBehavior, ApplyToAttribute,
-                             StartMin, StartMax,
-                             ChangeMin, ChangeMax,
-                             TotalTimeMin, TotalTimeMax);
-        #endregion
+            HashCode.Combine(
+                TypeOfBehavior,
+                ApplyToAttribute,
+                StartMin,
+                StartMax,
+                ChangeMin,
+                ChangeMax,
+                TotalTimeMin,
+                TotalTimeMax);
     }
 }

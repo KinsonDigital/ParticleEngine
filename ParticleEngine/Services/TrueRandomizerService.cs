@@ -1,45 +1,34 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography;
+﻿// <copyright file="TrueRandomizerService.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
-namespace ParticleEngine.Services
+namespace KDParticleEngine.Services
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Security.Cryptography;
+
     /// <summary>
     /// Provides methods for randomizing numbers.
     /// </summary>
     public class TrueRandomizerService : IRandomizerService
     {
-        #region Private Fields
-        private readonly RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
-        private readonly byte[] _uint32Buffer = new byte[4];
-        #endregion
+        private readonly RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+        private readonly byte[] uint32Buffer = new byte[4];
+        private bool isDisposed;
 
-
-        #region Constructors
         /// <summary>
-        /// Creates a new instance of <see cref="PseudoRandomizerService"/>.
+        /// Initializes a new instance of the <see cref="TrueRandomizerService"/> class.
         /// </summary>
-        public TrueRandomizerService() { }
-        #endregion
+        public TrueRandomizerService()
+        {
+        }
 
-
-        #region Public Methods
-        /// <summary>
-        /// Returns a true/false value that represents the flip of a coin.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public bool FlipCoin() => GetValue(0f, 1f) <= 0.5f;
 
-
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public float GetValue(float minValue, float maxValue)
         {
             var minValueAsInt = (int)(minValue * 1000);
@@ -55,32 +44,15 @@ namespace ParticleEngine.Services
             }
         }
 
-
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetValue(double minValue, double maxValue) =>
-            //Add 0.001 so that way the max value is inclusive.
             GetValue((float)minValue, (float)maxValue);
 
-
-        /// <summary>
-        /// Gets a random number between the given <paramref name="minValue"/> and <paramref name="maxValue"/>s.
-        /// A random value will be chosen between the min and max values no matter which value is less than 
-        /// or greater than the other.
-        /// </summary>
-        /// <param name="minValue">The inclusive minimum value of the range to randomly choose from.</param>
-        /// <param name="maxValue">The inclusive maximum value of the range to randomly choose from.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public int GetValue(int minValue, int maxValue)
         {
-            //If the min value is greater than the max,
-            //swap the values.
+            // If the min value is greater than the max,
+            // swap the values.
             if (minValue > maxValue)
             {
                 var valueTemp = minValue;
@@ -96,9 +68,9 @@ namespace ParticleEngine.Services
 
             while (true)
             {
-                _provider.GetBytes(_uint32Buffer);
+                this.provider.GetBytes(this.uint32Buffer);
 
-                var rand = Math.Abs((int)BitConverter.ToUInt32(_uint32Buffer, 0));
+                var rand = Math.Abs((int)BitConverter.ToUInt32(this.uint32Buffer, 0));
                 var max = 1 + (long)int.MaxValue;
                 var remainder = max % diff;
 
@@ -106,6 +78,29 @@ namespace ParticleEngine.Services
                     return (int)(minValue + (rand % diff));
             }
         }
-        #endregion
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.isDisposed)
+            {
+                if (disposing)
+                    this.provider.Dispose();
+
+                this.isDisposed = true;
+            }
+        }
     }
 }

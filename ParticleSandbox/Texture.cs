@@ -1,4 +1,4 @@
-﻿using ParticleEngine;
+﻿using KDParticleEngine;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -10,25 +10,21 @@ namespace ParticleSandbox
     public class Texture : IParticleTexture
     {
         #region Private Fields
-        private readonly Texture2D _texture2D;
-        private bool _disposedValue;
+        private bool isDisposed;
         #endregion
 
 
         #region Constructors
-        public Texture(Texture2D texture2D)
-        {
-            _texture2D = texture2D;
-        }
+        public Texture(Texture2D texture2D) => MonoTexture = texture2D;
         #endregion
 
 
         #region Props
-        public int Width => _texture2D.Width;
+        public int Width => MonoTexture.Width;
 
-        public int Height => _texture2D.Height;
+        public int Height => MonoTexture.Height;
 
-        public Texture2D MonoTexture => _texture2D;
+        public Texture2D MonoTexture { get; }
         #endregion
 
 
@@ -44,14 +40,14 @@ namespace ParticleSandbox
         #region Protected Methods
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposedValue)
+            if (this.isDisposed)
                 return;
 
             if (disposing)
-                _texture2D.Dispose();
+                MonoTexture.Dispose();
 
 
-            _disposedValue = true;
+            this.isDisposed = true;
         }
         #endregion
     }
