@@ -79,9 +79,7 @@ namespace KDParticleEngine.Services
             }
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public void Dispose()
         {
             Dispose(disposing: true);

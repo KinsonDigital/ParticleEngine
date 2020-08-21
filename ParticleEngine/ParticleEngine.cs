@@ -22,7 +22,7 @@ namespace KDParticleEngine
         private readonly IRandomizerService randomizer;
         private bool enabled = true;
         private bool texturesLoaded;
-        private bool disposedValue = false;
+        private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEngine"/> class.
@@ -123,7 +123,7 @@ namespace KDParticleEngine
         /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (!this.isDisposed)
             {
                 if (disposing)
                 {
@@ -131,7 +131,7 @@ namespace KDParticleEngine
                         pool.Dispose();
                 }
 
-                this.disposedValue = true;
+                this.isDisposed = true;
             }
         }
     }

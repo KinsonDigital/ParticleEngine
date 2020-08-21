@@ -22,9 +22,9 @@ namespace KDParticleEngine
         private readonly IRandomizerService randomService;
         private readonly ITextureLoader<TTexture> textureLoader;
         private List<Particle> particles = new List<Particle>();
-        private bool disposedValue = false;
+        private bool isDisposed;
         private int spawnRate;
-        private double spawnRateElapsed = 0;
+        private double spawnRateElapsed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticlePool{Texture}"/> class.
@@ -152,7 +152,7 @@ namespace KDParticleEngine
         /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposedValue)
+            if (this.isDisposed)
                 return;
 
             // Dispose of managed resources
@@ -161,13 +161,13 @@ namespace KDParticleEngine
                 if (!(PoolTexture is null))
                     PoolTexture.Dispose();
 
-                this.disposedValue = false;
+                this.isDisposed = false;
                 this.spawnRate = 0;
                 this.spawnRateElapsed = 0;
                 this.particles = new List<Particle>();
             }
 
-            this.disposedValue = true;
+            this.isDisposed = true;
         }
 
         /// <summary>
