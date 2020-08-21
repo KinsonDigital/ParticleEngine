@@ -50,9 +50,7 @@ namespace KDParticleEngine.Services
                 ? this.random.Next(maxValue, minValue + 1)
                 : this.random.Next(minValue, maxValue + 1);
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public void Dispose()
         {
             Dispose(disposing: true);
