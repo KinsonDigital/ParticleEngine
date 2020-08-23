@@ -36,7 +36,9 @@ namespace KDParticleEngine
         public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<TTexture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
             if (behaviorFactory is null)
+            {
                 throw new ArgumentNullException(nameof(behaviorFactory), "The parameter must not be null.");
+            }
 
             this.textureLoader = textureLoader;
             Effect = effect;
@@ -98,7 +100,9 @@ namespace KDParticleEngine
             for (var i = 0; i < this.particles.Count; i++)
             {
                 if (this.particles[i].IsDead)
+                {
                     continue;
+                }
 
                 this.particles[i].Update(timeElapsed);
             }
@@ -122,7 +126,9 @@ namespace KDParticleEngine
         public override bool Equals(object? obj)
         {
             if (!(obj is ParticlePool<TTexture> pool))
+            {
                 return false;
+            }
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
@@ -153,13 +159,17 @@ namespace KDParticleEngine
         protected virtual void Dispose(bool disposing)
         {
             if (this.isDisposed)
+            {
                 return;
+            }
 
             // Dispose of managed resources
             if (disposing)
             {
                 if (!(PoolTexture is null))
+                {
                     PoolTexture.Dispose();
+                }
 
                 this.isDisposed = false;
                 this.spawnRate = 0;
@@ -193,7 +203,9 @@ namespace KDParticleEngine
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
+            {
                 return this.randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+            }
 
             return this.randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }

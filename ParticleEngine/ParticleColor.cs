@@ -750,13 +750,19 @@ namespace KDParticleEngine
         public static bool operator ==(ParticleColor clrA, ParticleColor clrB)
         {
             if (clrA is null && clrB is null)
+            {
                 return true;
+            }
 
             if ((clrA is null && !(clrB is null)) || (!(clrA is null) && clrB is null))
+            {
                 return false;
+            }
 
             if (!(clrA is null) && !(clrB is null))
+            {
                 return clrA.Equals(clrB);
+            }
 
             return false;
         }
@@ -798,7 +804,9 @@ namespace KDParticleEngine
         public float GetHue()
         {
             if (R == G && G == B)
+            {
                 return 0f;
+            }
 
             var min = Math.Min(Math.Min(R, G), B);
             var max = Math.Max(Math.Max(R, G), B);
@@ -807,16 +815,24 @@ namespace KDParticleEngine
             float hue;
 
             if (R == max)
+            {
                 hue = (G - B) / delta;
+            }
             else if (G == max)
+            {
                 hue = ((B - R) / delta) + 2f;
+            }
             else
+            {
                 hue = ((R - G) / delta) + 4f;
+            }
 
             hue *= 60f;
 
             if (hue < 0f)
+            {
                 hue += 360f;
+            }
 
             return hue;
         }
@@ -847,7 +863,9 @@ namespace KDParticleEngine
         public override bool Equals(object? obj)
         {
             if (!(obj is ParticleColor color))
+            {
                 return false;
+            }
 
             var alphaSame = A == color.A;
             var redSame = R == color.R;

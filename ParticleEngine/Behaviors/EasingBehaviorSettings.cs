@@ -49,7 +49,9 @@ namespace KDParticleEngine.Behaviors
         public override bool Equals(object? obj)
         {
             if (!(obj is EasingBehaviorSettings setting))
+            {
                 return false;
+            }
 
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute &&

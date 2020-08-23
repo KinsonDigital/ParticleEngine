@@ -53,7 +53,9 @@ namespace KDParticleEngine
 
                 // If the engine is disabled, kill all the particles
                 if (!this.enabled)
+                {
                     KillAllParticles();
+                }
             }
         }
 
@@ -71,7 +73,9 @@ namespace KDParticleEngine
         public void ClearPools()
         {
             foreach (var pool in this.particlePools)
+            {
                 pool.Dispose();
+            }
 
             this.particlePools.Clear();
         }
@@ -102,10 +106,14 @@ namespace KDParticleEngine
         public void Update(TimeSpan timeElapsed)
         {
             if (!this.texturesLoaded)
+            {
                 throw new Exception("The textures must be loaded first.");
+            }
 
             if (!Enabled)
+            {
                 return;
+            }
 
             this.particlePools.ForEach(p => p.Update(timeElapsed));
         }
@@ -128,7 +136,9 @@ namespace KDParticleEngine
                 if (disposing)
                 {
                     foreach (var pool in ParticlePools)
+                    {
                         pool.Dispose();
+                    }
                 }
 
                 this.isDisposed = true;

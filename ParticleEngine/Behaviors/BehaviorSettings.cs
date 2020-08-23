@@ -27,7 +27,9 @@ namespace KDParticleEngine.Behaviors
         public override bool Equals(object? obj)
         {
             if (!(obj is BehaviorSettings setting))
+            {
                 return false;
+            }
 
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute;

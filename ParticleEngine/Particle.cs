@@ -84,7 +84,9 @@ namespace KDParticleEngine
                         || float.TryParse(string.IsNullOrEmpty(this.behaviors[i].Value) ? "0" : this.behaviors[i].Value, out value);
 
                     if (!parseSuccess)
+                    {
                         throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{this.behaviors[i].Value}' failed.\n\tValue must be a number.");
+                    }
 
                     this.behaviors[i].Update(timeElapsed);
                     IsAlive = true;
@@ -141,7 +143,9 @@ namespace KDParticleEngine
             if (!(this.behaviors is null))
             {
                 for (var i = 0; i < this.behaviors.Length; i++)
+                {
                     this.behaviors[i].Reset();
+                }
             }
 
             Angle = 0;
@@ -157,7 +161,9 @@ namespace KDParticleEngine
         public override bool Equals(object? obj)
         {
             if (!(obj is Particle particle))
+            {
                 return false;
+            }
 
             return Position == particle.Position &&
                 Angle == particle.Angle &&
@@ -190,11 +196,15 @@ namespace KDParticleEngine
 
             // Check to make sure that the 'clr' prefix exists
             if (!colorValue.Contains("clr", StringComparison.InvariantCulture))
+            {
                 return (false, "all", $"Error #900. Invalid Syntax. Missing 'clr' prefix.{syntaxAsFollowsMsg}");
+            }
 
             // Check to make sure the ':' character exists
             if (!colorValue.Contains(':', StringComparison.OrdinalIgnoreCase))
+            {
                 return (false, "all", $"Error #1000. Invalid Syntax. Missing ':'.{syntaxAsFollowsMsg}");
+            }
 
             // Split into sections to separate 'clr' section and the '10,20,30,40' pieces of the string
             // Section 1 => clr
@@ -210,20 +220,30 @@ namespace KDParticleEngine
 
             // Check if any of the color components are missing
             if (clrComponents.Length != 4)
+            {
                 return (false, "all", "Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>");
+            }
 
             // Check for non number digits contained in the components
             if (clrComponents[0].ContainsNonNumberCharacters())
+            {
                 return (false, clrComponents[0].ToString(CultureInfo.InvariantCulture), $"Error #1200. Invalid Syntax. Alpha color component must only contain numbers.");
+            }
 
             if (clrComponents[1].ContainsNonNumberCharacters())
+            {
                 return (false, clrComponents[1].ToString(CultureInfo.InvariantCulture), $"Error #1300. Invalid Syntax. Alpha color component must only contain numbers.");
+            }
 
             if (clrComponents[2].ContainsNonNumberCharacters())
+            {
                 return (false, clrComponents[2].ToString(CultureInfo.InvariantCulture), $"Error #1400. Invalid Syntax. Alpha color component must only contain numbers.");
+            }
 
             if (clrComponents[3].ContainsNonNumberCharacters())
+            {
                 return (false, clrComponents[3].ToString(CultureInfo.InvariantCulture), $"Error #1500. Invalid Syntax. Alpha color component must only contain numbers.");
+            }
 
             // Parse values and check for values out of the range of 0-255
             var alphaParseSuccess = byte.TryParse(clrComponents[0], out var alpha);
@@ -232,16 +252,24 @@ namespace KDParticleEngine
             var blueParseSuccess = byte.TryParse(clrComponents[3], out var blue);
 
             if (!alphaParseSuccess)
+            {
                 return (false, clrComponents[0].ToString(CultureInfo.InvariantCulture), "Error #1500. Invalid Syntax. Alpha color component out of range.");
+            }
 
             if (!redParseSuccess)
+            {
                 return (false, clrComponents[1].ToString(CultureInfo.InvariantCulture), "Error #1600. Invalid Syntax. Red color component out of range.");
+            }
 
             if (!greenParseSuccess)
+            {
                 return (false, clrComponents[2].ToString(CultureInfo.InvariantCulture), "Error #1700. Invalid Syntax. Green color component out of range.");
+            }
 
             if (!blueParseSuccess)
+            {
                 return (false, clrComponents[3].ToString(CultureInfo.InvariantCulture), "Error #1800. Invalid Syntax. Blue color component out of range.");
+            }
 
             // Create the color
             color = new ParticleColor(alpha, red, green, blue);
