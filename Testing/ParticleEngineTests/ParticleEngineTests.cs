@@ -2,6 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+#pragma warning disable CA1724 // The type name conflicts in whole or in part with the namespace name
 #pragma warning disable CA1031 // Do not catch general exception types
 namespace KDParticleEngineTests
 {

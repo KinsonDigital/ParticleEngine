@@ -49,7 +49,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Particle"/> is alive or dead.
         /// </summary>
-        public bool IsAlive { get; set; } = false;
+        public bool IsAlive { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Particle"/> is dead or alive.

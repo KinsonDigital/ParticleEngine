@@ -22,12 +22,12 @@ namespace KDParticleEngine.Behaviors
         double ElapsedTime { get; }
 
         /// <summary>
-        /// The particle attribute to apply the behavior result to.
+        /// Gets the particle attribute to apply the behavior result to.
         /// </summary>
         ParticleAttribute ApplyToAttribute { get; }
 
         /// <summary>
-        /// Gets a value indicating if the behavior is enabled.
+        /// Gets a value indicating whether the behavior is enabled.
         /// </summary>
         bool Enabled { get; }
 

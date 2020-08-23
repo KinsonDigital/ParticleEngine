@@ -6,7 +6,9 @@ namespace KDParticleEngine.Behaviors
 {
     using System;
 
-    // TODO: Add code docs
+    /// <summary>
+    /// Holds various settings for a particle behavior.
+    /// </summary>
     public abstract class BehaviorSettings
     {
         /// <summary>
@@ -15,7 +17,7 @@ namespace KDParticleEngine.Behaviors
         public BehaviorType TypeOfBehavior { get; set; }
 
         /// <summary>
-        /// The particle attribute to set the behavior value to.
+        /// Gets or sets the particle attribute to set the behavior value to.
         /// </summary>
         public ParticleAttribute ApplyToAttribute { get; set; }
 

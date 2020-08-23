@@ -99,6 +99,16 @@ namespace KDParticleEngine
         /// <returns>The number of items that match the predicate..</returns>
         public static int Count<T>(this List<T> items, Predicate<T> predicate)
         {
+            if (items is null)
+            {
+                return 0;
+            }
+
+            if (predicate is null)
+            {
+                throw new ArgumentNullException(nameof(predicate), "The parameter must not be null.");
+            }
+
             var result = 0;
 
             for (var i = 0; i < items.Count; i++)
@@ -121,6 +131,16 @@ namespace KDParticleEngine
         /// <returns>The number of items that match the predicate..</returns>
         public static int Count<T>(this T[] items, Predicate<T> predicate)
         {
+            if (items is null)
+            {
+                return 0;
+            }
+
+            if (predicate is null)
+            {
+                throw new ArgumentNullException(nameof(predicate), "The parameter must not be null.");
+            }
+
             var result = 0;
 
             for (var i = 0; i < items.Length; i++)
