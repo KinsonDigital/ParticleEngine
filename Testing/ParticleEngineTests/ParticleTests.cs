@@ -18,10 +18,8 @@ namespace KDParticleEngineTests
     /// </summary>
     public class ParticleTests
     {
-        #region Private Fields
         private readonly TimeSpan frameTime;
         private readonly Mock<IBehavior> mockBehavior;
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleTests"/> class.
@@ -126,7 +124,6 @@ namespace KDParticleEngineTests
         #endregion
 
         #region Method Tests
-
         [Fact]
         public void Update_WithFailedParse_ThrowsException()
         {

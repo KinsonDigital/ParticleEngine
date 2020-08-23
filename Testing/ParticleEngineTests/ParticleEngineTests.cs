@@ -2,6 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+#pragma warning disable CA1031 // Do not catch general exception types
 namespace KDParticleEngineTests
 {
     using System;
@@ -17,12 +18,10 @@ namespace KDParticleEngineTests
     /// </summary>
     public class ParticleEngineTests : IDisposable
     {
-        #region Private Fields
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         private Mock<IRandomizerService> mockRandomizerService;
         private ParticleEngine engine;
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEngineTests"/> class.
@@ -259,9 +258,7 @@ namespace KDParticleEngineTests
             {
                 action();
             }
-#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
             {
                 if (ex.GetType() == typeof(NullReferenceException))
                 {

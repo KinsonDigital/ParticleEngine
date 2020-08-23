@@ -11,7 +11,6 @@ namespace KDParticleEngineTests.XUnitHelpers
     /// </summary>
     public static class AssertExt
     {
-        #region Public Methods
         /// <summary>
         /// Asserts that the given <paramref name="value"/> falls within the <paramref name="min"/> and <paramref name="max"/>.
         /// </summary>
@@ -53,6 +52,5 @@ namespace KDParticleEngineTests.XUnitHelpers
 
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
-        #endregion
     }
 }
