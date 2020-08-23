@@ -20,12 +20,12 @@ namespace KDParticleEngine.Behaviors
         public Behavior(BehaviorSettings settings) => this.setting = settings;
 
         /// <summary>
-        /// Gets the current value of the behavior.
+        /// Gets or sets the current value of the behavior.
         /// </summary>
         public string Value { get; protected set; } = "0";
 
         /// <summary>
-        /// Gets the current amount of time that has elapsed for the behavior in milliseconds.
+        /// Gets or sets the current amount of time that has elapsed for the behavior in milliseconds.
         /// </summary>
         public double ElapsedTime { get; protected set; }
 
@@ -35,7 +35,7 @@ namespace KDParticleEngine.Behaviors
         public ParticleAttribute ApplyToAttribute => this.setting.ApplyToAttribute;
 
         /// <summary>
-        /// Gets a value indicating if the behavior is enabled.
+        /// Gets or sets a value indicating whether the behavior is enabled.
         /// </summary>
         public bool Enabled { get; protected set; } = true;
 
@@ -46,7 +46,7 @@ namespace KDParticleEngine.Behaviors
         public virtual void Update(TimeSpan timeElapsed) => ElapsedTime += timeElapsed.TotalMilliseconds;
 
         /// <summary>
-        /// Resets the behvior.
+        /// Resets the behavior.
         /// </summary>
         public virtual void Reset()
         {

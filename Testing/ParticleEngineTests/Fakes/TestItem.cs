@@ -26,7 +26,9 @@ namespace ParticleEngineTests.Fakes
         public override bool Equals(object obj)
         {
             if (!(obj is TestItem item))
+            {
                 return false;
+            }
 
             return Equals(item);
         }

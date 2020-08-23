@@ -60,7 +60,10 @@ namespace KDParticleEngine.Services
                 maxValue = valueTemp;
             }
 
-            if (minValue == maxValue) return minValue;
+            if (minValue == maxValue)
+            {
+                return minValue;
+            }
 
             maxValue += 1;
 
@@ -75,7 +78,9 @@ namespace KDParticleEngine.Services
                 var remainder = max % diff;
 
                 if (rand < max - remainder)
+                {
                     return (int)(minValue + (rand % diff));
+                }
             }
         }
 
@@ -95,7 +100,9 @@ namespace KDParticleEngine.Services
             if (!this.isDisposed)
             {
                 if (disposing)
+                {
                     this.provider.Dispose();
+                }
 
                 this.isDisposed = true;
             }

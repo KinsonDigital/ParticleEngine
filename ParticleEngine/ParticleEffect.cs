@@ -94,7 +94,9 @@ namespace KDParticleEngine
         public override bool Equals(object? obj)
         {
             if (!(obj is ParticleEffect effect))
+            {
                 return false;
+            }
 
             var colorsAreSame = true;
 

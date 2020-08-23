@@ -12,32 +12,32 @@ namespace KDParticleEngine.Behaviors
     public class EasingBehaviorSettings : BehaviorSettings
     {
         /// <summary>
-        /// The minimum starting value used in randomization.
+        /// Gets or sets the minimum starting value used in randomization.
         /// </summary>
         public float StartMin { get; set; }
 
         /// <summary>
-        /// The maximum starting value used in randomization.
+        /// Gets or sets the maximum starting value used in randomization.
         /// </summary>
         public float StartMax { get; set; }
 
         /// <summary>
-        /// The minimum amount of change used in randomization.
+        /// Gets or sets the minimum amount of change used in randomization.
         /// </summary>
         public float ChangeMin { get; set; }
 
         /// <summary>
-        /// The maximum amount of change used in randomization.
+        /// Gets or sets the maximum amount of change used in randomization.
         /// </summary>
         public float ChangeMax { get; set; }
 
         /// <summary>
-        /// The minimum total amount of time in milliseconds to complete the behavior.
+        /// Gets or sets the minimum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMin { get; set; }
 
         /// <summary>
-        /// The maximum total amount of time in milliseconds to complete the behavior.
+        /// Gets or sets the maximum total amount of time in milliseconds to complete the behavior.
         /// </summary>
         public float TotalTimeMax { get; set; }
 
@@ -49,7 +49,9 @@ namespace KDParticleEngine.Behaviors
         public override bool Equals(object? obj)
         {
             if (!(obj is EasingBehaviorSettings setting))
+            {
                 return false;
+            }
 
             return TypeOfBehavior == setting.TypeOfBehavior &&
                 ApplyToAttribute == setting.ApplyToAttribute &&

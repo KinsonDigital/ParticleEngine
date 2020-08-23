@@ -11,7 +11,6 @@ namespace KDParticleEngineTests.XUnitHelpers
     /// </summary>
     public static class AssertExt
     {
-        #region Public Methods
         /// <summary>
         /// Asserts that the given <paramref name="value"/> falls within the <paramref name="min"/> and <paramref name="max"/>.
         /// </summary>
@@ -21,7 +20,9 @@ namespace KDParticleEngineTests.XUnitHelpers
         public static void WithinRange(int value, int min, int max)
         {
             if (value >= min && value <= max)
+            {
                 return;
+            }
 
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
@@ -35,7 +36,9 @@ namespace KDParticleEngineTests.XUnitHelpers
         public static void WithinRange(float value, float min, float max)
         {
             if (value >= min && value <= max)
+            {
                 return;
+            }
 
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
@@ -49,10 +52,11 @@ namespace KDParticleEngineTests.XUnitHelpers
         public static void WithinRange(double value, double min, double max)
         {
             if (value >= min && value <= max)
+            {
                 return;
+            }
 
             Assert.True(false, $"Incorrect Value: {value}\nMin Value: {min}\nMax Value: {max}");
         }
-        #endregion
     }
 }

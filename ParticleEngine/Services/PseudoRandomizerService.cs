@@ -64,7 +64,9 @@ namespace KDParticleEngine.Services
         protected virtual void Dispose(bool disposing)
         {
             if (!this.isDisposed)
+            {
                 this.isDisposed = true;
+            }
         }
     }
 }

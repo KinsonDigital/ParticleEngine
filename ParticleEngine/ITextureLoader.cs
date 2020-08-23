@@ -7,7 +7,7 @@ namespace KDParticleEngine
     /// <summary>
     /// Loads textures.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of texture to load.</typeparam>
     public interface ITextureLoader<T>
         where T : class
     {

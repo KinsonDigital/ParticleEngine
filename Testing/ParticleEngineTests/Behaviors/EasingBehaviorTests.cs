@@ -17,9 +17,7 @@ namespace KDParticleEngineTests.Behaviors
     /// </summary>
     public class EasingBehaviorTests : IDisposable
     {
-        #region Private Fields
         private Mock<IRandomizerService> mockRandomizerService;
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EasingBehaviorTests"/> class.
