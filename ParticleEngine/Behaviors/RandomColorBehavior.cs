@@ -41,7 +41,9 @@ namespace KDParticleEngine.Behaviors
             Enabled = ElapsedTime < this.settings.LifeTime;
 
             if (this.isColorChosen)
+            {
                 return;
+            }
 
             // Randomly choose a color and set the value to a floating point number that represents that color
             var randomIndex = this.randomizer.GetValue(0, this.settings.Data is null ? 0 : this.settings.Data.Count - 1);

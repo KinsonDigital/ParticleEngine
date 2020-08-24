@@ -15,9 +15,9 @@
     <Description>A particle engine used for creating 2D particles for 2D games.</Description>
     <PackageTags>particle, engine, 2D</PackageTags>
     <Authors>Calvin Wilkinson</Authors>
-    <Version>0.15.0</Version>
-    <FileVersion>0.15.0</FileVersion>
-    <AssemblyVersion>0.15.0</AssemblyVersion>
+    <Version>0.16.0</Version>
+    <FileVersion>0.16.0</FileVersion>
+    <AssemblyVersion>0.16.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

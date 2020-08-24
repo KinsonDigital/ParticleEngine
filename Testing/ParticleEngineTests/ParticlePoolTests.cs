@@ -1,5 +1,5 @@
-﻿// <copyright file="ParticlePoolTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ParticlePoolTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests
@@ -18,7 +18,6 @@ namespace KDParticleEngineTests
     /// </summary>
     public class ParticlePoolTests
     {
-        #region Private Fields
         private const string ParticleTextureName = "particle-texture";
         private readonly Mock<IRandomizerService> mockRandomizerService;
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
@@ -26,7 +25,6 @@ namespace KDParticleEngineTests
         private readonly Mock<IBehavior> mockBehavior;
         private readonly EasingBehaviorSettings[] settings;
         private readonly ParticleEffect effect;
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticlePoolTests"/> class.

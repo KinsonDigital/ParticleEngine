@@ -1,5 +1,5 @@
-﻿// <copyright file="TestItem.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="TestItem.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
@@ -26,7 +26,9 @@ namespace ParticleEngineTests.Fakes
         public override bool Equals(object obj)
         {
             if (!(obj is TestItem item))
+            {
                 return false;
+            }
 
             return Equals(item);
         }

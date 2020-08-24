@@ -22,9 +22,9 @@ namespace KDParticleEngine
         private readonly IRandomizerService randomService;
         private readonly ITextureLoader<TTexture> textureLoader;
         private List<Particle> particles = new List<Particle>();
-        private bool disposedValue = false;
+        private bool isDisposed;
         private int spawnRate;
-        private double spawnRateElapsed = 0;
+        private double spawnRateElapsed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticlePool{Texture}"/> class.
@@ -36,7 +36,9 @@ namespace KDParticleEngine
         public ParticlePool(IBehaviorFactory behaviorFactory, ITextureLoader<TTexture> textureLoader, ParticleEffect effect, IRandomizerService randomizer)
         {
             if (behaviorFactory is null)
+            {
                 throw new ArgumentNullException(nameof(behaviorFactory), "The parameter must not be null.");
+            }
 
             this.textureLoader = textureLoader;
             Effect = effect;
@@ -98,7 +100,9 @@ namespace KDParticleEngine
             for (var i = 0; i < this.particles.Count; i++)
             {
                 if (this.particles[i].IsDead)
+                {
                     continue;
+                }
 
                 this.particles[i].Update(timeElapsed);
             }
@@ -122,7 +126,9 @@ namespace KDParticleEngine
         public override bool Equals(object? obj)
         {
             if (!(obj is ParticlePool<TTexture> pool))
+            {
                 return false;
+            }
 
             return TotalLivingParticles == pool.TotalLivingParticles &&
                 TotalDeadParticles == pool.TotalDeadParticles &&
@@ -152,22 +158,26 @@ namespace KDParticleEngine
         /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposedValue)
+            if (this.isDisposed)
+            {
                 return;
+            }
 
             // Dispose of managed resources
             if (disposing)
             {
                 if (!(PoolTexture is null))
+                {
                     PoolTexture.Dispose();
+                }
 
-                this.disposedValue = false;
+                this.isDisposed = false;
                 this.spawnRate = 0;
                 this.spawnRateElapsed = 0;
                 this.particles = new List<Particle>();
             }
 
-            this.disposedValue = true;
+            this.isDisposed = true;
         }
 
         /// <summary>
@@ -193,7 +203,9 @@ namespace KDParticleEngine
         private int GetRandomSpawnRate()
         {
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
+            {
                 return this.randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+            }
 
             return this.randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
         }

@@ -1,5 +1,5 @@
-﻿// <copyright file="EasingBehaviorTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="EasingBehaviorTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests.Behaviors
@@ -17,9 +17,7 @@ namespace KDParticleEngineTests.Behaviors
     /// </summary>
     public class EasingBehaviorTests : IDisposable
     {
-        #region Private Fields
         private Mock<IRandomizerService> mockRandomizerService;
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EasingBehaviorTests"/> class.

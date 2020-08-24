@@ -28,13 +28,17 @@ namespace KDParticleEngine
         public static float Next(this Random random, float minValue, float maxValue)
         {
             if (random is null)
+            {
                 throw new ArgumentNullException(nameof(random), "The parameter must not be null.");
+            }
 
             var minValueAsInt = (int)(minValue * 1000);
             var maxValueAsInt = (int)(maxValue * 1000);
 
             if (minValueAsInt > maxValueAsInt)
+            {
                 return maxValue;
+            }
 
             var randomResult = random.Next(minValueAsInt, maxValueAsInt);
 
@@ -50,7 +54,9 @@ namespace KDParticleEngine
         public static bool FlipCoin(this Random random)
         {
             if (random is null)
+            {
                 throw new ArgumentNullException(nameof(random), "The parameter must not be null.");
+            }
 
             return random.NextDouble() <= 0.5f;
         }
@@ -93,12 +99,24 @@ namespace KDParticleEngine
         /// <returns>The number of items that match the predicate..</returns>
         public static int Count<T>(this List<T> items, Predicate<T> predicate)
         {
+            if (items is null)
+            {
+                return 0;
+            }
+
+            if (predicate is null)
+            {
+                throw new ArgumentNullException(nameof(predicate), "The parameter must not be null.");
+            }
+
             var result = 0;
 
             for (var i = 0; i < items.Count; i++)
             {
                 if (predicate(items[i]))
+                {
                     result++;
+                }
             }
 
             return result;
@@ -113,12 +131,24 @@ namespace KDParticleEngine
         /// <returns>The number of items that match the predicate..</returns>
         public static int Count<T>(this T[] items, Predicate<T> predicate)
         {
+            if (items is null)
+            {
+                return 0;
+            }
+
+            if (predicate is null)
+            {
+                throw new ArgumentNullException(nameof(predicate), "The parameter must not be null.");
+            }
+
             var result = 0;
 
             for (var i = 0; i < items.Length; i++)
             {
                 if (predicate(items[i]))
+                {
                     result++;
+                }
             }
 
             return result;
@@ -132,7 +162,9 @@ namespace KDParticleEngine
         public static bool ContainsNonNumberCharacters(this string value)
         {
             if (string.IsNullOrEmpty(value))
+            {
                 return false;
+            }
 
             return value.ToCharArray().Any(c => !ValidNumChars.Contains(c));
         }
@@ -149,21 +181,31 @@ namespace KDParticleEngine
             where T : class
         {
             if (items is null && compareItems is null)
+            {
                 return true;
+            }
 
             if (items is null && !(compareItems is null))
+            {
                 return false;
+            }
 
             if (!(items is null) && compareItems is null)
+            {
                 return false;
+            }
 
             if (items.Count() != compareItems.Count())
+            {
                 return false;
+            }
 
             for (var i = 0; i < items.Count(); i++)
             {
                 if (!items.ElementAt(i).Equals(compareItems.ElementAt(i)))
+                {
                     return false;
+                }
             }
 
             return true;

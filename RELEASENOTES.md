@@ -1,5 +1,16 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.16.0**
+
+### **Changes**
+
+1. Updated PR templates
+2. Fixed **stylecop.json** file setup in solution
+3. Fixed the company name in all of the unit testing project file headers
+4. Added warnings to **editorconfig** files to adjust coding standards
+
+---
+
 ## **Version 0.15.0**
 
 ### **Additions**

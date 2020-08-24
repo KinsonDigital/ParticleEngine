@@ -12,12 +12,12 @@ namespace KDParticleEngine
     public interface IParticleTexture : IDisposable
     {
         /// <summary>
-        /// Gets or sets the width of the texture.
+        /// Gets the width of the texture.
         /// </summary>
         public int Width { get; }
 
         /// <summary>
-        /// Gets or sets the height of the texture.
+        /// Gets the height of the texture.
         /// </summary>
         public int Height { get; }
     }

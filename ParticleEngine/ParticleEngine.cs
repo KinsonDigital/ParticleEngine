@@ -22,7 +22,7 @@ namespace KDParticleEngine
         private readonly IRandomizerService randomizer;
         private bool enabled = true;
         private bool texturesLoaded;
-        private bool disposedValue = false;
+        private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEngine"/> class.
@@ -53,7 +53,9 @@ namespace KDParticleEngine
 
                 // If the engine is disabled, kill all the particles
                 if (!this.enabled)
+                {
                     KillAllParticles();
+                }
             }
         }
 
@@ -71,7 +73,9 @@ namespace KDParticleEngine
         public void ClearPools()
         {
             foreach (var pool in this.particlePools)
+            {
                 pool.Dispose();
+            }
 
             this.particlePools.Clear();
         }
@@ -102,10 +106,14 @@ namespace KDParticleEngine
         public void Update(TimeSpan timeElapsed)
         {
             if (!this.texturesLoaded)
+            {
                 throw new Exception("The textures must be loaded first.");
+            }
 
             if (!Enabled)
+            {
                 return;
+            }
 
             this.particlePools.ForEach(p => p.Update(timeElapsed));
         }
@@ -123,15 +131,17 @@ namespace KDParticleEngine
         /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (!this.isDisposed)
             {
                 if (disposing)
                 {
                     foreach (var pool in ParticlePools)
+                    {
                         pool.Dispose();
+                    }
                 }
 
-                this.disposedValue = true;
+                this.isDisposed = true;
             }
         }
     }

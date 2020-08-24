@@ -23,7 +23,9 @@ namespace KDParticleEngine.Behaviors
         public IBehavior[] CreateBehaviors(BehaviorSettings[] settings, IRandomizerService randomizerService)
         {
             if (settings is null)
+            {
                 throw new ArgumentNullException(nameof(settings), "The param must not be null.");
+            }
 
             var behaviors = new List<IBehavior>();
 
@@ -34,19 +36,25 @@ namespace KDParticleEngine.Behaviors
                 {
                     case BehaviorType.EaseOutBounce:
                         if (!(setting is EasingBehaviorSettings easeOutBounceSettings))
+                        {
                             throw new Exception($"Behavior Factory Error: Behavior settings must be of type '{nameof(EasingBehaviorSettings)}' for an '{nameof(EaseOutBounceBehavior)}'.");
+                        }
 
                         behaviors.Add(new EaseOutBounceBehavior(easeOutBounceSettings, randomizerService));
                         break;
                     case BehaviorType.EaseIn:
                         if (!(setting is EasingBehaviorSettings easeInSettings))
+                        {
                             throw new Exception($"Behavior Factory Error: Behavior settings must be of type '{nameof(EasingBehaviorSettings)}' for an '{nameof(EaseInBehavior)}'.");
+                        }
 
                         behaviors.Add(new EaseInBehavior(easeInSettings, randomizerService));
                         break;
                     case BehaviorType.RandomChoice:
                         if (!(setting is RandomChoiceBehaviorSettings randomChoiceSettings))
+                        {
                             throw new Exception($"Behavior Factory Error: Behavior settings must be of type '{nameof(RandomChoiceBehaviorSettings)}' for an '{nameof(RandomColorBehavior)}'.");
+                        }
 
                         behaviors.Add(new RandomColorBehavior(randomChoiceSettings, randomizerService));
                         break;
