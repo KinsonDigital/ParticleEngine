@@ -1,5 +1,5 @@
-﻿// <copyright file="AssertExt.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="AssertExt.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests.XUnitHelpers

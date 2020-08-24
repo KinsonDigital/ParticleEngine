@@ -1,5 +1,5 @@
-﻿// <copyright file="ParticleEffectTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ParticleEffectTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests

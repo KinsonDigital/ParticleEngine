@@ -1,5 +1,5 @@
-﻿// <copyright file="FakeBehavior.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="FakeBehavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests.Fakes
