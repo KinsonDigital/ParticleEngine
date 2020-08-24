@@ -1,5 +1,5 @@
-﻿// <copyright file="EaseInBehaviorTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="EaseInBehaviorTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace KDParticleEngineTests.Behaviors

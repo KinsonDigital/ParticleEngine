@@ -1,5 +1,5 @@
-﻿// <copyright file="ParticleEngineTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ParticleEngineTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 #pragma warning disable CA1724 // The type name conflicts in whole or in part with the namespace name
