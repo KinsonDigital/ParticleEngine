@@ -161,7 +161,7 @@ namespace KDParticleEngineTests
             // Arrange
             var mockBehavior = new Mock<IBehavior>();
 
-            var particles = new Particle[0];
+            var particles = Array.Empty<Particle>();
 
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
