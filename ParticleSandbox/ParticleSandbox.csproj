@@ -13,12 +13,19 @@
 
   
   <ItemGroup>
-    <None Remove="stylecop.json" />
+    <Compile Remove="Content\bin\**" />
+    <Compile Remove="Content\obj\**" />
+    <EmbeddedResource Remove="Content\bin\**" />
+    <EmbeddedResource Remove="Content\obj\**" />
+    <MonoGameContentReference Remove="Content\bin\**" />
+    <MonoGameContentReference Remove="Content\obj\**" />
+    <None Remove="Content\bin\**" />
+    <None Remove="Content\obj\**" />
   </ItemGroup>
 
   
   <ItemGroup>
-    <AdditionalFiles Include="stylecop.json" />
+    <None Remove="stylecop.json" />
   </ItemGroup>
 
   
