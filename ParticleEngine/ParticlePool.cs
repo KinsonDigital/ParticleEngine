@@ -8,6 +8,7 @@ namespace KDParticleEngine
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
@@ -140,6 +141,7 @@ namespace KDParticleEngine
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode() =>
             HashCode.Combine(TotalLivingParticles.GetHashCode(), TotalDeadParticles.GetHashCode(), Effect.GetHashCode(), PoolTexture?.GetHashCode());
 

@@ -5,28 +5,18 @@
 namespace KDParticleEngine.Behaviors
 {
     /// <summary>
-    /// Represents different types of behaviors that can be applied to a <see cref="Particle"/>.
+    /// Represents different types of easing functions that a behavior can apply to a <see cref="Particle"/> attribute.
     /// </summary>
-    public enum BehaviorType
+    public enum EasingFunction
     {
         /// <summary>
-        /// An unknown behavior.
-        /// </summary>
-        Unknown,
-
-        /// <summary>
-        /// Ease out bounce easing function behavior.
+        /// Ease out bounce easing function.
         /// </summary>
         EaseOutBounce,
 
         /// <summary>
-        /// Ease in easing function behavior.
+        /// Ease in easing function.
         /// </summary>
         EaseIn,
-
-        /// <summary>
-        /// Random choice behavior.
-        /// </summary>
-        RandomChoice,
     }
 }

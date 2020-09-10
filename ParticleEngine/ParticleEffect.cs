@@ -5,13 +5,9 @@
 namespace KDParticleEngine
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using System.Linq;
-    using System.Reflection.Metadata.Ecma335;
-    using System.Runtime.CompilerServices;
     using KDParticleEngine.Behaviors;
 
     /// <summary>

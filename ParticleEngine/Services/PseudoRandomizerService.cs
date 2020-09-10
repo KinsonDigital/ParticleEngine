@@ -51,6 +51,7 @@ namespace KDParticleEngine.Services
                 : this.random.Next(minValue, maxValue + 1);
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public void Dispose()
         {
             Dispose(disposing: true);
@@ -61,6 +62,7 @@ namespace KDParticleEngine.Services
         /// <inheritdoc/>
         /// </summary>
         /// <param name="disposing">True to dispose of managed resources.</param>
+        [ExcludeFromCodeCoverage]
         protected virtual void Dispose(bool disposing)
         {
             if (!this.isDisposed)

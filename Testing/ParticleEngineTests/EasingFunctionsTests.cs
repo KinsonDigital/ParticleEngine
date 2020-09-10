@@ -39,6 +39,19 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void EaseInQuad_WhenUsingNegativeChange_ResultDecreases()
+        {
+            // Arrange
+            var firstValue = EasingFunctions.EaseInQuad(16, 2.0, -1.0, 6.0);
+
+            // Act
+            var secondValue = EasingFunctions.EaseInQuad(32, 2.0, -1.0, 6.0);
+
+            // Assert
+            Assert.True(secondValue < firstValue);
+        }
         #endregion
     }
 }

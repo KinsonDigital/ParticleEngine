@@ -1,4 +1,4 @@
-﻿// <copyright file="EasingBehaviorSettingsTests.cs" company="KinsonDigital">
+﻿// <copyright file="EasingRandomBehaviorSettingsTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -9,30 +9,16 @@ namespace KDParticleEngineTests.Behaviors
     using Xunit;
 
     /// <summary>
-    /// Tests the <see cref="EasingBehaviorSettings"/> class.
+    /// Tests the <see cref="EasingRandomBehaviorSettings"/> class.
     /// </summary>
-    public class EasingBehaviorSettingsTests
+    public class EasingRandomBehaviorSettingsTests
     {
         #region Prop Tests
-        [Fact]
-        public void TypeOfBehavior_WhenSettingValue_ReturnsCorrectValue()
-        {
-            // Arrange
-            var setting = new EasingBehaviorSettings();
-
-            // Act
-            setting.TypeOfBehavior = BehaviorType.EaseIn;
-            var actual = setting.TypeOfBehavior;
-
-            // Assert
-            Assert.Equal(BehaviorType.EaseIn, actual);
-        }
-
         [Fact]
         public void ApplyToAttribute_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.ApplyToAttribute = ParticleAttribute.Angle;
@@ -46,7 +32,7 @@ namespace KDParticleEngineTests.Behaviors
         public void StartMin_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.StartMin = 1234f;
@@ -60,7 +46,7 @@ namespace KDParticleEngineTests.Behaviors
         public void StartMax_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.StartMax = 1234f;
@@ -74,7 +60,7 @@ namespace KDParticleEngineTests.Behaviors
         public void ChangeMin_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.ChangeMin = 1234f;
@@ -88,7 +74,7 @@ namespace KDParticleEngineTests.Behaviors
         public void ChangeMax_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.ChangeMax = 1234f;
@@ -102,7 +88,7 @@ namespace KDParticleEngineTests.Behaviors
         public void TotalTimeMin_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.TotalTimeMin = 1234f;
@@ -116,7 +102,7 @@ namespace KDParticleEngineTests.Behaviors
         public void TotalTimeMax_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings();
+            var setting = new EasingRandomBehaviorSettings();
 
             // Act
             setting.TotalTimeMax = 1234f;
@@ -132,9 +118,8 @@ namespace KDParticleEngineTests.Behaviors
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
         {
             // Arrange
-            var setting = new EasingBehaviorSettings()
+            var setting = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
@@ -156,9 +141,8 @@ namespace KDParticleEngineTests.Behaviors
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
             // Arrange
-            var settingA = new EasingBehaviorSettings()
+            var settingA = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
@@ -168,9 +152,8 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 60,
             };
 
-            var settingB = new EasingBehaviorSettings()
+            var settingB = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
@@ -191,9 +174,8 @@ namespace KDParticleEngineTests.Behaviors
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
             // Arrange
-            var settingA = new EasingBehaviorSettings()
+            var settingA = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.Unknown,
                 ApplyToAttribute = ParticleAttribute.BlueColorComponent,
                 ChangeMin = 100,
                 ChangeMax = 200,
@@ -203,9 +185,8 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 600,
             };
 
-            var settingB = new EasingBehaviorSettings()
+            var settingB = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
@@ -226,9 +207,8 @@ namespace KDParticleEngineTests.Behaviors
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
             // Arrange
-            var settingA = new EasingBehaviorSettings()
+            var settingA = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
@@ -238,9 +218,8 @@ namespace KDParticleEngineTests.Behaviors
                 TotalTimeMax = 60,
             };
 
-            var settingB = new EasingBehaviorSettings()
+            var settingB = new EasingRandomBehaviorSettings()
             {
-                TypeOfBehavior = BehaviorType.EaseIn,
                 ApplyToAttribute = ParticleAttribute.Angle,
                 ChangeMin = 10,
                 ChangeMax = 20,
