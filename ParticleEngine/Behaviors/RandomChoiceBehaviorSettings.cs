@@ -6,6 +6,7 @@ namespace KDParticleEngine.Behaviors
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Various settings for behaviors that choose values randomly from a list of choices.
@@ -41,10 +42,8 @@ namespace KDParticleEngine.Behaviors
                 return false;
             }
 
-            var bothAreNotNull = !(Data is null) && !(setting.Data is null);
-
-            return bothAreNotNull && Data.ItemsAreEqual(setting.Data) &&
-                LifeTime == LifeTime &&
+            return !(Data is null) && !(setting.Data is null) && Data.ItemsAreEqual(setting.Data) &&
+                LifeTime == setting.LifeTime &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
 
@@ -52,6 +51,7 @@ namespace KDParticleEngine.Behaviors
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode() => HashCode.Combine(Data);
     }
 }

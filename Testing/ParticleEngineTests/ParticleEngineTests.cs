@@ -36,6 +36,18 @@ namespace KDParticleEngineTests
             this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
         }
 
+        #region Constructor Tests
+        [Fact]
+        public void Ctor_WhenInvokedWithNullFactory_ThrowsException()
+        {
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                var pool = new ParticlePool<IParticleTexture>(null, null, null, null);
+            }, "The parameter must not be null. (Parameter 'behaviorFactory')");
+        }
+        #endregion
+
         #region Prop Tests
         [Fact]
         public void Enabled_WhenSettingValue_ReturnsCorrectValue()

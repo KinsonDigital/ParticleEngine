@@ -80,6 +80,11 @@ namespace KDParticleEngine
                 {
                     var value = 0f;
 
+                    /*NOTE:
+                     * The 'parseSuccess' variable will be considered successful if the incoming behavior value is a floating
+                     * point number OR if it is the special color syntax value.  This is because the color value syntax is
+                     * not an actual number and cannot be parsed into a float and requires special parsing.
+                     */
                     var parseSuccess = this.behaviors[i].ApplyToAttribute == ParticleAttribute.Color
                         || float.TryParse(string.IsNullOrEmpty(this.behaviors[i].Value) ? "0" : this.behaviors[i].Value, out value);
 

@@ -140,27 +140,28 @@ namespace KDParticleEngineTests
         }
 
         [Theory]
-        [InlineData("clr:300,0,0,255", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component out of range.")]
-        [InlineData("clr:-300,0,0,255", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component out of range.")] // Do negative values
-        [InlineData("clr:255,301,0,255", "Particle.Update Exception: Error #1600. Invalid Syntax. Red color component out of range.")]
-        [InlineData("clr:255,0,302,255", "Particle.Update Exception: Error #1700. Invalid Syntax. Green color component out of range.")]
-        [InlineData("clr:255,0,0,303", "Particle.Update Exception: Error #1800. Invalid Syntax. Blue color component out of range.")]
-        [InlineData("clr:1z0,0,0,255", "Particle.Update Exception: Error #1200. Invalid Syntax. Alpha color component must only contain numbers.")]
-        [InlineData("clr:255,1z1,0,255", "Particle.Update Exception: Error #1300. Invalid Syntax. Alpha color component must only contain numbers.")]
-        [InlineData("clr:255,0,1z2,255", "Particle.Update Exception: Error #1400. Invalid Syntax. Alpha color component must only contain numbers.")]
-        [InlineData("clr:255,0,0,1z3", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component must only contain numbers.")]
-        [InlineData("clr:,0,0,255", "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        [InlineData("clr:255,,0,255", "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        [InlineData("clr:255,0,,255", "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        [InlineData("clr:255,0,0,", "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        [InlineData("clr255,0,0,0", "Particle.Update Exception: Error #1000. Invalid Syntax. Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        [InlineData(":255,0,0,0", "Particle.Update Exception: Error #900. Invalid Syntax. Missing 'clr' prefix.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
-        public void Update_WhenUsingWrongRandomColorValue_ThrowsException(string value, string expectedMessage)
+        [InlineData(ParticleAttribute.Color, "clr:300,0,0,255", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component out of range.")]
+        [InlineData(ParticleAttribute.Color, "clr:-300,0,0,255", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component out of range.")] // Do negative values
+        [InlineData(ParticleAttribute.Color, "clr:255,301,0,255", "Particle.Update Exception: Error #1600. Invalid Syntax. Red color component out of range.")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,302,255", "Particle.Update Exception: Error #1700. Invalid Syntax. Green color component out of range.")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,0,303", "Particle.Update Exception: Error #1800. Invalid Syntax. Blue color component out of range.")]
+        [InlineData(ParticleAttribute.Color, "clr:1z0,0,0,255", "Particle.Update Exception: Error #1200. Invalid Syntax. Alpha color component must only contain numbers.")]
+        [InlineData(ParticleAttribute.Color, "clr:255,1z1,0,255", "Particle.Update Exception: Error #1300. Invalid Syntax. Alpha color component must only contain numbers.")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,1z2,255", "Particle.Update Exception: Error #1400. Invalid Syntax. Alpha color component must only contain numbers.")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,0,1z3", "Particle.Update Exception: Error #1500. Invalid Syntax. Alpha color component must only contain numbers.")]
+        [InlineData(ParticleAttribute.Color, "clr:,0,0,255",        "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Color, "clr:255,,0,255",      "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,,255",      "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Color, "clr:255,0,0,",        "Particle.Update Exception: Error #1100. Invalid Syntax. Missing color component.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Color, "clr255,0,0,0",        "Particle.Update Exception: Error #1000. Invalid Syntax. Missing ':'.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Color, ":255,0,0,0",          "Particle.Update Exception: Error #900. Invalid Syntax. Missing 'clr' prefix.\n\tSyntax is as follows: clr:<alpha>,<red>,<green>,<blue>")]
+        [InlineData(ParticleAttribute.Angle, "invalid-num",         "Particle.Update Exception:\n\tParsing the behavior value 'invalid-num' failed.\n\tValue must be a number.")]
+        public void Update_WhenUsingWrongRandomColorValue_ThrowsException(ParticleAttribute attribute, string value, string expectedMessage)
         {
             // Arrange
             this.mockBehavior.SetupGet(p => p.Value).Returns(value);
             this.mockBehavior.SetupGet(p => p.Enabled).Returns(true);
-            this.mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(ParticleAttribute.Color);
+            this.mockBehavior.SetupGet(p => p.ApplyToAttribute).Returns(attribute);
 
             var particle = new Particle(new[] { this.mockBehavior.Object });
 
