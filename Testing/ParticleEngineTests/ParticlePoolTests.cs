@@ -23,7 +23,7 @@ namespace KDParticleEngineTests
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         private readonly Mock<IBehavior> mockBehavior;
-        private readonly EasingBehaviorSettings[] settings;
+        private readonly EasingRandomBehaviorSettings[] settings;
         private readonly ParticleEffect effect;
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace KDParticleEngineTests
         /// </summary>
         public ParticlePoolTests()
         {
-            this.settings = new EasingBehaviorSettings[]
+            this.settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             this.effect = new ParticleEffect(ParticleTextureName, this.settings);
 

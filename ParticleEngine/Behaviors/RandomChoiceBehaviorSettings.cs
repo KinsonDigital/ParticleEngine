@@ -15,7 +15,9 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Initializes a new instance of the <see cref="RandomChoiceBehaviorSettings"/> class.
         /// </summary>
-        public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
+        public RandomChoiceBehaviorSettings()
+        {
+        }
 
         /// <summary>
         /// Gets or sets the data for the use by an <see cref="IBehavior"/> implementation.
@@ -39,7 +41,10 @@ namespace KDParticleEngine.Behaviors
                 return false;
             }
 
-            return TypeOfBehavior == setting.TypeOfBehavior &&
+            var bothAreNotNull = !(Data is null) && !(setting.Data is null);
+
+            return bothAreNotNull && Data.ItemsAreEqual(setting.Data) &&
+                LifeTime == LifeTime &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
 

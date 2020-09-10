@@ -18,7 +18,7 @@ namespace KDParticleEngineTests.Fakes
         /// Creates a new instance of <see cref="FakeBehavior"/>.
         /// </summary>
         /// <param name="setting">The settings for the behavior.</param>
-        public FakeBehavior(EasingBehaviorSettings setting)
+        public FakeBehavior(EasingRandomBehaviorSettings setting)
             : base(setting)
         {
         }
