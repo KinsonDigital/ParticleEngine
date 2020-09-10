@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -44,9 +44,7 @@
   </ItemGroup>
 
   
-  <ItemGroup>
-    <None Update="Content\bin\Shape-A.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)Content\bin\DesktopGL\Content\*.*&quot; &quot;$(TargetDir)Content\*.*&quot; /Y" />
+  </Target>
 </Project>

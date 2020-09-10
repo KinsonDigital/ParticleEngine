@@ -23,6 +23,7 @@ namespace ParticleSandbox
     {
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private Texture2D background;
         private SpriteFont gameFont;
         private readonly TrueRandomizerService randomService;
         private readonly ParticleEngine engine;
@@ -36,7 +37,6 @@ namespace ParticleSandbox
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = true;
-
             this.randomService = new TrueRandomizerService();
             this.textureLoader = new TextureLoader(Content);
             this.engine = new ParticleEngine(this.textureLoader, this.randomService);
@@ -56,6 +56,7 @@ namespace ParticleSandbox
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.background = Content.Load<Texture2D>("dark-background");
 
             this.gameFont = Content.Load<SpriteFont>("GameFont");
 
@@ -207,6 +208,10 @@ namespace ParticleSandbox
 
             this.spriteBatch.Begin();
 
+            //Draw the background
+            var backgroundDestRect = new Rectangle(0, 0, 800, 480);
+            this.spriteBatch.Draw(this.background, backgroundDestRect, XNAColor.White);
+
             //Render the FPS
             this.spriteBatch.DrawString(this.gameFont, $"FPS: {this.frameCounter.AverageFramesPerSecond}", new Vector2(5, 5), XNAColor.Black);
 
@@ -216,11 +221,11 @@ namespace ParticleSandbox
                 {
                     if (particle.IsAlive)
                     {
-                        var destRect = new Rectangle((int)particle.Position.X, (int)particle.Position.Y, (int)(pool.PoolTexture.Width * particle.Size), (int)(pool.PoolTexture.Height * particle.Size));
+                        var particleDestRect = new Rectangle((int)particle.Position.X, (int)particle.Position.Y, (int)(pool.PoolTexture.Width * particle.Size), (int)(pool.PoolTexture.Height * particle.Size));
 
                         var monoTexture = (pool.PoolTexture as Texture).MonoTexture;
 
-                        this.spriteBatch.Draw(monoTexture, destRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
+                        this.spriteBatch.Draw(monoTexture, particleDestRect, pool.PoolTexture.GetSrcRect(), particle.TintColor.ToXNAColor(), ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
                     }
                 }
             }
