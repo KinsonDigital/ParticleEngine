@@ -1,4 +1,4 @@
-﻿// <copyright file="EasingBehavior.cs" company="KinsonDigital">
+﻿// <copyright file="EasingRandomBehavior.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 

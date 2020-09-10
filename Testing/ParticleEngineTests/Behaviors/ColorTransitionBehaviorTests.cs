@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
-using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using Xunit;
+﻿// <copyright file="ColorTransitionBehaviorTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTests.Behaviors
 {
+    using System;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using Xunit;
+
     public class ColorTransitionBehaviorTests
     {
         #region Prop Tests

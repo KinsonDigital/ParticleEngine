@@ -1,4 +1,8 @@
-﻿namespace KDParticleEngine.Behaviors
+﻿// <copyright file="IEasingCapable.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace KDParticleEngine.Behaviors
 {
     /// <summary>
     /// Provides the ability that something has easing function capabilities.

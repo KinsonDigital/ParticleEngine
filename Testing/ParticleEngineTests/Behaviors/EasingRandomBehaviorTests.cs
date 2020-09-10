@@ -1,4 +1,4 @@
-﻿// <copyright file="EasingBehaviorTests.cs" company="KinsonDigital">
+﻿// <copyright file="EasingRandomBehaviorTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -8,7 +8,6 @@ namespace KDParticleEngineTests.Behaviors
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
-    using KDParticleEngineTests.Fakes;
     using Moq;
     using Xunit;
 

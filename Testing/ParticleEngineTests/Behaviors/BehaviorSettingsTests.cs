@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using KDParticleEngine;
-using ParticleEngineTests.Fakes;
-using Xunit;
+﻿// <copyright file="BehaviorSettingsTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTests.Behaviors
 {
+    using KDParticleEngine;
+    using ParticleEngineTests.Fakes;
+    using Xunit;
+
     public class BehaviorSettingsTests
     {
         #region Method Tests

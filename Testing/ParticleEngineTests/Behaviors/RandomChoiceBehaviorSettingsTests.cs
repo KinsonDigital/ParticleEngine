@@ -1,16 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Text;
-using Castle.DynamicProxy;
-using KDParticleEngine;
-using KDParticleEngine.Behaviors;
-using Xunit;
+﻿// <copyright file="RandomChoiceBehaviorSettingsTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTests.Behaviors
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using KDParticleEngine;
+    using KDParticleEngine.Behaviors;
+    using Xunit;
+
     public class RandomChoiceBehaviorSettingsTests
     {
         /// <summary>

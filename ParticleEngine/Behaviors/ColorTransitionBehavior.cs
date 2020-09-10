@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿// <copyright file="ColorTransitionBehavior.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace KDParticleEngine.Behaviors
 {
+    using System;
+
     /// <summary>
     /// Adds behavior that transations from one color to another over a period of time.
     /// </summary>
@@ -19,6 +19,7 @@ namespace KDParticleEngine.Behaviors
         /// <param name="settings">The color transition related behavior settings.</param>
         public ColorTransitionBehavior(ColorTransitionBehaviorSettings settings) => this.settings = settings;
 
+#pragma warning disable SA1629 // Documentation text should end with a period
         /// <summary>
         /// Gets the current value of the behavior represented as a color.
         /// </summary>
@@ -29,6 +30,7 @@ namespace KDParticleEngine.Behaviors
         ///     Example: clr:255,10,20,30
         /// </remarks>
         public string Value { get; private set; } = string.Empty;
+#pragma warning restore SA1629 // Documentation text should end with a period
 
         /// <inheritdoc/>
         public double ElapsedTime { get; private set; }
