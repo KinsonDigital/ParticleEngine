@@ -122,7 +122,7 @@ namespace KDParticleEngine
                             TintColor = result;
                             break;
                         case ParticleAttribute.RedColorComponent:
-                            TintColor.R = ClampClrValue(float.Parse(this.behaviors[i].Value, CultureInfo.CurrentCulture));
+                            TintColor.R = ClampClrValue(value);
                             break;
                         case ParticleAttribute.GreenColorComponent:
                             TintColor.G = ClampClrValue(value);

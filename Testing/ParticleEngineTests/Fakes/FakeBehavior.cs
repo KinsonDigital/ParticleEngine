@@ -8,7 +8,7 @@ namespace KDParticleEngineTests.Fakes
     using KDParticleEngine.Behaviors;
 
     /// <summary>
-    /// Used for testing purposes only.
+    /// Used for testing the <see cref="Behavior"/> class.
     /// </summary>
     [ExcludeFromCodeCoverage]
     public class FakeBehavior : Behavior

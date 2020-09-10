@@ -86,6 +86,10 @@ namespace KDParticleEngine.Behaviors
             Enabled = ElapsedTime < LifeTime;
         }
 
+        /// <summary>
+        /// Returns the red, green and blue color components after the ease in quad easing function has been applied.
+        /// </summary>
+        /// <returns>The component values after the easing function changes.</returns>
         private (byte redResult, byte greenResult, byte blueResult) EaseInQuad()
         {
             var red = (byte)EasingFunctions.EaseInQuad(
@@ -109,6 +113,10 @@ namespace KDParticleEngine.Behaviors
             return (red, green, blue);
         }
 
+        /// <summary>
+        /// Returns the red, green and blue color components after the ease out bounce easing function has been applied.
+        /// </summary>
+        /// <returns>The component values after the easing function changes.</returns>
         private (byte redResult, byte greenResult, byte blueResult) EaseOutBounce()
         {
             var red = (byte)EasingFunctions.EaseOutBounce(

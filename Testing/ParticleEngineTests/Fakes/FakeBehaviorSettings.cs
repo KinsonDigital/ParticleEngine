@@ -6,6 +6,9 @@ namespace ParticleEngineTests.Fakes
 {
     using KDParticleEngine.Behaviors;
 
+    /// <summary>
+    /// Used for testing the <see cref="BehaviorSettings"/> class.
+    /// </summary>
     public class FakeBehaviorSettings : BehaviorSettings
     {
     }
