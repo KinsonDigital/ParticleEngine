@@ -41,6 +41,11 @@ namespace KDParticleEngine.Behaviors
         public double LifeTime { get; set; }
 
         /// <summary>
+        /// Gets the amount of change to apply over time to the alpha color component.
+        /// </summary>
+        internal int AlphaChangeAmount => StopColor.A - StartColor.A;
+
+        /// <summary>
         /// Gets the amount of change to apply over time to the red color component.
         /// </summary>
         internal int RedChangeAmount => StopColor.R - StartColor.R;

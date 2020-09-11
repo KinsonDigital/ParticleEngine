@@ -91,27 +91,31 @@ namespace ParticleEngineTests.Behaviors
 
         #region Method Tests
         [Theory]
-        //                easingFunction                    StartColor                    StopColor             Elapsed Time      Expected Result(ARGB)
-        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0 }, new byte[] {   0,   0,   0 },     800,            "clr:255,91,0,0")] // Decreasing of red
-        [InlineData(EasingFunction.EaseIn,          new byte[] {   0,   0,   0 }, new byte[] { 255,   0,   0 },     1500,           "clr:255,61,0,0")] // Increasing of red
-        [InlineData(EasingFunction.EaseIn,          new byte[] {   0, 255,   0 }, new byte[] {   0,   0,   0 },     800,            "clr:255,0,91,0")] // Decreasing of green
-        [InlineData(EasingFunction.EaseIn,          new byte[] {   0,   0,   0 }, new byte[] {   0, 255,   0 },     1500,           "clr:255,0,61,0")] // Increasing of green
-        [InlineData(EasingFunction.EaseIn,          new byte[] {   0,   0, 255 }, new byte[] {   0,   0,   0 },     800,            "clr:255,0,0,91")] // Decreasing of blue
-        [InlineData(EasingFunction.EaseIn,          new byte[] {   0,   0,   0 }, new byte[] {   0,   0, 255 },     1500,           "clr:255,0,0,61")] // Increasing of blue
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0 }, new byte[] {   0,   0,   0 },     800,            "clr:255,15,0,0")] // Decreasing of red
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0,   0,   0 }, new byte[] { 255,   0,   0 },     1500,           "clr:255,169,0,0")] // Increasing of red
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0, 255,   0 }, new byte[] {   0,   0,   0 },     800,            "clr:255,0,15,0")] // Decreasing of green
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0,   0,   0 }, new byte[] {   0, 255,   0 },     1500,           "clr:255,0,169,0")] // Increasing of green
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0,   0, 255 }, new byte[] {   0,   0,   0 },     800,            "clr:255,0,0,15")] // Decreasing of blue
-        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0,   0,   0 }, new byte[] {   0,   0, 255 },     1500,           "clr:255,0,0,169")] // Increasing of blue
+        //                easingFunction                            StartColor                      StopColor                Elapsed Time               Expected Result(ARGB)
+        [InlineData(EasingFunction.EaseIn,          new byte[] {   0,   0,   0,   0 },  new byte[] { 255,   0,   0,   0 },      1500,           "clr:255,0,0,0")]   // Increasing of alpha
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0,   0 },  new byte[] {   0,   0,   0,   0 },       800,           "clr:91,0,0,0")]    // Decreasing of alpha
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0,   0 },  new byte[] { 255, 255,   0,   0 },      1500,           "clr:255,255,0,0")] // Increasing of red
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255, 255,   0,   0 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,91,0,0")]  // Decreasing of red
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0,   0 },  new byte[] { 255,   0, 255,   0 },      1500,           "clr:255,0,255,0")] // Increasing of green
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0, 255,   0 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,0,91,0")]  // Decreasing of green
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0,   0 },  new byte[] { 255,   0,   0, 255 },      1500,           "clr:255,0,0,255")] // Increasing of blue
+        [InlineData(EasingFunction.EaseIn,          new byte[] { 255,   0,   0, 255 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,0,0,91")]  // Decreasing of blue
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] {   0,   0,   0,   0 },  new byte[] { 255,   0,   0,   0 },      1500,           "clr:255,0,0,0")]   // Increasing of alpha
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0,   0 },  new byte[] {   0,   0,   0,   0 },       800,           "clr:15,0,0,0")]    // Decreasing of alpha
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0,   0 },  new byte[] { 255, 255,   0,   0 },      1500,           "clr:255,255,0,0")] // Increasing of red
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255, 255,   0,   0 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,15,0,0")]  // Decreasing of red
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0,   0 },  new byte[] { 255,   0, 255,   0 },      1500,           "clr:255,0,255,0")] // Increasing of green
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0, 255,   0 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,0,15,0")]  // Decreasing of green
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0,   0 },  new byte[] { 255,   0,   0, 255 },      1500,           "clr:255,0,0,255")] // Increasing of blue
+        [InlineData(EasingFunction.EaseOutBounce,   new byte[] { 255,   0,   0, 255 },  new byte[] { 255,   0,   0,   0 },       800,           "clr:255,0,0,15")]  // Decreasing of blue
         public void Update_WhenInvoked_CorrectlySetsValueProperty(EasingFunction easingFunction, byte[] startComponents, byte[] stopComponents, int timeElapsed, string expected)
         {
             // Arrange
             var settings = new ColorTransitionBehaviorSettings()
             {
                 LifeTime = 1000,
-                StartColor = new ParticleColor(255, startComponents[0], startComponents[1], startComponents[2]),
-                StopColor = new ParticleColor(255, stopComponents[0], stopComponents[1], stopComponents[2]),
+                StartColor = new ParticleColor(startComponents[0], startComponents[1], startComponents[2], startComponents[3]),
+                StopColor = new ParticleColor(stopComponents[0], stopComponents[1], stopComponents[2], stopComponents[3]),
                 EasingFunctionType = easingFunction,
             };
             var behavior = new ColorTransitionBehavior(settings);
