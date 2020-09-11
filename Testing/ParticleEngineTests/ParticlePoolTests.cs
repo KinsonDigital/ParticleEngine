@@ -168,7 +168,6 @@ namespace KDParticleEngineTests
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
@@ -190,7 +189,6 @@ namespace KDParticleEngineTests
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
@@ -214,7 +212,6 @@ namespace KDParticleEngineTests
             // Arrange
             var effectA = new ParticleEffect("texture-name", this.settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -225,7 +222,6 @@ namespace KDParticleEngineTests
 
             var effectB = new ParticleEffect("texture-name", this.settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -248,7 +244,6 @@ namespace KDParticleEngineTests
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;

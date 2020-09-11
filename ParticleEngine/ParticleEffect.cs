@@ -41,11 +41,6 @@ namespace KDParticleEngine
         public string ParticleTextureName { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the particle attribute to apply the behavior to.
-        /// </summary>
-        public ParticleAttribute ApplyBehaviorTo { get; set; }
-
-        /// <summary>
         /// Gets or sets the location on the screen of where to spawn the <see cref="Particle"/>s.
         /// </summary>
         public PointF SpawnLocation { get; set; }
@@ -65,11 +60,13 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets the minimum spawn rate of the range that a <see cref="Particle"/> will be randomly set to.
         /// </summary>
+        /// <remarks>Decrease this value to spawn particles faster over time.</remarks>
         public int SpawnRateMin { get; set; } = 250;
 
         /// <summary>
         /// Gets or sets the maximum spawn rate of the range that a <see cref="Particle"/> will be randomly set to.
         /// </summary>
+        /// <remarks>Decrease this value to spawn particles faster over time.</remarks>
         public int SpawnRateMax { get; set; } = 1000;
 
         /// <summary>
@@ -113,7 +110,6 @@ namespace KDParticleEngine
             }
 
             return ParticleTextureName == effect.ParticleTextureName &&
-                ApplyBehaviorTo == effect.ApplyBehaviorTo &&
                 SpawnLocation == effect.SpawnLocation &&
                 colorsAreSame &&
                 TotalParticlesAliveAtOnce == effect.TotalParticlesAliveAtOnce &&
@@ -133,7 +129,6 @@ namespace KDParticleEngine
             var hash = default(HashCode);
 
             hash.Add(ParticleTextureName);
-            hash.Add(ApplyBehaviorTo);
             hash.Add(SpawnLocation);
 
             var colorHash = 0;
