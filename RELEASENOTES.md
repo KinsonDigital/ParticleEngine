@@ -1,5 +1,26 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.17.0**
+
+### **New**
+
+1. Added color transitioning to particles
+   * This allows the user to set a start color and stop color and the particle will smoothly transition from that start color to the stop color based on an easing function.
+2. Added ability for particles to fade over time using transparency
+   * This allows the user to have the particles increase its transparency over time using easing functions.  This is very similar to the particle color transitioning feature except its for the particle color's **A (Alpha)** color component instead of the **RGB** color components.
+3. Added ability to enable and disable the spawn rate of particles
+   * This allows the user to have particles spawn at a particle rate or to turn it off entirely.  Disabled will spawn as many particles as possible
+
+### **Developer Related Items**
+
+1. Updated **MonoGame** nuget from **v3.7.0.7** to **v3.8.0.1641** in sand box project
+   * This was to improve and keep the testing sand box developer project up to date.
+2. Updated **Microsoft.NET.Test.Sdk** from **v16.7.0** to **v16.7.1**
+3. Increased code coverage of code base
+4. Updated unit testing **editorconfig** file to new version
+
+---
+
 ## **Version 0.16.0**
 
 ### **Changes**
@@ -13,7 +34,7 @@
 
 ## **Version 0.15.0**
 
-### **Additions**
+### **New**
 
 1. Added code analyzers to the solution to enforce coding standards and keep code clean
    * This required adding nuget packages to allow the analyzers to run
