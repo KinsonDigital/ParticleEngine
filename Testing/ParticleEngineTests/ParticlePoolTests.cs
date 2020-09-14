@@ -211,7 +211,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -232,7 +231,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -255,7 +253,6 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 99,
                 UseColorsFromList = true,
             };
@@ -265,7 +262,6 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 100,
                 UseColorsFromList = true,
             };
@@ -287,7 +283,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
