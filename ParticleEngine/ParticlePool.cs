@@ -46,6 +46,7 @@ namespace KDParticleEngine
             this.randomService = randomizer;
 
             CreateAllParticles(behaviorFactory);
+            this.spawnRate = GetRandomSpawnRate();
         }
 
         // TODO: Implement code to make use of invoking this event.
@@ -64,6 +65,15 @@ namespace KDParticleEngine
         /// Gets the current total number of dead <see cref="Particle"/>s.
         /// </summary>
         public int TotalDeadParticles => this.particles.Count(p => p.IsDead);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether particles will spawn at a limited rate.
+        /// </summary>
+        public bool SpawnRateEnabled
+        {
+            get => Effect.SpawnRateEnabled;
+            set => Effect.SpawnRateEnabled = value;
+        }
 
         /// <summary>
         /// Gets the list of particle in the pool.
@@ -89,7 +99,7 @@ namespace KDParticleEngine
             this.spawnRateElapsed += timeElapsed.TotalMilliseconds;
 
             // If the amount of time to spawn a new particle has passed
-            if (this.spawnRateElapsed >= this.spawnRate)
+            if (this.spawnRateElapsed >= this.spawnRate || !Effect.SpawnRateEnabled)
             {
                 this.spawnRate = GetRandomSpawnRate();
 

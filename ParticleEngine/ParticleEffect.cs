@@ -70,6 +70,11 @@ namespace KDParticleEngine
         public int SpawnRateMax { get; set; } = 1000;
 
         /// <summary>
+        /// Gets or sets a value indicating whether particles will spawn at a limited rate.
+        /// </summary>
+        public bool SpawnRateEnabled { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the colors will be randomly chosen from a list.
         /// </summary>
         public bool UseColorsFromList { get; set; }

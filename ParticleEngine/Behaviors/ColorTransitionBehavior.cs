@@ -7,7 +7,7 @@ namespace KDParticleEngine.Behaviors
     using System;
 
     /// <summary>
-    /// Adds behavior that transations from one color to another over a period of time.
+    /// Adds behavior that transitions from one color to another over a period of time.
     /// </summary>
     public class ColorTransitionBehavior : IBehavior
     {
@@ -38,7 +38,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Gets the particle attribute that the behavior will be applied to.
         /// </summary>
-        /// <remarks>Readonly and shold always be the value of <see cref="ParticleAttribute.Color"/>.</remarks>
+        /// <remarks>Read only and should always be the value of <see cref="ParticleAttribute.Color"/>.</remarks>
         public ParticleAttribute ApplyToAttribute => ParticleAttribute.Color;
 
         /// <inheritdoc/>
