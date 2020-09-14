@@ -1,4 +1,4 @@
-﻿// <copyright file="EasingBehaviorSettings.cs" company="KinsonDigital">
+﻿// <copyright file="EasingRandomBehaviorSettings.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -7,10 +7,13 @@ namespace KDParticleEngine.Behaviors
     using System;
 
     /// <summary>
-    /// Stores settings for creating an <see cref="EasingBehavior"/>.
+    /// Stores settings for creating an <see cref="EasingRandomBehavior"/>.
     /// </summary>
-    public class EasingBehaviorSettings : BehaviorSettings
+    public class EasingRandomBehaviorSettings : BehaviorSettings, IEasingCapable
     {
+        /// <inheritdoc/>
+        public EasingFunction EasingFunctionType { get; set; } = EasingFunction.EaseIn;
+
         /// <summary>
         /// Gets or sets the minimum starting value used in randomization.
         /// </summary>
@@ -48,13 +51,12 @@ namespace KDParticleEngine.Behaviors
         /// <returns>True if the specified object is equal to the current object; otherwise, false.</returns>
         public override bool Equals(object? obj)
         {
-            if (!(obj is EasingBehaviorSettings setting))
+            if (!(obj is EasingRandomBehaviorSettings setting))
             {
                 return false;
             }
 
-            return TypeOfBehavior == setting.TypeOfBehavior &&
-                ApplyToAttribute == setting.ApplyToAttribute &&
+            return ApplyToAttribute == setting.ApplyToAttribute &&
                 StartMin == setting.StartMin &&
                 StartMax == setting.StartMax &&
                 ChangeMin == setting.ChangeMin &&
@@ -69,7 +71,6 @@ namespace KDParticleEngine.Behaviors
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() =>
             HashCode.Combine(
-                TypeOfBehavior,
                 ApplyToAttribute,
                 StartMin,
                 StartMax,

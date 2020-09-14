@@ -36,6 +36,18 @@ namespace KDParticleEngineTests
             this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
         }
 
+        #region Constructor Tests
+        [Fact]
+        public void Ctor_WhenInvokedWithNullFactory_ThrowsException()
+        {
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                var pool = new ParticlePool<IParticleTexture>(null, null, null, null);
+            }, "The parameter must not be null. (Parameter 'behaviorFactory')");
+        }
+        #endregion
+
         #region Prop Tests
         [Fact]
         public void Enabled_WhenSettingValue_ReturnsCorrectValue()
@@ -51,9 +63,9 @@ namespace KDParticleEngineTests
         public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -116,9 +128,9 @@ namespace KDParticleEngineTests
         public void LoadTextures_WhenInvoked_LoadsParticlePoolTextures()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             var effect = new ParticleEffect("texture-name", settings);
             this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -146,9 +158,9 @@ namespace KDParticleEngineTests
         public void Update_WhenDisabled_DoesNotUpdateParticles()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings);
             var mockBehavior = new Mock<IBehavior>();
@@ -170,9 +182,9 @@ namespace KDParticleEngineTests
         public void Update_WhenEnabled_UpdatesAllParticles()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             var effect = new ParticleEffect(It.IsAny<string>(), settings)
             {

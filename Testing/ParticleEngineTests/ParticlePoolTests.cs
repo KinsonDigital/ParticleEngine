@@ -23,7 +23,7 @@ namespace KDParticleEngineTests
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         private readonly Mock<IBehavior> mockBehavior;
-        private readonly EasingBehaviorSettings[] settings;
+        private readonly EasingRandomBehaviorSettings[] settings;
         private readonly ParticleEffect effect;
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace KDParticleEngineTests
         /// </summary>
         public ParticlePoolTests()
         {
-            this.settings = new EasingBehaviorSettings[]
+            this.settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings(),
+                new EasingRandomBehaviorSettings(),
             };
             this.effect = new ParticleEffect(ParticleTextureName, this.settings);
 
@@ -105,6 +105,46 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Equal(9, actual);
         }
+
+        [Fact]
+        public void SpawnRateEnabled_WhenSettingValue_GeneratesCorrectNumberOfParticles()
+        {
+            /*Explanation:
+             * What we are testing for here is that if the spawn rate is enabled, then
+             * less particles will be generated because the spawn rate acts like a "throttle"
+             * which controls the rate of how many particles are generated.  If the spawn rate
+             * is disabled, then this means there is no "throttle" and particles will be
+             * generated as fast as possible.
+             */
+            // Arrange
+            // Generate a spawn rate
+            this.mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(32);
+            this.effect.TotalParticlesAliveAtOnce = 100;
+            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            pool.SpawnRateEnabled = true;
+
+            // Act
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+
+            var totalLivingWithSpawnRateEnabled = pool.TotalLivingParticles;
+
+            pool.KillAllParticles();
+            pool.SpawnRateEnabled = false;
+
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+
+            var totalLivingWithSpawnRateDisabled = pool.TotalLivingParticles;
+
+            // Assert
+            Assert.True(totalLivingWithSpawnRateDisabled > totalLivingWithSpawnRateEnabled,
+                $"Total living particles when spawn rate is disabled, is not greater then when spawn rate is enabled.\nTotal Living With Spawn Rate Enabled: {totalLivingWithSpawnRateEnabled}\nTotal Living With Spawn Rate Disabled: {totalLivingWithSpawnRateDisabled}");
+        }
         #endregion
 
         #region Method Tests
@@ -122,7 +162,7 @@ namespace KDParticleEngineTests
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Assert
-            this.mockRandomizerService.Verify(m => m.GetValue(rateMin < rateMax ? rateMin : rateMax, rateMax > rateMin ? rateMax : rateMin), Times.Once());
+            this.mockRandomizerService.Verify(m => m.GetValue(rateMin < rateMax ? rateMin : rateMax, rateMax > rateMin ? rateMax : rateMin), Times.Exactly(2));
         }
 
         [Fact]
@@ -168,7 +208,6 @@ namespace KDParticleEngineTests
         public void Equals_WithDifferentObjectTypes_ReturnsFalse()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
@@ -190,7 +229,6 @@ namespace KDParticleEngineTests
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
@@ -214,7 +252,6 @@ namespace KDParticleEngineTests
             // Arrange
             var effectA = new ParticleEffect("texture-name", this.settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -225,7 +262,6 @@ namespace KDParticleEngineTests
 
             var effectB = new ParticleEffect("texture-name", this.settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
@@ -248,7 +284,6 @@ namespace KDParticleEngineTests
         public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
         {
             // Arrange
-            this.effect.ApplyBehaviorTo = ParticleAttribute.Angle;
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;

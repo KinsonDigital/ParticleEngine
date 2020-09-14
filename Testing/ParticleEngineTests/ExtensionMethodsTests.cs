@@ -7,10 +7,10 @@ namespace KDParticleEngineTests
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using Castle.Core.Logging;
     using global::ParticleEngineTests.Fakes;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
+    using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
 
@@ -20,6 +20,19 @@ namespace KDParticleEngineTests
     public class ExtensionMethodsTests
     {
         #region Method Tests
+        [Fact]
+        public void Next_WhenInvokedWithNullRandomParam_ThrowsException()
+        {
+            // Arrange
+            Random random = null;
+
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                random.Next(It.IsAny<float>(), It.IsAny<float>());
+            }, "The parameter must not be null. (Parameter 'random')");
+        }
+
         [Fact]
         public void Next_WhenInvokedWithMinLessThanMax_ReturnsValueWithinMinAndMax()
         {
@@ -77,6 +90,36 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
+        public void Count_WhenInvokingListVersionWithNullItems_ReturnsCorrectValue()
+        {
+            // Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            List<Particle> particles = null;
+
+            // Act
+            var actual = particles.Count(p => true);
+
+            // Assert
+            Assert.Equal(0, actual);
+        }
+
+        [Fact]
+        public void Count_WhenInvokingListVersionWithNullPredicate_ThrowsException()
+        {
+            // Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            var particles = new List<Particle>();
+
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                particles.Count(null);
+            }, "The parameter must not be null. (Parameter 'predicate')");
+        }
+
+        [Fact]
         public void Count_WhenInvokingListVersion_ReturnsCorrectValue()
         {
             // Arrange
@@ -94,6 +137,36 @@ namespace KDParticleEngineTests
 
             // Assert
             Assert.Equal(9, actual);
+        }
+
+        [Fact]
+        public void Count_WhenInvokingArrayVersionWithNullItems_ReturnsCorrectValue()
+        {
+            // Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            Particle[] particles = null;
+
+            // Act
+            var actual = particles.Count(p => true);
+
+            // Assert
+            Assert.Equal(0, actual);
+        }
+
+        [Fact]
+        public void Count_WhenInvokingArrayVersionWithNullPredicate_ThrowsException()
+        {
+            // Arrange
+            var mockBehavior = new Mock<IBehavior>();
+
+            var particles = Array.Empty<Particle>();
+
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                particles.Count(null);
+            }, "The parameter must not be null. (Parameter 'predicate')");
         }
 
         [Fact]

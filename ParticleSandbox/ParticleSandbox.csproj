@@ -13,6 +13,18 @@
 
   
   <ItemGroup>
+    <Compile Remove="Content\bin\**" />
+    <Compile Remove="Content\obj\**" />
+    <EmbeddedResource Remove="Content\bin\**" />
+    <EmbeddedResource Remove="Content\obj\**" />
+    <MonoGameContentReference Remove="Content\bin\**" />
+    <MonoGameContentReference Remove="Content\obj\**" />
+    <None Remove="Content\bin\**" />
+    <None Remove="Content\obj\**" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
     <None Remove="stylecop.json" />
   </ItemGroup>
 
@@ -23,13 +35,7 @@
 
   
   <ItemGroup>
-    <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.4" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
-    <Folder Include="Content\" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
   </ItemGroup>
 
   
@@ -38,9 +44,7 @@
   </ItemGroup>
 
   
-  <ItemGroup>
-    <None Update="Content\bin\Shape-A.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)Content\bin\DesktopGL\Content\*.*&quot; &quot;$(TargetDir)Content\*.*&quot; /Y" />
+  </Target>
 </Project>

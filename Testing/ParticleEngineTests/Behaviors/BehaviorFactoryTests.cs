@@ -7,6 +7,7 @@ namespace KDParticleEngineTests.Behaviors
     using System;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
+    using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
 
@@ -16,19 +17,26 @@ namespace KDParticleEngineTests.Behaviors
     public class BehaviorFactoryTests
     {
         #region Method Tests
-        [Theory]
-        [InlineData(BehaviorType.EaseOutBounce, typeof(EaseOutBounceBehavior))]
-        [InlineData(BehaviorType.EaseIn, typeof(EaseInBehavior))]
-        public void CreateBehaviors_WhenInvoked_CreatesCorrectBehavior(BehaviorType behaviorType, Type expectedBehaviorType)
+        [Fact]
+        public void CreateBehaviors_WhenSettingsParamIsNull_ThrowsException()
+        {
+            // Act & Assert
+            var factory = new BehaviorFactory();
+
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                factory.CreateBehaviors(null, new Mock<IRandomizerService>().Object);
+            }, "The param must not be null. (Parameter 'settings')");
+        }
+
+        [Fact]
+        public void CreateBehaviors_WhenUsingEasingRandomBehaviorSettings_CreatesCorrectBehavior()
         {
             // Arrange
             var mockRandomizerService = new Mock<IRandomizerService>();
-            var settings = new EasingBehaviorSettings[]
+            var settings = new BehaviorSettings[]
             {
-                new EasingBehaviorSettings()
-                {
-                    TypeOfBehavior = behaviorType,
-                },
+                new EasingRandomBehaviorSettings(),
             };
             var factory = new BehaviorFactory();
 
@@ -37,7 +45,45 @@ namespace KDParticleEngineTests.Behaviors
 
             // Assert
             Assert.Single(actual);
-            Assert.Equal(actual[0].GetType(), expectedBehaviorType);
+            Assert.Equal(typeof(EasingRandomBehavior), actual[0].GetType());
+        }
+
+        [Fact]
+        public void CreateBehaviors_WhenUsingColorTransitionBehaviorSettings_CreatesCorrectBehavior()
+        {
+            // Arrange
+            var mockRandomizerService = new Mock<IRandomizerService>();
+            var settings = new BehaviorSettings[]
+            {
+                new ColorTransitionBehaviorSettings(),
+            };
+            var factory = new BehaviorFactory();
+
+            // Act
+            var actual = factory.CreateBehaviors(settings, mockRandomizerService.Object);
+
+            // Assert
+            Assert.Single(actual);
+            Assert.Equal(typeof(ColorTransitionBehavior), actual[0].GetType());
+        }
+
+        [Fact]
+        public void CreateBehaviors_WhenUsingRandomBehaviorSettings_CreatesCorrectBehavior()
+        {
+            // Arrange
+            var mockRandomizerService = new Mock<IRandomizerService>();
+            var settings = new BehaviorSettings[]
+            {
+                new RandomChoiceBehaviorSettings(),
+            };
+            var factory = new BehaviorFactory();
+
+            // Act
+            var actual = factory.CreateBehaviors(settings, mockRandomizerService.Object);
+
+            // Assert
+            Assert.Single(actual);
+            Assert.Equal(typeof(RandomColorBehavior), actual[0].GetType());
         }
         #endregion
     }

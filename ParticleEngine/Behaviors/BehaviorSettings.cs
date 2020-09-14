@@ -5,17 +5,13 @@
 namespace KDParticleEngine.Behaviors
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Holds various settings for a particle behavior.
     /// </summary>
     public abstract class BehaviorSettings
     {
-        /// <summary>
-        /// Gets or sets the type of behavior to be created.
-        /// </summary>
-        public BehaviorType TypeOfBehavior { get; set; }
-
         /// <summary>
         /// Gets or sets the particle attribute to set the behavior value to.
         /// </summary>
@@ -33,14 +29,14 @@ namespace KDParticleEngine.Behaviors
                 return false;
             }
 
-            return TypeOfBehavior == setting.TypeOfBehavior &&
-                ApplyToAttribute == setting.ApplyToAttribute;
+            return ApplyToAttribute == setting.ApplyToAttribute;
         }
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
-        /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode() => HashCode.Combine(TypeOfBehavior, ApplyToAttribute);
+        /// <returns>Ahash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
+        public override int GetHashCode() => HashCode.Combine(ApplyToAttribute);
     }
 }

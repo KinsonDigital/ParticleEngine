@@ -6,6 +6,7 @@ namespace KDParticleEngine.Behaviors
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Various settings for behaviors that choose values randomly from a list of choices.
@@ -15,7 +16,9 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Initializes a new instance of the <see cref="RandomChoiceBehaviorSettings"/> class.
         /// </summary>
-        public RandomChoiceBehaviorSettings() => TypeOfBehavior = BehaviorType.RandomChoice;
+        public RandomChoiceBehaviorSettings()
+        {
+        }
 
         /// <summary>
         /// Gets or sets the data for the use by an <see cref="IBehavior"/> implementation.
@@ -39,7 +42,8 @@ namespace KDParticleEngine.Behaviors
                 return false;
             }
 
-            return TypeOfBehavior == setting.TypeOfBehavior &&
+            return !(Data is null) && !(setting.Data is null) && Data.ItemsAreEqual(setting.Data) &&
+                LifeTime == setting.LifeTime &&
                 ApplyToAttribute == setting.ApplyToAttribute;
         }
 
@@ -47,6 +51,7 @@ namespace KDParticleEngine.Behaviors
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode() => HashCode.Combine(Data);
     }
 }

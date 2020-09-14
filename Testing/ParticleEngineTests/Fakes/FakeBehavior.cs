@@ -8,7 +8,7 @@ namespace KDParticleEngineTests.Fakes
     using KDParticleEngine.Behaviors;
 
     /// <summary>
-    /// Used for testing purposes only.
+    /// Used for testing the <see cref="Behavior"/> class.
     /// </summary>
     [ExcludeFromCodeCoverage]
     public class FakeBehavior : Behavior
@@ -18,7 +18,7 @@ namespace KDParticleEngineTests.Fakes
         /// Creates a new instance of <see cref="FakeBehavior"/>.
         /// </summary>
         /// <param name="setting">The settings for the behavior.</param>
-        public FakeBehavior(EasingBehaviorSettings setting)
+        public FakeBehavior(EasingRandomBehaviorSettings setting)
             : base(setting)
         {
         }

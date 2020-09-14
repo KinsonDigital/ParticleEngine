@@ -21,7 +21,7 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoked_SetsParticleTextureName()
         {
             // Act
-            var effect = new ParticleEffect("effect-name", It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect("effect-name", It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Assert
             Assert.Equal("effect-name", effect.ParticleTextureName);
@@ -31,12 +31,11 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoked_SetsBehaviorSettings()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingRandomBehaviorSettings()
                 {
                     ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
                     ChangeMin = 11,
                     ChangeMax = 22,
                     StartMin = 33,
@@ -57,24 +56,10 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void ApplyBehaviorTo_WhenSettingValue_ReturnsCorrectValue()
-        {
-            // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
-
-            // Act
-            effect.ApplyBehaviorTo = ParticleAttribute.Angle;
-            var actual = effect.ApplyBehaviorTo;
-
-            // Assert
-            Assert.Equal(ParticleAttribute.Angle, actual);
-        }
-
-        [Fact]
         public void SpawnLocation_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.SpawnLocation = new PointF(11, 22);
@@ -88,7 +73,7 @@ namespace KDParticleEngineTests
         public void TintColors_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(11, 22, 33, 44) });
@@ -102,7 +87,7 @@ namespace KDParticleEngineTests
         public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.TotalParticlesAliveAtOnce = 1234;
@@ -116,7 +101,7 @@ namespace KDParticleEngineTests
         public void SpawnRateMin_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.SpawnRateMin = 1234;
@@ -130,7 +115,7 @@ namespace KDParticleEngineTests
         public void SpawnRateMax_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.SpawnRateMax = 1234;
@@ -144,7 +129,7 @@ namespace KDParticleEngineTests
         public void UseColorsFromList_WhenSettingValue_ReturnsCorrectValue()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingBehaviorSettings[]>());
+            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
 
             // Act
             effect.UseColorsFromList = true;
@@ -160,12 +145,11 @@ namespace KDParticleEngineTests
         public void Equals_WithDifferentObjects_ReturnsFalse()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingRandomBehaviorSettings()
                 {
                     ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
                     ChangeMin = 11,
                     ChangeMax = 22,
                     StartMin = 33,
@@ -177,7 +161,6 @@ namespace KDParticleEngineTests
 
             var effect = new ParticleEffect("test-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -198,12 +181,11 @@ namespace KDParticleEngineTests
         public void Equals_WithEqualObjects_ReturnsTrue()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingRandomBehaviorSettings()
                 {
                     ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
                     ChangeMin = 11,
                     ChangeMax = 22,
                     StartMin = 33,
@@ -215,7 +197,6 @@ namespace KDParticleEngineTests
 
             var effectA = new ParticleEffect("test-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -226,7 +207,6 @@ namespace KDParticleEngineTests
 
             var effectB = new ParticleEffect("test-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -246,12 +226,11 @@ namespace KDParticleEngineTests
         public void Equals_WithNonEqualObjects_ReturnsFalse()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingRandomBehaviorSettings()
                 {
                     ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
                     ChangeMin = 11,
                     ChangeMax = 22,
                     StartMin = 33,
@@ -263,7 +242,6 @@ namespace KDParticleEngineTests
 
             var effectA = new ParticleEffect("test-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -274,7 +252,6 @@ namespace KDParticleEngineTests
 
             var effectB = new ParticleEffect("effect-bee", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.GreenColorComponent,
                 SpawnLocation = new PointF(99, 88),
                 SpawnRateMin = 77,
                 SpawnRateMax = 66,
@@ -294,12 +271,11 @@ namespace KDParticleEngineTests
         public void Equals_WithDifferentTintColorTotals_ReturnsFalse()
         {
             // Arrange
-            var settings = new EasingBehaviorSettings[]
+            var settings = new EasingRandomBehaviorSettings[]
             {
-                new EasingBehaviorSettings()
+                new EasingRandomBehaviorSettings()
                 {
                     ApplyToAttribute = ParticleAttribute.Angle,
-                    TypeOfBehavior = BehaviorType.EaseIn,
                     ChangeMin = 11,
                     ChangeMax = 22,
                     StartMin = 33,
@@ -311,7 +287,6 @@ namespace KDParticleEngineTests
 
             var effectA = new ParticleEffect("test-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
@@ -322,7 +297,6 @@ namespace KDParticleEngineTests
 
             var effectB = new ParticleEffect("effect-name", settings)
             {
-                ApplyBehaviorTo = ParticleAttribute.Angle,
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 11,
                 SpawnRateMax = 22,
