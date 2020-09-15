@@ -26,6 +26,8 @@ namespace KDParticleEngine
         private bool isDisposed;
         private int spawnRate;
         private double spawnRateElapsed;
+        private int burstOnTimeElapsed;
+        private int burstOffTimeElapsed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticlePool{Texture}"/> class.
@@ -39,6 +41,11 @@ namespace KDParticleEngine
             if (behaviorFactory is null)
             {
                 throw new ArgumentNullException(nameof(behaviorFactory), "The parameter must not be null.");
+            }
+
+            if (effect is null)
+            {
+                throw new ArgumentNullException(nameof(effect), "The parameter must not be null.");
             }
 
             this.textureLoader = textureLoader;
@@ -76,6 +83,32 @@ namespace KDParticleEngine
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the bursting effect is enabled or disabled.
+        /// </summary>
+        /// <remarks>
+        ///     If enabled, the engine will spawn particles in a bursting fashion at intervals based on the timings between
+        ///     the <see cref="ParticleEffect.BurstOnTime"/> and <see cref="ParticleEffect.BurstOffTime"/> timing values.
+        ///     If the bursting effect is in its on cycle, the particles will use the
+        ///     <see cref="ParticleEffect.BurstSpawnRateMin"/> and <see cref="ParticleEffect.BurstSpawnRateMax"/>
+        ///     values and if the spawn effect is in its off cycle, it will use the <see cref="ParticleEffect.SpawnRateMin"/>
+        ///     <see cref="ParticleEffect.SpawnRateMax"/> values.
+        /// </remarks>
+        public bool BurstEnabled
+        {
+            get => Effect.BurstEnabled;
+            set => Effect.BurstEnabled = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the bursting effect is currently bursting.
+        /// </summary>
+        /// <remarks>
+        ///     Indicates if the bursting effect is currently in its on in the on/off cycle.
+        ///     True is bursting and false means it is not.
+        /// </remarks>
+        public bool IsCurrentlyBursting { get; private set; }
+
+        /// <summary>
         /// Gets the list of particle in the pool.
         /// </summary>
         public ReadOnlyCollection<Particle> Particles => new ReadOnlyCollection<Particle>(this.particles.ToArray());
@@ -97,6 +130,8 @@ namespace KDParticleEngine
         public void Update(TimeSpan timeElapsed)
         {
             this.spawnRateElapsed += timeElapsed.TotalMilliseconds;
+
+            ManageBurstEffectTimings(timeElapsed);
 
             // If the amount of time to spawn a new particle has passed
             if (this.spawnRateElapsed >= this.spawnRate || !Effect.SpawnRateEnabled)
@@ -193,6 +228,34 @@ namespace KDParticleEngine
         }
 
         /// <summary>
+        /// Manages the timings for the burst effect on and off cycle.
+        /// </summary>
+        /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
+        private void ManageBurstEffectTimings(TimeSpan timeElapsed)
+        {
+            if (!Effect.BurstEnabled)
+            {
+                return;
+            }
+
+            this.burstOffTimeElapsed += (int)timeElapsed.TotalMilliseconds;
+
+            if (this.burstOffTimeElapsed >= Effect.BurstOffTime)
+            {
+                this.burstOnTimeElapsed += (int)timeElapsed.TotalMilliseconds;
+
+                IsCurrentlyBursting = false;
+
+                if (this.burstOnTimeElapsed >= Effect.BurstOnTime)
+                {
+                    IsCurrentlyBursting = true;
+                    this.burstOffTimeElapsed = 0;
+                    this.burstOnTimeElapsed = 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Resets all of the particles.
         /// </summary>
         private void SpawnNewParticle()
@@ -214,12 +277,15 @@ namespace KDParticleEngine
         /// <returns>A randomized spawn rate.</returns>
         private int GetRandomSpawnRate()
         {
+            var minRate = BurstEnabled && IsCurrentlyBursting ? Effect.BurstSpawnRateMin : Effect.SpawnRateMin;
+            var maxRate = BurstEnabled && IsCurrentlyBursting ? Effect.BurstSpawnRateMax : Effect.SpawnRateMax;
+
             if (Effect.SpawnRateMin <= Effect.SpawnRateMax)
             {
-                return this.randomService.GetValue(Effect.SpawnRateMin, Effect.SpawnRateMax);
+                return this.randomService.GetValue(minRate, maxRate);
             }
 
-            return this.randomService.GetValue(Effect.SpawnRateMax, Effect.SpawnRateMin);
+            return this.randomService.GetValue(maxRate, minRate);
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using NETPointF = System.Drawing.PointF;
 using System;
 using KDParticleEngine.Behaviors;
 using System.Collections.ObjectModel;
+using Microsoft.Xna.Framework.Input;
 
 /*Easing Function Resources
  * 1. http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
@@ -29,7 +30,8 @@ namespace ParticleSandbox
         private readonly ParticleEngine engine;
         private readonly ITextureLoader<IParticleTexture> textureLoader;
         private readonly FrameCounter frameCounter = new FrameCounter();
-
+        private KeyboardState prevKeyState;
+        private KeyboardState currentKeyState;
 
         public Game1()
         {
@@ -52,7 +54,7 @@ namespace ParticleSandbox
 
         protected override void Initialize()
         {
-            this.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
             base.Initialize();
         }
 
@@ -66,7 +68,7 @@ namespace ParticleSandbox
 
             var spawnLocation = new NETPointF(Window.ClientBounds.Width / 2, 50);
 
-            var settings = new BehaviorSettings[]
+            var effectBehaviorsB = new BehaviorSettings[]
             {
                 new EasingRandomBehaviorSettings()//X Position to right setup
                 {
@@ -74,7 +76,7 @@ namespace ParticleSandbox
                     ApplyToAttribute = ParticleAttribute.X,
                     StartMin = Window.ClientBounds.Width / 2,
                     StartMax = Window.ClientBounds.Width / 2,
-                    ChangeMin = -400,
+                    ChangeMin = 400,
                     ChangeMax = 400,
                     TotalTimeMin = 3000,
                     TotalTimeMax = 4500
@@ -100,18 +102,12 @@ namespace ParticleSandbox
                     TotalTimeMin = 1000,
                     TotalTimeMax = 10000
                 },
-                //new RandomChoiceBehaviorSettings()//Color choice
-                //{
-                //    ApplyToAttribute = ParticleAttribute.Color,
-                //    Data = new ReadOnlyCollection<string>(new[] { "clr:255,255,0,0", "clr:255,0,255,0", "clr:255,0,0,255" }),
-                //    LifeTime = 6000
-                //},
                 new ColorTransitionBehaviorSettings()
                 {
                     EasingFunctionType = EasingFunction.EaseIn,
                     LifeTime = 3000,
-                    StartColor = new ParticleColor(255, 0, 168, 235),
-                    StopColor = new ParticleColor(255, 255, 106, 0),//new ParticleColor(0, 125, 150, 200)
+                    StartColor = new ParticleColor(255, 235, 168, 0),
+                    StopColor = new ParticleColor(255, 255, 0, 0),//new ParticleColor(0, 125, 150, 200)
                 },
                 new EasingRandomBehaviorSettings()//Alpha channel setup
                 {
@@ -123,46 +119,6 @@ namespace ParticleSandbox
                     TotalTimeMin = 3000,
                     TotalTimeMax = 3000
                 },
-                //new EasingRandomBehaviorSettings()//Red channel setup
-                //{
-                //    ApplyToAttribute = ParticleAttribute.RedColorComponent,
-                //    StartMin = 255,
-                //    StartMax = 255,
-                //    ChangeMin = -255,
-                //    ChangeMax = -255,
-                //    TotalTimeMin = 5000,
-                //    TotalTimeMax = 5000
-                //},
-                //new EasingRandomBehaviorSettings()//Green channel setup
-                //{
-                //    ApplyToAttribute = ParticleAttribute.GreenColorComponent,
-                //    StartMin = 0,
-                //    StartMax = 0,
-                //    ChangeMin = 0,
-                //    ChangeMax = 0,
-                //    TotalTimeMin = 5,
-                //    TotalTimeMax = 5
-                //},
-                //new EasingRandomBehaviorSettings()//Blue channel setup
-                //{
-                //    ApplyToAttribute = ParticleAttribute.BlueColorComponent,
-                //    StartMin = 0,
-                //    StartMax = 0,
-                //    ChangeMin = 0,
-                //    ChangeMax = 0,
-                //    TotalTimeMin = 5,
-                //    TotalTimeMax = 5
-                //},
-                //new EasingRandomBehaviorSettings()//Size setup
-                //{
-                //    ApplyToAttribute = ParticleAttribute.Size,
-                //    StartMin = 0.5f,
-                //    StartMax = 0.5f,
-                //    ChangeMin = 0.5f,
-                //    ChangeMax = 0.5f,
-                //    TotalTimeMin = 1000,
-                //    TotalTimeMax = 4000
-                //}
                 new EasingRandomBehaviorSettings()//Size setup
                 {
                     ApplyToAttribute = ParticleAttribute.Size,
@@ -175,23 +131,96 @@ namespace ParticleSandbox
                 }
             };
 
-            var effectA = new ParticleEffect("Shape-B", settings)
+            var effectBehaviorsA = new BehaviorSettings[]
             {
-                UseColorsFromList = false,//THIS WILL LIKELY BE REMOVED
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[]//THIS WILL LIKELY BE REMOVED
+                new EasingRandomBehaviorSettings()//X Position to right setup
                 {
-                    new ParticleColor(255, 255, 0, 0),
-                    new ParticleColor(255, 0, 255, 0)
-                }),
+                    EasingFunctionType = EasingFunction.EaseOutBounce,
+                    ApplyToAttribute = ParticleAttribute.X,
+                    StartMin = Window.ClientBounds.Width / 2,
+                    StartMax = Window.ClientBounds.Width / 2,
+                    ChangeMin = -400,
+                    ChangeMax = -400,
+                    TotalTimeMin = 3000,
+                    TotalTimeMax = 4500
+                },
+                new EasingRandomBehaviorSettings()//Y Position to left setup
+                {
+                    EasingFunctionType = EasingFunction.EaseIn,
+                    ApplyToAttribute = ParticleAttribute.Y,
+                    StartMin = Window.ClientBounds.Height / 2,
+                    StartMax = Window.ClientBounds.Height / 2,
+                    ChangeMin = -400,
+                    ChangeMax = 400,
+                    TotalTimeMin = 2000,
+                    TotalTimeMax = 2000
+                },
+                new EasingRandomBehaviorSettings()//Angle setup
+                {
+                    ApplyToAttribute = ParticleAttribute.Angle,
+                    StartMin = 0,
+                    StartMax = 180,
+                    ChangeMin = 90,
+                    ChangeMax = 270,
+                    TotalTimeMin = 1000,
+                    TotalTimeMax = 10000
+                },
+                new RandomChoiceBehaviorSettings()//Color choice
+                {
+                    ApplyToAttribute = ParticleAttribute.Color,
+                    Data = new ReadOnlyCollection<string>(new[]
+                    {
+                        "clr:255,255,0,0",
+                        "clr:255,0,255,0",
+                        "clr:255,0,0,255",
+                        "clr:255,255,0,255",
+                        "clr:255,255,255,0",
+                        "clr:255,0,255,255",
+                    }),
+                    LifeTime = 6000
+                },
+                new EasingRandomBehaviorSettings()//Size setup
+                {
+                    ApplyToAttribute = ParticleAttribute.Size,
+                    StartMin = 0.25f,
+                    StartMax = 0.5f,
+                    ChangeMin = 0.25f,
+                    ChangeMax = 0.25f,
+                    TotalTimeMin = 3000,
+                    TotalTimeMax = 3000
+                }
+            };
+
+            var effectA = new ParticleEffect("Shape-B", effectBehaviorsB)
+            {
+                UseColorsFromList = false,
                 SpawnLocation = spawnLocation,
-                SpawnRateMin = -1,
-                SpawnRateMax = -1,
+                SpawnRateMin = 250,
+                SpawnRateMax = 250,
                 TotalParticlesAliveAtOnce = 2000,
+                BurstSpawnRateMin = 10,
+                BurstSpawnRateMax = 10,
+                BurstOffTime = 2000,
+                BurstOnTime = 4000,
+            };
+
+            var effectB = new ParticleEffect("Shape-A", effectBehaviorsA)
+            {
+                UseColorsFromList = false,
+                SpawnLocation = spawnLocation,
+                SpawnRateMin = 250,
+                SpawnRateMax = 250,
+                TotalParticlesAliveAtOnce = 2000,
+                BurstSpawnRateMin = 50,
+                BurstSpawnRateMax = 50,
+                BurstOffTime = 4000,
+                BurstOnTime = 5000,
             };
 
             IBehaviorFactory factory = new BehaviorFactory();
 
             this.engine.CreatePool(effectA, factory);
+            this.engine.CreatePool(effectB, factory);
 
             this.engine.LoadTextures();
         }
@@ -201,6 +230,17 @@ namespace ParticleSandbox
         {
             this.engine.Update(gameTime.ElapsedGameTime);
 
+            this.currentKeyState = Keyboard.GetState();
+
+            if (this.currentKeyState.IsKeyDown(Keys.B)  && this.prevKeyState.IsKeyUp(Keys.B))
+            {
+                foreach (var pool in this.engine.ParticlePools)
+                {
+                    pool.BurstEnabled = !pool.BurstEnabled;
+                }
+            }
+
+            this.prevKeyState = this.currentKeyState;
             base.Update(gameTime);
         }
 

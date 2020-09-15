@@ -36,3 +36,4 @@ This <span style="color:whitesmoke;font-weight:bold">PR</span> merges everything
    * <span style="color:whitesmoke;font-weight:bold">NOTE:</span> Create the tag <span style="color:whitesmoke;font-weight:bold">on</span> the <span style="color:whitesmoke;font-weight:bold">master</span> branch where the <span style="color:whitesmoke;font-weight:bold">release</span> branch has been merged into <span style="color:whitesmoke;font-weight:bold">master</span>
    * <span style="color:whitesmoke;font-weight:bold">Syntax:</span>: v[version]
    * <span style="color:whitesmoke;font-weight:bold">Example:</span>  v1.2.3
+3. Update the **Version** field for all related cards for the release.

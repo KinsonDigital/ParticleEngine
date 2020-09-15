@@ -10,6 +10,7 @@ namespace KDParticleEngineTests
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
+    using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
 
@@ -73,6 +74,16 @@ namespace KDParticleEngineTests
 
             // Assert
             Assert.Equal(10, pool.Particles.Count);
+        }
+
+        [Fact]
+        public void Ctor_WithNullParticleEffect_ThrowsException()
+        {
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, null, this.mockRandomizerService.Object);
+            }, "The parameter must not be null. (Parameter 'effect')");
         }
         #endregion
 
@@ -145,6 +156,40 @@ namespace KDParticleEngineTests
             Assert.True(totalLivingWithSpawnRateDisabled > totalLivingWithSpawnRateEnabled,
                 $"Total living particles when spawn rate is disabled, is not greater then when spawn rate is enabled.\nTotal Living With Spawn Rate Enabled: {totalLivingWithSpawnRateEnabled}\nTotal Living With Spawn Rate Disabled: {totalLivingWithSpawnRateDisabled}");
         }
+
+        [Fact]
+        public void BurstEnabled_WhenSettingValue_ReturnsCorrectValue()
+        {
+            // Arrange
+            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+
+            // Act
+            pool.BurstEnabled = true;
+            var actual = pool.BurstEnabled;
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, false)]
+        public void IsCurrentlyBursting_WhenGettingValue_ReturnsCorrectResult(bool burstingEnabled, bool expected)
+        {
+            // Arrange
+            this.effect.BurstOffTime = 10;
+            this.effect.BurstOnTime = 10;
+            this.effect.BurstEnabled = burstingEnabled;
+
+            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+
+            // Act
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            var actual = pool.IsCurrentlyBursting;
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
         #endregion
 
         #region Method Tests
@@ -176,6 +221,30 @@ namespace KDParticleEngineTests
 
             // Assert
             Assert.Equal(1, pool.TotalLivingParticles);
+        }
+
+        [Theory]
+        [InlineData(false, 111, 222)]
+        [InlineData(true, 333, 444)]
+        public void Update_WhenCurrentlyBursting_ReturnsCorrectSpawnRate(bool burstingEnabled, int expectedRateMin, int expectedRateMax)
+        {
+            // Arrange
+            this.effect.BurstOffTime = 10;
+            this.effect.BurstOnTime = 10;
+            this.effect.SpawnRateMin = 111;
+            this.effect.SpawnRateMax = 222;
+            this.effect.BurstSpawnRateMin = 333;
+            this.effect.BurstSpawnRateMax = 444;
+            this.effect.BurstEnabled = burstingEnabled;
+
+            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+
+            // Act
+            pool.Update(new TimeSpan(0, 0, 0, 0, 16));
+            var actual = pool.IsCurrentlyBursting;
+
+            // Assert
+            this.mockRandomizerService.Verify(m => m.GetValue(expectedRateMin, expectedRateMax), Times.AtLeast(1));
         }
 
         [Fact]
@@ -211,7 +280,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -232,7 +300,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
@@ -255,7 +322,6 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 99,
                 UseColorsFromList = true,
             };
@@ -265,7 +331,6 @@ namespace KDParticleEngineTests
                 SpawnLocation = new PointF(11, 22),
                 SpawnRateMin = 33,
                 SpawnRateMax = 44,
-                TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) }),
                 TotalParticlesAliveAtOnce = 100,
                 UseColorsFromList = true,
             };
@@ -287,7 +352,6 @@ namespace KDParticleEngineTests
             this.effect.SpawnLocation = new PointF(11, 22);
             this.effect.SpawnRateMin = 33;
             this.effect.SpawnRateMax = 44;
-            this.effect.TintColors = new ReadOnlyCollection<ParticleColor>(new ParticleColor[] { new ParticleColor(55, 66, 77, 88) });
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
