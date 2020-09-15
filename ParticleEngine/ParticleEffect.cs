@@ -73,10 +73,9 @@ namespace KDParticleEngine
         /// <remarks>
         ///     If enabled, the engine will spawn particles in a bursting fashion at intervals based on the timings between
         ///     the <see cref="ParticleEffect.BurstOnTime"/> and <see cref="ParticleEffect.BurstOffTime"/> timing values.
-        ///     The spawn rates for bursting will be based on the <see cref="ParticleEffect.BurstSpawnRateMin"/>
-        ///     and <see cref="ParticleEffect.BurstSpawnRateMax"/> spawn rates.  If the bursting effect is in its on cycle,
-        ///     the particles will use the <see cref="ParticleEffect.BurstSpawnRateMin"/> and <see cref="ParticleEffect.BurstSpawnRateMax"/>
-        ///     values, and if the spawn effect is in its off cycle, it will use the <see cref="ParticleEffect.SpawnRateMin"/>
+        ///     If the bursting effect is in its on cycle, the particles will use the
+        ///     <see cref="ParticleEffect.BurstSpawnRateMin"/> and <see cref="ParticleEffect.BurstSpawnRateMax"/>
+        ///     values and if the spawn effect is in its off cycle, it will use the <see cref="ParticleEffect.SpawnRateMin"/>
         ///     <see cref="ParticleEffect.SpawnRateMax"/> values.
         /// </remarks>
         public bool BurstEnabled { get; set; }

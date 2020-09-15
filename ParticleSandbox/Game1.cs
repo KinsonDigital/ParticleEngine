@@ -54,7 +54,7 @@ namespace ParticleSandbox
 
         protected override void Initialize()
         {
-            this.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
             base.Initialize();
         }
 
@@ -232,7 +232,7 @@ namespace ParticleSandbox
 
             this.currentKeyState = Keyboard.GetState();
 
-            if (currentKeyState.IsKeyDown(Keys.B)  && prevKeyState.IsKeyUp(Keys.B))
+            if (this.currentKeyState.IsKeyDown(Keys.B)  && this.prevKeyState.IsKeyUp(Keys.B))
             {
                 foreach (var pool in this.engine.ParticlePools)
                 {
