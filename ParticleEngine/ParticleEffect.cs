@@ -68,6 +68,42 @@ namespace KDParticleEngine
         public bool SpawnRateEnabled { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the bursting effect is enabled or disabled.
+        /// </summary>
+        /// <remarks>
+        ///     If enabled, the engine will spawn particles in a bursting fashion at intervals based on the timings between
+        ///     the <see cref="ParticleEffect.BurstOnTime"/> and <see cref="ParticleEffect.BurstOffTime"/> timing values.
+        ///     The spawn rates for bursting will be based on the <see cref="ParticleEffect.BurstSpawnRateMin"/>
+        ///     and <see cref="ParticleEffect.BurstSpawnRateMax"/> spawn rates.  If the bursting effect is in its on cycle,
+        ///     the particles will use the <see cref="ParticleEffect.BurstSpawnRateMin"/> and <see cref="ParticleEffect.BurstSpawnRateMax"/>
+        ///     values, and if the spawn effect is in its off cycle, it will use the <see cref="ParticleEffect.SpawnRateMin"/>
+        ///     <see cref="ParticleEffect.SpawnRateMax"/> values.
+        /// </remarks>
+        public bool BurstEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum particle spawn rate that can be randomly generated
+        /// when <see cref="BurstEnabled"/> is enabled.
+        /// </summary>
+        public int BurstSpawnRateMin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum particle spawn rate that can be randomly generated
+        /// when <see cref="BurstEnabled"/> is enabled.
+        /// </summary>
+        public int BurstSpawnRateMax { get; set; } = 250;
+
+        /// <summary>
+        /// Gets or sets the amount of time that the bursting effect will run in it's on cycle.
+        /// </summary>
+        public int BurstOnTime { get; set; } = 3000;
+
+        /// <summary>
+        /// Gets or sets the amount of time that the bursting effect will run in it's off cycle.
+        /// </summary>
+        public int BurstOffTime { get; set; } = 1000;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the colors will be randomly chosen from a list.
         /// </summary>
         public bool UseColorsFromList { get; set; }
