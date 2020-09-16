@@ -2,10 +2,16 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
+
+#pragma warning disable SA1200 // Using directives should be placed correctly
+using System;
+using System.Runtime.CompilerServices;
+#pragma warning restore SA1200 // Using directives should be placed correctly
+
+[assembly: InternalsVisibleTo(assemblyName: "ParticleEngineTesterTests", AllInternalsVisible = true)]
+
 namespace ParticleEngineTester
 {
-    using System;
-
     /// <summary>
     /// Runs the application.
     /// </summary>

@@ -28,7 +28,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void EaseInQuad_WhenInvoked_ReturnsCorrectValue()
+        public void EaseInQuad_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var expected = 30.444444444444443;

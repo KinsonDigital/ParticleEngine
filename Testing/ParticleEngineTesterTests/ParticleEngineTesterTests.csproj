@@ -32,4 +32,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ParticleEngineTester\ParticleEngineTester.csproj" />
+  </ItemGroup>
+
 </Project>

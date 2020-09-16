@@ -50,7 +50,7 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void Enabled_WhenSettingValue_ReturnsCorrectValue()
+        public void Enabled_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             this.engine.Enabled = false;
@@ -60,7 +60,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void ParticlePools_WhenGettingValue_ReturnsCorrectValue()
+        public void ParticlePools_WhenGettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var settings = new EasingRandomBehaviorSettings[]

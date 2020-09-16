@@ -42,6 +42,7 @@ Included items must then not match any entries in the exclude list to remain inc
                 <ModulePath>.*MathExpressionEngine.dll</ModulePath>
                 <ModulePath>.*ParticleEngineTests.dll</ModulePath>
                 <ModulePath>.*MathExpressionEngineTests.dll</ModulePath>
+                <ModulePath>.*ParticleEngineTesterTests.dll</ModulePath>
               </Exclude>
             </ModulePaths>
 

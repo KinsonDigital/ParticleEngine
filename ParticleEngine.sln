@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49C662-51F3-4D0F-892A-60079135A5DF}"
 	ProjectSection(SolutionItems) = preProject
 		Testing\.editorconfig = Testing\.editorconfig
-		ParticleEngine.runsettings = ParticleEngine.runsettings
+		Testing\ParticleEngine.runsettings = Testing\ParticleEngine.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "Testing\ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
