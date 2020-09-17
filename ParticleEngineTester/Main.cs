@@ -7,18 +7,20 @@ namespace ParticleEngineTester
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Xml;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using ParticleEngineTester.Scenes;
+    using ParticleEngineTester.UI;
 
     public class Main : Game
     {
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private SpriteFont fps;
-        private ISpriteRenderer renderer;
+        private IRenderer renderer;
         private IContentLoader contentLoader;
         private ISceneManger sceneManager;
+        private Label myLabel;
 
         public Main()
         {
@@ -42,7 +44,7 @@ namespace ParticleEngineTester
             Window.Title = "Particle Engine Tester";
 
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.renderer = new SpriteRenderer(this.spriteBatch);
+            this.renderer = new Renderer(this.spriteBatch);
             this.contentLoader = new ContentLoader(Content);
 
             this.sceneManager = new SceneManager(this.renderer, this.contentLoader, Window.ClientBounds.Width, Window.ClientBounds.Height);
@@ -56,12 +58,23 @@ namespace ParticleEngineTester
 
         protected override void LoadContent()
         {
+            this.myLabel = new Label(this.renderer, this.contentLoader, new MouseInput(), "Fonts/font-sample-1");
+
+            this.myLabel.Text = "Hello World.  It is a wonderful day";
+            this.myLabel.Location = new Vector2(400, 100);
+            this.myLabel.Forecolor = Color.Black;
+
+            this.myLabel.Right = Window.ClientBounds.Width;
+            this.myLabel.Bottom = Window.ClientBounds.Height;
+
             this.sceneManager.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
             this.sceneManager.Update(gameTime);
+
+            this.myLabel.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,6 +86,8 @@ namespace ParticleEngineTester
             this.renderer.Begin();
 
             this.sceneManager.Draw(gameTime);
+
+            this.myLabel.Draw(gameTime);
 
             this.renderer.End();
 

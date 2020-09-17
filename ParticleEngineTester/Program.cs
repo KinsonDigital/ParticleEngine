@@ -2,9 +2,9 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 #pragma warning restore SA1200 // Using directives should be placed correctly
 
@@ -15,6 +15,7 @@ namespace ParticleEngineTester
     /// <summary>
     /// Runs the application.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         [STAThread]

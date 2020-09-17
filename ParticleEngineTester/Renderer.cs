@@ -1,4 +1,4 @@
-﻿// <copyright file="SpriteRenderer.cs" company="KinsonDigital">
+﻿// <copyright file="Renderer.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -10,11 +10,11 @@ namespace ParticleEngineTester
     using Microsoft.Xna.Framework.Graphics;
 
     [ExcludeFromCodeCoverage]
-    public class SpriteRenderer : ISpriteRenderer
+    public class Renderer : IRenderer
     {
         private SpriteBatch? spriteBatch;
 
-        internal SpriteRenderer(SpriteBatch spriteBatch)
+        internal Renderer(SpriteBatch spriteBatch)
         {
             this.spriteBatch = spriteBatch;
         }
@@ -37,6 +37,23 @@ namespace ParticleEngineTester
             }
 
             this.spriteBatch.Draw(texture.InternalTexture, position, color);
+        }
+
+        public void DrawText(IFont font, string text, Vector2 position, Color color)
+        {
+            if (this.spriteBatch is null)
+            {
+                throw new NullReferenceException($"The internal sprite batch cannot be null.");
+            }
+
+            text = string.IsNullOrEmpty(text) ? string.Empty : text;
+
+            this.spriteBatch.DrawString(font.InternalFont, text, position, color);
+        }
+
+        public void DrawLine(float x1, float y1, float x2, float y2, Color color)
+        {
+            this.spriteBatch.DrawLine(x1, y1, x2, y2, color);
         }
 
         public void End()

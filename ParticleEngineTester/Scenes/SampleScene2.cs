@@ -10,7 +10,7 @@ namespace ParticleEngineTester.Scenes
     {
         private ITexture sampleTexture;
 
-        public SampleScene2(ISpriteRenderer renderer, IContentLoader contentLoader)
+        public SampleScene2(IRenderer renderer, IContentLoader contentLoader)
             : base(renderer, contentLoader)
         {
             Name = "SampleScene2";
@@ -18,7 +18,7 @@ namespace ParticleEngineTester.Scenes
 
         public override void LoadContent()
         {
-            this.sampleTexture = this.contentLoader.Load("sample-2");
+            this.sampleTexture = this.contentLoader.LoadTexture("Graphics/sample-2");
 
             base.LoadContent();
         }

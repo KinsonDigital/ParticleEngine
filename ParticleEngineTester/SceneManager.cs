@@ -9,31 +9,31 @@ namespace ParticleEngineTester
     using System.Collections.ObjectModel;
     using System.Reflection.Metadata.Ecma335;
     using Microsoft.Xna.Framework;
+    using ParticleEngineTester.UI;
 
     /// <summary>
     /// Manages scenes.
     /// </summary>
     public class SceneManager : ISceneManger
     {
-        private ISpriteRenderer renderer;
         private readonly List<IScene> scenes = new List<IScene>();
         private readonly int windowHeight;
         private readonly int windowWidth;
-        private readonly IButton previousButton;
-        private readonly IButton nextButton;
+        private readonly Control previousButton;
+        private readonly Control nextButton;
         private const int buttonSpacing = 10;
 
         /// <inheritdoc/>
-        public event EventHandler<EventArgs> EnabledChanged;
+        public event EventHandler<EventArgs>? EnabledChanged;
 
-        /// <inheritdoc/>
-        public event EventHandler<EventArgs> UpdateOrderChanged;
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? UpdateOrderChanged;
 
-        /// <inheritdoc/>
-        public event EventHandler<EventArgs> DrawOrderChanged;
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? DrawOrderChanged;
 
-        /// <inheritdoc/>
-        public event EventHandler<EventArgs> VisibleChanged;
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? VisibleChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManager"/> class.
@@ -42,7 +42,7 @@ namespace ParticleEngineTester
         /// <param name="contentLoader">Loads content for scenes in the scene manager.</param>
         /// <param name="windowWidth">The width of the window.</param>
         /// <param name="windowHeight">The height of the window.</param>
-        public SceneManager(ISpriteRenderer renderer, IContentLoader contentLoader, int windowWidth, int windowHeight)
+        public SceneManager(IRenderer renderer, IContentLoader contentLoader, int windowWidth, int windowHeight)
         {
             if (renderer is null)
             {
@@ -54,24 +54,22 @@ namespace ParticleEngineTester
                 throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
             }
 
-            this.renderer = renderer;
-
             this.windowWidth = windowWidth;
             this.windowHeight = windowHeight;
 
 #pragma warning disable IDE0017 // Simplify object initialization
-            this.nextButton = new Button(renderer, contentLoader, new MouseInput(), "next-button");
+            this.nextButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/next-button");
             this.nextButton.Right = this.windowWidth - buttonSpacing;
             this.nextButton.Bottom = this.windowHeight - buttonSpacing;
             this.nextButton.Click += NextButton_Click;
 
-            this.previousButton = new Button(renderer, contentLoader, new MouseInput(), "prev-button");
+            this.previousButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/prev-button");
             this.previousButton.Right = this.nextButton.Left - buttonSpacing;
             this.previousButton.Bottom = this.windowHeight - buttonSpacing;
             this.previousButton.Click += PreviousButton_Click;
 #pragma warning restore IDE0017 // Simplify object initialization
         }
-        
+
         /// <inheritdoc/>
         public bool Enabled { get; set; } = true;
 
@@ -163,6 +161,11 @@ namespace ParticleEngineTester
         private void NextButton_Click(object sender, EventArgs e)
         {
             NextScene();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,8 @@ namespace ParticleEngineTester
 {
     public interface IContentLoader
     {
-        ITexture Load(string content);
+        ITexture LoadTexture(string assetName);
+
+        IFont LoadFont(string assetName);
     }
 }

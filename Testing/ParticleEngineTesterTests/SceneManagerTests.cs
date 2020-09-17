@@ -23,8 +23,8 @@ namespace ParticleEngineTesterTests
             this.mockTexture = new Mock<ITexture>();
 
             this.mockContentLoader = new Mock<IContentLoader>();
-            this.mockContentLoader.Setup(m => m.Load("prev-button")).Returns(this.mockTexture.Object);
-            this.mockContentLoader.Setup(m => m.Load("next-button")).Returns(this.mockTexture.Object);
+            this.mockContentLoader.Setup(m => m.LoadTexture("Graphics/prev-button")).Returns(this.mockTexture.Object);
+            this.mockContentLoader.Setup(m => m.LoadTexture("Graphics/next-button")).Returns(this.mockTexture.Object);
         }
 
         #region Constructor Tests
@@ -44,7 +44,7 @@ namespace ParticleEngineTesterTests
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-                var manager = new SceneManager(new Mock<ISpriteRenderer>().Object, null, this.windowWidth, this.windowHeight);
+                var manager = new SceneManager(new Mock<IRenderer>().Object, null, this.windowWidth, this.windowHeight);
             }, "The parameter must not be null. (Parameter 'contentLoader')");
         }
 
@@ -178,6 +178,22 @@ namespace ParticleEngineTesterTests
             // Assert
             mockSceneA.Verify(m => m.LoadContent(), Times.Once());
             mockSceneB.Verify(m => m.LoadContent(), Times.Once());
+        }
+
+        [Fact]
+        public void Update_WhenNextButtonIsClicked_NextButtonClickInvoked()
+        {
+            // Arrange
+            var mockScene = new Mock<IScene>();
+
+            var manager = CreateSceneManager();
+
+            manager.AddScene(mockScene.Object);
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
         }
 
         [Fact]
@@ -326,7 +342,7 @@ namespace ParticleEngineTesterTests
 
         private SceneManager CreateSceneManager()
         {
-            return new SceneManager(new Mock<ISpriteRenderer>().Object, this.mockContentLoader.Object, this.windowWidth, this.windowHeight);
+            return new SceneManager(new Mock<IRenderer>().Object, this.mockContentLoader.Object, this.windowWidth, this.windowHeight);
         }
     }
 }

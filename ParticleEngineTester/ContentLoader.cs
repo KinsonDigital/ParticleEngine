@@ -19,11 +19,18 @@ namespace ParticleEngineTester
             this.contentManager = contentManager;
         }
 
-        public ITexture Load(string assetName)
+        public ITexture LoadTexture(string assetName)
         {
             var internalTexture = this.contentManager.Load<Texture2D>(assetName);
 
             return new Texture(internalTexture);
+        }
+
+        public IFont LoadFont(string assetName)
+        {
+            var internalFont = this.contentManager.Load<SpriteFont>(assetName);
+
+            return new Font(internalFont);
         }
     }
 }

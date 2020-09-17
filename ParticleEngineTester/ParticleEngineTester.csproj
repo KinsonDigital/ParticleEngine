@@ -22,6 +22,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Content\bin\Fonts\font-sample-1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Graphics\next-button.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Graphics\prev-button.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Graphics\sample-1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Graphics\sample-2.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\bin\next-button-hover.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

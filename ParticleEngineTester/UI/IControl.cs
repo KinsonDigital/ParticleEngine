@@ -1,13 +1,11 @@
-﻿// <copyright file="IButton.cs" company="KinsonDigital">
-// Copyright (c) KinsonDigital. All rights reserved.
-// </copyright>
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
 
-namespace ParticleEngineTester
+namespace ParticleEngineTester.UI
 {
-    using System;
-    using Microsoft.Xna.Framework;
-
-    public interface IButton : IUpdateable, IDrawable
+    public interface IControl : IUpdateable, IDrawable, IDisposable
     {
         event EventHandler<EventArgs>? Click;
 
@@ -24,5 +22,7 @@ namespace ParticleEngineTester
         int Top { get; set; }
 
         int Bottom { get; set; }
+
+        void OnClick();
     }
 }

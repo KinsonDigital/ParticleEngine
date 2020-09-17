@@ -4,13 +4,14 @@
 
 namespace ParticleEngineTester
 {
+    using System;
     using System.Collections.ObjectModel;
     using Microsoft.Xna.Framework;
 
     /// <summary>
     /// Manages scenes to be updated and rendered.
     /// </summary>
-    public interface ISceneManger : IUpdateable, IDrawable
+    public interface ISceneManger : IUpdateable, IDrawable, IDisposable
     {
         /// <summary>
         /// Gets a list of the scenes in the <see cref="ISceneManager"/>.

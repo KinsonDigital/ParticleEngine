@@ -12,9 +12,9 @@ namespace ParticleEngineTester
     public class Texture : ITexture
     {
 
-        internal Texture(Texture2D internalTexture)
+        public Texture(Texture2D internalTexture)
         {
-            this.InternalTexture = internalTexture;
+            InternalTexture = internalTexture;
         }
 
         public Texture2D InternalTexture { get; private set; }

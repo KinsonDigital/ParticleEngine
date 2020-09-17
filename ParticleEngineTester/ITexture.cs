@@ -12,6 +12,7 @@ namespace ParticleEngineTester
         int Width { get; }
 
         int Height { get; }
+
         Texture2D InternalTexture { get; }
 
         void GetData(Color[] data);

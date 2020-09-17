@@ -9,7 +9,7 @@ namespace ParticleEngineTester.Scenes
 
     public abstract class SceneBase : IScene
     {
-        protected readonly ISpriteRenderer renderer;
+        protected readonly IRenderer renderer;
         protected readonly IContentLoader contentLoader;
 
         public event EventHandler<EventArgs> EnabledChanged;
@@ -20,8 +20,18 @@ namespace ParticleEngineTester.Scenes
 
         public event EventHandler<EventArgs> VisibleChanged;
 
-        public SceneBase(ISpriteRenderer renderer, IContentLoader contentLoader)
+        public SceneBase(IRenderer renderer, IContentLoader contentLoader)
         {
+            if (renderer is null)
+            {
+                throw new ArgumentNullException(nameof(renderer), "The parameter must not be null.");
+            }
+
+            if (contentLoader is null)
+            {
+                throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
+            }
+
             this.renderer = renderer;
             this.contentLoader = contentLoader;
         }
@@ -38,7 +48,6 @@ namespace ParticleEngineTester.Scenes
 
         public virtual void LoadContent()
         {
-
         }
 
         public virtual void Draw(GameTime gameTime)
