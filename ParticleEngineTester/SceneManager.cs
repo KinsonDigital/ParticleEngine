@@ -94,7 +94,15 @@ namespace ParticleEngineTester
         public int CurrentSceneIndex { get; private set; }
 
         /// <inheritdoc/>
-        public void AddScene(IScene scene) => this.scenes.Add(scene);
+        public void AddScene(IScene scene)
+        {
+            if (SceneNameAlReadyExists(scene.Name))
+            {
+                throw new Exception($"A scene with the name '{scene.Name}' already has been added to the '{nameof(SceneManager)}'.  Duplicate scene names not aloud.'");
+            }
+
+            this.scenes.Add(scene);
+        }
 
         /// <inheritdoc/>
         public void LoadContent()
@@ -193,5 +201,30 @@ namespace ParticleEngineTester
         private void PreviousButton_Click(object? sender, EventArgs e) => PreviousScene();
 
         private void NextButton_Click(object? sender, EventArgs e) => NextScene();
+
+        /// <summary>
+        /// Returns true if the a scene with the given <paramref name="name"/> already exists.
+        /// </summary>
+        /// <param name="name">The name of the scene.</param>
+        /// <returns>True if the scene already exists.</returns>
+        private bool SceneNameAlReadyExists(string name)
+        {
+            var total = 0;
+
+            foreach (var scene in this.scenes)
+            {
+                if (scene.Name == name)
+                {
+                    total += 1;
+
+                    if (total >= 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

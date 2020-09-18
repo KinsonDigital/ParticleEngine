@@ -17,9 +17,14 @@ namespace ParticleEngineTester.Scenes
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneBase"/> class.
         /// </summary>
-        /// <param name="renderer">Thee renderer used to render the scene.</param>
+        /// <param name="renderer">The renderer used to render the scene.</param>
         /// <param name="contentLoader">Loads content related for all of the scenes.</param>
-        public SceneBase(IRenderer renderer, IContentLoader contentLoader)
+        /// <param name="name">The name of the scene.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if the <paramref name="renderer"/>, <paramref name="contentLoader"/>,
+        ///     or <paramref name="name"/> parameters are null.
+        /// </exception>
+        public SceneBase(IRenderer renderer, IContentLoader contentLoader, string name)
         {
             if (renderer is null)
             {
@@ -31,8 +36,14 @@ namespace ParticleEngineTester.Scenes
                 throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
             }
 
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name), "The parameter must not be null.");
+            }
+
             Renderer = renderer;
             ContentLoader = contentLoader;
+            Name = name;
         }
 
 #pragma warning disable CS0067 // The event is never used

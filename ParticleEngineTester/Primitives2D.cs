@@ -4,6 +4,7 @@
 
 #pragma warning disable SA1124 // Do not use regions
 #pragma warning disable SA1514 // Element documentation header should be preceded by blank line
+#pragma warning disable SA1515 //Single -CallerLineNumberAttribute comment should be preceded by blank line
 namespace ParticleEngineTester
 {
     using System;

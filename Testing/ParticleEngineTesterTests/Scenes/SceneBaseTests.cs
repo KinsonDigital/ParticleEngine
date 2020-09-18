@@ -11,6 +11,9 @@ namespace ParticleEngineTesterTests.Scenes
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="SceneBase"/> class.
+    /// </summary>
     public class SceneBaseTests
     {
         #region Constructor Tests
@@ -20,7 +23,7 @@ namespace ParticleEngineTesterTests.Scenes
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-                var scene = new FakeSceneBase(null, new Mock<IContentLoader>().Object);
+                var scene = new FakeSceneBase(null, new Mock<IContentLoader>().Object, null);
             }, "The parameter must not be null. (Parameter 'renderer')");
         }
 
@@ -30,8 +33,18 @@ namespace ParticleEngineTesterTests.Scenes
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-                var scene = new FakeSceneBase(new Mock<IRenderer>().Object, null);
+                var scene = new FakeSceneBase(new Mock<IRenderer>().Object, null, null);
             }, "The parameter must not be null. (Parameter 'contentLoader')");
+        }
+
+        [Fact]
+        public void Ctor_WithNullName_ThrowsException()
+        {
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
+            {
+                var scene = new FakeSceneBase(new Mock<IRenderer>().Object, new Mock<IContentLoader>().Object, null);
+            }, "The parameter must not be null. (Parameter 'name')");
         }
 
         [Fact]
@@ -41,10 +54,11 @@ namespace ParticleEngineTesterTests.Scenes
             var scene = CreateScene();
 
             // Act
+            scene.Name = "other-test-name";
             var actual = scene.Name;
 
             // Assert
-            Assert.Equal(string.Empty, actual);
+            Assert.Equal("other-test-name", actual);
         }
 
         [Fact]
@@ -100,9 +114,9 @@ namespace ParticleEngineTesterTests.Scenes
         }
         #endregion
 
-        private FakeSceneBase CreateScene()
+        private FakeSceneBase CreateScene(string name = "test-name")
         {
-            return new FakeSceneBase(new Mock<IRenderer>().Object, new Mock<IContentLoader>().Object);
+            return new FakeSceneBase(new Mock<IRenderer>().Object, new Mock<IContentLoader>().Object, name);
         }
     }
 }

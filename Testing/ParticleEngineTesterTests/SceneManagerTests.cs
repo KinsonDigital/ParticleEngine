@@ -11,6 +11,9 @@ namespace ParticleEngineTesterTests
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="SceneManager"/> class.
+    /// </summary>
     public class SceneManagerTests
     {
         private readonly Mock<ITexture> mockTexture;
@@ -162,12 +165,32 @@ namespace ParticleEngineTesterTests
         }
 
         [Fact]
+        public void AddScene_WithDuplicateSceneNames_ThrowsException()
+        {
+            // Arrange
+            var manager = CreateSceneManager();
+            var mockScene = new Mock<IScene>();
+            mockScene.SetupGet(p => p.Name).Returns("duplicate-scene");
+
+            manager.AddScene(mockScene.Object);
+
+            // Act & Assert
+            AssertHelpers.ThrowsWithMessage<Exception>(() =>
+            {
+                manager.AddScene(mockScene.Object);
+            }, $"A scene with the name 'duplicate-scene' already has been added to the '{nameof(SceneManager)}'.  Duplicate scene names not aloud.'");
+        }
+
+        [Fact]
         public void LoadContent_WhenInvoked_LoadsContentForAllScenes()
         {
             // Arrange
             var manager = CreateSceneManager();
             var mockSceneA = new Mock<IScene>();
+            mockSceneA.Setup(p => p.Name).Returns("scene-A");
+
             var mockSceneB = new Mock<IScene>();
+            mockSceneB.Setup(p => p.Name).Returns("scene-B");
 
             manager.AddScene(mockSceneA.Object);
             manager.AddScene(mockSceneB.Object);
@@ -201,7 +224,10 @@ namespace ParticleEngineTesterTests
         {
             // Arrange
             var mockSceneA = new Mock<IScene>();
+            mockSceneA.Setup(p => p.Name).Returns("scene-A");
+
             var mockSceneB = new Mock<IScene>();
+            mockSceneB.Setup(p => p.Name).Returns("scene-B");
 
             var manager = CreateSceneManager();
 
@@ -222,8 +248,10 @@ namespace ParticleEngineTesterTests
         {
             // Arrange
             var mockSceneA = new Mock<IScene>();
-            var mockSceneB = new Mock<IScene>();
+            mockSceneA.Setup(p => p.Name).Returns("scene-A");
 
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.Setup(p => p.Name).Returns("scene-B");
             var manager = CreateSceneManager();
 
             manager.AddScene(mockSceneA.Object);
@@ -243,8 +271,10 @@ namespace ParticleEngineTesterTests
         {
             // Arrange
             var mockSceneA = new Mock<IScene>();
-            var mockSceneB = new Mock<IScene>();
+            mockSceneA.Setup(p => p.Name).Returns("scene-A");
 
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.Setup(p => p.Name).Returns("scene-B");
             var manager = CreateSceneManager();
 
             manager.AddScene(mockSceneA.Object);
@@ -264,8 +294,10 @@ namespace ParticleEngineTesterTests
         {
             // Arrange
             var mockSceneA = new Mock<IScene>();
-            var mockSceneB = new Mock<IScene>();
+            mockSceneA.Setup(p => p.Name).Returns("scene-A");
 
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.Setup(p => p.Name).Returns("scene-B");
             var manager = CreateSceneManager();
 
             manager.AddScene(mockSceneA.Object);
@@ -292,7 +324,9 @@ namespace ParticleEngineTesterTests
 
             for (var i = 0; i < scenesToAdd; i++)
             {
-                manager.AddScene(new Mock<IScene>().Object);
+                var newScene = new Mock<IScene>();
+                newScene.SetupGet(p => p.Name).Returns($"scene-{i}");
+                manager.AddScene(newScene.Object);
             }
 
             // Act
@@ -319,7 +353,9 @@ namespace ParticleEngineTesterTests
 
             for (var i = 0; i < scenesToAdd; i++)
             {
-                manager.AddScene(new Mock<IScene>().Object);
+                var newScene = new Mock<IScene>();
+                newScene.SetupGet(p => p.Name).Returns($"scene-{i}");
+                manager.AddScene(newScene.Object);
             }
 
             for (var i = 0; i < nextSceneCount; i++)
@@ -340,6 +376,10 @@ namespace ParticleEngineTesterTests
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new scene manager for testing.
+        /// </summary>
+        /// <returns>New scene manager.</returns>
         private SceneManager CreateSceneManager()
         {
             return new SceneManager(new Mock<IRenderer>().Object, this.mockContentLoader.Object, this.windowWidth, this.windowHeight);
