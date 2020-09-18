@@ -47,6 +47,7 @@ namespace ParticleEngineTester.Scenes
         }
 
 #pragma warning disable CS0067 // The event is never used
+
         /// <inheritdoc/>
         public event EventHandler<EventArgs>? EnabledChanged;
 
@@ -58,6 +59,7 @@ namespace ParticleEngineTester.Scenes
 
         /// <inheritdoc/>
         public event EventHandler<EventArgs>? VisibleChanged;
+
 #pragma warning restore CS0067 // The event is never used
 
         /// <summary>

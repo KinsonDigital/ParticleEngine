@@ -4,13 +4,14 @@
 
 namespace ParticleEngineTester
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
     /// A simple 2D texture that can be rendered.
     /// </summary>
-    public interface ITexture
+    public interface ITexture : IDisposable
     {
         /// <summary>
         /// Gets the width of the <see cref="ITexture"/>.

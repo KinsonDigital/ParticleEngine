@@ -4,6 +4,7 @@
 
 namespace ParticleEngineTester
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +15,8 @@ namespace ParticleEngineTester
     [ExcludeFromCodeCoverage]
     public class Texture : ITexture
     {
+        private bool isDisposed;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Texture"/> class.
         /// </summary>
@@ -34,5 +37,33 @@ namespace ParticleEngineTester
 
         /// <inheritdoc/>
         public void SetData(Color[] data) => InternalTexture.SetData(data);
+
+        /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
+        [ExcludeFromCodeCoverage]
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                InternalTexture.Dispose();
+            }
+
+            this.isDisposed = true;
+        }
     }
 }

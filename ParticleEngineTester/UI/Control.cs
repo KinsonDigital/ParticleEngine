@@ -28,6 +28,7 @@ namespace ParticleEngineTester.UI
         public event EventHandler<EventArgs>? Click;
 
 #pragma warning disable CS0067 // The event is never used
+
         /// <inheritdoc/>
         public event EventHandler<EventArgs>? EnabledChanged;
 
@@ -39,6 +40,7 @@ namespace ParticleEngineTester.UI
 
         /// <inheritdoc/>
         public event EventHandler<EventArgs>? VisibleChanged;
+
 #pragma warning restore CS0067 // The event is never used
 
         /// <inheritdoc/>

@@ -67,6 +67,44 @@ namespace ParticleEngineTester
         }
 
         /// <inheritdoc/>
+        public void Draw(ITexture texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float layerDepth)
+        {
+            if (this.spriteBatch is null)
+            {
+                throw new NullReferenceException($"The internal sprite batch cannot be null.");
+            }
+
+            this.spriteBatch.Draw(
+                texture.InternalTexture,
+                destinationRectangle,
+                sourceRectangle,
+                color,
+                rotation,
+                origin,
+                SpriteEffects.None,
+                layerDepth);
+        }
+
+        /// <inheritdoc/>
+        public void Draw(ParticleTexture texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float layerDepth)
+        {
+            if (this.spriteBatch is null)
+            {
+                throw new NullReferenceException($"The internal sprite batch cannot be null.");
+            }
+
+            this.spriteBatch.Draw(
+                texture.MonoTexture,
+                destinationRectangle,
+                sourceRectangle,
+                color,
+                rotation,
+                origin,
+                SpriteEffects.None,
+                layerDepth);
+        }
+
+        /// <inheritdoc/>
         public void DrawLine(float x1, float y1, float x2, float y2, Color color) => this.spriteBatch?.DrawLine(x1, y1, x2, y2, color);
 
         /// <inheritdoc/>

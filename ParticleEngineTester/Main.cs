@@ -22,7 +22,6 @@ namespace ParticleEngineTester
         private IRenderer? renderer;
         private IContentLoader? contentLoader;
         private ISceneManger? sceneManager;
-        private Label? myLabel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
@@ -66,16 +65,6 @@ namespace ParticleEngineTester
                 throw new Exception("The renderer and content loader must not be null.");
             }
 
-            this.myLabel = new Label(this.renderer, this.contentLoader, new MouseInput(), "Fonts/font-sample-1")
-            {
-                Text = "Hello World.  It is a wonderful day",
-                Location = new Vector2(400, 100),
-                Forecolor = Color.Black,
-
-                Right = Window.ClientBounds.Width,
-                Bottom = Window.ClientBounds.Height,
-            };
-
             this.sceneManager?.LoadContent();
         }
 
@@ -83,8 +72,6 @@ namespace ParticleEngineTester
         protected override void Update(GameTime gameTime)
         {
             this.sceneManager?.Update(gameTime);
-
-            this.myLabel?.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -97,8 +84,6 @@ namespace ParticleEngineTester
             this.renderer?.Begin();
 
             this.sceneManager?.Draw(gameTime);
-
-            this.myLabel?.Draw(gameTime);
 
             this.renderer?.End();
 

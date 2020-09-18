@@ -23,7 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Content\bin\Fonts\font-sample-1.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Graphics\gear-particle.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Content\bin\Graphics\next-button.xnb">

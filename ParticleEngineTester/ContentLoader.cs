@@ -27,6 +27,8 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         public ITexture LoadTexture(string assetName)
         {
+            // TODO: Catch the exception here where the content cannot be found and
+            // suggest that maybe they are missing the Graphics or Fonts folder prefix.
             var internalTexture = this.contentManager.Load<Texture2D>(assetName);
 
             return new Texture(internalTexture);
