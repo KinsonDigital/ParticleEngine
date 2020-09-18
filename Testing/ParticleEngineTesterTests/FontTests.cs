@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ParticleEngineTester;
-using ParticleEngineTesterTests.Helpers;
-using Xunit;
+﻿// <copyright file="FontTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTesterTests
 {
+    using System;
+    using ParticleEngineTester;
+    using ParticleEngineTesterTests.Helpers;
+    using Xunit;
+
     public class FontTests
     {
         #region Constructor Tests
@@ -18,7 +18,6 @@ namespace ParticleEngineTesterTests
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-
                 var font = new Font(null);
             }, "The parameter must not be null. (Parameter 'font')");
         }

@@ -38,6 +38,10 @@ namespace ParticleSandbox
 
 
         #region Protected Methods
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.isDisposed)
@@ -45,7 +49,6 @@ namespace ParticleSandbox
 
             if (disposing)
                 MonoTexture.Dispose();
-
 
             this.isDisposed = true;
         }

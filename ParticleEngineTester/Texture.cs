@@ -8,29 +8,31 @@ namespace ParticleEngineTester
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    /// <summary>
+    /// A simple 2D texture that can be rendered.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public class Texture : ITexture
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Texture"/> class.
+        /// </summary>
+        /// <param name="internalTexture">The internal monogame texture.</param>
+        public Texture(Texture2D internalTexture) => InternalTexture = internalTexture;
 
-        public Texture(Texture2D internalTexture)
-        {
-            InternalTexture = internalTexture;
-        }
-
+        /// <inheritdoc/>
         public Texture2D InternalTexture { get; private set; }
 
+        /// <inheritdoc/>
         public int Width => InternalTexture.Width;
 
+        /// <inheritdoc/>
         public int Height => InternalTexture.Height;
 
-        public void GetData(Color[] data)
-        {
-            InternalTexture.GetData(data);
-        }
+        /// <inheritdoc/>
+        public void GetData(Color[] data) => InternalTexture.GetData(data);
 
-        public void SetData(Color[] data)
-        {
-            InternalTexture.SetData(data);
-        }
+        /// <inheritdoc/>
+        public void SetData(Color[] data) => InternalTexture.SetData(data);
     }
 }

@@ -29,10 +29,19 @@ namespace ParticleEngineTester
         /// <param name="scene">The scene to add.</param>
         void AddScene(IScene scene);
 
+        /// <summary>
+        /// Loads the scenes content.
+        /// </summary>
         void LoadContent();
 
+        /// <summary>
+        /// Moves to the next scene.
+        /// </summary>
         void NextScene();
 
+        /// <summary>
+        /// Moves to the next scene.
+        /// </summary>
         void PreviousScene();
     }
 }

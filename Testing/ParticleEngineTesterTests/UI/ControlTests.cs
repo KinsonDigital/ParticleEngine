@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Moq;
-using ParticleEngineTester;
-using ParticleEngineTesterTests.Fakes;
-using ParticleEngineTesterTests.Helpers;
-using Xunit;
+﻿// <copyright file="ControlTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTesterTests.UI
 {
+    using System;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+    using Moq;
+    using ParticleEngineTester;
+    using ParticleEngineTesterTests.Fakes;
+    using ParticleEngineTesterTests.Helpers;
+    using Xunit;
+
     public class ControlTests
     {
         private readonly Mock<IMouse> mockMouse;
 
-        public ControlTests()
-        {
-            this.mockMouse = new Mock<IMouse>();
-        }
+        public ControlTests() => this.mockMouse = new Mock<IMouse>();
 
         #region Prop Tests
         [Fact]
@@ -45,7 +43,7 @@ namespace ParticleEngineTesterTests.UI
 
             control.Click += (sender, e) =>
             {
-                hasInvoked = true;// This should not be invoked for the purpose of the test
+                hasInvoked = true; // This should not be invoked for the purpose of the test
             };
 
             // Act

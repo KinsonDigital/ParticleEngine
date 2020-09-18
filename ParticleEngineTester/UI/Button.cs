@@ -4,22 +4,27 @@
 
 namespace ParticleEngineTester.UI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http.Headers;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Input;
 
+    /// <summary>
+    /// A simple button that can be rendered and clicked using the mouse.
+    /// </summary>
     public class Button : Control
     {
-        private IRenderer renderer;
-        private ITexture texture;
-        private Color[] normalPixels;
-        private Color[] mouseHoverPixels;
-        private Color[] mouseDownPixels;
-        private Color[] disabledPixels;
+        private readonly IRenderer renderer;
+        private readonly ITexture texture;
+        private readonly Color[] normalPixels;
+        private readonly Color[] mouseHoverPixels;
+        private readonly Color[] mouseDownPixels;
+        private readonly Color[] disabledPixels;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Button"/> class.
+        /// </summary>
+        /// <param name="renderer">The renderer used to render the <see cref="Button"/>.</param>
+        /// <param name="contentLoader">Loads content for the <see cref="Button"/>.</param>
+        /// <param name="mouse">The mouse that will interact with the <see cref="Button"/>.</param>
+        /// <param name="textureContent">The name of the button texture content to load.</param>
         public Button(
             IRenderer renderer,
             IContentLoader contentLoader,
@@ -80,18 +85,17 @@ namespace ParticleEngineTester.UI
             };
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
+        /// <inheritdoc/>
+        public override void Update(GameTime gameTime) => base.Update(gameTime);
 
+        /// <inheritdoc/>
         public override void Draw(GameTime gameTime)
         {
             if (Enabled)
             {
-                if (this.isMouseOver)
+                if (IsMouseOver)
                 {
-                    if (this.isMouseDown)
+                    if (IsMouseDown)
                     {
                         this.texture.SetData(this.mouseDownPixels);
                     }
@@ -115,6 +119,12 @@ namespace ParticleEngineTester.UI
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Returns the given <paramref name="value"/> by the given <paramref name="percentage"/> amount.
+        /// </summary>
+        /// <param name="value">The value to increase.</param>
+        /// <param name="percentage">The percentage to increase the <paramref name="value"/> by.</param>
+        /// <returns>The <paramref name="value"/> increased by the given <paramref name="percentage"/>.</returns>
         private byte IncreaseValue(byte value, float percentage)
         {
             int intValue = value;

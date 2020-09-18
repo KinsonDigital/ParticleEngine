@@ -4,15 +4,16 @@
 
 namespace ParticleEngineTester
 {
+    using System;
     using Microsoft.Xna.Framework;
 
     /// <summary>
     /// A single scene that can be updated and rendered.
     /// </summary>
-    public interface IScene : IUpdateable, IDrawable
+    public interface IScene : IUpdateable, IDrawable, IDisposable
     {
         /// <summary>
-        /// Gets or sets the name of the scene.
+        /// Gets the name of the scene.
         /// </summary>
         string Name { get; }
 

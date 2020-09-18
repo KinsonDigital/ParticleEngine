@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using Microsoft.Xna.Framework.Input;
-
 namespace ParticleEngineTester
 {
+    using Microsoft.Xna.Framework.Input;
+
     public interface IMouse
     {
         MouseState GetState();

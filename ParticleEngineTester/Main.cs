@@ -7,21 +7,26 @@ namespace ParticleEngineTester
     using System;
     using System.IO;
     using System.Reflection;
-    using System.Xml;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using ParticleEngineTester.Scenes;
     using ParticleEngineTester.UI;
 
+    /// <summary>
+    /// The main part of the application.
+    /// </summary>
     public class Main : Game
     {
         private readonly GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private IRenderer renderer;
-        private IContentLoader contentLoader;
-        private ISceneManger sceneManager;
-        private Label myLabel;
+        private SpriteBatch? spriteBatch;
+        private IRenderer? renderer;
+        private IContentLoader? contentLoader;
+        private ISceneManger? sceneManager;
+        private Label? myLabel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Main"/> class.
+        /// </summary>
         public Main()
         {
             this.graphics = new GraphicsDeviceManager(this);
@@ -37,6 +42,7 @@ namespace ParticleEngineTester
             };
         }
 
+        /// <inheritdoc/>
         protected override void Initialize()
         {
             Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\bin\";
@@ -48,48 +54,53 @@ namespace ParticleEngineTester
             this.contentLoader = new ContentLoader(Content);
 
             this.sceneManager = new SceneManager(this.renderer, this.contentLoader, Window.ClientBounds.Width, Window.ClientBounds.Height);
-            IScene sampleScene1 = new SampleScene1(this.renderer, this.contentLoader);
-            IScene sampleScene2 = new SampleScene2(this.renderer, this.contentLoader);
-            this.sceneManager.AddScene(sampleScene1);
-            this.sceneManager.AddScene(sampleScene2);
 
             base.Initialize();
         }
 
+        /// <inheritdoc/>
         protected override void LoadContent()
         {
-            this.myLabel = new Label(this.renderer, this.contentLoader, new MouseInput(), "Fonts/font-sample-1");
+            if (this.renderer is null || this.contentLoader is null)
+            {
+                throw new Exception("The renderer and content loader must not be null.");
+            }
 
-            this.myLabel.Text = "Hello World.  It is a wonderful day";
-            this.myLabel.Location = new Vector2(400, 100);
-            this.myLabel.Forecolor = Color.Black;
+            this.myLabel = new Label(this.renderer, this.contentLoader, new MouseInput(), "Fonts/font-sample-1")
+            {
+                Text = "Hello World.  It is a wonderful day",
+                Location = new Vector2(400, 100),
+                Forecolor = Color.Black,
 
-            this.myLabel.Right = Window.ClientBounds.Width;
-            this.myLabel.Bottom = Window.ClientBounds.Height;
+                Right = Window.ClientBounds.Width,
+                Bottom = Window.ClientBounds.Height,
+            };
 
-            this.sceneManager.LoadContent();
+            this.sceneManager?.LoadContent();
         }
 
+        /// <inheritdoc/>
         protected override void Update(GameTime gameTime)
         {
-            this.sceneManager.Update(gameTime);
+            this.sceneManager?.Update(gameTime);
 
-            this.myLabel.Update(gameTime);
+            this.myLabel?.Update(gameTime);
 
             base.Update(gameTime);
         }
 
+        /// <inheritdoc/>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            this.renderer.Begin();
+            this.renderer?.Begin();
 
-            this.sceneManager.Draw(gameTime);
+            this.sceneManager?.Draw(gameTime);
 
-            this.myLabel.Draw(gameTime);
+            this.myLabel?.Draw(gameTime);
 
-            this.renderer.End();
+            this.renderer?.End();
 
             base.Draw(gameTime);
         }

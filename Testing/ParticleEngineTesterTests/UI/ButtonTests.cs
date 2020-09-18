@@ -7,10 +7,8 @@ namespace ParticleEngineTesterTests.UI
     using System;
     using System.Linq;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Moq;
-    using NuGet.Frameworks;
     using ParticleEngineTester;
     using ParticleEngineTester.UI;
     using Xunit;

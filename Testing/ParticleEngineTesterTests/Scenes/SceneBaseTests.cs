@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Moq;
-using ParticleEngineTester;
-using ParticleEngineTesterTests.Fakes;
-using ParticleEngineTesterTests.Helpers;
-using Xunit;
+﻿// <copyright file="SceneBaseTests.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
 
 namespace ParticleEngineTesterTests.Scenes
 {
+    using System;
+    using Moq;
+    using ParticleEngineTester;
+    using ParticleEngineTesterTests.Fakes;
+    using ParticleEngineTesterTests.Helpers;
+    using Xunit;
+
     public class SceneBaseTests
     {
         #region Constructor Tests

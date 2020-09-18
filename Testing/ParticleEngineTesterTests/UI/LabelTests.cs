@@ -2,18 +2,16 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Moq;
-using ParticleEngineTester;
-using ParticleEngineTester.UI;
-using Xunit;
-
 namespace ParticleEngineTesterTests.UI
 {
+    using System;
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+    using Moq;
+    using ParticleEngineTester;
+    using ParticleEngineTester.UI;
+    using Xunit;
+
     public class LabelTests
     {
         private readonly Mock<IRenderer> mockRenderer;

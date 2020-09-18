@@ -7,7 +7,7 @@ namespace ParticleEngineTester
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Reflection.Metadata.Ecma335;
+    using System.Linq;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.UI;
 
@@ -16,24 +16,13 @@ namespace ParticleEngineTester
     /// </summary>
     public class SceneManager : ISceneManger
     {
+        private const int ButtonSpacing = 10;
         private readonly List<IScene> scenes = new List<IScene>();
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly Control previousButton;
         private readonly Control nextButton;
-        private const int buttonSpacing = 10;
-
-        /// <inheritdoc/>
-        public event EventHandler<EventArgs>? EnabledChanged;
-
-        /// <inheritdoc/>?
-        public event EventHandler<EventArgs>? UpdateOrderChanged;
-
-        /// <inheritdoc/>?
-        public event EventHandler<EventArgs>? DrawOrderChanged;
-
-        /// <inheritdoc/>?
-        public event EventHandler<EventArgs>? VisibleChanged;
+        private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManager"/> class.
@@ -59,16 +48,30 @@ namespace ParticleEngineTester
 
 #pragma warning disable IDE0017 // Simplify object initialization
             this.nextButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/next-button");
-            this.nextButton.Right = this.windowWidth - buttonSpacing;
-            this.nextButton.Bottom = this.windowHeight - buttonSpacing;
+            this.nextButton.Right = this.windowWidth - ButtonSpacing;
+            this.nextButton.Bottom = this.windowHeight - ButtonSpacing;
             this.nextButton.Click += NextButton_Click;
 
             this.previousButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/prev-button");
-            this.previousButton.Right = this.nextButton.Left - buttonSpacing;
-            this.previousButton.Bottom = this.windowHeight - buttonSpacing;
+            this.previousButton.Right = this.nextButton.Left - ButtonSpacing;
+            this.previousButton.Bottom = this.windowHeight - ButtonSpacing;
             this.previousButton.Click += PreviousButton_Click;
 #pragma warning restore IDE0017 // Simplify object initialization
         }
+
+#pragma warning disable CS0067 // The event is never used
+        /// <inheritdoc/>
+        public event EventHandler<EventArgs>? EnabledChanged;
+
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? UpdateOrderChanged;
+
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? DrawOrderChanged;
+
+        /// <inheritdoc/>?
+        public event EventHandler<EventArgs>? VisibleChanged;
+#pragma warning restore CS0067 // The event is never used
 
         /// <inheritdoc/>
         public bool Enabled { get; set; } = true;
@@ -85,14 +88,15 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         public ReadOnlyCollection<IScene> Scenes => new ReadOnlyCollection<IScene>(this.scenes);
 
+        /// <summary>
+        /// Gets the index of the currently active scene.
+        /// </summary>
         public int CurrentSceneIndex { get; private set; }
 
         /// <inheritdoc/>
-        public void AddScene(IScene scene)
-        {
-            this.scenes.Add(scene);
-        }
+        public void AddScene(IScene scene) => this.scenes.Add(scene);
 
+        /// <inheritdoc/>
         public void LoadContent()
         {
             foreach (var scene in this.scenes)
@@ -101,6 +105,7 @@ namespace ParticleEngineTester
             }
         }
 
+        /// <inheritdoc/>
         public void NextScene()
         {
             if (this.scenes.Count <= 0)
@@ -113,6 +118,7 @@ namespace ParticleEngineTester
                 : CurrentSceneIndex + 1;
         }
 
+        /// <inheritdoc/>
         public void PreviousScene()
         {
             if (this.scenes.Count <= 0)
@@ -133,7 +139,10 @@ namespace ParticleEngineTester
                 return;
             }
 
-            this.scenes[CurrentSceneIndex].Update(gameTime);
+            if (this.scenes.Count > 0)
+            {
+                this.scenes[CurrentSceneIndex].Update(gameTime);
+            }
 
             this.previousButton.Update(gameTime);
             this.nextButton.Update(gameTime);
@@ -147,25 +156,42 @@ namespace ParticleEngineTester
                 return;
             }
 
-            this.scenes[CurrentSceneIndex].Draw(gameTime);
+            if (this.scenes.Count > 0)
+            {
+                this.scenes[CurrentSceneIndex].Draw(gameTime);
+            }
 
             this.previousButton.Draw(gameTime);
             this.nextButton.Draw(gameTime);
         }
 
-        private void PreviousButton_Click(object sender, EventArgs e)
+        /// <inheritdoc/>
+        public void Dispose() => throw new NotImplementedException();
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="disposing">True to dispose of managed resources.</param>
+        protected virtual void Dispose(bool disposing)
         {
-            PreviousScene();
+            if (this.isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                foreach (var scene in this.scenes)
+                {
+                    scene.Dispose();
+                }
+            }
+
+            this.isDisposed = true;
         }
 
-        private void NextButton_Click(object sender, EventArgs e)
-        {
-            NextScene();
-        }
+        private void PreviousButton_Click(object? sender, EventArgs e) => PreviousScene();
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        private void NextButton_Click(object? sender, EventArgs e) => NextScene();
     }
 }

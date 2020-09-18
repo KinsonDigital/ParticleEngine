@@ -110,7 +110,7 @@ namespace KDParticleEngine
                             break;
                         case ParticleAttribute.Color:
                             // Create the color
-                            var (clrParseSuccess, componentValue, parseFailReason) = TryParse(this.behaviors[i].Value, out ParticleColor result);
+                            var (clrParseSuccess, componentValue, parseFailReason) = TryParse(this.behaviors[i].Value, out var result);
 
                             if (!clrParseSuccess)
                             {
