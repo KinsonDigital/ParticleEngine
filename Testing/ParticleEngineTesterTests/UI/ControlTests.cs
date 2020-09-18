@@ -13,10 +13,16 @@ namespace ParticleEngineTesterTests.UI
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="Control"/> class.
+    /// </summary>
     public class ControlTests
     {
         private readonly Mock<IMouse> mockMouse;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlTests"/> class.
+        /// </summary>
         public ControlTests() => this.mockMouse = new Mock<IMouse>();
 
         #region Prop Tests

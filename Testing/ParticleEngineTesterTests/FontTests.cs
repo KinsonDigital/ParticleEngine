@@ -9,6 +9,9 @@ namespace ParticleEngineTesterTests
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="Font"/> class.
+    /// </summary>
     public class FontTests
     {
         #region Constructor Tests

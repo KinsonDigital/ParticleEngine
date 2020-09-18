@@ -21,6 +21,9 @@ namespace ParticleEngineTesterTests
         private readonly int windowWidth = 800;
         private readonly int windowHeight = 400;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SceneManagerTests"/> class.
+        /// </summary>
         public SceneManagerTests()
         {
             this.mockTexture = new Mock<ITexture>();

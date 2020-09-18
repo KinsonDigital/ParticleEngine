@@ -12,6 +12,9 @@ namespace ParticleEngineTesterTests.UI
     using ParticleEngineTester.UI;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="Label"/> class.
+    /// </summary>
     public class LabelTests
     {
         private readonly Mock<IRenderer> mockRenderer;
@@ -19,6 +22,9 @@ namespace ParticleEngineTesterTests.UI
         private readonly Mock<IMouse> mockMouse;
         private readonly Mock<IFont> mockFont;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LabelTests"/> class.
+        /// </summary>
         public LabelTests()
         {
             this.mockRenderer = new Mock<IRenderer>();

@@ -13,6 +13,9 @@ namespace ParticleEngineTesterTests.UI
     using ParticleEngineTester.UI;
     using Xunit;
 
+    /// <summary>
+    /// Tests the <see cref="Button"/> class.
+    /// </summary>
     public class ButtonTests
     {
         private readonly Mock<IRenderer> mockRenderer;
@@ -21,6 +24,9 @@ namespace ParticleEngineTesterTests.UI
         private readonly Mock<ITexture> mockTexture;
         private Color[] normalPixels;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ButtonTests"/> class.
+        /// </summary>
         public ButtonTests()
         {
             this.mockRenderer = new Mock<IRenderer>();
