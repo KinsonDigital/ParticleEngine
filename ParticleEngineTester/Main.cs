@@ -1,4 +1,4 @@
-// <copyright file="Main.cs" company="KinsonDigital">
+﻿// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -152,13 +152,14 @@ namespace ParticleEngineTester
 
             var menuScene = new MenuScene(this.renderer, this.contentLoader, "menu-scene");
 
-            menuScene.ChangedScene += MenuScene_ChangedScene;
+            menuScene.MenuClicked += MenuScene_MenuClicked;
 
             IScene angularVelScene = new AngularVelocityScene(this.renderer, this.contentLoader, "angular-velocity-scene");
+            IScene xVelScene = new XVelocityScene(this.renderer, this.contentLoader, "x-velocity-scene");
 
             this.sceneManager?.AddScene(menuScene);
             this.sceneManager?.AddScene(angularVelScene);
-        }
+            this.sceneManager?.AddScene(xVelScene);
         }
     }
 }

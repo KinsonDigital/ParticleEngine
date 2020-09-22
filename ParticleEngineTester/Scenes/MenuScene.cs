@@ -1,4 +1,4 @@
-// <copyright file="MenuScene.cs" company="KinsonDigital">
+﻿// <copyright file="MenuScene.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -42,6 +42,7 @@ namespace ParticleEngineTester.Scenes
             this.menu.ItemClicked += Menu_ItemClicked;
 
             this.menu.Add("angular-velocity", "Angular Velocity", Color.White);
+            this.menu.Add("x-velocity", "X Velocity", Color.White);
             this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
 
             base.LoadContent();
@@ -71,6 +72,9 @@ namespace ParticleEngineTester.Scenes
             switch (e.MenuItemName)
             {
                 case "angular-velocity":
+                    this.MenuClicked?.Invoke(this, e);
+                    break;
+                case "x-velocity":
                     this.MenuClicked?.Invoke(this, e);
                     break;
             }
