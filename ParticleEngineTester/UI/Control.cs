@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.UI
 {
     using System;
+    using System.Runtime.CompilerServices;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
@@ -16,7 +17,8 @@ namespace ParticleEngineTester.UI
         private readonly IMouse mouse;
         private MouseState currentMouseState;
         private MouseState previousMouseState;
-        private bool isDisposed;
+        private bool currentMouseOver;
+        private bool previousMouseOver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -25,7 +27,13 @@ namespace ParticleEngineTester.UI
         public Control(IMouse mouse) => this.mouse = mouse;
 
         /// <inheritdoc/>
-        public event EventHandler<EventArgs>? Click;
+        public event EventHandler<ClickedEventArgs>? Click;
+
+        /// <inheritdoc/>
+        public event EventHandler<EventArgs>? MouseEnter;
+
+        /// <inheritdoc/>
+        public event EventHandler<EventArgs>? MouseLeave;
 
 #pragma warning disable CS0067 // The event is never used
 
@@ -42,6 +50,9 @@ namespace ParticleEngineTester.UI
         public event EventHandler<EventArgs>? VisibleChanged;
 
 #pragma warning restore CS0067 // The event is never used
+
+        /// <inheritdoc/>
+        public string Name { get; set; } = string.Empty;
 
         /// <inheritdoc/>
         public Vector2 Location { get; set; } = Vector2.Zero;
@@ -70,7 +81,7 @@ namespace ParticleEngineTester.UI
         public int Top
         {
             get => (int)Location.Y;
-            set => Location = new Vector2(Location.Y, value);
+            set => Location = new Vector2(Location.X, value);
         }
 
         /// <inheritdoc/>
@@ -103,6 +114,11 @@ namespace ParticleEngineTester.UI
         internal Func<int>? GetHeight { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether if the <see cref="Control"/> has been disposed.
+        /// </summary>
+        protected bool IsDisposed { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether the mouse is in the down position over the <see cref="Control"/>.
         /// </summary>
         protected bool IsMouseDown { get; private set; }
@@ -117,11 +133,13 @@ namespace ParticleEngineTester.UI
         {
             this.currentMouseState = this.mouse.GetState();
 
-            var isMouseOver = new Rectangle((int)Location.X, (int)Location.Y, Width, Height)
+            var isMouseOverControl = new Rectangle((int)Location.X, (int)Location.Y, Width, Height)
                 .Contains(this.currentMouseState.X, this.currentMouseState.Y);
 
+            this.currentMouseOver = isMouseOverControl;
+
             // If the mouse is over the button
-            if (isMouseOver)
+            if (isMouseOverControl)
             {
                 IsMouseOver = true;
 
@@ -140,11 +158,9 @@ namespace ParticleEngineTester.UI
                 IsMouseOver = false;
             }
 
-            if (IsMouseOver && this.currentMouseState.LeftButton == ButtonState.Released && this.previousMouseState.LeftButton == ButtonState.Pressed)
-            {
-                this.Click?.Invoke(this, new EventArgs());
-            }
+            ProcessMouseEvents();
 
+            this.previousMouseOver = this.currentMouseOver;
             this.previousMouseState = this.currentMouseState;
         }
 
@@ -154,7 +170,7 @@ namespace ParticleEngineTester.UI
         }
 
         /// <inheritdoc/>
-        public virtual void OnClick() => this.Click?.Invoke(this, new EventArgs());
+        public virtual void OnClick(object? sender, ClickedEventArgs e) => this.Click?.Invoke(sender, e);
 
         /// <inheritdoc/>
         public void Dispose()
@@ -169,7 +185,7 @@ namespace ParticleEngineTester.UI
         /// <param name="disposing">True to dispose of managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (this.isDisposed)
+            if (IsDisposed)
             {
                 return;
             }
@@ -180,12 +196,35 @@ namespace ParticleEngineTester.UI
                 {
                     foreach (var subscription in this.Click.GetInvocationList())
                     {
-                        this.Click -= subscription as EventHandler<EventArgs>;
+                        this.Click -= subscription as EventHandler<ClickedEventArgs>;
+                        this.MouseEnter -= subscription as EventHandler<EventArgs>;
+                        this.MouseLeave -= subscription as EventHandler<EventArgs>;
                     }
                 }
             }
 
-            this.isDisposed = true;
+            IsDisposed = true;
+        }
+
+        /// <summary>
+        /// Processes all of t he mouse related events.
+        /// </summary>
+        private void ProcessMouseEvents()
+        {
+            if (this.currentMouseOver == true && this.previousMouseOver == false)
+            {
+                this.MouseEnter?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (this.currentMouseOver == false && this.previousMouseOver == true)
+            {
+                this.MouseLeave?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (IsMouseOver && this.currentMouseState.LeftButton == ButtonState.Released && this.previousMouseState.LeftButton == ButtonState.Pressed)
+            {
+                OnClick(this, new ClickedEventArgs(Name));
+            }
         }
     }
 }

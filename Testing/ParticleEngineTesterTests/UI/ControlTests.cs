@@ -9,6 +9,7 @@ namespace ParticleEngineTesterTests.UI
     using Microsoft.Xna.Framework.Input;
     using Moq;
     using ParticleEngineTester;
+    using ParticleEngineTester.UI;
     using ParticleEngineTesterTests.Fakes;
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
@@ -55,7 +56,7 @@ namespace ParticleEngineTesterTests.UI
             // Act
             control.Dispose();
             control.Dispose();
-            control.OnClick();
+            control.OnClick(control, new ClickedEventArgs("test-control"));
 
             // Assert
             Assert.False(hasInvoked);
@@ -106,13 +107,16 @@ namespace ParticleEngineTesterTests.UI
         {
             // Arrange
             var control = CreateControl();
+            control.Location = new Vector2(0, 456);
 
             // Act
-            control.Left = 1234;
+            control.Left = 123;
             var actual = control.Left;
+            var actualLocation = control.Location;
 
             // Assert
-            Assert.Equal(1234, actual);
+            Assert.Equal(123, actual);
+            Assert.Equal(new Vector2(123, 456), actualLocation);
         }
 
         [Fact]
@@ -120,14 +124,16 @@ namespace ParticleEngineTesterTests.UI
         {
             // Arrange
             var control = CreateControl();
+            control.Location = new Vector2(0, 456);
 
             // Act
-            control.Right = 1000;
-            var actual = control.Right;
+            control.Right = 200;
+            var actualRight = control.Right;
+            var actualLocation = control.Location;
 
             // Assert
-            Assert.Equal(1000, actual);
-            Assert.Equal(900, control.Left);
+            Assert.Equal(200, actualRight);
+            Assert.Equal(new Vector2(100, 456), actualLocation);
         }
 
         [Fact]
@@ -135,13 +141,16 @@ namespace ParticleEngineTesterTests.UI
         {
             // Arrange
             var control = CreateControl();
+            control.Location = new Vector2(123, 0);
 
             // Act
-            control.Top = 1234;
-            var actual = control.Top;
+            control.Top = 456;
+            var actualLeft = control.Top;
+            var actualLocation = control.Location;
 
             // Assert
-            Assert.Equal(1234, actual);
+            Assert.Equal(456, actualLeft);
+            Assert.Equal(new Vector2(123, 456), actualLocation);
         }
 
         [Fact]
@@ -149,14 +158,16 @@ namespace ParticleEngineTesterTests.UI
         {
             // Arrange
             var control = CreateControl();
+            control.Location = new Vector2(123, 0);
 
             // Act
-            control.Bottom = 1000;
-            var actual = control.Bottom;
+            control.Bottom = 456;
+            var actualBottom = control.Bottom;
+            var actualLocation = control.Location;
 
             // Assert
-            Assert.Equal(1000, actual);
-            Assert.Equal(900, control.Top);
+            Assert.Equal(456, actualBottom);
+            Assert.Equal(new Vector2(123, 356), actualLocation);
         }
         #endregion
 
@@ -185,12 +196,92 @@ namespace ParticleEngineTesterTests.UI
             control.Location = new Vector2(50, 50);
 
             // Act & Assert
-            Assert.Raises<EventArgs>((handler) => // Attach
+            Assert.Raises<ClickedEventArgs>((handler) => // Attach
             {
                 control.Click += handler;
             }, (handler) => // Detach
             {
                 control.Click -= handler;
+            }, () => // Test Code
+            {
+                // NOTE: Need to run update at least 2 times to update the state of the mouse
+                control.Update(new GameTime());
+                control.Update(new GameTime());
+            });
+
+            this.mockMouse.Verify(m => m.GetState(), Times.Exactly(2));
+        }
+
+        [Fact]
+        public void Update_WithMouseEnteringOverControl_InvokesMouseEnterEvent()
+        {
+            // Arrange
+            var getStateInvokeCount = 0;
+
+            this.mockMouse.Setup(m => m.GetState()).Returns(() =>
+            {
+                getStateInvokeCount += 1;
+
+                if (getStateInvokeCount == 1)
+                {
+                    return new MouseState(0, 0, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
+                else
+                {
+                    return new MouseState(75, 75, 0, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
+            });
+
+            var control = CreateControl();
+            control.Location = new Vector2(50, 50);
+
+            // Act & Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                control.MouseEnter += handler;
+            }, (handler) => // Detach
+            {
+                control.MouseEnter -= handler;
+            }, () => // Test Code
+            {
+                // NOTE: Need to run update at least 2 times to update the state of the mouse
+                control.Update(new GameTime());
+                control.Update(new GameTime());
+            });
+
+            this.mockMouse.Verify(m => m.GetState(), Times.Exactly(2));
+        }
+
+        [Fact]
+        public void Update_WithMouseLeavingOverControl_InvokesMouseLeaveEvent()
+        {
+            // Arrange
+            var getStateInvokeCount = 0;
+
+            this.mockMouse.Setup(m => m.GetState()).Returns(() =>
+            {
+                getStateInvokeCount += 1;
+
+                if (getStateInvokeCount == 1)
+                {
+                    return new MouseState(75, 75, 0, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
+                else
+                {
+                    return new MouseState(0, 0, 0, ButtonState.Pressed, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
+            });
+
+            var control = CreateControl();
+            control.Location = new Vector2(50, 50);
+
+            // Act & Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                control.MouseLeave += handler;
+            }, (handler) => // Detach
+            {
+                control.MouseLeave -= handler;
             }, () => // Test Code
             {
                 // NOTE: Need to run update at least 2 times to update the state of the mouse

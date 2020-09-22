@@ -79,6 +79,15 @@ namespace ParticleEngineTester.Scenes
         /// <inheritdoc/>
         public bool Visible { get; set; } = true;
 
+        /// <inheritdoc/>
+        public int SceneWidth => Main.WindowWidth;
+
+        /// <inheritdoc/>
+        public int SceneHeight => Main.WindowHeight;
+
+        /// <inheritdoc/>
+        public Vector2 SceneCenter => Main.WindowCenter;
+
         /// <summary>
         /// Gets renderer that renders the scene.
         /// </summary>

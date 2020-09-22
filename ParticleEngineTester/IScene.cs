@@ -13,9 +13,24 @@ namespace ParticleEngineTester
     public interface IScene : IUpdateable, IDrawable, IDisposable
     {
         /// <summary>
-        /// Gets the name of the scene.
+        /// Gets or sets the name of the scene.
         /// </summary>
-        string Name { get; }
+        string Name { get; set; }
+
+        /// <summary>
+        /// Gets the width of the scene.
+        /// </summary>
+        int SceneWidth { get; }
+
+        /// <summary>
+        /// Gets the height of the scene.
+        /// </summary>
+        int SceneHeight { get; }
+
+        /// <summary>
+        /// Gets the center location of the scene.
+        /// </summary>
+        Vector2 SceneCenter { get; }
 
         /// <summary>
         /// Loads content for a scene.

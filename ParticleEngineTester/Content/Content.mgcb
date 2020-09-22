@@ -13,12 +13,19 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/font-sample-1.spritefont
+#begin Fonts/bold-font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/font-sample-1.spritefont
+/build:Fonts/bold-font.spritefont
+
+#begin Fonts/standard-font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/standard-font.spritefont
 
 #begin Graphics/gear-particle.png
 /importer:TextureImporter

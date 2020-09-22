@@ -125,7 +125,7 @@ namespace ParticleEngineTesterTests.UI
             button.Location = new Vector2(50, 50);
 
             // Act & Assert
-            Assert.Raises<EventArgs>((handler) => // Attach
+            Assert.Raises<ClickedEventArgs>((handler) => // Attach
             {
                 button.Click += handler;
             }, (handler) => // Detach

@@ -20,7 +20,8 @@ namespace ParticleEngineTesterTests.UI
         private readonly Mock<IRenderer> mockRenderer;
         private readonly Mock<IContentLoader> mockContentLoader;
         private readonly Mock<IMouse> mockMouse;
-        private readonly Mock<IFont> mockFont;
+        private readonly Mock<IFont> mockStandardFont;
+        private readonly Mock<IFont> mockBoldFont;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LabelTests"/> class.
@@ -29,13 +30,19 @@ namespace ParticleEngineTesterTests.UI
         {
             this.mockRenderer = new Mock<IRenderer>();
 
-            this.mockFont = new Mock<IFont>();
-            this.mockFont.SetupGet(p => p.Width).Returns(100);
-            this.mockFont.SetupGet(p => p.Height).Returns(25);
-            this.mockFont.SetupProperty(p => p.Text);
+            this.mockStandardFont = new Mock<IFont>();
+            this.mockStandardFont.SetupGet(p => p.Width).Returns(100);
+            this.mockStandardFont.SetupGet(p => p.Height).Returns(25);
+            this.mockStandardFont.SetupProperty(p => p.Text);
+
+            this.mockBoldFont = new Mock<IFont>();
+            this.mockBoldFont.SetupGet(p => p.Width).Returns(100);
+            this.mockBoldFont.SetupGet(p => p.Height).Returns(25);
+            this.mockBoldFont.SetupProperty(p => p.Text);
 
             this.mockContentLoader = new Mock<IContentLoader>();
-            this.mockContentLoader.Setup(m => m.LoadFont("font-content")).Returns(this.mockFont.Object);
+            this.mockContentLoader.Setup(m => m.LoadFont("Fonts/standard-font")).Returns(this.mockStandardFont.Object);
+            this.mockContentLoader.Setup(m => m.LoadFont("Fonts/bold-font")).Returns(this.mockBoldFont.Object);
 
             this.mockMouse = new Mock<IMouse>();
         }
@@ -148,7 +155,7 @@ namespace ParticleEngineTesterTests.UI
             label.Location = new Vector2(50, 50);
 
             // Act & Assert
-            Assert.Raises<EventArgs>((handler) => // Attach
+            Assert.Raises<ClickedEventArgs>((handler) => // Attach
             {
                 label.Click += handler;
             }, (handler) => // Detach
@@ -177,7 +184,7 @@ namespace ParticleEngineTesterTests.UI
             label.Draw(new GameTime());
 
             // Assert
-            this.mockRenderer.Verify(m => m.DrawText(this.mockFont.Object, "label-text", new Vector2(11, 22), Color.Purple));
+            this.mockRenderer.Verify(m => m.DrawText(this.mockStandardFont.Object, "label-text", new Vector2(11, 22), Color.Purple));
         }
         #endregion
 
@@ -186,8 +193,7 @@ namespace ParticleEngineTesterTests.UI
             return new Label(
                 this.mockRenderer.Object,
                 this.mockContentLoader.Object,
-                this.mockMouse.Object,
-                "font-content");
+                this.mockMouse.Object);
         }
     }
 }
