@@ -1,4 +1,4 @@
-﻿// <copyright file="Main.cs" company="KinsonDigital">
+// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -6,6 +6,7 @@ namespace ParticleEngineTester
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -24,6 +25,7 @@ namespace ParticleEngineTester
         private IContentLoader? contentLoader;
         private ISceneManger? sceneManager;
         private IControlFactory? ctrlFactory;
+        private SceneFactory? sceneFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
@@ -73,6 +75,7 @@ namespace ParticleEngineTester
             this.contentLoader = new ContentLoader(Content);
 
             this.ctrlFactory = new ControlFactory(this.renderer, this.contentLoader);
+            this.sceneFactory = new SceneFactory(this.renderer, this.contentLoader, SceneList.SceneKeys);
 
             this.sceneManager = new SceneManager(this.ctrlFactory, Window.ClientBounds.Width, Window.ClientBounds.Height);
             this.sceneManager.SceneChanged += SceneManager_SceneChanged;
@@ -122,18 +125,13 @@ namespace ParticleEngineTester
         {
             var sections = e.CurrentScene.Split("-");
 
-            static string ToUpperFirstChar(string value)
-            {
-                return $"{value[0].ToString().ToUpper()}{value[1..]}";
-            }
-
-            Window.Title = $"{ToUpperFirstChar(sections[0])} {ToUpperFirstChar(sections[1])}";
+            Window.Title = $"{sections[0].ToUpperFirstChar()} {sections[1].ToUpperFirstChar()}";
         }
 
         /// <summary>
         /// Occurs every time the scene is changed.
         /// </summary>
-        private void MenuScene_MenuClicked(object? sender, MenuItemClickedEventArgs e) => this.sceneManager?.ActivateScene($"{e.MenuItemName}-scene");
+        private void MenuScene_MenuClicked(object? sender, MenuItemClickedEventArgs e) => this.sceneManager?.ActivateScene(e.MenuItemName);
 
         /// <summary>
         /// Creates all of the scenes for the application.
@@ -154,16 +152,17 @@ namespace ParticleEngineTester
 
             menuScene.MenuClicked += MenuScene_MenuClicked;
 
-            IScene angularVelScene = new AngularVelocityScene(this.renderer, this.contentLoader, "angular-velocity-scene");
-            IScene xVelScene = new XVelocityScene(this.renderer, this.contentLoader, "x-velocity-scene");
-            IScene yVelScene = new YVelocityScene(this.renderer, this.contentLoader, "y-velocity-scene");
-            IScene sizeScene = new SizeScene(this.renderer, this.contentLoader, "size-scene");
-
             this.sceneManager?.AddScene(menuScene);
-            this.sceneManager?.AddScene(angularVelScene);
-            this.sceneManager?.AddScene(xVelScene);
-            this.sceneManager?.AddScene(yVelScene);
-            this.sceneManager?.AddScene(sizeScene);
+
+            foreach (var sceneKey in SceneList.SceneKeys)
+            {
+                var newScene = this.sceneFactory?.CreateScene(sceneKey);
+
+                if (!(newScene is null))
+                {
+                    this.sceneManager?.AddScene(newScene);
+                }
+            }
         }
     }
 }

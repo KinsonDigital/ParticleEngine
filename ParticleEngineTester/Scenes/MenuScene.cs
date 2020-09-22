@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
+    using System.Linq;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
@@ -43,10 +44,10 @@ namespace ParticleEngineTester.Scenes
             this.menu.VerticalSpacing = 15;
             this.menu.ItemClicked += Menu_ItemClicked;
 
-            this.menu.Add("angular-velocity", "Angular Velocity", this.defaultColor);
-            this.menu.Add("x-velocity", "X Velocity", this.defaultColor);
-            this.menu.Add("y-velocity", "Y Velocity", this.defaultColor);
-            this.menu.Add("size", "Size", this.defaultColor);
+            foreach (var sceneKey in SceneList.SceneKeys)
+            {
+                this.menu.Add(sceneKey, sceneKey.ToTitle(), this.defaultColor);
+            }
 
             this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
             this.menu.MouseEnter += Menu_MouseEnter;
