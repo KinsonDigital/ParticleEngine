@@ -8,6 +8,8 @@ namespace ParticleEngineTesterTests
     using Microsoft.Xna.Framework;
     using Moq;
     using ParticleEngineTester;
+    using ParticleEngineTester.Factories;
+    using ParticleEngineTester.UI;
     using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
@@ -18,6 +20,10 @@ namespace ParticleEngineTesterTests
     {
         private readonly Mock<ITexture> mockTexture;
         private readonly Mock<IContentLoader> mockContentLoader;
+        private readonly Mock<IControlFactory> mockCtrlFactory;
+        private readonly Mock<IButton> mockNextButton;
+        private readonly Mock<IButton> mockPrevButton;
+
         private readonly int windowWidth = 800;
         private readonly int windowHeight = 400;
 
@@ -31,29 +37,16 @@ namespace ParticleEngineTesterTests
             this.mockContentLoader = new Mock<IContentLoader>();
             this.mockContentLoader.Setup(m => m.LoadTexture("Graphics/prev-button")).Returns(this.mockTexture.Object);
             this.mockContentLoader.Setup(m => m.LoadTexture("Graphics/next-button")).Returns(this.mockTexture.Object);
+
+            this.mockNextButton = new Mock<IButton>();
+            this.mockPrevButton = new Mock<IButton>();
+
+            this.mockCtrlFactory = new Mock<IControlFactory>();
+            this.mockCtrlFactory.Setup(m => m.CreateButton("next-btn", It.IsAny<string>())).Returns(this.mockNextButton.Object);
+            this.mockCtrlFactory.Setup(m => m.CreateButton("prev-btn", It.IsAny<string>())).Returns(this.mockPrevButton.Object);
         }
 
         #region Constructor Tests
-        [Fact]
-        public void Ctor_WithNullSpriteBatch_ThrowsException()
-        {
-            // Act & Assert
-            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
-            {
-                var manager = new SceneManager(null, null, this.windowWidth, this.windowHeight);
-            }, "The parameter must not be null. (Parameter 'renderer')");
-        }
-
-        [Fact]
-        public void Ctor_WithNullContentLoader_ThrowsException()
-        {
-            // Act & Assert
-            AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
-            {
-                var manager = new SceneManager(new Mock<IRenderer>().Object, null, this.windowWidth, this.windowHeight);
-            }, "The parameter must not be null. (Parameter 'contentLoader')");
-        }
-
         [Fact]
         public void Ctor_WhenInvoked_ReturnsCorrectDefaultEnabledResult()
         {
@@ -184,6 +177,30 @@ namespace ParticleEngineTesterTests
             }, $"A scene with the name 'duplicate-scene' already has been added to the '{nameof(SceneManager)}'.  Duplicate scene names not aloud.'");
         }
 
+        [Theory]
+        [InlineData("test-scene-B", 1)]
+        [InlineData("invalid-scene-name", 0)]
+        public void ActivateScene_WithExistingScene_ActivatesScene(string activeSceneName, int expectedIndex)
+        {
+            // Arrange
+            var manager = CreateSceneManager();
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns("test-scene-A");
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns("test-scene-B");
+
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act
+            manager.ActivateScene(activeSceneName);
+            var actual = manager.CurrentSceneIndex;
+
+            // Assert
+            Assert.Equal(expectedIndex, actual);
+        }
+
         [Fact]
         public void LoadContent_WhenInvoked_LoadsContentForAllScenes()
         {
@@ -207,19 +224,45 @@ namespace ParticleEngineTesterTests
         }
 
         [Fact]
-        public void Update_WhenNextButtonIsClicked_NextButtonClickInvoked()
+        public void Update_WhenNextButtonIsClicked_MovesToNextScene()
         {
             // Arrange
-            var mockScene = new Mock<IScene>();
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns("sceneA");
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns("sceneB");
 
             var manager = CreateSceneManager();
 
-            manager.AddScene(mockScene.Object);
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act
-            manager.Update(new GameTime());
+            this.mockNextButton.Raise((button) => button.Click += null, new ClickedEventArgs("next-btn"));
 
-            // Assert
+            Assert.Equal(1, manager.CurrentSceneIndex);
+        }
+
+        [Fact]
+        public void Update_WhenPreviousButtonIsClicked_MovesToPreviousScene()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns("sceneA");
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns("sceneB");
+
+            var manager = CreateSceneManager();
+
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act
+            this.mockPrevButton.Raise((button) => button.Click += null, new ClickedEventArgs("next-btn"));
+
+            Assert.Equal(0, manager.CurrentSceneIndex);
         }
 
         [Fact]
@@ -316,7 +359,7 @@ namespace ParticleEngineTesterTests
         }
 
         [Theory]
-        [InlineData(0, 1, 0)]
+        [InlineData(0, 1, -1)]
         [InlineData(1, 1, 0)]
         [InlineData(2, 5, 1)]
         [InlineData(5, 2, 2)]
@@ -348,7 +391,7 @@ namespace ParticleEngineTesterTests
         [InlineData(2, 1, 1, 0)]
         [InlineData(2, 0, 5, 0)]
         [InlineData(3, 5, 1, 1)]
-        [InlineData(0, 0, 1, 0)]
+        [InlineData(0, 0, 1, -1)]
         public void PreviousScene_WithNoScenes_ReturnsCorrectSceneIndex(int scenesToAdd, int nextSceneCount, int prevSceneCount, int expectedSceneIndex)
         {
             // Arrange
@@ -377,6 +420,30 @@ namespace ParticleEngineTesterTests
             // Assert
             Assert.Equal(expectedSceneIndex, actual);
         }
+
+        [Fact]
+        public void Dispose_WhenInvoked_DisposesOfAllScenes()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns("sceneA");
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns("sceneB");
+
+            var manager = CreateSceneManager();
+
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act
+            manager.Dispose();
+            manager.Dispose();
+
+            // Assert
+            mockSceneA.Verify(m => m.Dispose(), Times.Once());
+            mockSceneB.Verify(m => m.Dispose(), Times.Once());
+        }
         #endregion
 
         /// <summary>
@@ -385,7 +452,7 @@ namespace ParticleEngineTesterTests
         /// <returns>New scene manager.</returns>
         private SceneManager CreateSceneManager()
         {
-            return new SceneManager(new Mock<IRenderer>().Object, this.mockContentLoader.Object, this.windowWidth, this.windowHeight);
+            return new SceneManager(this.mockCtrlFactory.Object, this.windowWidth, this.windowHeight);
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿// <copyright file="MenuScene.cs" company="KinsonDigital">
+// <copyright file="MenuScene.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace ParticleEngineTester.Scenes
 {
+    using System;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
@@ -29,14 +30,19 @@ namespace ParticleEngineTester.Scenes
             this.menu = new Menu(this.ctrlFactory);
         }
 
+        /// <summary>
+        /// Invoked when a scene has changed.
+        /// </summary>
+        public event EventHandler<MenuItemClickedEventArgs>? MenuClicked;
+
         /// <inheritdoc/>
         public override void LoadContent()
         {
-            this.menu.Add("Item 1", "Item #1");
             this.menu.VerticalSpacing = 15;
-            this.menu.MenuItemClicked += Menu_MenuItemClicked;
+            this.menu.ItemClicked += Menu_ItemClicked;
 
-            this.menu.Location = new Vector2(Main.WindowCenter.X - (this.menu.Width / 2), Main.WindowCenter.Y - (this.menu.Height / 2));
+            this.menu.Add("angular-velocity", "Angular Velocity", Color.White);
+            this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
 
             base.LoadContent();
         }
@@ -60,11 +66,12 @@ namespace ParticleEngineTester.Scenes
         /// <summary>
         /// Invoked when a menu item has been clicked, and loads a scene.
         /// </summary>
-        private void Menu_MenuItemClicked(object? sender, MenuItemClickedEventArgs e)
+        private void Menu_ItemClicked(object? sender, MenuItemClickedEventArgs e)
         {
             switch (e.MenuItemName)
             {
-                default:
+                case "angular-velocity":
+                    this.MenuClicked?.Invoke(this, e);
                     break;
             }
         }

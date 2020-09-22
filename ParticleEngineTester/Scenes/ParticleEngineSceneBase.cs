@@ -15,8 +15,6 @@ namespace ParticleEngineTester.Scenes
     /// </summary>
     public abstract class ParticleEngineSceneBase : SceneBase
     {
-        private readonly ParticleEngine engine;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEngineSceneBase"/> class.
         /// </summary>
@@ -31,16 +29,25 @@ namespace ParticleEngineTester.Scenes
             : base(renderer, contentLoader, name)
         {
             var loader = new ParticleTextureLoader(contentLoader);
-            this.engine = new ParticleEngine(loader, new TrueRandomizerService());
+            Engine = new ParticleEngine(loader, new TrueRandomizerService());
         }
 
+        /// <summary>
+        /// Gets the particle engine in the scene.
+        /// </summary>
+        public ParticleEngine Engine { get; private set; }
+
         /// <inheritdoc/>
-        public override void LoadContent() => base.LoadContent();
+        public override void LoadContent()
+        {
+            Engine.LoadTextures();
+            base.LoadContent();
+        }
 
         /// <inheritdoc/>
         public override void Update(GameTime gameTime)
         {
-            this.engine.Update(gameTime.ElapsedGameTime);
+            Engine.Update(gameTime.ElapsedGameTime);
 
             base.Update(gameTime);
         }
@@ -48,7 +55,7 @@ namespace ParticleEngineTester.Scenes
         /// <inheritdoc/>
         public override void Draw(GameTime gameTime)
         {
-            foreach (var pool in this.engine.ParticlePools)
+            foreach (var pool in Engine.ParticlePools)
             {
                 foreach (var particle in pool.Particles)
                 {

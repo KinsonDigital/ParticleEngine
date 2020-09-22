@@ -8,6 +8,7 @@ namespace ParticleEngineTester
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Microsoft.Xna.Framework;
+    using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
 
     /// <summary>
@@ -18,43 +19,35 @@ namespace ParticleEngineTester
         private const int ButtonSpacing = 10;
         private readonly List<IScene> scenes = new List<IScene>();
         private readonly int windowHeight;
+        private readonly IControlFactory ctrlFactory;
         private readonly int windowWidth;
-        private readonly Control previousButton;
-        private readonly Control nextButton;
+        private readonly IControl prevButton;
+        private readonly IControl nextButton;
         private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManager"/> class.
         /// </summary>
-        /// <param name="renderer">The renderer used to render any graphics for the scenes.</param>
-        /// <param name="contentLoader">Loads content for scenes in the scene manager.</param>
+        /// <param name="ctrlFactory">Creates controls for the scene manager.</param>
         /// <param name="windowWidth">The width of the window.</param>
         /// <param name="windowHeight">The height of the window.</param>
-        public SceneManager(IRenderer renderer, IContentLoader contentLoader, int windowWidth, int windowHeight)
+        public SceneManager(IControlFactory ctrlFactory, int windowWidth, int windowHeight)
         {
-            if (renderer is null)
-            {
-                throw new ArgumentNullException(nameof(renderer), "The parameter must not be null.");
-            }
-
-            if (contentLoader is null)
-            {
-                throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
-            }
+            this.ctrlFactory = ctrlFactory;
 
             this.windowWidth = windowWidth;
             this.windowHeight = windowHeight;
 
 #pragma warning disable IDE0017 // Simplify object initialization
-            this.nextButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/next-button");
+            this.nextButton = ctrlFactory.CreateButton("next-btn", "Graphics/next-button");
             this.nextButton.Right = this.windowWidth - ButtonSpacing;
             this.nextButton.Bottom = this.windowHeight - ButtonSpacing;
             this.nextButton.Click += NextButton_Click;
 
-            this.previousButton = new Button(renderer, contentLoader, new MouseInput(), "Graphics/prev-button");
-            this.previousButton.Right = this.nextButton.Left - ButtonSpacing;
-            this.previousButton.Bottom = this.windowHeight - ButtonSpacing;
-            this.previousButton.Click += PreviousButton_Click;
+            this.prevButton = ctrlFactory.CreateButton("prev-btn", "Graphics/prev-button");
+            this.prevButton.Right = this.nextButton.Left - ButtonSpacing;
+            this.prevButton.Bottom = this.windowHeight - ButtonSpacing;
+            this.prevButton.Click += PreviousButton_Click;
 #pragma warning restore IDE0017 // Simplify object initialization
         }
 
@@ -63,14 +56,17 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         public event EventHandler<EventArgs>? EnabledChanged;
 
-        /// <inheritdoc/>?
+        /// <inheritdoc/>
         public event EventHandler<EventArgs>? UpdateOrderChanged;
 
-        /// <inheritdoc/>?
+        /// <inheritdoc/>
         public event EventHandler<EventArgs>? DrawOrderChanged;
 
-        /// <inheritdoc/>?
+        /// <inheritdoc/>
         public event EventHandler<EventArgs>? VisibleChanged;
+
+        /// <inheritdoc/>
+        public event EventHandler<SceneChangedEventArgs>? SceneChanged;
 
 #pragma warning restore CS0067 // The event is never used
 
@@ -92,7 +88,7 @@ namespace ParticleEngineTester
         /// <summary>
         /// Gets the index of the currently active scene.
         /// </summary>
-        public int CurrentSceneIndex { get; private set; }
+        public int CurrentSceneIndex { get; private set; } = -1;
 
         /// <inheritdoc/>
         public void AddScene(IScene scene)
@@ -103,6 +99,30 @@ namespace ParticleEngineTester
             }
 
             this.scenes.Add(scene);
+
+            CurrentSceneIndex = this.scenes.Count == 1 ? 0 : CurrentSceneIndex;
+        }
+
+        /// <inheritdoc/>
+        public void ActivateScene(string name)
+        {
+            var sceneIndex = GetSceneIndexByName(name);
+
+            if (sceneIndex == -1)
+            {
+                return;
+            }
+
+            var prevSceneIndex = CurrentSceneIndex;
+
+            CurrentSceneIndex = sceneIndex;
+
+            // Only invoked the scene changed event if the scene has actually changed.
+            if (prevSceneIndex != CurrentSceneIndex)
+            {
+                // TODO: Unit test this
+                this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
+            }
         }
 
         /// <inheritdoc/>
@@ -122,9 +142,14 @@ namespace ParticleEngineTester
                 return;
             }
 
+            var prevSceneIndex = CurrentSceneIndex;
+
             CurrentSceneIndex = CurrentSceneIndex >= this.scenes.Count - 1
                 ? this.scenes.Count - 1
                 : CurrentSceneIndex + 1;
+
+            // TODO: Unit test this
+            this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
         /// <inheritdoc/>
@@ -135,9 +160,14 @@ namespace ParticleEngineTester
                 return;
             }
 
+            var prevSceneIndex = CurrentSceneIndex;
+
             CurrentSceneIndex = CurrentSceneIndex <= 0
                 ? 0
                 : CurrentSceneIndex - 1;
+
+            // TODO: Unit test this
+            this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
         /// <inheritdoc/>
@@ -148,12 +178,12 @@ namespace ParticleEngineTester
                 return;
             }
 
-            if (this.scenes.Count > 0)
+            if (this.scenes.Count > 0 && CurrentSceneIndex != -1)
             {
                 this.scenes[CurrentSceneIndex].Update(gameTime);
             }
 
-            this.previousButton.Update(gameTime);
+            this.prevButton.Update(gameTime);
             this.nextButton.Update(gameTime);
         }
 
@@ -170,12 +200,16 @@ namespace ParticleEngineTester
                 this.scenes[CurrentSceneIndex].Draw(gameTime);
             }
 
-            this.previousButton.Draw(gameTime);
+            this.prevButton.Draw(gameTime);
             this.nextButton.Draw(gameTime);
         }
 
         /// <inheritdoc/>
-        public void Dispose() => throw new NotImplementedException();
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// <inheritdoc/>
@@ -199,9 +233,15 @@ namespace ParticleEngineTester
             this.isDisposed = true;
         }
 
-        private void PreviousButton_Click(object? sender, EventArgs e) => PreviousScene();
+        /// <summary>
+        /// Invoked when the previous scene button has been clicked.
+        /// </summary>
+        private void PreviousButton_Click(object? sender, ClickedEventArgs e) => PreviousScene();
 
-        private void NextButton_Click(object? sender, EventArgs e) => NextScene();
+        /// <summary>
+        /// Invoked when the next scene button has been clicked.
+        /// </summary>
+        private void NextButton_Click(object? sender, ClickedEventArgs e) => NextScene();
 
         /// <summary>
         /// Returns true if the a scene with the given <paramref name="name"/> already exists.
@@ -226,6 +266,29 @@ namespace ParticleEngineTester
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets the index of a scene that matches the given scene <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">The name of the scene.</param>
+        /// <returns>The index of the scene.</returns>
+        private int GetSceneIndexByName(string name)
+        {
+            var sceneExists = SceneNameAlReadyExists(name);
+
+            if (sceneExists)
+            {
+                for (var i = 0; i < this.scenes.Count; i++)
+                {
+                    if (this.scenes[i].Name == name)
+                    {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
         }
     }
 }

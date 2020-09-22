@@ -20,6 +20,14 @@ namespace ParticleEngineTester.Factories
         ILabel CreateLabel(string name, string text);
 
         /// <summary>
+        /// Creates a button with the given <paramref name="name"/> and <paramref name="buttonContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the button control.</param>
+        /// <param name="buttonContent">The graphical content of the button control.</param>
+        /// <returns>A button with a name and graphic that defines its looks.</returns>
+        IButton CreateButton(string name, string buttonContent);
+
+        /// <summary>
         /// Creates a mouse.
         /// </summary>
         /// <returns>A mouse object.</returns>

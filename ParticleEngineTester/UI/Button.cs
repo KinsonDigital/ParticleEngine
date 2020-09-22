@@ -9,7 +9,7 @@ namespace ParticleEngineTester.UI
     /// <summary>
     /// A simple button that can be rendered and clicked using the mouse.
     /// </summary>
-    public class Button : Control
+    public class Button : Control, IButton
     {
         private readonly IRenderer renderer;
         private readonly ITexture texture;

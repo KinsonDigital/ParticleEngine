@@ -26,12 +26,7 @@ namespace ParticleEngineTester.Factories
             ControlFactory.contentLoader = contentLoader;
         }
 
-        /// <summary>
-        /// Creates a label with the given <paramref name="name"/> and <paramref name="text"/>.
-        /// </summary>
-        /// <param name="name">The name to give the <see cref="ILabel"/>.</param>
-        /// <param name="text">The text to give the <see cref="ILabel"/>.</param>
-        /// <returns>A label object.</returns>
+        /// <inheritdoc/>
         public ILabel CreateLabel(string name, string text = "")
         {
             if (renderer is null)
@@ -51,6 +46,24 @@ namespace ParticleEngineTester.Factories
             };
 
             return newLabel;
+        }
+
+        /// <inheritdoc/>
+        public IButton CreateButton(string name, string buttonContent)
+        {
+            if (renderer is null)
+            {
+                throw new ArgumentNullException(nameof(renderer), "The parameter must not be null.");
+            }
+
+            if (contentLoader is null)
+            {
+                throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
+            }
+
+            var newButton = new Button(renderer, contentLoader, new MouseInput(), buttonContent);
+
+            return newButton;
         }
 
         /// <summary>

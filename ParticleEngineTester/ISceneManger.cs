@@ -14,6 +14,11 @@ namespace ParticleEngineTester
     public interface ISceneManger : IUpdateable, IDrawable, IDisposable
     {
         /// <summary>
+        /// Occurs when the scene has changed.
+        /// </summary>
+        event EventHandler<SceneChangedEventArgs>? SceneChanged;
+
+        /// <summary>
         /// Gets a list of the scenes in the <see cref="ISceneManager"/>.
         /// </summary>
         ReadOnlyCollection<IScene> Scenes { get; }
@@ -28,6 +33,12 @@ namespace ParticleEngineTester
         /// </summary>
         /// <param name="scene">The scene to add.</param>
         void AddScene(IScene scene);
+
+        /// <summary>
+        /// Activates a <see cref="IScene"/> that matches the given name.
+        /// </summary>
+        /// <param name="name">The name of the scene to activate.</param>
+        void ActivateScene(string name);
 
         /// <summary>
         /// Loads the scenes content.

@@ -1,11 +1,10 @@
-﻿// <copyright file="Main.cs" company="KinsonDigital">
+// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace ParticleEngineTester
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using Microsoft.Xna.Framework;
@@ -24,6 +23,7 @@ namespace ParticleEngineTester
         private IRenderer? renderer;
         private IContentLoader? contentLoader;
         private ISceneManger? sceneManager;
+        private IControlFactory? ctrlFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
@@ -72,7 +72,10 @@ namespace ParticleEngineTester
             this.renderer = new Renderer(this.spriteBatch);
             this.contentLoader = new ContentLoader(Content);
 
-            this.sceneManager = new SceneManager(this.renderer, this.contentLoader, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            this.ctrlFactory = new ControlFactory(this.renderer, this.contentLoader);
+
+            this.sceneManager = new SceneManager(this.ctrlFactory, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            this.sceneManager.SceneChanged += SceneManager_SceneChanged;
 
             CreateScenes();
 
@@ -101,7 +104,7 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(45, 45, 45, 255));
 
             this.renderer?.Begin();
 
@@ -112,20 +115,29 @@ namespace ParticleEngineTester
             base.Draw(gameTime);
         }
 
-        private void Menu_MouseEnter(object? sender, EventArgs e) => Window.Title = "Mouse Enter Menu";
-
-        private void Menu_MouseLeave(object? sender, EventArgs e) => Window.Title = "Mouse Leave Menu";
-
-        private void Menu_MenuItemClicked(object? sender, MenuItemClickedEventArgs e) => Window.Title = e.MenuItemName;
-
-        private void Menu_Click(object? sender, ClickedEventArgs e)
+        /// <summary>
+        /// Invoked when the scene manager changes scenes.
+        /// </summary>
+        private void SceneManager_SceneChanged(object? sender, SceneChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(e.Name))
+            var sections = e.CurrentScene.Split("-");
+
+            string ToUpperFirstChar(string value)
             {
-                return;
+                return $"{value[0].ToString().ToUpper()}{value.Substring(1, value.Length - 1)}";
             }
+
+            Window.Title = $"{ToUpperFirstChar(sections[0])} {ToUpperFirstChar(sections[1])}";
         }
 
+        /// <summary>
+        /// Occurs every time the scene is changed.
+        /// </summary>
+        private void MenuScene_MenuClicked(object? sender, MenuItemClickedEventArgs e) => this.sceneManager?.ActivateScene($"{e.MenuItemName}-scene");
+
+        /// <summary>
+        /// Creates all of the scenes for the application.
+        /// </summary>
         private void CreateScenes()
         {
             if (this.renderer is null)
@@ -138,9 +150,15 @@ namespace ParticleEngineTester
                 throw new ArgumentNullException(nameof(this.contentLoader), "The parameter must not be null.");
             }
 
-            IScene menuScene = new MenuScene(this.renderer, this.contentLoader, "menu-scene");
+            var menuScene = new MenuScene(this.renderer, this.contentLoader, "menu-scene");
+
+            menuScene.ChangedScene += MenuScene_ChangedScene;
+
+            IScene angularVelScene = new AngularVelocityScene(this.renderer, this.contentLoader, "angular-velocity-scene");
 
             this.sceneManager?.AddScene(menuScene);
+            this.sceneManager?.AddScene(angularVelScene);
+        }
         }
     }
 }

@@ -45,7 +45,7 @@ namespace ParticleEngineTester.UI
         /// <summary>
         /// Invoked when the mouse clicks the menu item.
         /// </summary>
-        public event EventHandler<MenuItemClickedEventArgs>? MenuItemClicked;
+        public event EventHandler<MenuItemClickedEventArgs>? ItemClicked;
 
         /// <summary>
         /// Gets the list of menu items.
@@ -76,6 +76,26 @@ namespace ParticleEngineTester.UI
         {
             var newLabel = this.ctrlFactory.CreateLabel(name, text);
             newLabel.Text = text;
+
+            newLabel.Click += MenuItems_Click;
+            newLabel.MouseEnter += MenuItems_MouseEnter;
+            newLabel.MouseLeave += MenuItems_MouseLeave;
+            newLabel.Name = name;
+
+            this.menuItems.Add(newLabel);
+        }
+
+        /// <summary>
+        /// Adds a new <see cref="Menu"/> item to the menu with the given <paramref name="text"/>.
+        /// </summary>
+        /// <param name="name">The name of the menu item.</param>
+        /// <param name="text">The text of the menu item.</param>
+        /// <param name="foreColor">The forecolor of the menu item text.</param>
+        public void Add(string name, string text, Color foreColor)
+        {
+            var newLabel = this.ctrlFactory.CreateLabel(name, text);
+            newLabel.Text = text;
+            newLabel.Forecolor = foreColor;
 
             newLabel.Click += MenuItems_Click;
             newLabel.MouseEnter += MenuItems_MouseEnter;
@@ -142,7 +162,7 @@ namespace ParticleEngineTester.UI
                 return;
             }
 
-            MenuItemClicked?.Invoke(label, new MenuItemClickedEventArgs(label.Name));
+            ItemClicked?.Invoke(label, new MenuItemClickedEventArgs(label.Name));
             this.Click?.Invoke(this, new ClickedEventArgs(Name));
         }
 

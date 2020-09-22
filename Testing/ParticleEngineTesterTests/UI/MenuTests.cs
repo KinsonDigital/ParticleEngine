@@ -5,14 +5,12 @@
 namespace ParticleEngineTesterTests.UI
 {
     using System;
-    using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
     using Moq;
     using ParticleEngineTester;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
-    using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
     /// <summary>
