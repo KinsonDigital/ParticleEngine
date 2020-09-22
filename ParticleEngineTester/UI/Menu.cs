@@ -65,7 +65,7 @@ namespace ParticleEngineTester.UI
         /// <summary>
         /// Gets the height of the <see cref="Menu"/>.
         /// </summary>
-        public new int Height => this.menuItems.Count <= 0 ? 0 : this.menuItems.Max(i => i.Bottom);
+        public new int Height => this.menuItems.Count <= 0 ? 0 : this.menuItems.Sum(i => i.Height) + (VerticalSpacing * (this.menuItems.Count - 1));
 
         /// <summary>
         /// Adds a new <see cref="Menu"/> item to the menu with the given <paramref name="text"/>.
