@@ -157,11 +157,13 @@ namespace ParticleEngineTester
             IScene angularVelScene = new AngularVelocityScene(this.renderer, this.contentLoader, "angular-velocity-scene");
             IScene xVelScene = new XVelocityScene(this.renderer, this.contentLoader, "x-velocity-scene");
             IScene yVelScene = new YVelocityScene(this.renderer, this.contentLoader, "y-velocity-scene");
+            IScene sizeScene = new SizeScene(this.renderer, this.contentLoader, "size-scene");
 
             this.sceneManager?.AddScene(menuScene);
             this.sceneManager?.AddScene(angularVelScene);
             this.sceneManager?.AddScene(xVelScene);
             this.sceneManager?.AddScene(yVelScene);
+            this.sceneManager?.AddScene(sizeScene);
         }
     }
 }

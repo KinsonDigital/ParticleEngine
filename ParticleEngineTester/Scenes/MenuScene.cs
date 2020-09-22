@@ -44,6 +44,7 @@ namespace ParticleEngineTester.Scenes
             this.menu.Add("angular-velocity", "Angular Velocity", Color.White);
             this.menu.Add("x-velocity", "X Velocity", Color.White);
             this.menu.Add("y-velocity", "Y Velocity", Color.White);
+            this.menu.Add("size", "Size", Color.White);
 
             this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
 
