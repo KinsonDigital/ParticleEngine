@@ -27,6 +27,11 @@ namespace ParticleEngineTester.UI
         event EventHandler<EventArgs>? MouseLeave;
 
         /// <summary>
+        /// Gets a value indicating whether the mouse is or is not over the object.
+        /// </summary>
+        bool IsMouseOver { get; }
+
+        /// <summary>
         /// Invokes the <see cref="Click"/> event.
         /// </summary>
         /// <param name="sender">The control object that invoked the event.</param>

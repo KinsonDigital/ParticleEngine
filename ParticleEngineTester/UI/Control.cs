@@ -103,6 +103,11 @@ namespace ParticleEngineTester.UI
         public bool Visible { get; set; } = true;
 
         /// <summary>
+        /// Gets a value indicating whether the mouse is positioned over the <see cref="Control"/>.
+        /// </summary>
+        public bool IsMouseOver { get; private set; }
+
+        /// <summary>
         /// Gets or sets the width of the control.
         /// </summary>
         internal Func<int>? GetWidth { get; set; }
@@ -121,11 +126,6 @@ namespace ParticleEngineTester.UI
         /// Gets a value indicating whether the mouse is in the down position over the <see cref="Control"/>.
         /// </summary>
         protected bool IsMouseDown { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the mouse is positioned over the <see cref="Control"/>.
-        /// </summary>
-        protected bool IsMouseOver { get; private set; }
 
         /// <inheritdoc/>
         public virtual void Update(GameTime gameTime)

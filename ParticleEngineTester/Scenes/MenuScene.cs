@@ -16,6 +16,8 @@ namespace ParticleEngineTester.Scenes
     {
         private readonly ControlFactory ctrlFactory;
         private readonly Menu menu;
+        private readonly Color defaultColor = Color.White;
+        private readonly Color highlightColor = new Color(60, 179, 113, 255);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MenuScene"/> class.
@@ -41,12 +43,13 @@ namespace ParticleEngineTester.Scenes
             this.menu.VerticalSpacing = 15;
             this.menu.ItemClicked += Menu_ItemClicked;
 
-            this.menu.Add("angular-velocity", "Angular Velocity", Color.White);
-            this.menu.Add("x-velocity", "X Velocity", Color.White);
-            this.menu.Add("y-velocity", "Y Velocity", Color.White);
-            this.menu.Add("size", "Size", Color.White);
+            this.menu.Add("angular-velocity", "Angular Velocity", this.defaultColor);
+            this.menu.Add("x-velocity", "X Velocity", this.defaultColor);
+            this.menu.Add("y-velocity", "Y Velocity", this.defaultColor);
+            this.menu.Add("size", "Size", this.defaultColor);
 
             this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
+            this.menu.MouseEnter += Menu_MouseEnter;
 
             base.LoadContent();
         }
@@ -65,6 +68,23 @@ namespace ParticleEngineTester.Scenes
             this.menu.Draw(gameTime);
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Sets the color of the menu items based on if the mouse is over the item.
+        /// </summary>
+        private void Menu_MouseEnter(object? sender, EventArgs e)
+        {
+            if (!(sender is Menu menu))
+            {
+                return;
+            }
+
+            // Set the fore color of the items depending on if the mouse is over the item
+            foreach (var item in menu.MenuItems)
+            {
+                item.Forecolor = item.IsMouseOver ? this.highlightColor : this.defaultColor;
+            }
         }
 
         /// <summary>
