@@ -43,6 +43,8 @@ namespace ParticleEngineTester.Scenes
 
             this.menu.Add("angular-velocity", "Angular Velocity", Color.White);
             this.menu.Add("x-velocity", "X Velocity", Color.White);
+            this.menu.Add("y-velocity", "Y Velocity", Color.White);
+
             this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
 
             base.LoadContent();
@@ -67,17 +69,6 @@ namespace ParticleEngineTester.Scenes
         /// <summary>
         /// Invoked when a menu item has been clicked, and loads a scene.
         /// </summary>
-        private void Menu_ItemClicked(object? sender, MenuItemClickedEventArgs e)
-        {
-            switch (e.MenuItemName)
-            {
-                case "angular-velocity":
-                    this.MenuClicked?.Invoke(this, e);
-                    break;
-                case "x-velocity":
-                    this.MenuClicked?.Invoke(this, e);
-                    break;
-            }
-        }
+        private void Menu_ItemClicked(object? sender, MenuItemClickedEventArgs e) => this.MenuClicked?.Invoke(this, e);
     }
 }

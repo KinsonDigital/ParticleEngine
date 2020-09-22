@@ -122,9 +122,9 @@ namespace ParticleEngineTester
         {
             var sections = e.CurrentScene.Split("-");
 
-            string ToUpperFirstChar(string value)
+            static string ToUpperFirstChar(string value)
             {
-                return $"{value[0].ToString().ToUpper()}{value.Substring(1, value.Length - 1)}";
+                return $"{value[0].ToString().ToUpper()}{value[1..]}";
             }
 
             Window.Title = $"{ToUpperFirstChar(sections[0])} {ToUpperFirstChar(sections[1])}";
@@ -156,10 +156,12 @@ namespace ParticleEngineTester
 
             IScene angularVelScene = new AngularVelocityScene(this.renderer, this.contentLoader, "angular-velocity-scene");
             IScene xVelScene = new XVelocityScene(this.renderer, this.contentLoader, "x-velocity-scene");
+            IScene yVelScene = new YVelocityScene(this.renderer, this.contentLoader, "y-velocity-scene");
 
             this.sceneManager?.AddScene(menuScene);
             this.sceneManager?.AddScene(angularVelScene);
             this.sceneManager?.AddScene(xVelScene);
+            this.sceneManager?.AddScene(yVelScene);
         }
     }
 }
