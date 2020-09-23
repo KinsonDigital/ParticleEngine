@@ -187,6 +187,10 @@ namespace ParticleEngineTesterTests.UI
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new instance of <see cref="Label"/> for testing.
+        /// </summary>
+        /// <returns>A label instance.</returns>
         private Label CreateLabel()
         {
             return new Label(

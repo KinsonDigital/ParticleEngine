@@ -114,6 +114,11 @@ namespace ParticleEngineTesterTests.Scenes
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new instance of a <see cref="FakeSceneBase"/> for testing.
+        /// </summary>
+        /// <param name="name">The name to give the scene.</param>
+        /// <returns>A fake scene for testing.</returns>
         private FakeSceneBase CreateScene(string name = "test-name")
         {
             return new FakeSceneBase(new Mock<IRenderer>().Object, new Mock<IContentLoader>().Object, name);

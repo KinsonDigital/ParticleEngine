@@ -319,6 +319,10 @@ namespace ParticleEngineTesterTests.UI
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new instance of <see cref="Menu"/> for testing.
+        /// </summary>
+        /// <returns>A menu instance.</returns>
         private Menu CreateMenu()
         {
             return new Menu(this.mockCtrlFactory.Object);

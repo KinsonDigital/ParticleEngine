@@ -35,7 +35,7 @@ namespace KDParticleEngine.Behaviors
         /// Gets the life time of the behavior in milliseconds.
         /// </summary>
         /// <remarks>
-        ///     Once the amount of time that has elapsed the life time of the
+        ///     Once the amount of time has elapsed the life time of the
         ///     behavior, the behavior will be disabled.
         /// </remarks>
         double LifeTime { get; }

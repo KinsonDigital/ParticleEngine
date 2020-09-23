@@ -198,7 +198,7 @@ namespace KDParticleEngineTests.Behaviors
         #endregion
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {
