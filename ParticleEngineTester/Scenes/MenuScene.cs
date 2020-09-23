@@ -5,7 +5,6 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
-    using System.Linq;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;

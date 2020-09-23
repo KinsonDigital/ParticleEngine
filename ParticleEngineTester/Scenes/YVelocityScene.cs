@@ -31,17 +31,6 @@ namespace ParticleEngineTester.Scenes
             {
                 new EasingRandomBehaviorSettings()
                 {
-                    ApplyToAttribute = ParticleAttribute.Size,
-                    StartMin = 1,
-                    StartMax = 1,
-                    ChangeMin = 0,
-                    ChangeMax = 0,
-                    TotalTimeMin = 2000,
-                    TotalTimeMax = 2000,
-                    EasingFunctionType = EasingFunction.EaseIn,
-                },
-                new EasingRandomBehaviorSettings()
-                {
                     ApplyToAttribute = ParticleAttribute.Y,
                     StartMin = SceneCenter.Y - 200,
                     StartMax = SceneCenter.Y - 200,
