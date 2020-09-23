@@ -27,11 +27,17 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Gets or sets the minimum amount of change used in randomization.
         /// </summary>
+        /// <remarks>
+        ///     Use positive values to increase and negative values to decrease.
+        /// </remarks>
         public float ChangeMin { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum amount of change used in randomization.
         /// </summary>
+        /// <remarks>
+        ///     Use positive values to increase and negative values to decrease.
+        /// </remarks>
         public float ChangeMax { get; set; }
 
         /// <summary>
