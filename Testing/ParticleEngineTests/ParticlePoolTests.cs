@@ -5,7 +5,6 @@
 namespace KDParticleEngineTests
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
@@ -89,7 +88,7 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void TotalLivingParticles_WhenGettingValue_ReturnsCorrectValue()
+        public void TotalLivingParticles_WhenGettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
@@ -103,7 +102,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void TotalDeadParticles_WhenGettingValue_ReturnsCorrectValue()
+        public void TotalDeadParticles_WhenGettingValue_ReturnsCorrectResult()
         {
             // Arrange
             this.effect.TotalParticlesAliveAtOnce = 10;
@@ -158,7 +157,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void BurstEnabled_WhenSettingValue_ReturnsCorrectValue()
+        public void BurstEnabled_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
@@ -346,7 +345,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        public void GetHashCode_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             this.effect.SpawnLocation = new PointF(11, 22);

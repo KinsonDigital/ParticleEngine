@@ -24,7 +24,7 @@ namespace KDParticleEngine.Behaviors
         {
             if (settings is null)
             {
-                throw new ArgumentNullException(nameof(settings), "The param must not be null.");
+                throw new ArgumentNullException(nameof(settings), "The parameter must not be null.");
             }
 
             var behaviors = new List<IBehavior>();
@@ -43,6 +43,10 @@ namespace KDParticleEngine.Behaviors
                 else if (setting is RandomChoiceBehaviorSettings randomChoiceBehaviorSettings)
                 {
                     behaviors.Add(new RandomColorBehavior(randomChoiceBehaviorSettings, randomizerService));
+                }
+                else
+                {
+                    throw new Exception($"Unknown behavior settings of type '{setting.GetType()}'");
                 }
             }
 

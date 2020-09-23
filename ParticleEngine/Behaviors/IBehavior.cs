@@ -32,6 +32,15 @@ namespace KDParticleEngine.Behaviors
         bool Enabled { get; }
 
         /// <summary>
+        /// Gets the life time of the behavior in milliseconds.
+        /// </summary>
+        /// <remarks>
+        ///     Once the amount of time has elapsed the life time of the
+        ///     behavior, the behavior will be disabled.
+        /// </remarks>
+        double LifeTime { get; }
+
+        /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>

@@ -4,7 +4,6 @@
 
 namespace KDParticleEngineTests
 {
-    using System.Collections.ObjectModel;
     using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
@@ -56,7 +55,7 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void SpawnLocation_WhenSettingValue_ReturnsCorrectValue()
+        public void SpawnLocation_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
@@ -70,7 +69,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectValue()
+        public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
@@ -84,7 +83,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void SpawnRateMin_WhenSettingValue_ReturnsCorrectValue()
+        public void SpawnRateMin_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
@@ -98,7 +97,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void SpawnRateMax_WhenSettingValue_ReturnsCorrectValue()
+        public void SpawnRateMax_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
@@ -112,7 +111,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void UseColorsFromList_WhenSettingValue_ReturnsCorrectValue()
+        public void UseColorsFromList_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());

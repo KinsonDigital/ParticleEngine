@@ -63,7 +63,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Add_WhenInvoking_ReturnsCorrectValue()
+        public void Add_WhenInvoking_ReturnsCorrectResult()
         {
             // Arrange
             var pointA = new PointF(10, 20);
@@ -77,7 +77,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Mult_WhenInvoking_ReturnsCorrectValue()
+        public void Mult_WhenInvoking_ReturnsCorrectResult()
         {
             // Arrange
             var point = new PointF(10, 20);
@@ -90,7 +90,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Count_WhenInvokingListVersionWithNullItems_ReturnsCorrectValue()
+        public void Count_WhenInvokingListVersionWithNullItems_ReturnsCorrectResult()
         {
             // Arrange
             var mockBehavior = new Mock<IBehavior>();
@@ -120,7 +120,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Count_WhenInvokingListVersion_ReturnsCorrectValue()
+        public void Count_WhenInvokingListVersion_ReturnsCorrectResult()
         {
             // Arrange
             var mockBehavior = new Mock<IBehavior>();
@@ -140,7 +140,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Count_WhenInvokingArrayVersionWithNullItems_ReturnsCorrectValue()
+        public void Count_WhenInvokingArrayVersionWithNullItems_ReturnsCorrectResult()
         {
             // Arrange
             var mockBehavior = new Mock<IBehavior>();
@@ -170,7 +170,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Count_WhenInvokingArrayVersion_ReturnsCorrectValue()
+        public void Count_WhenInvokingArrayVersion_ReturnsCorrectResult()
         {
             // Arrange
             var mockBehavior = new Mock<IBehavior>();

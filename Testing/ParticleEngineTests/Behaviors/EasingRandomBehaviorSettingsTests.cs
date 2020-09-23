@@ -15,7 +15,7 @@ namespace KDParticleEngineTests.Behaviors
     {
         #region Prop Tests
         [Fact]
-        public void ApplyToAttribute_WhenSettingValue_ReturnsCorrectValue()
+        public void ApplyToAttribute_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -29,7 +29,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void StartMin_WhenSettingValue_ReturnsCorrectValue()
+        public void StartMin_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -43,7 +43,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void StartMax_WhenSettingValue_ReturnsCorrectValue()
+        public void StartMax_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -57,7 +57,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void ChangeMin_WhenSettingValue_ReturnsCorrectValue()
+        public void ChangeMin_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -71,7 +71,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void ChangeMax_WhenSettingValue_ReturnsCorrectValue()
+        public void ChangeMax_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -85,7 +85,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void TotalTimeMin_WhenSettingValue_ReturnsCorrectValue()
+        public void TotalTimeMin_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -99,7 +99,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void TotalTimeMax_WhenSettingValue_ReturnsCorrectValue()
+        public void TotalTimeMax_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var setting = new EasingRandomBehaviorSettings();
@@ -204,7 +204,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        public void GetHashCode_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var settingA = new EasingRandomBehaviorSettings()

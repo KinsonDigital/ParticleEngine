@@ -39,11 +39,18 @@ namespace KDParticleEngine.Behaviors
         /// </summary>
         public bool Enabled { get; protected set; } = true;
 
+        /// <inheritdoc/>
+        public double LifeTime { get; set; }
+
         /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed since the last frame.</param>
-        public virtual void Update(TimeSpan timeElapsed) => ElapsedTime += timeElapsed.TotalMilliseconds;
+        public virtual void Update(TimeSpan timeElapsed)
+        {
+            ElapsedTime += timeElapsed.TotalMilliseconds;
+            Enabled = ElapsedTime < LifeTime;
+        }
 
         /// <summary>
         /// Resets the behavior.

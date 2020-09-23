@@ -38,7 +38,7 @@ namespace KDParticleEngineTests
 
         #region Method Tests
         [Fact]
-        public void GetBrightness_WhenInvoked_ReturnsCorrectValue()
+        public void GetBrightness_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var color = new ParticleColor(255, 24, 98, 118);
@@ -68,7 +68,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void GetSaturation_WhenInvoked_ReturnsCorrectValue()
+        public void GetSaturation_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var color = new ParticleColor(255, 24, 98, 118);
@@ -155,7 +155,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        public void GetHashCode_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var colorA = new ParticleColor(11, 22, 33, 44);
@@ -169,7 +169,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void ToString_WhenInvoked_ReturnsCorrectValue()
+        public void ToString_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var color = new ParticleColor(10, 20, 30, 40);

@@ -26,7 +26,7 @@ namespace KDParticleEngineTests.Behaviors
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
                 factory.CreateBehaviors(null, new Mock<IRandomizerService>().Object);
-            }, "The param must not be null. (Parameter 'settings')");
+            }, "The parameter must not be null. (Parameter 'settings')");
         }
 
         [Fact]
