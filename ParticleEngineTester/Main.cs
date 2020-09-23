@@ -1,10 +1,11 @@
-﻿// <copyright file="Main.cs" company="KinsonDigital">
+// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
 namespace ParticleEngineTester
 {
     using System;
+    using System.Data;
     using System.IO;
     using System.Reflection;
     using Microsoft.Xna.Framework;
@@ -18,8 +19,10 @@ namespace ParticleEngineTester
     /// </summary>
     public class Main : Game
     {
+        private static string appVersion = "not set";
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch? spriteBatch;
+        private SpriteFont? standardFont;
         private IRenderer? renderer;
         private IContentLoader? contentLoader;
         private ISceneManger? sceneManager;
@@ -42,6 +45,10 @@ namespace ParticleEngineTester
             {
                 e.GraphicsDeviceInformation.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             };
+
+            var versionInfo = Assembly.GetExecutingAssembly()?.GetName().Version;
+
+            appVersion = versionInfo is null ? "error: version unknown" : $"Particle Engine Tester: v{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}";
         }
 
         /// <summary>
@@ -92,6 +99,8 @@ namespace ParticleEngineTester
                 throw new Exception("The renderer and content loader must not be null.");
             }
 
+            this.standardFont = Content.Load<SpriteFont>("Fonts/version-font");
+
             this.sceneManager?.LoadContent();
         }
 
@@ -111,6 +120,10 @@ namespace ParticleEngineTester
             this.renderer?.Begin();
 
             this.sceneManager?.Draw(gameTime);
+
+            var testerVersionPosition = new Vector2(10, WindowHeight - (this.standardFont is null ? 0 : this.standardFont.MeasureString(appVersion).Y + 10));
+
+            this.spriteBatch?.DrawString(this.standardFont, appVersion, testerVersionPosition, new Color(255, 255, 0, 255));
 
             this.renderer?.End();
 
