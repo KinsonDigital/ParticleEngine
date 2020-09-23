@@ -69,11 +69,11 @@ namespace ParticleEngineTester.Scenes
                     ApplyToAttribute = ParticleAttribute.X,
                     StartMin = SceneCenter.X - 50,
                     StartMax = SceneCenter.X + 50,
-                    ChangeMin = -400,
-                    ChangeMax = 400,
+                    ChangeMin = -(SceneWidth - SceneCenter.X - 12),
+                    ChangeMax = SceneWidth - SceneCenter.X - 12,
                     TotalTimeMin = totalTime - 2000,
                     TotalTimeMax = totalTime - 2000,
-                    EasingFunctionType = EasingFunction.EaseIn,
+                    EasingFunctionType = EasingFunction.EaseOutBounce,
                 },
                 new EasingRandomBehaviorSettings()
                 {
