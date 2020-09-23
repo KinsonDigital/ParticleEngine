@@ -75,6 +75,9 @@ namespace ParticleEngineTester.Factories
                 case "blue-color-scene":
                     newScene = new BlueColorScene(renderer, contentLoader, sceneKey);
                     break;
+                case "alpha-color-scene":
+                    newScene = new AlphaColorScene(renderer, contentLoader, sceneKey);
+                    break;
             }
 
             return newScene;

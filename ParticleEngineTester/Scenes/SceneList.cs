@@ -21,6 +21,7 @@ namespace ParticleEngineTester.Scenes
             "red-color-scene",
             "green-color-scene",
             "blue-color-scene",
+            "alpha-color-scene",
         };
     }
 }
