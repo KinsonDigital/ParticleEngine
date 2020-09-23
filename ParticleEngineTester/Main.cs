@@ -1,4 +1,4 @@
-// <copyright file="Main.cs" company="KinsonDigital">
+﻿// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -74,7 +74,7 @@ namespace ParticleEngineTester
             this.contentLoader = new ContentLoader(Content);
 
             this.ctrlFactory = new ControlFactory(this.renderer, this.contentLoader);
-            this.sceneFactory = new SceneFactory(this.renderer, this.contentLoader, SceneList.SceneKeys);
+            this.sceneFactory = new SceneFactory(this.renderer, this.contentLoader);
 
             this.sceneManager = new SceneManager(this.ctrlFactory, Window.ClientBounds.Width, Window.ClientBounds.Height);
             this.sceneManager.SceneChanged += SceneManager_SceneChanged;

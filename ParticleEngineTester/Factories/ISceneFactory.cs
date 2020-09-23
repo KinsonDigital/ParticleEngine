@@ -1,4 +1,8 @@
-﻿namespace ParticleEngineTester.Factories
+﻿// <copyright file="ISceneFactory.cs" company="KinsonDigital">
+// Copyright (c) KinsonDigital. All rights reserved.
+// </copyright>
+
+namespace ParticleEngineTester.Factories
 {
     /// <summary>
     /// Creates scenes that can be rendered to the screen.

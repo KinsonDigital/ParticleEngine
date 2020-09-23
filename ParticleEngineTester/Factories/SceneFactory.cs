@@ -1,8 +1,12 @@
-// <copyright file="SceneFactory.cs" company="KinsonDigital">
+﻿// <copyright file="SceneFactory.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
+#pragma warning disable SA1512 // Single-line comments should not be followed by blank line
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
 // TODO: Create unit tests for this class.
+#pragma warning restore SA1512 // Single-line comments should not be followed by blank line
+#pragma warning restore SA1515 // Single-line comment should be preceded by blank line
 
 namespace ParticleEngineTester.Factories
 {
@@ -17,19 +21,16 @@ namespace ParticleEngineTester.Factories
     {
         private static IRenderer? renderer;
         private static IContentLoader? contentLoader;
-        private readonly string[] sceneKeys;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneFactory"/> class.
         /// </summary>
         /// <param name="renderer">Used to render created controls.</param>
         /// <param name="contentLoader">Used to load content for controls.</param>
-        /// <param name="sceneTypeKeys">A list of scene keys to understand what kind of scenes to create.</param>
-        public SceneFactory(IRenderer renderer, IContentLoader contentLoader, string[] sceneTypeKeys)
+        public SceneFactory(IRenderer renderer, IContentLoader contentLoader)
         {
             SceneFactory.renderer = renderer;
             SceneFactory.contentLoader = contentLoader;
-            this.sceneKeys = sceneTypeKeys;
         }
 
         /// <inheritdoc/>

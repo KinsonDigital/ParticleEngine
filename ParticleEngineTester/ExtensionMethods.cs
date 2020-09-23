@@ -2,7 +2,11 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
+#pragma warning disable SA1512 // Single-line comments should not be followed by blank line
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
 // TODO: Create unit tests for this class
+#pragma warning restore SA1512 // Single-line comments should not be followed by blank line
+#pragma warning restore SA1515 // Single-line comment should be preceded by blank line
 
 namespace ParticleEngineTester
 {

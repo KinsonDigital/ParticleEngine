@@ -6,7 +6,6 @@ namespace ParticleEngineTester.Scenes
 {
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
-    using KDParticleEngine.Services;
     using Microsoft.Xna.Framework;
 
     /// <summary>

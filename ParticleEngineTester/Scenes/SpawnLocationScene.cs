@@ -4,7 +4,6 @@
 
 namespace ParticleEngineTester.Scenes
 {
-    using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Microsoft.Xna.Framework;
@@ -15,7 +14,7 @@ namespace ParticleEngineTester.Scenes
     /// </summary>
     public class SpawnLocationScene : ParticleEngineSceneBase
     {
-        private IMouse mouse;
+        private readonly IMouse mouse;
         private MouseState currentMouseState;
 
         /// <summary>
