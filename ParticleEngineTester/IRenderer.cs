@@ -96,6 +96,13 @@ namespace ParticleEngineTester
         void DrawLine(float x1, float y1, float x2, float y2, Color color);
 
         /// <summary>
+        /// Draws an unfilled rectangle to the screen.
+        /// </summary>
+        /// <param name="rect">The rectangle to render..</param>
+        /// <param name="color">The color of the rectangle.</param>
+        void DrawRectangle(Rectangle rect, Color color);
+
+        /// <summary>
         /// Flushes all batched text and sprites to the screen.
         /// </summary>
         /// <remarks>

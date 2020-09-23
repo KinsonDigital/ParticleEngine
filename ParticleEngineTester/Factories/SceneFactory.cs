@@ -1,4 +1,4 @@
-﻿// <copyright file="SceneFactory.cs" company="KinsonDigital">
+// <copyright file="SceneFactory.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -86,6 +86,9 @@ namespace ParticleEngineTester.Factories
                     break;
                 case "spawn-location-scene":
                     newScene = new SpawnLocationScene(renderer, contentLoader, new MouseInput(), sceneKey);
+                    break;
+                case "random-choice-scene":
+                    newScene = new RandomChoiceScene(renderer, contentLoader, sceneKey);
                     break;
             }
 
