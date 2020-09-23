@@ -66,6 +66,9 @@ namespace ParticleEngineTester.Factories
                 case "size-scene":
                     newScene = new SizeScene(renderer, contentLoader, sceneKey);
                     break;
+                case "red-color-scene":
+                    newScene = new RedColorScene(renderer, contentLoader, sceneKey);
+                    break;
             }
 
             return newScene;
