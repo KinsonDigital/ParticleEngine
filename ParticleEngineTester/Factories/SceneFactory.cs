@@ -1,4 +1,4 @@
-﻿// <copyright file="SceneFactory.cs" company="KinsonDigital">
+// <copyright file="SceneFactory.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -68,6 +68,9 @@ namespace ParticleEngineTester.Factories
                     break;
                 case "red-color-scene":
                     newScene = new RedColorScene(renderer, contentLoader, sceneKey);
+                    break;
+                case "green-color-scene":
+                    newScene = new GreenColorScene(renderer, contentLoader, sceneKey);
                     break;
             }
 

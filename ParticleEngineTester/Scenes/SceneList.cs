@@ -19,6 +19,7 @@ namespace ParticleEngineTester.Scenes
             "y-velocity-scene",
             "size-scene",
             "red-color-scene",
+            "green-color-scene",
         };
     }
 }

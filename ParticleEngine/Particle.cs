@@ -42,7 +42,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets the size of the <see cref="Particle"/>.
         /// </summary>
-        public float Size { get; set; }
+        public float Size { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Particle"/> is alive or dead.
@@ -151,6 +151,7 @@ namespace KDParticleEngine
                 }
             }
 
+            Size = 1;
             Angle = 0;
             TintColor = ParticleColor.White;
             IsAlive = true;
