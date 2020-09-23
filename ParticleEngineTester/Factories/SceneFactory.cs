@@ -78,6 +78,9 @@ namespace ParticleEngineTester.Factories
                 case "alpha-color-scene":
                     newScene = new AlphaColorScene(renderer, contentLoader, sceneKey);
                     break;
+                case "bursting-effect-scene":
+                    newScene = new BurstingEffectScene(renderer, contentLoader, sceneKey);
+                    break;
             }
 
             return newScene;
