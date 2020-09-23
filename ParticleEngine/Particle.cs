@@ -78,6 +78,9 @@ namespace KDParticleEngine
                 {
                     var value = 0f;
 
+                    this.behaviors[i].Update(timeElapsed);
+                    IsAlive = true;
+
                     /*NOTE:
                      * The 'parseSuccess' variable will be considered successful if the incoming behavior value is a floating
                      * point number OR if it is the special color syntax value.  This is because the color value syntax is
@@ -90,9 +93,6 @@ namespace KDParticleEngine
                     {
                         throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{this.behaviors[i].Value}' failed.\n\tValue must be a number.");
                     }
-
-                    this.behaviors[i].Update(timeElapsed);
-                    IsAlive = true;
 
                     switch (this.behaviors[i].ApplyToAttribute)
                     {
