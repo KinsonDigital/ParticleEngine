@@ -56,6 +56,17 @@ namespace KDParticleEngine.Behaviors
                     break;
             }
 
+            if (!(this.settings.UpdateStartMin is null))
+            {
+                this.settings.StartMin = this.settings.UpdateStartMin.Invoke();
+            }
+
+
+            if (!(this.settings.UpdateStartMax is null))
+            {
+                this.settings.StartMax = this.settings.UpdateStartMax.Invoke();
+            }
+
             base.Update(timeElapsed);
         }
 
