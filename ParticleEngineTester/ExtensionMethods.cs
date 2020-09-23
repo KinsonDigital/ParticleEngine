@@ -10,6 +10,8 @@
 
 namespace ParticleEngineTester
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Text;
     using Microsoft.Xna.Framework;
@@ -55,6 +57,25 @@ namespace ParticleEngineTester
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Sets the size of the window to the given <paramref name="width"/> and <paramref name="height"/>.
+        /// </summary>
+        /// <param name="deviceManager">The graphics device manager to use to set the size.</param>
+        /// <param name="width">The width of the window.</param>
+        /// <param name="height">The height of the window.</param>
+        [ExcludeFromCodeCoverage]
+        public static void SetWindowSize(this GraphicsDeviceManager deviceManager, int width, int height)
+        {
+            if (deviceManager is null)
+            {
+                throw new ArgumentNullException(nameof(deviceManager), "The parameter must not be null.");
+            }
+
+            deviceManager.PreferredBackBufferWidth = width;
+            deviceManager.PreferredBackBufferHeight = height;
+            deviceManager.ApplyChanges();
         }
     }
 }
