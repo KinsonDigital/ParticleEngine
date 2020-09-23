@@ -29,7 +29,6 @@ namespace ParticleEngineTester.Scenes
         public override void LoadContent()
         {
             const int totalTime = 4000;
-            const int particleHeight = 33;
 
             var burstingSettings = new BehaviorSettings[]
             {

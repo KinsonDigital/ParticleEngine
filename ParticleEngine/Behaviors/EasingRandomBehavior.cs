@@ -41,11 +41,6 @@ namespace KDParticleEngine.Behaviors
         public double Change { get; set; }
 
         /// <summary>
-        /// Gets the life time of the behavior in milliseconds.
-        /// </summary>
-        protected double LifeTime { get; private set; }
-
-        /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
@@ -62,7 +57,6 @@ namespace KDParticleEngine.Behaviors
             }
 
             base.Update(timeElapsed);
-            Enabled = ElapsedTime < LifeTime;
         }
 
         /// <summary>

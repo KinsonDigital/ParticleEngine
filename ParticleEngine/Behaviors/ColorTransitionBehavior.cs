@@ -9,7 +9,7 @@ namespace KDParticleEngine.Behaviors
     /// <summary>
     /// Adds behavior that transitions from one color to another over a period of time.
     /// </summary>
-    public class ColorTransitionBehavior : IBehavior
+    public class ColorTransitionBehavior : Behavior
     {
         private readonly ColorTransitionBehaviorSettings settings;
 
@@ -17,54 +17,19 @@ namespace KDParticleEngine.Behaviors
         /// Initializes a new instance of the <see cref="ColorTransitionBehavior"/> class.
         /// </summary>
         /// <param name="settings">The color transition related behavior settings.</param>
-        public ColorTransitionBehavior(ColorTransitionBehaviorSettings settings) => this.settings = settings;
-
-#pragma warning disable SA1629 // Documentation text should end with a period
-        /// <summary>
-        /// Gets the current value of the behavior represented as a color.
-        /// </summary>
-        /// <remarks>
-        ///     The color will be a string value that represents the current color transition
-        ///     result that follows the following syntax.
-        ///     Syntax: clr:<alpha>,<red>,<green>,<blue>
-        ///     Example: clr:255,10,20,30
-        /// </remarks>
-        public string Value { get; private set; } = string.Empty;
-#pragma warning restore SA1629 // Documentation text should end with a period
-
-        /// <inheritdoc/>
-        public double ElapsedTime { get; private set; }
-
-        /// <summary>
-        /// Gets the particle attribute that the behavior will be applied to.
-        /// </summary>
-        /// <remarks>Read only and should always be the value of <see cref="ParticleAttribute.Color"/>.</remarks>
-        public ParticleAttribute ApplyToAttribute => ParticleAttribute.Color;
-
-        /// <inheritdoc/>
-        public bool Enabled { get; private set; }
-
-        /// <summary>
-        /// Gets the life time of the behavior in milliseconds.
-        /// </summary>
-        /// <remarks>
-        ///     Once the amount of time that has elapsed the life time of the
-        ///     behavior, the behavior will be disabled.
-        /// </remarks>
-        protected double LifeTime => this.settings.LifeTime;
-
-        /// <inheritdoc/>
-        public void Reset()
+        public ColorTransitionBehavior(ColorTransitionBehaviorSettings settings)
+            : base(settings)
         {
-            Value = string.Empty;
-            ElapsedTime = 0;
-            Enabled = true;
+            this.settings = settings;
+            this.settings.ApplyToAttribute = ParticleAttribute.Color;
+
+            LifeTime = this.settings.LifeTime;
         }
 
         /// <inheritdoc/>
-        public void Update(TimeSpan timeElapsed)
+        public override void Update(TimeSpan timeElapsed)
         {
-            ElapsedTime += timeElapsed.TotalMilliseconds;
+            base.Update(timeElapsed);
 
             byte alpha = 0;
             byte red = 0;
@@ -83,8 +48,6 @@ namespace KDParticleEngine.Behaviors
             }
 
             Value = $"clr:{alpha},{red},{green},{blue}";
-
-            Enabled = ElapsedTime < LifeTime;
         }
 
         /// <summary>
