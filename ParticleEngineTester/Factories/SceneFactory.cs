@@ -1,4 +1,4 @@
-// <copyright file="SceneFactory.cs" company="KinsonDigital">
+﻿// <copyright file="SceneFactory.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -47,7 +47,7 @@ namespace ParticleEngineTester.Factories
 
             if (!SceneList.SceneKeys.Contains(sceneKey))
             {
-                throw new ArgumentException(nameof(sceneKey), "The given scene key is invalid.");
+                throw new ArgumentException(nameof(sceneKey), $"The given scene key '{sceneKey}' is invalid.");
             }
 
             IScene? newScene = null;
