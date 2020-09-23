@@ -53,11 +53,13 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Gets or sets the minimum total amount of time in milliseconds to complete the behavior.
         /// </summary>
+        /// <remarks>A value less then or equal to 0 will result in the behavior not working.</remarks>
         public float TotalTimeMin { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum total amount of time in milliseconds to complete the behavior.
         /// </summary>
+        /// <remarks>A value less then or equal to 0 will result in the behavior not working.</remarks>
         public float TotalTimeMax { get; set; }
 
         /// <summary>

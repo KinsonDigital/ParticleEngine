@@ -24,6 +24,7 @@ namespace ParticleEngineTester.Scenes
             "alpha-color-scene",
             "color-transition-scene",
             "bursting-effect-scene",
+            "spawn-location-scene",
         };
     }
 }

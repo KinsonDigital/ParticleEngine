@@ -84,6 +84,9 @@ namespace ParticleEngineTester.Factories
                 case "bursting-effect-scene":
                     newScene = new BurstingEffectScene(renderer, contentLoader, sceneKey);
                     break;
+                case "spawn-location-scene":
+                    newScene = new SpawnLocationScene(renderer, contentLoader, new MouseInput(), sceneKey);
+                    break;
             }
 
             return newScene;
