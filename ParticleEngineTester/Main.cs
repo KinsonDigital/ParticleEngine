@@ -78,7 +78,7 @@ namespace ParticleEngineTester
             WindowWidth = Window.ClientBounds.Width;
             WindowHeight = Window.ClientBounds.Height;
 
-            Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\bin\";
+            Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\";
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             Window.Title = "Particle Engine Tester";
 
