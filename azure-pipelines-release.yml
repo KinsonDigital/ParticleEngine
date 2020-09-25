@@ -1,5 +1,5 @@
 trigger:
-- feature/en-2197-create-engine-tester-app-pipelines
+- 'release/v*.*.*'
 
 
 variables:
