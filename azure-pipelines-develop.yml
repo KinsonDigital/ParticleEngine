@@ -13,7 +13,7 @@ variables:
     value: 'CoverageReport'
   - name: engineLibName
     value: 'ParticleEngine'
-  - name: engineAppTesterName
+  - name: engineTesterAppName
     value: 'ParticleEngineTester'
   - name: pool
     value: 'KinsonDigital'
@@ -44,14 +44,14 @@ stages:
       inputs:
         SourceFolder: '$(Agent.ToolsDirectory)\MGCB'
         Contents: '**'
-        TargetFolder: '$(System.DefaultWorkingDirectory)\$(engineAppTesterName)\Content'
+        TargetFolder: '$(System.DefaultWorkingDirectory)\$(engineTesterAppName)\Content'
         OverWrite: true
 
     - task: CmdLine@2
       displayName: 'Build MonoGame Content With MGCB Tool'
       inputs:
         script: 'mgcb /@:Content.mgcb'
-        workingDirectory: '$(System.DefaultWorkingDirectory)\$(engineAppTesterName)\Content'
+        workingDirectory: '$(System.DefaultWorkingDirectory)\$(engineTesterAppName)\Content'
 
     - task: NuGetCommand@2
       displayName: 'Restore Nuget Packages'
@@ -71,9 +71,9 @@ stages:
         clean: true
 
     - task: VSBuild@1
-      displayName: 'Build $(engineAppTesterName) Project'
+      displayName: 'Build $(engineTesterAppName) Project'
       inputs:
-        solution: '**\$(engineAppTesterName).csproj'
+        solution: '**\$(engineTesterAppName).csproj'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
         clean: true
@@ -90,7 +90,7 @@ stages:
       displayName: "Run ParticleEngine Tests & Collect Code Coverage"
       inputs:
         command: 'test'
-        projects: '**\*$(engienAppName)[Tt]ests\*.csproj'
+        projects: '**\*$(engineLibName)[Tt]ests\*.csproj'
         arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
         publishTestResults: true
         testRunTitle: 'Unit Test Results'
@@ -99,7 +99,7 @@ stages:
       displayName: "Run Engine Test App Tests & Collect Code Coverage"
       inputs:
         command: 'test'
-        projects: '**\*$(engineAppTesterName)[Tt]ests\*.csproj'
+        projects: '**\*$(engineTesterAppName)[Tt]ests\*.csproj'
         arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
         publishTestResults: true
         testRunTitle: 'Unit Test Results'
@@ -131,7 +131,7 @@ stages:
     - task: CmdLine@2
       displayName: 'Display Engine Test App Artifact Path'
       inputs:
-        script: 'echo $(System.DefaultWorkingDirectory)\**\$(engineAppTesterName).csproj'
+        script: 'echo $(System.DefaultWorkingDirectory)\**\$(engineTesterAppName).csproj'
         failOnStderr: true
 
     - task: DotNetCoreCLI@2
@@ -139,29 +139,29 @@ stages:
       inputs:
         command: 'publish'
         publishWebProjects: false
-        projects: '$(System.DefaultWorkingDirectory)\**\$(engineAppTesterName).csproj'
+        projects: '$(System.DefaultWorkingDirectory)\**\$(engineTesterAppName).csproj'
         arguments: '-o $(System.DefaultWorkingDirectory)\publish -c Release'
         zipAfterPublish: false
         modifyOutputPath: false
 
     - task: ArchiveFiles@2
-      displayName: 'Archive $(engineAppTesterName) Build Results To Staging Directory'
+      displayName: 'Archive $(engineTesterAppName) Build Results To Staging Directory'
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)\publish'
         includeRootFolder: false
         archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)\$(engineAppTesterName).zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)\$(engineTesterAppName).zip'
         replaceExistingArchive: true
 
     - task: CmdLine@2
-      displayName: 'Add Version Number To $(engineAppTesterName) Build Artifact'
+      displayName: 'Add Version Number To $(engineTesterAppName) Build Artifact'
       inputs:
-        script: 'avs --archivepath "$(Build.ArtifactStagingDirectory)\$(engineAppTesterName).zip" --projectfilepath "$(System.DefaultWorkingDirectory)\$(engineAppTesterName)\$(engineAppTesterName).csproj"'
+        script: 'avs --archivepath "$(Build.ArtifactStagingDirectory)\$(engineTesterAppName).zip" --projectfilepath "$(System.DefaultWorkingDirectory)\$(engineTesterAppName)\$(engineTesterAppName).csproj"'
         workingDirectory: 'C:\AVS'
         failOnStderr: true
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish $(engineAppTesterName) Build Artifacts'
+      displayName: 'Publish $(engineTesterAppName) Build Artifacts'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
