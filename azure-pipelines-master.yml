@@ -133,12 +133,6 @@ stages:
     displayName: 'Publish Artifacts'
     steps:
 
-    - task: CmdLine@2
-      displayName: 'Display Engine Test App Artifact Path'
-      inputs:
-        script: 'echo $(System.DefaultWorkingDirectory)\**\$(engineTesterAppName).csproj'
-        failOnStderr: true
-
     - task: DotNetCoreCLI@2
       displayName: 'Publish Engine Test App Artifacts'
       inputs:
