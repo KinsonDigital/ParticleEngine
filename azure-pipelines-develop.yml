@@ -8,7 +8,7 @@ variables:
   - name: buildPlatform
     value: 'Any CPU'
   - name: buildConfiguration
-    value: 'Release'
+    value: 'Debug'
   - name: coverageReportDirName
     value: 'CoverageReport'
   - name: engineLibName
