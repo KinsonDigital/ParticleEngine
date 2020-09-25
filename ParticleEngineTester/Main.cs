@@ -7,19 +7,25 @@ namespace ParticleEngineTester
     using System;
     using System.IO;
     using System.Reflection;
+    using KDParticleEngine;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.Scenes;
     using ParticleEngineTester.UI;
+    using EngineVersion = KDParticleEngine.Version;
 
     /// <summary>
     /// The main part of the application.
     /// </summary>
     public class Main : Game
     {
+        private static string appVersion = "not set";
+        private static string particleEngineVersion = "not set";
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch? spriteBatch;
+        private SpriteFont? versionFont;
+        private float versionTextHeight;
         private IRenderer? renderer;
         private IContentLoader? contentLoader;
         private ISceneManger? sceneManager;
@@ -42,6 +48,11 @@ namespace ParticleEngineTester
             {
                 e.GraphicsDeviceInformation.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             };
+
+            var versionInfo = Assembly.GetExecutingAssembly()?.GetName().Version;
+
+            appVersion = versionInfo is null ? "error: version unknown" : $"Particle Engine Tester: v{versionInfo.Major}.{versionInfo.Minor}.{versionInfo.Build}";
+            particleEngineVersion = EngineVersion.GetVersion();
         }
 
         /// <summary>
@@ -62,10 +73,12 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         protected override void Initialize()
         {
+            this.graphics.SetWindowSize(1200, 1000);
+
             WindowWidth = Window.ClientBounds.Width;
             WindowHeight = Window.ClientBounds.Height;
 
-            Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\bin\";
+            Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\";
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             Window.Title = "Particle Engine Tester";
 
@@ -92,6 +105,9 @@ namespace ParticleEngineTester
                 throw new Exception("The renderer and content loader must not be null.");
             }
 
+            this.versionFont = Content.Load<SpriteFont>("Fonts/version-font");
+            this.versionTextHeight = this.versionFont.MeasureString(appVersion).Y;
+
             this.sceneManager?.LoadContent();
         }
 
@@ -112,6 +128,8 @@ namespace ParticleEngineTester
 
             this.sceneManager?.Draw(gameTime);
 
+            RenderVersions();
+
             this.renderer?.End();
 
             base.Draw(gameTime);
@@ -131,6 +149,19 @@ namespace ParticleEngineTester
         /// Occurs every time the scene is changed.
         /// </summary>
         private void MenuScene_MenuClicked(object? sender, MenuItemClickedEventArgs e) => this.sceneManager?.ActivateScene(e.MenuItemName);
+
+        /// <summary>
+        /// Renders the version numbers to the bottom left corner of the window.
+        /// </summary>
+        private void RenderVersions()
+        {
+            var testerVersionPosition = new Vector2(10, WindowHeight - ((this.versionTextHeight * 2) + 20));
+            var engineVersionPosition = new Vector2(10, testerVersionPosition.Y + this.versionTextHeight + 10);
+
+            this.spriteBatch?.DrawString(this.versionFont, appVersion, testerVersionPosition, new Color(255, 255, 0, 255));
+
+            this.spriteBatch?.DrawString(this.versionFont, particleEngineVersion, engineVersionPosition, new Color(255, 255, 0, 255));
+        }
 
         /// <summary>
         /// Creates all of the scenes for the application.

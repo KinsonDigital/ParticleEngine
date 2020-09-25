@@ -21,7 +21,7 @@ namespace ParticleEngineTester
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentLoader"/> class.
         /// </summary>
-        /// <param name="contentManager">The mnogame content loader.</param>
+        /// <param name="contentManager">The monogame content loader.</param>
         public ContentLoader(ContentManager contentManager) => this.contentManager = contentManager;
 
         /// <inheritdoc/>
