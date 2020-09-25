@@ -1,5 +1,5 @@
 trigger:
-- 'release/v*.*.*'
+- 'release/v*.*.*' #QA Environment
 
 
 variables:
