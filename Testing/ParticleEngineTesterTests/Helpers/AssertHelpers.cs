@@ -9,6 +9,8 @@ namespace ParticleEngineTesterTests.Helpers
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Xunit;
+    using Xunit.Sdk;
+    using static Xunit.Assert;
 
     /// <summary>
     /// Provides helper methods for the <see cref="XUnit"/>'s <see cref="Assert"/> class.
@@ -26,7 +28,7 @@ namespace ParticleEngineTesterTests.Helpers
         public static void ThrowsWithMessage<T>(Action testCode, string expectedMessage)
             where T : Exception
         {
-            Assert.Equal(expectedMessage, Assert.Throws<T>(testCode).Message);
+            Equal(expectedMessage, Throws<T>(testCode).Message);
         }
 
         public static void DoesNotThrow<T>(Action action)
@@ -43,7 +45,7 @@ namespace ParticleEngineTesterTests.Helpers
             }
             catch (T)
             {
-                Assert.True(false, $"Expected the exception {typeof(T).Name} to not be thrown.");
+                True(false, $"Expected the exception {typeof(T).Name} to not be thrown.");
             }
         }
 
@@ -64,11 +66,11 @@ namespace ParticleEngineTesterTests.Helpers
             {
                 if (ex.GetType() == typeof(NullReferenceException))
                 {
-                    Assert.True(false, $"Expected not to raise a {nameof(NullReferenceException)} exception.");
+                    True(false, $"Expected not to raise a {nameof(NullReferenceException)} exception.");
                 }
                 else
                 {
-                    Assert.True(true);
+                    True(true);
                 }
             }
         }
@@ -79,13 +81,13 @@ namespace ParticleEngineTesterTests.Helpers
             {
                 var result = fieldContainer.IsNullOrZeroField(name);
 
-                Assert.True(true);
+                True(true);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
-                Assert.True(false, ex.Message);
+                True(false, ex.Message);
             }
         }
 
@@ -105,17 +107,17 @@ namespace ParticleEngineTesterTests.Helpers
         {
             if (expectedItems is null && !(actualItems is null))
             {
-                Assert.True(false, $"Both lists must be null or not null to be equal.\nThe '{nameof(expectedItems)}' is null and the '{nameof(actualItems)}' is not null.");
+                True(false, $"Both lists must be null or not null to be equal.\nThe '{nameof(expectedItems)}' is null and the '{nameof(actualItems)}' is not null.");
             }
 
             if (!(expectedItems is null) && actualItems is null)
             {
-                Assert.True(false, $"Both lists must be null or not null to be equal.\nThe '{nameof(expectedItems)}' is not null and the '{nameof(actualItems)}' is null.");
+                True(false, $"Both lists must be null or not null to be equal.\nThe '{nameof(expectedItems)}' is not null and the '{nameof(actualItems)}' is null.");
             }
 
             if (expectedItems.Count() != actualItems.Count())
             {
-                Assert.True(false, $"The quantity of items for '{nameof(expectedItems)}' and '{nameof(actualItems)}' do not match.");
+                True(false, $"The quantity of items for '{nameof(expectedItems)}' and '{nameof(actualItems)}' do not match.");
             }
 
             var expectedArrayItems = expectedItems.ToArray();
@@ -125,21 +127,21 @@ namespace ParticleEngineTesterTests.Helpers
             {
                 if ((expectedArrayItems[i] is null) && !(actualArrayItems[i] is null))
                 {
-                    Assert.True(false, $"Both the expected and actual item must both be null or not null to be equal.\n\nThe expected item at index '{i}' is null and the actual item at index '{i}' is not null.");
+                    True(false, $"Both the expected and actual item must both be null or not null to be equal.\n\nThe expected item at index '{i}' is null and the actual item at index '{i}' is not null.");
                 }
 
                 if (!(expectedArrayItems[i] is null) && (actualArrayItems[i] is null))
                 {
-                    Assert.True(false, $"Both the expected and actual item must both be null or not null to be equal.\n\nThe expected item at index '{i}' is not null and the actual item at index '{i}' is null.");
+                    True(false, $"Both the expected and actual item must both be null or not null to be equal.\n\nThe expected item at index '{i}' is not null and the actual item at index '{i}' is null.");
                 }
 
                 if (expectedArrayItems[i] != actualArrayItems[i])
                 {
-                    Assert.True(false, $"The expected and actual item at index '{i}' are not equal.");
+                    True(false, $"The expected and actual item at index '{i}' are not equal.");
                 }
             }
 
-            Assert.True(true);
+            True(true);
         }
 
         /// <summary>
@@ -165,8 +167,51 @@ namespace ParticleEngineTesterTests.Helpers
                     continue;
                 }
 
-                Assert.True(false, $"The item '{itemsToCheck[i]}' at index '{i}' returned false with the '{nameof(arePredicate)}'");
+                True(false, $"The item '{itemsToCheck[i]}' at index '{i}' returned false with the '{nameof(arePredicate)}'");
             }
+        }
+
+        /// <summary>
+        /// Asserts that an event should not of been raised.
+        /// </summary>
+        /// <typeparam name="T">The type of the event arguments to expect if the event was raised.</typeparam>
+        /// <param name="attach">Code to attach the event handler.</param>
+        /// <param name="detach">Code to detach the event handler.</param>
+        /// <param name="testCode">A delegate to the code to be tested.</param>
+        public static void DoesNotRaise<T>(Action<EventHandler<T>> attach, Action<EventHandler<T>> detach, Action testCode)
+            where T : EventArgs
+        {
+            RaisedEvent<T> raisedEvent = RaisesInternal(attach, detach, testCode);
+
+            if (raisedEvent == null || !raisedEvent.Arguments.GetType().Equals(typeof(T)))
+            {
+                True(true);
+                return;
+            }
+
+            True(false, "The event was raised and should not of been.");
+        }
+
+        /// <summary>
+        /// Verifies that an event with the exact or a derived event args is raised.
+        /// </summary>
+        /// <typeparam name="T">The type of the event arguments to expect if the event was raised.</typeparam>
+        /// <param name="attach">Code to attach the event handler.</param>
+        /// <param name="detach">Code to detach the event handler.</param>
+        /// <param name="testCode">A delegate to the code to be tested.</param>
+        private static RaisedEvent<T> RaisesInternal<T>(Action<EventHandler<T>> attach, Action<EventHandler<T>> detach, Action testCode)
+            where T : EventArgs
+        {
+            RaisedEvent<T> raisedEvent = null;
+            void Obj(object s, T args)
+            {
+                raisedEvent = new RaisedEvent<T>(s, args);
+            }
+
+            attach(Obj);
+            testCode();
+            detach(Obj);
+            return raisedEvent;
         }
     }
 }
