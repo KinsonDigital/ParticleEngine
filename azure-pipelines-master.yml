@@ -83,6 +83,7 @@ stages:
         configuration: '$(buildConfiguration)'
         clean: true
 
+
 - stage: Testing_Stage
   displayName: 'Testing Stage'
   pool: '$(pool)'
