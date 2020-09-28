@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49
 	ProjectSection(SolutionItems) = preProject
 		Testing\.editorconfig = Testing\.editorconfig
 		Testing\ParticleEngine.runsettings = Testing\ParticleEngine.runsettings
+		Testing\ParticleEngineTester.runsettings = Testing\ParticleEngineTester.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "Testing\ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
@@ -37,9 +38,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequestTemplates", "Pul
 		pull_request_template\release_to_master.md = pull_request_template\release_to_master.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleEngineTester", "ParticleEngineTester\ParticleEngineTester.csproj", "{238F2D79-6BB6-4DC7-945B-7D1C26621124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTester", "ParticleEngineTester\ParticleEngineTester.csproj", "{238F2D79-6BB6-4DC7-945B-7D1C26621124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleEngineTesterTests", "Testing\ParticleEngineTesterTests\ParticleEngineTesterTests.csproj", "{CD2B2511-D108-4077-AAEE-8AE6F0B04B45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTesterTests", "Testing\ParticleEngineTesterTests\ParticleEngineTesterTests.csproj", "{CD2B2511-D108-4077-AAEE-8AE6F0B04B45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
