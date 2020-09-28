@@ -12,10 +12,14 @@ namespace KDParticleEngine
         where T : class
     {
         /// <summary>
-        /// Loads and returns a texture with the given <paramref name="imageFilePath"/>.
+        /// Loads and returns a texture with the given <paramref name="assetName"/>.
         /// </summary>
-        /// <param name="imageFilePath">The file path of the image to load.</param>
+        /// <param name="assetName">The name of the asset to load.</param>
+        /// <remarks>
+        ///     The <paramref name="assetName"/> can be a simple name, file path or just a file name without the path.
+        ///     The name is abstract and is left to the implementation on how to handle it.
+        /// </remarks>
         /// <returns>The texture.</returns>
-        T LoadTexture(string imageFilePath);
+        T LoadTexture(string assetName);
     }
 }

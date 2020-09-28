@@ -41,11 +41,6 @@ namespace KDParticleEngine.Behaviors
         public double Change { get; set; }
 
         /// <summary>
-        /// Gets the life time of the behavior in milliseconds.
-        /// </summary>
-        protected double LifeTime { get; private set; }
-
-        /// <summary>
         /// Updates the behavior.
         /// </summary>
         /// <param name="timeElapsed">The amount of time that has elapsed for this update of the behavior.</param>
@@ -61,8 +56,17 @@ namespace KDParticleEngine.Behaviors
                     break;
             }
 
+            if (!(this.settings.UpdateStartMin is null))
+            {
+                this.settings.StartMin = this.settings.UpdateStartMin.Invoke();
+            }
+
+            if (!(this.settings.UpdateStartMax is null))
+            {
+                this.settings.StartMax = this.settings.UpdateStartMax.Invoke();
+            }
+
             base.Update(timeElapsed);
-            Enabled = ElapsedTime < LifeTime;
         }
 
         /// <summary>

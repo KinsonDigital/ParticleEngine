@@ -44,7 +44,7 @@ namespace KDParticleEngineTests.Behaviors
 
         #region Prop Tests
         [Fact]
-        public void Start_WhenSettingValue_ReturnsCorrectValue()
+        public void Start_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var settings = new EasingRandomBehaviorSettings();
@@ -59,7 +59,7 @@ namespace KDParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void Change_WhenSettingValue_ReturnsCorrectValue()
+        public void Change_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var settings = new EasingRandomBehaviorSettings();
@@ -198,7 +198,7 @@ namespace KDParticleEngineTests.Behaviors
         #endregion
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// <inheritdoc/>
         /// </summary>
         public void Dispose()
         {

@@ -30,7 +30,7 @@ namespace ParticleEngineTests.Behaviors
 
         #region Prop Tests
         [Fact]
-        public void Data_WhenSettingValue_ReturnsCorrectValue()
+        public void Data_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var settings = new RandomChoiceBehaviorSettings();
@@ -45,7 +45,7 @@ namespace ParticleEngineTests.Behaviors
         }
 
         [Fact]
-        public void LifeTime_WhenSettingValue_ReturnsCorrectValue()
+        public void LifeTime_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var settings = new RandomChoiceBehaviorSettings();

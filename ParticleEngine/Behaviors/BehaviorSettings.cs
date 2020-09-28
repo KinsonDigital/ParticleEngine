@@ -35,7 +35,7 @@ namespace KDParticleEngine.Behaviors
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
-        /// <returns>Ahash code for the current object.</returns>
+        /// <returns>A hash code for the current object.</returns>
         [ExcludeFromCodeCoverage]
         public override int GetHashCode() => HashCode.Combine(ApplyToAttribute);
     }

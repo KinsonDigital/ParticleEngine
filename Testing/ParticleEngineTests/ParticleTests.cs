@@ -33,7 +33,7 @@ namespace KDParticleEngineTests
 
         #region Prop Tests
         [Fact]
-        public void Position_WhenSettingValue_ReturnsCorrectValue()
+        public void Position_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -49,7 +49,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Angle_WhenSettingValue_ReturnsCorrectValue()
+        public void Angle_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -65,7 +65,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void TintColor_WhenSettingValue_ReturnsCorrectValue()
+        public void TintColor_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -81,7 +81,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void Size_WhenSettingValue_ReturnsCorrectValue()
+        public void Size_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -97,7 +97,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void IsAlive_WhenSettingValue_ReturnsCorrectValue()
+        public void IsAlive_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -110,7 +110,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void IsDead_WhenSettingValue_ReturnsCorrectValue()
+        public void IsDead_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
             var particle = new Particle(Array.Empty<IBehavior>())
@@ -455,7 +455,7 @@ namespace KDParticleEngineTests
         }
 
         [Fact]
-        public void GetHashCode_WhenInvoked_ReturnsCorrectValue()
+        public void GetHashCode_WhenInvoked_ReturnsCorrectResult()
         {
             // Arrange
             var behaviors = new IBehavior[]

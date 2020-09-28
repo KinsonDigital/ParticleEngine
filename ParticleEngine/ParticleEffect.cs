@@ -46,13 +46,6 @@ namespace KDParticleEngine
         public PointF SpawnLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of colors that the <see cref="ParticleEngine"/> will
-        /// randomly choose from when spawning a new <see cref="Particle"/>.
-        /// Only used if the <see cref="UseColorsFromList"/> is set to true.
-        /// </summary>
-        public ReadOnlyCollection<ParticleColor> TintColors { get; set; } = new ReadOnlyCollection<ParticleColor>(Array.Empty<ParticleColor>());
-
-        /// <summary>
         /// Gets or sets the total number of particles that can be alive at once.
         /// </summary>
         public int TotalParticlesAliveAtOnce { get; set; } = 1;
@@ -73,6 +66,41 @@ namespace KDParticleEngine
         /// Gets or sets a value indicating whether particles will spawn at a limited rate.
         /// </summary>
         public bool SpawnRateEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the bursting effect is enabled or disabled.
+        /// </summary>
+        /// <remarks>
+        ///     If enabled, the engine will spawn particles in a bursting fashion at intervals based on the timings between
+        ///     the <see cref="ParticleEffect.BurstOnTime"/> and <see cref="ParticleEffect.BurstOffTime"/> timing values.
+        ///     If the bursting effect is in its on cycle, the particles will use the
+        ///     <see cref="ParticleEffect.BurstSpawnRateMin"/> and <see cref="ParticleEffect.BurstSpawnRateMax"/>
+        ///     values and if the spawn effect is in its off cycle, it will use the <see cref="ParticleEffect.SpawnRateMin"/>
+        ///     <see cref="ParticleEffect.SpawnRateMax"/> values.
+        /// </remarks>
+        public bool BurstEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum particle spawn rate that can be randomly generated
+        /// when <see cref="BurstEnabled"/> is enabled.
+        /// </summary>
+        public int BurstSpawnRateMin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum particle spawn rate that can be randomly generated
+        /// when <see cref="BurstEnabled"/> is enabled.
+        /// </summary>
+        public int BurstSpawnRateMax { get; set; } = 250;
+
+        /// <summary>
+        /// Gets or sets the amount of time that the bursting effect will run in it's on cycle.
+        /// </summary>
+        public int BurstOnTime { get; set; } = 3000;
+
+        /// <summary>
+        /// Gets or sets the amount of time that the bursting effect will run in it's off cycle.
+        /// </summary>
+        public int BurstOffTime { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets a value indicating whether the colors will be randomly chosen from a list.
@@ -96,27 +124,8 @@ namespace KDParticleEngine
                 return false;
             }
 
-            var colorsAreSame = true;
-
-            if (TintColors.Count == effect.TintColors.Count)
-            {
-                for (var i = 0; i < TintColors.Count; i++)
-                {
-                    if (TintColors[i] != effect.TintColors[i])
-                    {
-                        colorsAreSame = false;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                colorsAreSame = false;
-            }
-
             return ParticleTextureName == effect.ParticleTextureName &&
                 SpawnLocation == effect.SpawnLocation &&
-                colorsAreSame &&
                 TotalParticlesAliveAtOnce == effect.TotalParticlesAliveAtOnce &&
                 SpawnRateMin == effect.SpawnRateMin &&
                 SpawnRateMax == effect.SpawnRateMax &&
@@ -136,14 +145,6 @@ namespace KDParticleEngine
             hash.Add(ParticleTextureName);
             hash.Add(SpawnLocation);
 
-            var colorHash = 0;
-
-            foreach (var clr in TintColors)
-            {
-                colorHash += clr.GetHashCode();
-            }
-
-            hash.Add(colorHash);
             hash.Add(TotalParticlesAliveAtOnce);
             hash.Add(SpawnRateMin);
             hash.Add(SpawnRateMax);

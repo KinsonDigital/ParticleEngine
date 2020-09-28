@@ -37,7 +37,7 @@ namespace KDParticleEngine.Behaviors
         {
             base.Update(timeElapsed);
 
-            // If the amount of time has passed, disable the behavor
+            // If the amount of time has passed, disable the behavior
             Enabled = ElapsedTime < this.settings.LifeTime;
 
             if (this.isColorChosen)

@@ -42,7 +42,7 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets or sets the size of the <see cref="Particle"/>.
         /// </summary>
-        public float Size { get; set; }
+        public float Size { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Particle"/> is alive or dead.
@@ -78,6 +78,9 @@ namespace KDParticleEngine
                 {
                     var value = 0f;
 
+                    this.behaviors[i].Update(timeElapsed);
+                    IsAlive = true;
+
                     /*NOTE:
                      * The 'parseSuccess' variable will be considered successful if the incoming behavior value is a floating
                      * point number OR if it is the special color syntax value.  This is because the color value syntax is
@@ -90,9 +93,6 @@ namespace KDParticleEngine
                     {
                         throw new Exception($"{nameof(Particle)}.{nameof(Particle.Update)} Exception:\n\tParsing the behavior value '{this.behaviors[i].Value}' failed.\n\tValue must be a number.");
                     }
-
-                    this.behaviors[i].Update(timeElapsed);
-                    IsAlive = true;
 
                     switch (this.behaviors[i].ApplyToAttribute)
                     {
@@ -110,7 +110,7 @@ namespace KDParticleEngine
                             break;
                         case ParticleAttribute.Color:
                             // Create the color
-                            var (clrParseSuccess, componentValue, parseFailReason) = TryParse(this.behaviors[i].Value, out ParticleColor result);
+                            var (clrParseSuccess, componentValue, parseFailReason) = TryParse(this.behaviors[i].Value, out var result);
 
                             if (!clrParseSuccess)
                             {
@@ -151,6 +151,7 @@ namespace KDParticleEngine
                 }
             }
 
+            Size = 1;
             Angle = 0;
             TintColor = ParticleColor.White;
             IsAlive = true;
