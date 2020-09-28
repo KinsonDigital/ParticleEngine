@@ -115,7 +115,7 @@ namespace ParticleEngineTesterTests.UI
 
         #region Prop Tests
         [Fact]
-        public void Text_WhenSettingValue_ReturnsCorrectResult()
+        public void Text_WhenGettingValueWithNullStandardFont_ReturnsCorrectResult()
         {
             // Arrange
             var label = CreateLabel();
@@ -184,6 +184,23 @@ namespace ParticleEngineTesterTests.UI
 
             // Assert
             this.mockRenderer.Verify(m => m.DrawText(this.mockStandardFont.Object, "label-text", new Vector2(11, 22), Color.Purple));
+        }
+
+        [Fact]
+        public void Draw_WhenInvokedWithBoldFont_RendersUsingBoldFont()
+        {
+            // Arrange
+            var label = CreateLabel();
+            label.Text = "label-text";
+            label.Location = new Vector2(11, 22);
+            label.Forecolor = Color.Purple;
+            label.IsBold = true;
+
+            // Act
+            label.Draw(new GameTime());
+
+            // Assert
+            this.mockRenderer.Verify(m => m.DrawText(this.mockBoldFont.Object, "label-text", new Vector2(11, 22), Color.Purple));
         }
         #endregion
 
