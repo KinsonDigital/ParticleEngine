@@ -159,8 +159,16 @@ stages:
         workingDirectory: 'C:\AVS'
         failOnStderr: true
 
+    - task: DotNetCoreCLI@2
+      displayName: 'Create $(engineLibName) Nuget Package Artifact'
+      inputs:
+        command: 'pack'
+        packagesToPack: '$(System.DefaultWorkingDirectory)\$(engineLibName)\$(engineLibName).csproj'
+        configuration: '$(buildConfiguration)'
+        versioningScheme: 'off'
+
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish $(engineTesterAppName) Build Artifacts'
+      displayName: 'Publish All Build Artifacts'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
