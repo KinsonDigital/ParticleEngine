@@ -1,5 +1,18 @@
 # **Particle Engine Release Notes**
 
+## **Version 0.18.0**
+
+### **New**
+
+1. Added a new bursting effect to the particle system.
+   * This effect can be used to increase the spawn rate for a set amount of time.  This make the particles "burst" onto the screen.
+2. Created a new GUI application for testing the **Particle Engine**.
+
+### **Developer Related Items**
+1. Updated build and release pipelines to be setup for different environments.  A **DEV** and **QA** environment have been setup to improve the process of manual testing the particle engine.
+
+---
+
 ## **Version 0.17.0**
 
 ### **New**
