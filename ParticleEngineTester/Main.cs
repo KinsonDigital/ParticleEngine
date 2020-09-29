@@ -1,4 +1,4 @@
-﻿// <copyright file="Main.cs" company="KinsonDigital">
+// <copyright file="Main.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -41,6 +41,8 @@ namespace ParticleEngineTester
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = true;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 
