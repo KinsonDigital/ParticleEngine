@@ -4,6 +4,7 @@
 
 namespace ParticleEngineTester.Scenes
 {
+    using System.Diagnostics.CodeAnalysis;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// Shows particles with Blue color component for the purpose of testing.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class SpawnLocationScene : ParticleEngineSceneBase
     {
         private readonly IMouse mouse;

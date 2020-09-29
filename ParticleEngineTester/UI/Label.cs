@@ -51,8 +51,16 @@ namespace ParticleEngineTester.UI
             set
             {
                 this.text = value;
-                this.standardFont.Text = value;
-                this.boldFont.Text = value;
+
+                if (!(this.standardFont is null))
+                {
+                    this.standardFont.Text = value;
+                }
+
+                if (!(this.boldFont is null))
+                {
+                    this.boldFont.Text = value;
+                }
             }
         }
 

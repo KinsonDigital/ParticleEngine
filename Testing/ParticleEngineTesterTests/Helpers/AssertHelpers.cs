@@ -9,7 +9,6 @@ namespace ParticleEngineTesterTests.Helpers
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Xunit;
-    using Xunit.Sdk;
     using static Xunit.Assert;
 
     /// <summary>

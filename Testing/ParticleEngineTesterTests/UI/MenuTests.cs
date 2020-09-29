@@ -484,7 +484,6 @@ namespace ParticleEngineTesterTests.UI
         public void Update_WhenInvoked_ProperlySetsMenuItemLocations()
         {
             // Arrange
-
             var mockLabelA = new Mock<ILabel>();
             mockLabelA.SetupProperty(p => p.Name);
             mockLabelA.SetupProperty(p => p.Text);

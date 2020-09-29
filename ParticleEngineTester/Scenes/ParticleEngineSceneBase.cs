@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using KDParticleEngine;
     using KDParticleEngine.Services;
     using Microsoft.Xna.Framework;
@@ -13,6 +14,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// Provides a base for creating a scene with particles that are rendered to the screen.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public abstract class ParticleEngineSceneBase : SceneBase
     {
         /// <summary>
