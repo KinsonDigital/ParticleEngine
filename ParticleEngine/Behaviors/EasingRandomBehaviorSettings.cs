@@ -35,6 +35,16 @@ namespace KDParticleEngine.Behaviors
         public Func<float>? UpdateStartMax { get; set; }
 
         /// <summary>
+        /// Gets or sets a delegate that when invoked updates the <see cref="ChangeMin"/> value.
+        /// </summary>
+        public Func<float>? UpdateChangeMin { get; set; }
+
+        /// <summary>
+        /// Gets or sets a delegate that when invoked updates the <see cref="ChangeMax"/> value.
+        /// </summary>
+        public Func<float>? UpdateChangeMax { get; set; }
+
+        /// <summary>
         /// Gets or sets the minimum amount of change used in randomization.
         /// </summary>
         /// <remarks>
