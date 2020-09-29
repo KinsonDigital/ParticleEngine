@@ -68,9 +68,9 @@ namespace ParticleEngineTester.UI
             for (var i = 0; i < this.normalPixels.Length; i++)
             {
                 this.disabledPixels[i] = new Color(
-                    IncreaseValue(this.normalPixels[i].R, 0.70f),
-                    IncreaseValue(this.normalPixels[i].G, 0.70f),
-                    IncreaseValue(this.normalPixels[i].B, 0.70f),
+                    DecreaseValue(this.normalPixels[i].R, 0.50f),
+                    DecreaseValue(this.normalPixels[i].G, 0.50f),
+                    DecreaseValue(this.normalPixels[i].B, 0.50f),
                     this.normalPixels[i].A);
             }
 
@@ -86,7 +86,12 @@ namespace ParticleEngineTester.UI
         }
 
         /// <inheritdoc/>
-        public override void Update(GameTime gameTime) => base.Update(gameTime);
+        public override void Update(GameTime gameTime)
+        {
+            MouseButtonInteractionEnabled = Enabled;
+
+            base.Update(gameTime);
+        }
 
         /// <inheritdoc/>
         public override void Draw(GameTime gameTime)
@@ -132,6 +137,23 @@ namespace ParticleEngineTester.UI
             var result = intValue + (intValue * percentage);
 
             result = result > 255 ? 255 : result;
+
+            return (byte)result;
+        }
+
+        /// <summary>
+        /// Returns the given <paramref name="value"/> by the given <paramref name="percentage"/> amount.
+        /// </summary>
+        /// <param name="value">The value to decrease.</param>
+        /// <param name="percentage">The percentage to decrease the <paramref name="value"/> by.</param>
+        /// <returns>The <paramref name="value"/> decreased by the given <paramref name="percentage"/>.</returns>
+        private byte DecreaseValue(byte value, float percentage)
+        {
+            int intValue = value;
+
+            var result = intValue - (intValue * percentage);
+
+            result = result < 0 ? 0 : result;
 
             return (byte)result;
         }

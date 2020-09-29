@@ -1,4 +1,4 @@
-﻿// <copyright file="SceneManagerTests.cs" company="KinsonDigital">
+// <copyright file="SceneManagerTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -350,6 +350,113 @@ namespace ParticleEngineTesterTests
             {
                 manager.Update(new GameTime());
             });
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsFirstScene_PreviousButtonIsDisabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            var mockPrevButton = new Mock<IButton>();
+            mockPrevButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(mockPrevButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.False(mockPrevButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsNotFirstScene_PreviousButtonIsEnabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockPrevButton = new Mock<IButton>();
+            mockPrevButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("prev-btn", It.IsAny<string>()))
+                .Returns(mockPrevButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+            manager.NextScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.True(mockPrevButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsLastScene_NextButtonIsDisabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockNextButton = new Mock<IButton>();
+            mockNextButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("next-btn", It.IsAny<string>()))
+                .Returns(mockNextButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            manager.NextScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.False(mockNextButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsNotLastScene_NextButtonIsEnabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockNextButton = new Mock<IButton>();
+            mockNextButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("next-btn", It.IsAny<string>()))
+                .Returns(mockNextButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+            manager.NextScene();
+            manager.PreviousScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.True(mockNextButton.Object.Enabled);
         }
 
         [Fact]
