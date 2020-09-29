@@ -17,9 +17,10 @@ namespace ParticleEngineTesterTests.UI
         public void Ctor_WhenInvoked_SetsItemNameProperty()
         {
             // Arrange
+            var itemName = "test-item";
 
             // Act
-            var eventArgs = new MenuItemClickedEventArgs("test-item");
+            var eventArgs = new MenuItemClickedEventArgs(itemName);
             var actual = eventArgs.MenuItemName;
 
             // Assert
