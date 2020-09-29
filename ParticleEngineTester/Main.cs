@@ -42,6 +42,8 @@ namespace ParticleEngineTester
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = true;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 
@@ -76,9 +78,6 @@ namespace ParticleEngineTester
         {
             this.graphics.SetWindowSize(1200, 1000);
 
-            WindowWidth = Window.ClientBounds.Width;
-            WindowHeight = Window.ClientBounds.Height;
-
             Content.RootDirectory = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\Content\";
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             Window.Title = "Particle Engine Tester";
@@ -90,7 +89,7 @@ namespace ParticleEngineTester
             this.ctrlFactory = new ControlFactory(this.renderer, this.contentLoader);
             this.sceneFactory = new SceneFactory(this.renderer, this.contentLoader);
 
-            this.sceneManager = new SceneManager(this.ctrlFactory, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            this.sceneManager = new SceneManager(this.ctrlFactory);
             this.sceneManager.SceneChanged += SceneManager_SceneChanged;
 
             CreateScenes();
@@ -115,6 +114,10 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         protected override void Update(GameTime gameTime)
         {
+            // Update the window width and height
+            WindowWidth = Window.ClientBounds.Width;
+            WindowHeight = Window.ClientBounds.Height;
+
             this.sceneManager?.Update(gameTime);
 
             base.Update(gameTime);
@@ -134,6 +137,16 @@ namespace ParticleEngineTester
             this.renderer?.End();
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Updates the graphics device of changed window size.
+        /// </summary>
+        private void Window_ClientSizeChanged(object? sender, EventArgs e)
+        {
+            this.graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            this.graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            this.graphics.ApplyChanges();
         }
 
         /// <summary>

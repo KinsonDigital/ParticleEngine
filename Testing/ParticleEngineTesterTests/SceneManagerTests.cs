@@ -596,7 +596,7 @@ namespace ParticleEngineTesterTests
         /// <returns>New scene manager.</returns>
         private SceneManager CreateSceneManager()
         {
-            return new SceneManager(this.mockCtrlFactory.Object, this.windowWidth, this.windowHeight);
+            return new SceneManager(this.mockCtrlFactory.Object);
         }
     }
 }
