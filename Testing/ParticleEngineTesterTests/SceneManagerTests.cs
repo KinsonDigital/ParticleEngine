@@ -1,4 +1,4 @@
-// <copyright file="SceneManagerTests.cs" company="KinsonDigital">
+﻿// <copyright file="SceneManagerTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -205,15 +205,15 @@ namespace ParticleEngineTesterTests
         public void ActivateScene_WhenInvoked_RaisesSceneChangedEvent()
         {
             // Arrange
-            var sceneA = new Mock<IScene>();
-            sceneA.SetupGet(p => p.Name).Returns(nameof(sceneA));
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
 
-            var sceneB = new Mock<IScene>();
-            sceneB.SetupGet(p => p.Name).Returns(nameof(sceneB));
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
 
             var manager = CreateSceneManager();
-            manager.AddScene(sceneA.Object);
-            manager.AddScene(sceneB.Object);
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act & Assert
             Assert.Raises<SceneChangedEventArgs>((handler) =>
@@ -224,7 +224,7 @@ namespace ParticleEngineTesterTests
                 manager.SceneChanged -= handler;
             }, () =>
             {
-                manager.ActivateScene("sceneB");
+                manager.ActivateScene(nameof(mockSceneB));
             });
         }
 
@@ -538,15 +538,15 @@ namespace ParticleEngineTesterTests
         public void NextScene_WithNoSceneChangedSubscription_DoesNotThrowNullReferenceException()
         {
             // Arrange
-            var sceneA = new Mock<IScene>();
-            sceneA.SetupGet(p => p.Name).Returns(nameof(sceneA));
+            var mockSeneA = new Mock<IScene>();
+            mockSeneA.SetupGet(p => p.Name).Returns(nameof(mockSeneA));
 
-            var sceneB = new Mock<IScene>();
-            sceneB.SetupGet(p => p.Name).Returns(nameof(sceneB));
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
 
             var manager = CreateSceneManager();
-            manager.AddScene(sceneA.Object);
-            manager.AddScene(sceneB.Object);
+            manager.AddScene(mockSeneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act & Assert
             AssertHelpers.DoesNotRaise<SceneChangedEventArgs>((handler) =>
@@ -563,15 +563,15 @@ namespace ParticleEngineTesterTests
         public void NextScene_WhenInvoked_RaisesSceneChangedEvent()
         {
             // Arrange
-            var sceneA = new Mock<IScene>();
-            sceneA.SetupGet(p => p.Name).Returns(nameof(sceneA));
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
 
-            var sceneB = new Mock<IScene>();
-            sceneB.SetupGet(p => p.Name).Returns(nameof(sceneB));
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
 
             var manager = CreateSceneManager();
-            manager.AddScene(sceneA.Object);
-            manager.AddScene(sceneB.Object);
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act & Assert
             Assert.Raises<SceneChangedEventArgs>((handler) =>
@@ -624,15 +624,15 @@ namespace ParticleEngineTesterTests
         public void PreviousScene_WithNoSceneChangedSubscription_DoesNotThrowNullReferenceException()
         {
             // Arrange
-            var sceneA = new Mock<IScene>();
-            sceneA.SetupGet(p => p.Name).Returns(nameof(sceneA));
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
 
-            var sceneB = new Mock<IScene>();
-            sceneB.SetupGet(p => p.Name).Returns(nameof(sceneB));
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
 
             var manager = CreateSceneManager();
-            manager.AddScene(sceneA.Object);
-            manager.AddScene(sceneB.Object);
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act & Assert
             AssertHelpers.DoesNotRaise<SceneChangedEventArgs>((handler) =>
@@ -649,15 +649,15 @@ namespace ParticleEngineTesterTests
         public void PreviousScene_WhenInvoked_RaisesSceneChangedEvent()
         {
             // Arrange
-            var sceneA = new Mock<IScene>();
-            sceneA.SetupGet(p => p.Name).Returns(nameof(sceneA));
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
 
-            var sceneB = new Mock<IScene>();
-            sceneB.SetupGet(p => p.Name).Returns(nameof(sceneB));
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
 
             var manager = CreateSceneManager();
-            manager.AddScene(sceneA.Object);
-            manager.AddScene(sceneB.Object);
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
 
             // Act & Assert
             Assert.Raises<SceneChangedEventArgs>((handler) =>
