@@ -91,7 +91,7 @@ namespace ParticleEngineTester
             this.ctrlFactory = new ControlFactory(this.renderer, this.contentLoader);
             this.sceneFactory = new SceneFactory(this.renderer, this.contentLoader);
 
-            this.sceneManager = new SceneManager(this.ctrlFactory, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            this.sceneManager = new SceneManager(this.ctrlFactory);
             this.sceneManager.SceneChanged += SceneManager_SceneChanged;
 
             CreateScenes();
