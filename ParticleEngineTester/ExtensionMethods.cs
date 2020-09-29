@@ -55,8 +55,10 @@ namespace ParticleEngineTester
 
                 return resultStrBuilder.ToString().TrimEnd();
             }
-
-            return value;
+            else
+            {
+                return value;
+            }
         }
 
         /// <summary>

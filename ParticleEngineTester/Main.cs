@@ -5,9 +5,9 @@
 namespace ParticleEngineTester
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
-    using KDParticleEngine;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using ParticleEngineTester.Factories;
@@ -18,6 +18,7 @@ namespace ParticleEngineTester
     /// <summary>
     /// The main part of the application.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class Main : Game
     {
         private static string appVersion = "not set";

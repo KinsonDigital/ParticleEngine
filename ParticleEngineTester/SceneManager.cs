@@ -120,7 +120,6 @@ namespace ParticleEngineTester
             // Only invoked the scene changed event if the scene has actually changed.
             if (prevSceneIndex != CurrentSceneIndex)
             {
-                // TODO: Unit test this
                 this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
             }
         }
@@ -148,7 +147,6 @@ namespace ParticleEngineTester
                 ? this.scenes.Count - 1
                 : CurrentSceneIndex + 1;
 
-            // TODO: Unit test this
             this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
@@ -166,7 +164,6 @@ namespace ParticleEngineTester
                 ? 0
                 : CurrentSceneIndex - 1;
 
-            // TODO: Unit test this
             this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
@@ -257,15 +254,10 @@ namespace ParticleEngineTester
                 if (scene.Name == name)
                 {
                     total += 1;
-
-                    if (total >= 1)
-                    {
-                        return true;
-                    }
                 }
             }
 
-            return false;
+            return total > 0;
         }
 
         /// <summary>

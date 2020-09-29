@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.Xna.Framework;
 
     /// <summary>
@@ -80,12 +81,15 @@ namespace ParticleEngineTester.Scenes
         public bool Visible { get; set; } = true;
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public int SceneWidth => Main.WindowWidth;
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public int SceneHeight => Main.WindowHeight;
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public Vector2 SceneCenter => Main.WindowCenter;
 
         /// <summary>
@@ -99,21 +103,25 @@ namespace ParticleEngineTester.Scenes
         protected IContentLoader ContentLoader { get; private set; }
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public virtual void LoadContent()
         {
         }
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public virtual void Draw(GameTime gameTime)
         {
         }
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public virtual void Update(GameTime gameTime)
         {
         }
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public void Dispose()
         {
             Dispose(true);
@@ -124,6 +132,7 @@ namespace ParticleEngineTester.Scenes
         /// <inheritdoc/>
         /// </summary>
         /// <param name="disposing">True to dispose of managed resources.</param>
+        [ExcludeFromCodeCoverage]
         protected virtual void Dispose(bool disposing)
         {
             if (this.isDisposed)

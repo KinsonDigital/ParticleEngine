@@ -61,7 +61,10 @@ namespace ParticleEngineTester.Factories
                 throw new ArgumentNullException(nameof(contentLoader), "The parameter must not be null.");
             }
 
-            var newButton = new Button(renderer, contentLoader, new MouseInput(), buttonContent);
+            var newButton = new Button(renderer, contentLoader, new MouseInput(), buttonContent)
+            {
+                Name = name,
+            };
 
             return newButton;
         }

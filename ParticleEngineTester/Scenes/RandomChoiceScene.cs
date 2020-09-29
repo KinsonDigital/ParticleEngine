@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// Shows particles with X velocity for the purpose of testing.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class RandomChoiceScene : ParticleEngineSceneBase
     {
         private readonly int spriteWidth;

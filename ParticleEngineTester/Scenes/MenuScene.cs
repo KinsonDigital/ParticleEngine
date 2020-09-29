@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
@@ -12,6 +13,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// The main menu scene used to choose scenes.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class MenuScene : SceneBase
     {
         private readonly ControlFactory ctrlFactory;

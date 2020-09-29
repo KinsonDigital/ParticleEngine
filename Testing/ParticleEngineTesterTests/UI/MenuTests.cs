@@ -11,6 +11,7 @@ namespace ParticleEngineTesterTests.UI
     using ParticleEngineTester;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
+    using ParticleEngineTesterTests.Helpers;
     using Xunit;
 
     /// <summary>
@@ -65,27 +66,7 @@ namespace ParticleEngineTesterTests.UI
 
         #region Method Tests
         [Fact]
-        public void Add_WhenInvoked_CreatesMenuItem()
-        {
-            // Arrange
-            var mockLabel = new Mock<ILabel>();
-            mockLabel.SetupProperty(p => p.Text);
-
-            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-menu")).Returns(mockLabel.Object);
-
-            var menu = CreateMenu();
-
-            // Act
-            menu.Add("test-menu", "test-menu");
-            var actual = menu.MenuItems;
-
-            // Assert
-            Assert.Single(actual);
-            Assert.Equal("test-menu", actual[0].Text);
-        }
-
-        [Fact]
-        public void Add_WhenAddingByLabelWithName_CreatesMenuItem()
+        public void Add_WhenInvoking2ParamOverload_CreatesMenuItem()
         {
             // Arrange
             var mockLabel = new Mock<ILabel>();
@@ -104,6 +85,370 @@ namespace ParticleEngineTesterTests.UI
             Assert.Single(actual);
             Assert.Equal("test-menu", actual[0].Name);
             Assert.Equal("test-item", actual[0].Text);
+        }
+
+        [Fact]
+        public void Add_WhenInvoking2ParamOverload_RaisesClickEventWhenClicked()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item");
+
+            // Assert
+            Assert.Raises<ClickedEventArgs>((handler) => // Attach
+            {
+                menu.Click += handler;
+            }, (handler) => // Detach
+            {
+                menu.Click -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.Click += null, new ClickedEventArgs("test-menu"));
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking2ParamOverloadWithNullLabel_DoesNotRaiseMouseEnterEventWhenMouseEntersMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item");
+
+            // Assert
+            AssertHelpers.DoesNotRaise<EventArgs>((handler) => // Attach
+            {
+                menu.MouseEnter += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseEnter -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseEnter += null, null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking2ParamOverloadWithNullLabel_DoesNotRaiseMouseLeaveEventWhenMouseLeavesMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item");
+
+            // Assert
+            AssertHelpers.DoesNotRaise<EventArgs>((handler) => // Attach
+            {
+                menu.MouseLeave += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseLeave -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseLeave += null, null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking2ParamOverload_RaisesMouseEnterEventWhenMouseEntersMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item");
+
+            // Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                menu.MouseEnter += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseEnter -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseEnter += null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking2ParamOverload_RaisesMouseLeaveEventWhenMouseLeavesMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item");
+
+            // Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                menu.MouseLeave += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseLeave -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseLeave += null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverload_CreatesMenuItem()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            mockLabel.SetupProperty(p => p.Name);
+            mockLabel.SetupProperty(p => p.Text);
+            mockLabel.SetupProperty(p => p.Forecolor);
+
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+            var actual = menu.MenuItems;
+
+            // Assert
+            Assert.Single(actual);
+            Assert.Equal("test-menu", actual[0].Name);
+            Assert.Equal("test-item", actual[0].Text);
+            Assert.Equal(Color.DarkOrange, actual[0].Forecolor);
+        }
+
+        [Fact]
+        public void Add_With3ParamOverloadAndNullLabel_DoesNotRaiseClickEvent()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            AssertHelpers.DoesNotThrow<NullReferenceException>(() =>
+            {
+                mockLabel.Raise(e => e.Click += null, null, new ClickedEventArgs(It.IsAny<string>()));
+            });
+        }
+
+        [Fact]
+        public void Add_With3ParamOverloadAndNoItemClickedEventSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            AssertHelpers.DoesNotThrow<NullReferenceException>(() =>
+            {
+                mockLabel.Raise(e => e.Click += null, new ClickedEventArgs(It.IsAny<string>()));
+            });
+        }
+
+        [Fact]
+        public void Add_With3ParamOverloadAndNoClickEventSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            AssertHelpers.DoesNotThrow<NullReferenceException>(() =>
+            {
+                mockLabel.Raise(e => e.Click += null, new ClickedEventArgs(It.IsAny<string>()));
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverload_RaisesClickEventWhenClicked()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            // Assert
+            Assert.Raises<ClickedEventArgs>((handler) => // Attach
+            {
+                menu.Click += handler;
+            }, (handler) => // Detach
+            {
+                menu.Click -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.Click += null, new ClickedEventArgs("test-menu"));
+            });
+        }
+
+        [Fact]
+        public void Add_With3ParamOverloadAndNoMouseEnterEventSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            AssertHelpers.DoesNotThrow<NullReferenceException>(() =>
+            {
+                mockLabel.Raise(e => e.MouseEnter += null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverloadWithNullLabel_DoesNotRaiseMouseEnterEventWhenMouseEntersMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            // Assert
+            AssertHelpers.DoesNotRaise<EventArgs>((handler) => // Attach
+            {
+                menu.MouseEnter += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseEnter -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseEnter += null, null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_With3ParamOverloadAndNoMouseLeaveEventSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            AssertHelpers.DoesNotThrow<NullReferenceException>(() =>
+            {
+                mockLabel.Raise(e => e.MouseLeave += null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverloadWithNullLabel_DoesNotRaiseMouseLeaveEventWhenMouseLeavesMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            // Assert
+            AssertHelpers.DoesNotRaise<EventArgs>((handler) => // Attach
+            {
+                menu.MouseLeave += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseLeave -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseLeave += null, null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverload_RaisesMouseEnterEventWhenMouseEntersMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            // Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                menu.MouseEnter += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseEnter -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseEnter += null, EventArgs.Empty);
+            });
+        }
+
+        [Fact]
+        public void Add_WhenInvoking3ParamOverload_RaisesMouseLeaveEventWhenMouseLeavesMenuArea()
+        {
+            // Arrange
+            var mockLabel = new Mock<ILabel>();
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
+
+            var menu = CreateMenu();
+
+            // Act
+            menu.Add("test-menu", "test-item", Color.DarkOrange);
+
+            // Assert
+            Assert.Raises<EventArgs>((handler) => // Attach
+            {
+                menu.MouseLeave += handler;
+            }, (handler) => // Detach
+            {
+                menu.MouseLeave -= handler;
+            }, () =>
+            {
+                mockLabel.Raise(e => e.MouseLeave += null, EventArgs.Empty);
+            });
         }
 
         [Fact]
@@ -136,87 +481,9 @@ namespace ParticleEngineTesterTests.UI
         }
 
         [Fact]
-        public void Add_WhenInvoked_RaisesClickEventWhenClicked()
-        {
-            // Arrange
-            var mockLabel = new Mock<ILabel>();
-            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
-
-            var menu = CreateMenu();
-
-            // Act
-            menu.Add("test-menu", "test-item");
-
-            // Assert
-            Assert.Raises<ClickedEventArgs>((handler) => // Attach
-            {
-                menu.Click += handler;
-            }, (handler) => // Detach
-            {
-                menu.Click -= handler;
-            }, () =>
-            {
-                mockLabel.Raise(e => e.Click += null, new ClickedEventArgs("test-menu"));
-            });
-        }
-
-        [Fact]
-        public void Add_WhenInvoked_RaisesMouseEnterEventWhenMouseEntersMenuArea()
-        {
-            // Arrange
-            var mockLabel = new Mock<ILabel>();
-            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
-
-            var menu = CreateMenu();
-
-            // Act
-            menu.Add("test-menu", "test-item");
-
-            // Assert
-            Assert.Raises<EventArgs>((handler) => // Attach
-            {
-                menu.MouseEnter += handler;
-            }, (handler) => // Detach
-            {
-                menu.MouseEnter -= handler;
-            }, () =>
-            {
-                mockLabel.Raise(e => e.MouseEnter += null, EventArgs.Empty);
-            });
-        }
-
-        [Fact]
-        public void Add_WhenInvoked_RaisesMouseLeaveEventWhenMouseLeavesMenuArea()
-        {
-            // Arrange
-            var mockLabel = new Mock<ILabel>();
-            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu", "test-item")).Returns(mockLabel.Object);
-
-            var menu = CreateMenu();
-
-            // Act
-            menu.Add("test-menu", "test-item");
-
-            // Assert
-            Assert.Raises<EventArgs>((handler) => // Attach
-            {
-                menu.MouseLeave += handler;
-            }, (handler) => // Detach
-            {
-                menu.MouseLeave -= handler;
-            }, () =>
-            {
-                mockLabel.Raise(e => e.MouseLeave += null, EventArgs.Empty);
-            });
-        }
-
-        [Fact]
         public void Update_WhenInvoked_ProperlySetsMenuItemLocations()
         {
             // Arrange
-            var menu = CreateMenu();
-            menu.Location = new Vector2(100, 200);
-
             var mockLabelA = new Mock<ILabel>();
             mockLabelA.SetupProperty(p => p.Name);
             mockLabelA.SetupProperty(p => p.Text);
@@ -232,6 +499,9 @@ namespace ParticleEngineTesterTests.UI
 
             this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-A", "test-item-A")).Returns(mockLabelA.Object);
             this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-B", "test-item-B")).Returns(mockLabelB.Object);
+
+            var menu = CreateMenu();
+            menu.Location = new Vector2(100, 200);
 
             menu.Add("test-menu-A", "test-item-A");
             menu.Add("test-menu-B", "test-item-B");
@@ -316,6 +586,82 @@ namespace ParticleEngineTesterTests.UI
 
             // Assert
             Assert.Equal(10, actual);
+        }
+
+        [Fact]
+        public void Width_WhenGettingValueWithNoLabels_ReturnsCorrectResult()
+        {
+            // Arrange
+            var menu = CreateMenu();
+
+            // Act
+            var actual = menu.Width;
+
+            // Assert
+            Assert.Equal(0, actual);
+        }
+
+        [Fact]
+        public void Width_WhenGettingValueWith2Labels_ReturnsCorrectResult()
+        {
+            // Arrange
+            var mockLabelA = new Mock<ILabel>();
+            mockLabelA.SetupGet(p => p.Width).Returns(10);
+
+            var mockLabelB = new Mock<ILabel>();
+            mockLabelB.SetupGet(p => p.Width).Returns(20);
+
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-A", "test-menu-A")).Returns(mockLabelA.Object);
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-B", "test-menu-B")).Returns(mockLabelB.Object);
+
+            var menu = CreateMenu();
+
+            menu.Add("test-menu-A", "test-menu-A");
+            menu.Add("test-menu-B", "test-menu-B");
+
+            // Act
+            var actual = menu.Width;
+
+            // Assert
+            Assert.Equal(20, actual);
+        }
+
+        [Fact]
+        public void Height_WhenGettingValueWithNoLabels_ReturnsCorrectResult()
+        {
+            // Arrange
+            var menu = CreateMenu();
+
+            // Act
+            var actual = menu.Height;
+
+            // Assert
+            Assert.Equal(0, actual);
+        }
+
+        [Fact]
+        public void Height_WhenGettingValueWith2Labels_ReturnsCorrectResult()
+        {
+            // Arrange
+            var mockLabelA = new Mock<ILabel>();
+            mockLabelA.SetupGet(p => p.Height).Returns(10);
+
+            var mockLabelB = new Mock<ILabel>();
+            mockLabelB.SetupGet(p => p.Height).Returns(20);
+
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-A", "test-menu-A")).Returns(mockLabelA.Object);
+            this.mockCtrlFactory.Setup(m => m.CreateLabel("test-menu-B", "test-menu-B")).Returns(mockLabelB.Object);
+
+            var menu = CreateMenu();
+
+            menu.Add("test-menu-A", "test-menu-A");
+            menu.Add("test-menu-B", "test-menu-B");
+
+            // Act
+            var actual = menu.Height;
+
+            // Assert
+            Assert.Equal(35, actual);
         }
         #endregion
 
