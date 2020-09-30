@@ -248,7 +248,7 @@ namespace ParticleEngineTesterTests.UI
             // Assert
             this.mockRenderer.Verify(m => m.Draw(this.mockTexture.Object, new Vector2(50, 50), It.IsAny<Color>()), Times.Once());
             Assert.Equal(16, colorData.Length);
-            Assert.True(colorData.All(clr => clr.R == 17 && clr.G == 17 && clr.B == 17 && clr.A == 255),
+            Assert.True(colorData.All(clr => clr.R == 5 && clr.G == 5 && clr.B == 5 && clr.A == 255),
                 $"Current Color: R:{colorData[0].R},G:{colorData[0].G},B:{colorData[0].B},A:{colorData[0].A}");
         }
         #endregion

@@ -32,14 +32,14 @@ namespace ParticleEngineTester
             this.ctrlFactory = ctrlFactory;
 
 #pragma warning disable IDE0017 // Simplify object initialization
-            this.nextButton = ctrlFactory.CreateButton("next-btn", "Graphics/next-button");
-            this.nextButton.Click += NextButton_Click;
-
             this.prevButton = ctrlFactory.CreateButton("prev-btn", "Graphics/prev-button");
             this.prevButton.Click += PreviousButton_Click;
+
+            this.nextButton = ctrlFactory.CreateButton("next-btn", "Graphics/next-button");
+            this.nextButton.Click += NextButton_Click;
 #pragma warning restore IDE0017 // Simplify object initialization
 
-            UpdateButtonLocations();
+            UpdateButtonStates();
         }
 
 #pragma warning disable CS0067 // The event is never used
@@ -171,7 +171,7 @@ namespace ParticleEngineTester
                 this.scenes[CurrentSceneIndex].Update(gameTime);
             }
 
-            UpdateButtonLocations();
+            UpdateButtonStates();
 
             this.prevButton.Update(gameTime);
             this.nextButton.Update(gameTime);
@@ -234,15 +234,19 @@ namespace ParticleEngineTester
         private void NextButton_Click(object? sender, ClickedEventArgs e) => NextScene();
 
         /// <summary>
-        /// Updates the locations of the buttons.
+        /// Updates the state of the previous and next buttons locations and enabled/disabled state.
         /// </summary>
-        private void UpdateButtonLocations()
+        private void UpdateButtonStates()
         {
+            // Update the locations of the buttons
+            this.prevButton.Right = this.nextButton.Left - ButtonSpacing;
+            this.prevButton.Bottom = Main.WindowHeight - ButtonSpacing;
+
             this.nextButton.Right = Main.WindowWidth - ButtonSpacing;
             this.nextButton.Bottom = Main.WindowHeight - ButtonSpacing;
 
-            this.prevButton.Right = this.nextButton.Left - ButtonSpacing;
-            this.prevButton.Bottom = Main.WindowHeight - ButtonSpacing;
+            this.prevButton.Enabled = CurrentSceneIndex > 0;
+            this.nextButton.Enabled = CurrentSceneIndex < this.scenes.Count - 1;
         }
 
         /// <summary>
