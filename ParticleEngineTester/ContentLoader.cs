@@ -29,7 +29,7 @@ namespace ParticleEngineTester
         {
             try
             {
-                var internalTexture = this.contentManager.Load<Texture2D>(assetName + "AAA");
+                var internalTexture = this.contentManager.Load<Texture2D>(assetName);
 
                 return new Texture(internalTexture);
             }
