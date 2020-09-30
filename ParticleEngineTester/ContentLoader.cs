@@ -27,19 +27,33 @@ namespace ParticleEngineTester
         /// <inheritdoc/>
         public ITexture LoadTexture(string assetName)
         {
-            // TODO: Catch the exception here where the content cannot be found and
-            // suggest that maybe they are missing the Graphics or Fonts folder prefix.
-            var internalTexture = this.contentManager.Load<Texture2D>(assetName);
+            try
+            {
+                var internalTexture = this.contentManager.Load<Texture2D>(assetName + "AAA");
 
-            return new Texture(internalTexture);
+                return new Texture(internalTexture);
+            }
+            catch (Exception ex)
+            {
+                Program.ErrorLogger?.Error(ex, $"Problem loading texture asset '{assetName}'");
+                throw ex;
+            }
         }
 
         /// <inheritdoc/>
         public IFont LoadFont(string assetName)
         {
-            var internalFont = this.contentManager.Load<SpriteFont>(assetName);
+            try
+            {
+                var internalFont = this.contentManager.Load<SpriteFont>(assetName);
 
-            return new Font(internalFont);
+                return new Font(internalFont);
+            }
+            catch (Exception ex)
+            {
+                Program.ErrorLogger?.Error(ex, $"Problem loading font asset '{assetName}'");
+                throw ex;
+            }
         }
 
         /// <inheritdoc/>
