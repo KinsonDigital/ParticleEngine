@@ -1,0 +1,67 @@
+trigger:
+  branches:
+    include:
+    - feature/en-2265-improve-pipelines #Development Environment
+
+# TODO: Add more branch triggers
+
+variables:
+  - name: solution
+    value: '**/*.sln'
+  - name: buildPlatform
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Debug'
+  - name: coverageReportDirName
+    value: 'CoverageReport'
+  - name: engineLibName
+    value: 'ParticleEngine'
+  - name: engineTesterProjectName
+    value: 'ParticleEngineTester'
+  - name: pool
+    value: 'KinsonDigital'
+  - name: isMasterBranch
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+
+
+stages:
+- stage: Build_Stage
+  displayName: 'Build Stage'
+  pool: '$(pool)'
+  jobs:
+  - template: templates/build-content-job-template.yml
+    parameters:
+      engineTesterProjectName: $(engineTesterProjectName)
+      monoToolDirName: MGCB
+      contentFileName: Content.mgcb
+
+  - template: templates/build-solution-job-template.yml
+    parameters:
+      engineLibProjectName: $(engineLibName)
+      engineTesterProjectName: $(engineTesterProjectName)
+      buildPlatform: $(buildPlatform)
+      buildConfiguration: $(buildConfiguration)
+      vstsFeed: '1020f331-f22a-4330-a69a-78abfe6f6372/4c644bf2-f1e8-4f28-a3df-3bc9d3283df9'
+
+
+- stage: Testing_Stage
+  displayName: 'Testing Stage'
+  pool: '$(pool)'
+  dependsOn: 'Build_Stage'
+  jobs:
+  - template: templates/unit-testing-job-template.yml
+    parameters:
+      engineLibProjectName: $(engineLibName)
+      engineTesterProjectName: $(engineTesterProjectName)
+      buildConfiguration: $(buildConfiguration)
+      coverageReportDirName: $(coverageReportDirName)
+
+
+- stage: Publish_Artifacts_Stage
+  displayName: 'Publish Artifacts Stage'
+  pool: '$(pool)'
+  dependsOn: 'Testing_Stage'
+  jobs:
+  - template: templates/publish-artifacts-job-template.yml
+    parameters:
+      engineTesterProjectName: $(engineTesterProjectName)
