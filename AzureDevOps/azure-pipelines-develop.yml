@@ -1,9 +1,8 @@
 trigger:
   branches:
     include:
-    - feature/en-2265-improve-pipelines #Development Environment
-
-# TODO: Add more branch triggers
+    - develop # Development Environment
+    - master # Production Environment
 
 variables:
   - name: solution
@@ -20,8 +19,6 @@ variables:
     value: 'ParticleEngineTester'
   - name: pool
     value: 'KinsonDigital'
-  - name: isMasterBranch
-    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 
 
 stages:
