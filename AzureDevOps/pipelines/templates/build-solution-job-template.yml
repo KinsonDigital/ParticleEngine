@@ -1,0 +1,45 @@
+parameters:
+- name: engineLibProjectName
+  type: string
+- name: engineTesterProjectName
+  type: string  
+- name: buildPlatform
+  type: string
+- name: buildConfiguration
+  type: string
+- name: vstsFeed
+  type: string
+
+
+jobs:
+- job: 'Build_Solution_Job'
+  displayName: 'Build Solution'
+  dependsOn: Build_Content_Job
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Set Up Nuget Installer Tool'  
+
+  - task: NuGetCommand@2
+    displayName: 'Restore Nuget Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'select'
+      vstsFeed: '${{parameters.vstsFeed}}' # KinsonDigitalFeed
+      includeNuGetOrg: true
+
+  - task: VSBuild@1
+    displayName: 'Build Particle Engine Project'
+    inputs:
+      solution: '**\${{parameters.engineLibProjectName}}.csproj'
+      platform: '${{parameters.buildPlatform}}'
+      configuration: '${{parameters.buildConfiguration}}'
+      clean: true
+
+  - task: VSBuild@1
+    displayName: 'Build ${{parameters.engineTesterProjectName}} Project'
+    inputs:
+      solution: '**\${{parameters.engineTesterProjectName}}.csproj'
+      platform: '${{parameters.buildPlatform}}'
+      configuration: '${{parameters.buildConfiguration}}'
+      clean: true

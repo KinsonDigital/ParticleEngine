@@ -1,0 +1,46 @@
+parameters:
+- name: engineLibProjectName
+  type: string
+- name: engineTesterProjectName
+  type: string  
+- name: buildConfiguration
+  type: string
+- name: coverageReportDirName
+  type: string
+
+
+jobs:
+- job: 'Run_Tests_Job'
+  displayName: 'Run Tests'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: "Run ParticleEngine Tests & Collect Code Coverage"
+    inputs:
+      command: 'test'
+      projects: '**\*${{parameters.engineLibProjectName}}[Tt]ests\*.csproj'
+      arguments: '--configuration ${{parameters.buildConfiguration}} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+      publishTestResults: true
+      testRunTitle: 'Unit Test Results'
+
+  - task: DotNetCoreCLI@2
+    displayName: "Run Engine Test App Tests & Collect Code Coverage"
+    inputs:
+      command: 'test'
+      projects: '**\*${{parameters.engineTesterProjectName}}[Tt]ests\*.csproj'
+      arguments: '--configuration ${{parameters.buildConfiguration}} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+      publishTestResults: true
+      testRunTitle: 'Unit Test Results'
+
+  - task: reportgenerator@4
+    displayName: 'Generate Code Coverage Reports'
+    inputs:
+      reports: '**\*.cobertura.xml'
+      targetdir: 'CoverageReport'
+      sourcedirs: '$(System.DefaultWorkingDirectory)'
+
+  - task: PublishCodeCoverageResults@1
+    displayName: "Publish All Code Coverage Results"
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)\${{parameters.coverageReportDirName}}\Cobertura.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)\${{parameters.coverageReportDirName}}'
