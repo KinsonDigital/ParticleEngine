@@ -11,7 +11,7 @@
 
 1. An additional **QA** environment has been added for QA testing.
 2. Improved the build and release pipelines.
-   * Every release archive is not retained on the **SoftwareReleases** share for the proper environment.
+   * Every release archive is now retained on the **SoftwareReleases** share for the proper environment.
 
 ## **Particle Engine Tester - Version 1.1.0**
 
