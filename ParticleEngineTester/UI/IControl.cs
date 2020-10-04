@@ -16,5 +16,10 @@ namespace ParticleEngineTester.UI
         /// Gets or sets the name of the control.
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="IControl"/> should be enabled.
+        /// </summary>
+        new bool Enabled { get; set; }
     }
 }

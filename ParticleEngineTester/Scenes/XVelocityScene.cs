@@ -4,6 +4,8 @@
 
 namespace ParticleEngineTester.Scenes
 {
+    using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Microsoft.Xna.Framework;
@@ -11,8 +13,11 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// Shows particles with X velocity for the purpose of testing.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class XVelocityScene : ParticleEngineSceneBase
     {
+        private ParticleEffect? effect;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="XVelocityScene"/> class.
         /// </summary>
@@ -33,7 +38,9 @@ namespace ParticleEngineTester.Scenes
                 {
                     ApplyToAttribute = ParticleAttribute.X,
                     StartMin = SceneCenter.X - 200,
+                    UpdateStartMin = () => SceneCenter.X - 200,
                     StartMax = SceneCenter.X - 200,
+                    UpdateStartMax = () => SceneCenter.X - 200,
                     ChangeMin = 380,
                     ChangeMax = 380,
                     TotalTimeMin = 3000,
@@ -42,7 +49,7 @@ namespace ParticleEngineTester.Scenes
                 },
             };
 
-            var effect = new ParticleEffect("Graphics/gear-particle", settings)
+            this.effect = new ParticleEffect("Graphics/gear-particle", settings)
             {
                 BurstEnabled = false,
                 SpawnLocation = SceneCenter.ToPointF(),
@@ -50,13 +57,21 @@ namespace ParticleEngineTester.Scenes
                 SpawnRateMax = 1000,
             };
 
-            Engine.CreatePool(effect, new BehaviorFactory());
+            Engine.CreatePool(this.effect, new BehaviorFactory());
 
             base.LoadContent();
         }
 
         /// <inheritdoc/>
-        public override void Update(GameTime gameTime) => base.Update(gameTime);
+        public override void Update(GameTime gameTime)
+        {
+            if (!(this.effect is null))
+            {
+                this.effect.SpawnLocation = new PointF(SceneCenter.X - 200, SceneCenter.Y);
+            }
+
+            base.Update(gameTime);
+        }
 
         /// <inheritdoc/>
         public override void Draw(GameTime gameTime) => base.Draw(gameTime);

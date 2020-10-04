@@ -11,6 +11,7 @@ This <span style="color:whitesmoke;font-weight:bold">PR</span> merges everything
 	* <span style="color:whitesmoke;font-weight:bold">Syntax:</span> release/v[version]
 	* <span style="color:whitesmoke;font-weight:bold">Example:</span> release/v1.2.3
 2. [ ] Verify the PR title:
+   * <span style="color:whitesmoke;font-weight:bold">Syntax:</span> Release v[version] - Merge Into Develop
    * <span style="color:whitesmoke;font-weight:bold">Example:</span> Release v1.2.3 - Merge Into Develop
 3. [ ] Verify that all related work item cards have been linked/added to the PR
 4. [ ] Verify that the entire solution <span style="color:whitesmoke;font-weight:bold">builds</span> locally using <span style="color:mediumpurple;font-weight:bold;font-weight:bold">Visual Studio</span>

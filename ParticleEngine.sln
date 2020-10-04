@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{7D49
 	ProjectSection(SolutionItems) = preProject
 		Testing\.editorconfig = Testing\.editorconfig
 		Testing\ParticleEngine.runsettings = Testing\ParticleEngine.runsettings
+		Testing\ParticleEngineTester.runsettings = Testing\ParticleEngineTester.runsettings
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTests", "Testing\ParticleEngineTests\ParticleEngineTests.csproj", "{A76A5BCB-CAA1-47C3-8EB5-89F9BAE66956}"
@@ -25,10 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDevOps", "AzureDevOps", "{43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines-develop.yml = azure-pipelines-develop.yml
-		azure-pipelines-master.yml = azure-pipelines-master.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequestTemplates", "PullRequestTemplates", "{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9}"
 	ProjectSection(SolutionItems) = preProject
@@ -37,9 +34,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequestTemplates", "Pul
 		pull_request_template\release_to_master.md = pull_request_template\release_to_master.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleEngineTester", "ParticleEngineTester\ParticleEngineTester.csproj", "{238F2D79-6BB6-4DC7-945B-7D1C26621124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTester", "ParticleEngineTester\ParticleEngineTester.csproj", "{238F2D79-6BB6-4DC7-945B-7D1C26621124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleEngineTesterTests", "Testing\ParticleEngineTesterTests\ParticleEngineTesterTests.csproj", "{CD2B2511-D108-4077-AAEE-8AE6F0B04B45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTesterTests", "Testing\ParticleEngineTesterTests\ParticleEngineTesterTests.csproj", "{CD2B2511-D108-4077-AAEE-8AE6F0B04B45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{00D43262-5A6A-4E0D-BD8C-AD2EF7FAD1FD}"
+	ProjectSection(SolutionItems) = preProject
+		AzureDevOps\pipelines\particle-engine-pipeline.yml = AzureDevOps\pipelines\particle-engine-pipeline.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{9209E075-2AA9-4F36-BCBC-CB4D72F0C8D1}"
+	ProjectSection(SolutionItems) = preProject
+		AzureDevOps\pipelines\templates\build-content-job-template.yml = AzureDevOps\pipelines\templates\build-content-job-template.yml
+		AzureDevOps\pipelines\templates\build-solution-job-template.yml = AzureDevOps\pipelines\templates\build-solution-job-template.yml
+		AzureDevOps\pipelines\templates\publish-artifacts-job-template.yml = AzureDevOps\pipelines\templates\publish-artifacts-job-template.yml
+		AzureDevOps\pipelines\templates\unit-testing-job-template.yml = AzureDevOps\pipelines\templates\unit-testing-job-template.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +86,8 @@ Global
 		{FC644A3B-EC06-46BB-8F54-D5E5C8AB57F9} = {43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}
 		{238F2D79-6BB6-4DC7-945B-7D1C26621124} = {7D49C662-51F3-4D0F-892A-60079135A5DF}
 		{CD2B2511-D108-4077-AAEE-8AE6F0B04B45} = {7D49C662-51F3-4D0F-892A-60079135A5DF}
+		{00D43262-5A6A-4E0D-BD8C-AD2EF7FAD1FD} = {43E1F353-36D1-4EE6-B8C8-7B23A2DF4856}
+		{9209E075-2AA9-4F36-BCBC-CB4D72F0C8D1} = {00D43262-5A6A-4E0D-BD8C-AD2EF7FAD1FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B5522DE-EC6C-4C93-9F87-F0C24E228B37}

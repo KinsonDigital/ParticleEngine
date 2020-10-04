@@ -1,0 +1,53 @@
+parameters:
+- name: engineProjectName
+  type: string
+- name: engineTesterProjectName
+  type: string
+
+
+jobs:
+- job: 'Publish_Artifacts_Job'
+  displayName: 'Publish Artifacts'
+  steps:
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Engine Test App Artifacts'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '$(System.DefaultWorkingDirectory)\**\${{parameters.engineTesterProjectName}}.csproj'
+      arguments: '-o $(System.DefaultWorkingDirectory)\publish -c Release'
+      zipAfterPublish: false
+      modifyOutputPath: false
+
+  - task: ArchiveFiles@2
+    displayName: 'Archive ${{parameters.engineTesterProjectName}} Build Results To Staging Directory'
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)\publish'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)\${{parameters.engineTesterProjectName}}.zip'
+      replaceExistingArchive: true
+
+  - task: CmdLine@2
+    displayName: 'Add Version Number To ${{parameters.engineTesterProjectName}} Build Artifact'
+    inputs:
+      script: 'avs --archivepath "$(Build.ArtifactStagingDirectory)\${{parameters.engineTesterProjectName}}.zip" --projectfilepath "$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\${{parameters.engineTesterProjectName}}.csproj"'
+      workingDirectory: 'C:\AVS'
+      failOnStderr: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Create ${{parameters.engineTesterProjectName}} Nuget Package Artifact'
+    inputs:
+      command: 'pack'
+      packagesToPack: '$(System.DefaultWorkingDirectory)\**\${{parameters.engineProjectName}}.csproj'
+      configuration: '$(buildConfiguration)'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
+      versioningScheme: 'off'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish ${{parameters.engineTesterProjectName}} Build Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

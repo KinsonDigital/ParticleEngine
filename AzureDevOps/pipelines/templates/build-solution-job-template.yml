@@ -1,0 +1,43 @@
+parameters:
+- name: engineProjectName
+  type: string
+- name: engineTesterProjectName
+  type: string  
+- name: buildPlatform
+  type: string
+- name: buildConfiguration
+  type: string
+- name: vstsFeed
+  type: string
+
+
+jobs:
+- job: 'Build_Solution_Job'
+  displayName: 'Build Projects'
+  dependsOn: Build_Content_Job
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Set Up Nuget Installer Tool'  
+
+  - task: NuGetCommand@2
+    displayName: 'Restore Nuget Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'select'
+      vstsFeed: '${{parameters.vstsFeed}}'
+      includeNuGetOrg: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Particle Engine Project'
+    inputs:
+      command: 'build'
+      projects: '**\${{parameters.engineProjectName}}.csproj'
+      arguments: '-c ${{parameters.buildConfiguration}}'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build ${{parameters.engineTesterProjectName}} Project'
+    inputs:
+      command: 'build'
+      projects: '**\${{parameters.engineTesterProjectName}}.csproj'
+      arguments: '-c ${{parameters.buildConfiguration}}'

@@ -18,11 +18,15 @@ namespace ParticleEngineTester
     [ExcludeFromCodeCoverage]
     public static class Program
     {
+        /// <summary>
+        /// Gets the error logger used to log errors to a file.
+        /// </summary>
+        public static ILogger Logger { get; private set; } = new ErrorLogger();
+
         [STAThread]
         private static void Main()
         {
             var main = new Main();
-
             main.Run();
         }
     }

@@ -4,6 +4,7 @@
 
 namespace ParticleEngineTester.Scenes
 {
+    using System.Diagnostics.CodeAnalysis;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using Microsoft.Xna.Framework;
@@ -11,6 +12,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// Shows particles with a bursting effect for the purpose of testing.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class BurstingEffectScene : ParticleEngineSceneBase
     {
         /// <summary>
@@ -68,9 +70,13 @@ namespace ParticleEngineTester.Scenes
                 {
                     ApplyToAttribute = ParticleAttribute.X,
                     StartMin = SceneCenter.X - 50,
+                    UpdateStartMin = () => SceneCenter.X - 50,
                     StartMax = SceneCenter.X + 50,
+                    UpdateStartMax = () => SceneCenter.X - 50,
                     ChangeMin = -(SceneWidth - SceneCenter.X - 12),
+                    UpdateChangeMin = () => -(SceneWidth - SceneCenter.X - 12),
                     ChangeMax = SceneWidth - SceneCenter.X - 12,
+                    UpdateChangeMax = () => SceneWidth - SceneCenter.X - 12,
                     TotalTimeMin = totalTime - 2000,
                     TotalTimeMax = totalTime - 2000,
                     EasingFunctionType = EasingFunction.EaseOutBounce,
@@ -79,9 +85,13 @@ namespace ParticleEngineTester.Scenes
                 {
                     ApplyToAttribute = ParticleAttribute.Y,
                     StartMin = SceneCenter.Y, // Will bounce off the bottom of the window
+                    UpdateStartMin = () => SceneCenter.Y,
                     StartMax = SceneCenter.Y,
+                    UpdateStartMax = () => SceneCenter.Y,
                     ChangeMin = SceneHeight - SceneCenter.Y - 12,
                     ChangeMax = SceneHeight - SceneCenter.Y - 12,
+                    UpdateChangeMin = () => SceneHeight - SceneCenter.Y - 12,
+                    UpdateChangeMax = () => SceneHeight - SceneCenter.Y - 12,
                     TotalTimeMin = totalTime,
                     TotalTimeMax = totalTime,
                     EasingFunctionType = EasingFunction.EaseOutBounce,

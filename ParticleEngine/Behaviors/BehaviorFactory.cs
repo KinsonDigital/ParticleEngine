@@ -20,6 +20,7 @@ namespace KDParticleEngine.Behaviors
         /// <param name="settings">The list of settings used to create each behavior.</param>
         /// <param name="randomizerService">The random used to randomly generate values.</param>
         /// <returns>A list of behaviors.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the <paramref name="settings"/> parameter is null.</exception>
         public IBehavior[] CreateBehaviors(BehaviorSettings[] settings, IRandomizerService randomizerService)
         {
             if (settings is null)

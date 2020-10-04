@@ -18,9 +18,7 @@ namespace ParticleEngineTester
     {
         private const int ButtonSpacing = 10;
         private readonly List<IScene> scenes = new List<IScene>();
-        private readonly int windowHeight;
         private readonly IControlFactory ctrlFactory;
-        private readonly int windowWidth;
         private readonly IControl prevButton;
         private readonly IControl nextButton;
         private bool isDisposed;
@@ -29,26 +27,19 @@ namespace ParticleEngineTester
         /// Initializes a new instance of the <see cref="SceneManager"/> class.
         /// </summary>
         /// <param name="ctrlFactory">Creates controls for the scene manager.</param>
-        /// <param name="windowWidth">The width of the window.</param>
-        /// <param name="windowHeight">The height of the window.</param>
-        public SceneManager(IControlFactory ctrlFactory, int windowWidth, int windowHeight)
+        public SceneManager(IControlFactory ctrlFactory)
         {
             this.ctrlFactory = ctrlFactory;
 
-            this.windowWidth = windowWidth;
-            this.windowHeight = windowHeight;
-
 #pragma warning disable IDE0017 // Simplify object initialization
-            this.nextButton = ctrlFactory.CreateButton("next-btn", "Graphics/next-button");
-            this.nextButton.Right = this.windowWidth - ButtonSpacing;
-            this.nextButton.Bottom = this.windowHeight - ButtonSpacing;
-            this.nextButton.Click += NextButton_Click;
-
             this.prevButton = ctrlFactory.CreateButton("prev-btn", "Graphics/prev-button");
-            this.prevButton.Right = this.nextButton.Left - ButtonSpacing;
-            this.prevButton.Bottom = this.windowHeight - ButtonSpacing;
             this.prevButton.Click += PreviousButton_Click;
+
+            this.nextButton = ctrlFactory.CreateButton("next-btn", "Graphics/next-button");
+            this.nextButton.Click += NextButton_Click;
 #pragma warning restore IDE0017 // Simplify object initialization
+
+            UpdateButtonStates();
         }
 
 #pragma warning disable CS0067 // The event is never used
@@ -120,7 +111,6 @@ namespace ParticleEngineTester
             // Only invoked the scene changed event if the scene has actually changed.
             if (prevSceneIndex != CurrentSceneIndex)
             {
-                // TODO: Unit test this
                 this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
             }
         }
@@ -148,7 +138,6 @@ namespace ParticleEngineTester
                 ? this.scenes.Count - 1
                 : CurrentSceneIndex + 1;
 
-            // TODO: Unit test this
             this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
@@ -166,7 +155,6 @@ namespace ParticleEngineTester
                 ? 0
                 : CurrentSceneIndex - 1;
 
-            // TODO: Unit test this
             this.SceneChanged?.Invoke(this, new SceneChangedEventArgs(this.scenes[prevSceneIndex].Name, this.scenes[CurrentSceneIndex].Name));
         }
 
@@ -182,6 +170,8 @@ namespace ParticleEngineTester
             {
                 this.scenes[CurrentSceneIndex].Update(gameTime);
             }
+
+            UpdateButtonStates();
 
             this.prevButton.Update(gameTime);
             this.nextButton.Update(gameTime);
@@ -244,6 +234,22 @@ namespace ParticleEngineTester
         private void NextButton_Click(object? sender, ClickedEventArgs e) => NextScene();
 
         /// <summary>
+        /// Updates the state of the previous and next buttons locations and enabled/disabled state.
+        /// </summary>
+        private void UpdateButtonStates()
+        {
+            // Update the locations of the buttons
+            this.prevButton.Right = this.nextButton.Left - ButtonSpacing;
+            this.prevButton.Bottom = Main.WindowHeight - ButtonSpacing;
+
+            this.nextButton.Right = Main.WindowWidth - ButtonSpacing;
+            this.nextButton.Bottom = Main.WindowHeight - ButtonSpacing;
+
+            this.prevButton.Enabled = CurrentSceneIndex > 0;
+            this.nextButton.Enabled = CurrentSceneIndex < this.scenes.Count - 1;
+        }
+
+        /// <summary>
         /// Returns true if the a scene with the given <paramref name="name"/> already exists.
         /// </summary>
         /// <param name="name">The name of the scene.</param>
@@ -257,15 +263,10 @@ namespace ParticleEngineTester
                 if (scene.Name == name)
                 {
                     total += 1;
-
-                    if (total >= 1)
-                    {
-                        return true;
-                    }
                 }
             }
 
-            return false;
+            return total > 0;
         }
 
         /// <summary>

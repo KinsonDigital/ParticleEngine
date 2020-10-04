@@ -118,6 +118,11 @@ namespace ParticleEngineTester.UI
         internal Func<int>? GetHeight { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether mouse button interaction is enabled or disabled.
+        /// </summary>
+        internal bool MouseButtonInteractionEnabled { get; set; } = true;
+
+        /// <summary>
         /// Gets a value indicating whether if the <see cref="Control"/> has been disposed.
         /// </summary>
         protected bool IsDisposed { get; private set; }
@@ -220,7 +225,8 @@ namespace ParticleEngineTester.UI
                 this.MouseLeave?.Invoke(this, EventArgs.Empty);
             }
 
-            if (IsMouseOver && this.currentMouseState.LeftButton == ButtonState.Released && this.previousMouseState.LeftButton == ButtonState.Pressed)
+            if (MouseButtonInteractionEnabled && IsMouseOver &&
+                this.currentMouseState.LeftButton == ButtonState.Released && this.previousMouseState.LeftButton == ButtonState.Pressed)
             {
                 OnClick(this, new ClickedEventArgs(Name));
             }

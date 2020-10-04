@@ -24,9 +24,6 @@ namespace ParticleEngineTesterTests
         private readonly Mock<IButton> mockNextButton;
         private readonly Mock<IButton> mockPrevButton;
 
-        private readonly int windowWidth = 800;
-        private readonly int windowHeight = 400;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManagerTests"/> class.
         /// </summary>
@@ -202,6 +199,33 @@ namespace ParticleEngineTesterTests
         }
 
         [Fact]
+        public void ActivateScene_WhenInvoked_RaisesSceneChangedEvent()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act & Assert
+            Assert.Raises<SceneChangedEventArgs>((handler) =>
+            {
+                manager.SceneChanged += handler;
+            }, (handler) =>
+            {
+                manager.SceneChanged -= handler;
+            }, () =>
+            {
+                manager.ActivateScene(nameof(mockSceneB));
+            });
+        }
+
+        [Fact]
         public void LoadContent_WhenInvoked_LoadsContentForAllScenes()
         {
             // Arrange
@@ -313,6 +337,126 @@ namespace ParticleEngineTesterTests
         }
 
         [Fact]
+        public void Update_WhenInvoked_NoNullReferenceExceptionThrown()
+        {
+            // Arrange
+            var manager = CreateSceneManager();
+
+            // Act & Assert
+            AssertHelpers.DoesNotThrow<IndexOutOfRangeException>(() =>
+            {
+                manager.Update(new GameTime());
+            });
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsFirstScene_PreviousButtonIsDisabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            var mockPrevButton = new Mock<IButton>();
+            mockPrevButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(mockPrevButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.False(mockPrevButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsNotFirstScene_PreviousButtonIsEnabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockPrevButton = new Mock<IButton>();
+            mockPrevButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("prev-btn", It.IsAny<string>()))
+                .Returns(mockPrevButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+            manager.NextScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.True(mockPrevButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsLastScene_NextButtonIsDisabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockNextButton = new Mock<IButton>();
+            mockNextButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("next-btn", It.IsAny<string>()))
+                .Returns(mockNextButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            manager.NextScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.False(mockNextButton.Object.Enabled);
+        }
+
+        [Fact]
+        public void Update_WhenCurrentSceneIsNotLastScene_NextButtonIsEnabled()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var mockNextButton = new Mock<IButton>();
+            mockNextButton.SetupProperty(p => p.Enabled);
+
+            this.mockCtrlFactory.Setup(m => m.CreateButton("next-btn", It.IsAny<string>()))
+                .Returns(mockNextButton.Object);
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+            manager.NextScene();
+            manager.PreviousScene();
+
+            // Act
+            manager.Update(new GameTime());
+
+            // Assert
+            Assert.True(mockNextButton.Object.Enabled);
+        }
+
+        [Fact]
         public void Draw_WhenDisabled_DoesNotDrawAnyScenes()
         {
             // Arrange
@@ -387,6 +531,58 @@ namespace ParticleEngineTesterTests
             Assert.Equal(expectedSceneIndex, actual);
         }
 
+        [Fact]
+        public void NextScene_WithNoSceneChangedSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockSeneA = new Mock<IScene>();
+            mockSeneA.SetupGet(p => p.Name).Returns(nameof(mockSeneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSeneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act & Assert
+            AssertHelpers.DoesNotRaise<SceneChangedEventArgs>((handler) =>
+            {
+            }, (handler) =>
+            {
+            }, () =>
+            {
+                manager.NextScene();
+            });
+        }
+
+        [Fact]
+        public void NextScene_WhenInvoked_RaisesSceneChangedEvent()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act & Assert
+            Assert.Raises<SceneChangedEventArgs>((handler) =>
+            {
+                manager.SceneChanged += handler;
+            }, (handler) =>
+            {
+                manager.SceneChanged -= handler;
+            }, () =>
+            {
+                manager.NextScene();
+            });
+        }
+
         [Theory]
         [InlineData(2, 1, 1, 0)]
         [InlineData(2, 0, 5, 0)]
@@ -422,6 +618,58 @@ namespace ParticleEngineTesterTests
         }
 
         [Fact]
+        public void PreviousScene_WithNoSceneChangedSubscription_DoesNotThrowNullReferenceException()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act & Assert
+            AssertHelpers.DoesNotRaise<SceneChangedEventArgs>((handler) =>
+            {
+            }, (handler) =>
+            {
+            }, () =>
+            {
+                manager.PreviousScene();
+            });
+        }
+
+        [Fact]
+        public void PreviousScene_WhenInvoked_RaisesSceneChangedEvent()
+        {
+            // Arrange
+            var mockSceneA = new Mock<IScene>();
+            mockSceneA.SetupGet(p => p.Name).Returns(nameof(mockSceneA));
+
+            var mockSceneB = new Mock<IScene>();
+            mockSceneB.SetupGet(p => p.Name).Returns(nameof(mockSceneB));
+
+            var manager = CreateSceneManager();
+            manager.AddScene(mockSceneA.Object);
+            manager.AddScene(mockSceneB.Object);
+
+            // Act & Assert
+            Assert.Raises<SceneChangedEventArgs>((handler) =>
+            {
+                manager.SceneChanged += handler;
+            }, (handler) =>
+            {
+                manager.SceneChanged -= handler;
+            }, () =>
+            {
+                manager.PreviousScene();
+            });
+        }
+
+        [Fact]
         public void Dispose_WhenInvoked_DisposesOfAllScenes()
         {
             // Arrange
@@ -452,7 +700,7 @@ namespace ParticleEngineTesterTests
         /// <returns>New scene manager.</returns>
         private SceneManager CreateSceneManager()
         {
-            return new SceneManager(this.mockCtrlFactory.Object, this.windowWidth, this.windowHeight);
+            return new SceneManager(this.mockCtrlFactory.Object);
         }
     }
 }

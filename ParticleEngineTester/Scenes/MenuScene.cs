@@ -5,6 +5,7 @@
 namespace ParticleEngineTester.Scenes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.Xna.Framework;
     using ParticleEngineTester.Factories;
     using ParticleEngineTester.UI;
@@ -12,6 +13,7 @@ namespace ParticleEngineTester.Scenes
     /// <summary>
     /// The main menu scene used to choose scenes.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class MenuScene : SceneBase
     {
         private readonly ControlFactory ctrlFactory;
@@ -48,7 +50,8 @@ namespace ParticleEngineTester.Scenes
                 this.menu.Add(sceneKey, sceneKey.ToTitle(), this.defaultColor);
             }
 
-            this.menu.Location = new Vector2(SceneCenter.X - (this.menu.Width / 2), SceneCenter.Y - (this.menu.Height / 2));
+            UpdateMenuLocation();
+
             this.menu.MouseEnter += Menu_MouseEnter;
 
             base.LoadContent();
@@ -57,6 +60,8 @@ namespace ParticleEngineTester.Scenes
         /// <inheritdoc/>
         public override void Update(GameTime gameTime)
         {
+            UpdateMenuLocation();
+
             this.menu.Update(gameTime);
 
             base.Update(gameTime);
@@ -91,5 +96,12 @@ namespace ParticleEngineTester.Scenes
         /// Invoked when a menu item has been clicked, and loads a scene.
         /// </summary>
         private void Menu_ItemClicked(object? sender, MenuItemClickedEventArgs e) => this.MenuClicked?.Invoke(this, e);
+
+        /// <summary>
+        /// Updates the location of the menu to the center of the scene.
+        /// </summary>
+        private void UpdateMenuLocation() => this.menu.Location = new Vector2(
+            SceneCenter.X - (this.menu.Width / 2),
+            SceneCenter.Y - (this.menu.Height / 2));
     }
 }
