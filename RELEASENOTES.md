@@ -1,5 +1,29 @@
 # **Particle Engine Release Notes**
 
+## **Particle Engine - Version 0.19.0**
+
+### **New**
+
+1. Added ability to dynamically update the **EasingRandomBehavior** **ChangeMin** and **ChangeMax** settings for updating the values dynamically during runtime.
+   * These are done by setting the **UpdateChangeMin** and **UpdateChangeMax** properties of the **EasingRandomBehaviorSettings** class to an implementation of type **Func<float>**.  This will set the change min and max settings during runtime.
+
+### **Other**
+
+1. An additional **QA** environment has been added for QA testing.
+2. Improved the build and release pipelines.
+   * Every release archive is not retained on the **SoftwareReleases** share for the proper environment.
+
+## **Particle Engine Tester - Version 1.1.0**
+
+### **New**
+
+1. Increased code coverage of code base to over **90%**.
+2. Added logging of errors/exceptions during run time to an error log.
+3. The **previous** and **next** scene buttons now are enabled and disabled appropriately when on the first or last scene.
+4. The tester window is not able to be resized via the maximize and restore button and the mouse by grabbing the edge of the window.
+
+---
+
 ## **Version 0.18.0**
 
 ### **New**
