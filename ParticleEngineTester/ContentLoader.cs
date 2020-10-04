@@ -35,7 +35,7 @@ namespace ParticleEngineTester
             }
             catch (Exception ex)
             {
-                Program.ErrorLogger?.Error(ex, $"Problem loading texture asset '{assetName}'");
+                Program.Logger.Error(ex, $"Problem loading texture asset '{assetName}'");
                 throw ex;
             }
         }
@@ -51,7 +51,7 @@ namespace ParticleEngineTester
             }
             catch (Exception ex)
             {
-                Program.ErrorLogger?.Error(ex, $"Problem loading font asset '{assetName}'");
+                Program.Logger.Error(ex, $"Problem loading font asset '{assetName}'");
                 throw ex;
             }
         }
