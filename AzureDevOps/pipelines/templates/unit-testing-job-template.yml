@@ -1,5 +1,5 @@
 parameters:
-- name: engineLibProjectName
+- name: engineProjectName
   type: string
 - name: engineTesterProjectName
   type: string  
@@ -17,7 +17,7 @@ jobs:
     displayName: "Run ParticleEngine Tests & Collect Code Coverage"
     inputs:
       command: 'test'
-      projects: '**\*${{parameters.engineLibProjectName}}[Tt]ests\*.csproj'
+      projects: '**\*${{parameters.engineProjectName}}[Tt]ests\*.csproj'
       arguments: '--configuration ${{parameters.buildConfiguration}} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
       publishTestResults: true
       testRunTitle: 'Unit Test Results'
