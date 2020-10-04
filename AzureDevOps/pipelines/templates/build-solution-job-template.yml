@@ -1,5 +1,5 @@
 parameters:
-- name: engineLibProjectName
+- name: engineProjectName
   type: string
 - name: engineTesterProjectName
   type: string  
@@ -13,7 +13,7 @@ parameters:
 
 jobs:
 - job: 'Build_Solution_Job'
-  displayName: 'Build Solution'
+  displayName: 'Build Projects'
   dependsOn: Build_Content_Job
   steps:
   - task: NuGetToolInstaller@1
@@ -25,21 +25,19 @@ jobs:
       command: 'restore'
       restoreSolution: '**/*.sln'
       feedsToUse: 'select'
-      vstsFeed: '${{parameters.vstsFeed}}' # KinsonDigitalFeed
+      vstsFeed: '${{parameters.vstsFeed}}'
       includeNuGetOrg: true
 
-  - task: VSBuild@1
+  - task: DotNetCoreCLI@2
     displayName: 'Build Particle Engine Project'
     inputs:
-      solution: '**\${{parameters.engineLibProjectName}}.csproj'
-      platform: '${{parameters.buildPlatform}}'
-      configuration: '${{parameters.buildConfiguration}}'
-      clean: true
+      command: 'build'
+      projects: '**\${{parameters.engineProjectName}}.csproj'
+      arguments: '-c ${{parameters.buildConfiguration}}'
 
-  - task: VSBuild@1
+  - task: DotNetCoreCLI@2
     displayName: 'Build ${{parameters.engineTesterProjectName}} Project'
     inputs:
-      solution: '**\${{parameters.engineTesterProjectName}}.csproj'
-      platform: '${{parameters.buildPlatform}}'
-      configuration: '${{parameters.buildConfiguration}}'
-      clean: true
+      command: 'build'
+      projects: '**\${{parameters.engineTesterProjectName}}.csproj'
+      arguments: '-c ${{parameters.buildConfiguration}}'

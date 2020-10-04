@@ -1,4 +1,6 @@
 parameters:
+- name: engineProjectName
+  type: string
 - name: engineTesterProjectName
   type: string
 
@@ -33,6 +35,15 @@ jobs:
       script: 'avs --archivepath "$(Build.ArtifactStagingDirectory)\${{parameters.engineTesterProjectName}}.zip" --projectfilepath "$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\${{parameters.engineTesterProjectName}}.csproj"'
       workingDirectory: 'C:\AVS'
       failOnStderr: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Create ${{parameters.engineTesterProjectName}} Nuget Package Artifact'
+    inputs:
+      command: 'pack'
+      packagesToPack: '$(System.DefaultWorkingDirectory)\**\${{parameters.engineProjectName}}.csproj'
+      configuration: '$(buildConfiguration)'
+      packDirectory: '$(Build.ArtifactStagingDirectory)'
+      versioningScheme: 'off'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish ${{parameters.engineTesterProjectName}} Build Artifacts'

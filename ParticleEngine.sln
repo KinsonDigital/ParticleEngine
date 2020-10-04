@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleEngineTesterTests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{00D43262-5A6A-4E0D-BD8C-AD2EF7FAD1FD}"
 	ProjectSection(SolutionItems) = preProject
-		AzureDevOps\pipelines\azure-pipelines-develop.yml = AzureDevOps\pipelines\azure-pipelines-develop.yml
+		AzureDevOps\pipelines\particle-engine-pipeline.yml = AzureDevOps\pipelines\particle-engine-pipeline.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{9209E075-2AA9-4F36-BCBC-CB4D72F0C8D1}"
