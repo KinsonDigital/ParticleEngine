@@ -24,7 +24,7 @@ variables:
   - name: engineTesterProjectName
     value: 'ParticleEngineTester'
   - name: pool
-    value: 'KinsonDigital'
+    value: 'KinsonServer'
 
 stages:
 - stage: Print_Variable_Stage
