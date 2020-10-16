@@ -6,31 +6,29 @@ trigger:
 
 
 variables:
-  - name: solution
-    value: '**/*.sln'
-  - name: buildPlatform
-    value: 'any'
-  - name: buildConfiguration
-    ${{ if notIn(variables['Build.SourceBranchName'], 'develop', 'master')}}:
-      value: 'Debug'
-    ${{ if eq(variables['Build.SourceBranchName'], 'develop')}}:
-      value: 'Debug'
-    ${{ if eq(variables['Build.SourceBranchName'], 'master')}}:
-      value: 'Release'
-  - name: coverageReportDirName
-    value: 'CoverageReport'
-  - name: engineProjectName
-    value: 'ParticleEngine'
-  - name: engineTesterProjectName
-    value: 'ParticleEngineTester'
-  - name: kinsonDigitalNugetFeed
-    value: '1020f331-f22a-4330-a69a-78abfe6f6372/4c644bf2-f1e8-4f28-a3df-3bc9d3283df9'    
-  - name: pool
-    value: 'KinsonServer'
+- name: solution
+  value: '**/*.sln'
+- name: buildPlatform
+  value: 'any'
+- name: buildConfiguration
+  ${{ if notIn(variables['Build.SourceBranchName'], 'develop', 'master')}}:
+    value: 'Debug'
+  ${{ if eq(variables['Build.SourceBranchName'], 'develop')}}:
+    value: 'Debug'
+  ${{ if eq(variables['Build.SourceBranchName'], 'master')}}:
+    value: 'Release'
+- name: engineProjectName
+  value: 'ParticleEngine'
+- name: engineTesterProjectName
+  value: 'ParticleEngineTester'
+- name: kinsonDigitalNugetFeed
+  value: '1020f331-f22a-4330-a69a-78abfe6f6372/4c644bf2-f1e8-4f28-a3df-3bc9d3283df9'    
+- name: pool
+  value: 'KinsonServer'
 
 
 stages:
-- stage: Print_Variable_Stage
+- stage: Print_Variable_Stage #🟢
   displayName: Print Variables
   pool: $(pool)
   jobs:
@@ -46,7 +44,6 @@ stages:
           Write-Host "##[command]solution: $(solution)"
           Write-Host "##[command]buildPlatform: $(buildPlatform)"
           Write-Host "##[command]buildConfiguration: $(buildConfiguration)"
-          Write-Host "##[command]coverageReportDirName: $(coverageReportDirName)"
           Write-Host "##[command]engineProjectName: $(engineProjectName)"
           Write-Host "##[command]engineTesterProjectName: $(engineTesterProjectName)"
           Write-Host "##[command]pool: $(pool)"
@@ -64,6 +61,7 @@ stages:
       projectName: $(engineTesterProjectName)
       monoToolDirName: MGCB
       contentFileName: Content.mgcb
+
 
 
   - template: templates/build-solution-job-template.yml
@@ -95,6 +93,7 @@ stages:
 - stage: Publish_Artifacts_Stage #🟢
   displayName: 'Publish Artifacts Stage'
   pool: '$(pool)'
+  condition: in(variables['Build.SourceBranchName'], 'develop', 'master')
   jobs:
   - template: templates/publish-artifacts-job-template.yml
     parameters:
