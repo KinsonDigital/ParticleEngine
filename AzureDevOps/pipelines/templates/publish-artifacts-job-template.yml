@@ -3,50 +3,74 @@ parameters:
   type: string
 - name: engineTesterProjectName
   type: string
+- name: buildPlatform
+  type: string  
+- name: buildConfiguration
+  type: string  
+- name: vstsFeed
+  type: string
 
 
 jobs:
-- job: 'Publish_Artifacts_Job'
-  displayName: 'Publish Artifacts'
+- job: 'Publish_Particle_Engine_Artifacts_Job' #🟠
+  displayName: 'Publish ParticleEngine Artifacts'
   steps:
+  - template: setup-nuget-task-template.yml
+    parameters:
+      projectName: ${{parameters.engineProjectName}}
+      vstsFeed: ${{parameters.vstsFeed}}
+
+
+  - task: CmdLine@2
+    displayName: '🟣Create ${{parameters.engineProjectName}} Nuget Package Artifact'
+    inputs:
+      script: "dotnet pack \"$(System.DefaultWorkingDirectory)\\${{parameters.engineProjectName}}\\${{parameters.engineProjectName}}.csproj\" -c ${{parameters.buildConfiguration}} /p:Platform=${{parameters.buildPlatform}} -o $(Build.ArtifactStagingDirectory)"
+
+
+  - task: PublishBuildArtifacts@1
+    displayName: '🟣Publish ${{parameters.engineProjectName}} Build Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+
+
+
+
+- job: 'Publish_Engine_Tester_Artifacts_Job' #🟠
+  displayName: 'Publish ParticleEngineTester Artifacts'
+  steps:
+  - template: setup-nuget-task-template.yml
+    parameters:
+      projectName: ${{parameters.engineTesterProjectName}}
+      vstsFeed: ${{parameters.vstsFeed}}
+
 
   - task: DotNetCoreCLI@2
-    displayName: 'Publish Engine Test App Artifacts'
+    displayName: '🟣Publish ${{parameters.engineTesterProjectName}} Artifacts'
     inputs:
       command: 'publish'
       publishWebProjects: false
-      projects: '$(System.DefaultWorkingDirectory)\**\${{parameters.engineTesterProjectName}}.csproj'
-      arguments: '-o $(System.DefaultWorkingDirectory)\publish -c Release'
-      zipAfterPublish: false
+      projects: '$(System.DefaultWorkingDirectory)/**/${{parameters.engineTesterProjectName}}.csproj'
+      arguments: '-o $(Build.ArtifactStagingDirectory) -c ${{parameters.buildConfiguration}} /p:Platform=${{parameters.buildPlatform}}'
+      zipAfterPublish: true
       modifyOutputPath: false
 
-  - task: ArchiveFiles@2
-    displayName: 'Archive ${{parameters.engineTesterProjectName}} Build Results To Staging Directory'
-    inputs:
-      rootFolderOrFile: '$(System.DefaultWorkingDirectory)\publish'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)\${{parameters.engineTesterProjectName}}.zip'
-      replaceExistingArchive: true
 
   - task: CmdLine@2
-    displayName: 'Add Version Number To ${{parameters.engineTesterProjectName}} Build Artifact'
+    displayName: '🟣Rename ${{parameters.engineTesterProjectName}} Artifact'
     inputs:
-      script: 'avs --archivepath "$(Build.ArtifactStagingDirectory)\${{parameters.engineTesterProjectName}}.zip" --projectfilepath "$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\${{parameters.engineTesterProjectName}}.csproj"'
-      workingDirectory: 'C:\AVS'
-      failOnStderr: true
+      script: 'ren "$(Build.ArtifactStagingDirectory)\a.zip" "${{parameters.engineTesterProjectName}}.zip"'
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Create ${{parameters.engineTesterProjectName}} Nuget Package Artifact'
+
+  - task: CmdLine@2
+    displayName: '🟣Copy ${{parameters.engineTesterProjectName}} Project File'
     inputs:
-      command: 'pack'
-      packagesToPack: '$(System.DefaultWorkingDirectory)\**\${{parameters.engineProjectName}}.csproj'
-      configuration: '$(buildConfiguration)'
-      packDirectory: '$(Build.ArtifactStagingDirectory)'
-      versioningScheme: 'off'
+      script: 'copy "$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\${{parameters.engineTesterProjectName}}.csproj" "$(Build.ArtifactStagingDirectory)" /Y'
+
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish ${{parameters.engineTesterProjectName}} Build Artifacts'
+    displayName: '🟣Publish ${{parameters.engineTesterProjectName}} Build Artifacts'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'
