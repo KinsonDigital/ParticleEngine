@@ -1,5 +1,5 @@
 parameters:
-- name: engineTesterProjectName
+- name: projectName
   type: string
 - name: monoToolDirName
   type: string
@@ -8,8 +8,8 @@ parameters:
 
 
 jobs:
-- job: 'Build_Content_Job'
-  displayName: 'Build MonoGame Content'
+- job: 'Build_Engine_Tester_Content_Job' #🟠
+  displayName: 'Build ParticleEngineTester MonoGame Content'
   steps:
   # The MonoGame tool cannot be installed every time due to exit code 1 errors if it is already installed.
   # The workaround is to just update it every time to avoid the error.  Have to ignore failed sources
@@ -17,19 +17,21 @@ jobs:
   - task: CmdLine@2
     displayName: 'Install/Update MonoGame Content Builder Tool'
     inputs:
-      script: 'dotnet tool update dotnet-mgcb --tool-path "$(Agent.ToolsDirectory)\MGCB" --ignore-failed-sources'
-      workingDirectory: '$(Agent.ToolsDirectory)\'
+      script: 'dotnet tool update dotnet-mgcb --tool-path "$(Agent.ToolsDirectory)/MGCB" --ignore-failed-sources'
+      workingDirectory: '$(Agent.ToolsDirectory)/'
+
 
   - task: CopyFiles@2
     displayName: 'Prepare MGCB Tool For Execution'
     inputs:
-      SourceFolder: '$(Agent.ToolsDirectory)\${{parameters.monoToolDirName}}'
+      SourceFolder: '$(Agent.ToolsDirectory)/${{parameters.monoToolDirName}}'
       Contents: '**'
-      TargetFolder: '$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\Content'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/${{parameters.projectName}}/Content'
       OverWrite: true
+
 
   - task: CmdLine@2
     displayName: 'Build MonoGame Content With MGCB Tool'
     inputs:
       script: 'mgcb /@:${{parameters.contentFileName}}'
-      workingDirectory: '$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\Content'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/${{parameters.projectName}}/Content'

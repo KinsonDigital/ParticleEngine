@@ -9,7 +9,7 @@ variables:
   - name: solution
     value: '**/*.sln'
   - name: buildPlatform
-    value: 'Any CPU'
+    value: 'any'
   - name: buildConfiguration
     ${{ if notIn(variables['Build.SourceBranchName'], 'develop', 'master')}}:
       value: 'Debug'
@@ -23,41 +23,48 @@ variables:
     value: 'ParticleEngine'
   - name: engineTesterProjectName
     value: 'ParticleEngineTester'
+  - name: kinsonDigitalNugetFeed
+    value: '1020f331-f22a-4330-a69a-78abfe6f6372/4c644bf2-f1e8-4f28-a3df-3bc9d3283df9'    
   - name: pool
     value: 'KinsonServer'
+
 
 stages:
 - stage: Print_Variable_Stage
   displayName: Print Variables
   pool: $(pool)
   jobs:
-  - job: 'Print_Variables_Job'
+  - job: 'Print_Variables_Job' #🟠
     displayName: Print Variables
     steps:
-    - task: CmdLine@2
+    - task: PowerShell@2
       displayName: Print Variables
       inputs:
+        targetType: 'inline'
         script: |
-          echo =====================================================================================
-          echo solution: $(solution)
-          echo buildPlatform: $(buildPlatform)
-          echo buildConfiguration: $(buildConfiguration)
-          echo coverageReportDirName: $(coverageReportDirName)
-          echo engineProjectName: $(engineProjectName)
-          echo engineTesterProjectName: $(engineTesterProjectName)
-          echo pool: $(pool)
-          echo =====================================================================================
+          Write-Host "##[group]Pipeline Variables"
+          Write-Host "##[command]solution: $(solution)"
+          Write-Host "##[command]buildPlatform: $(buildPlatform)"
+          Write-Host "##[command]buildConfiguration: $(buildConfiguration)"
+          Write-Host "##[command]coverageReportDirName: $(coverageReportDirName)"
+          Write-Host "##[command]engineProjectName: $(engineProjectName)"
+          Write-Host "##[command]engineTesterProjectName: $(engineTesterProjectName)"
+          Write-Host "##[command]pool: $(pool)"
+          Write-Host "##[endgroup]"
 
 
-- stage: Build_Stage
+
+
+- stage: Build_Stage #🟢
   displayName: 'Build Stage'
   pool: '$(pool)'
   jobs:
   - template: templates/build-content-job-template.yml
     parameters:
-      engineTesterProjectName: $(engineTesterProjectName)
+      projectName: $(engineTesterProjectName)
       monoToolDirName: MGCB
       contentFileName: Content.mgcb
+
 
   - template: templates/build-solution-job-template.yml
     parameters:
@@ -65,28 +72,34 @@ stages:
       engineTesterProjectName: $(engineTesterProjectName)
       buildPlatform: $(buildPlatform)
       buildConfiguration: $(buildConfiguration)
-      vstsFeed: '1020f331-f22a-4330-a69a-78abfe6f6372/4c644bf2-f1e8-4f28-a3df-3bc9d3283df9' # KinsonDigitalFeed
+      vstsFeed: '$(kinsonDigitalNugetFeed)'
 
 
-- stage: Testing_Stage
+
+
+- stage: Testing_Stage #🟢
   displayName: 'Testing Stage'
   pool: '$(pool)'
-  dependsOn: 'Build_Stage'
   jobs:
   - template: templates/unit-testing-job-template.yml
     parameters:
       engineProjectName: $(engineProjectName)
       engineTesterProjectName: $(engineTesterProjectName)
+      buildPlatform: $(buildPlatform)      
       buildConfiguration: $(buildConfiguration)
-      coverageReportDirName: $(coverageReportDirName)
+      vstsFeed: '$(kinsonDigitalNugetFeed)'
 
 
-- stage: Publish_Artifacts_Stage
+
+
+- stage: Publish_Artifacts_Stage #🟢
   displayName: 'Publish Artifacts Stage'
   pool: '$(pool)'
-  dependsOn: 'Testing_Stage'
   jobs:
   - template: templates/publish-artifacts-job-template.yml
     parameters:
       engineProjectName: $(engineProjectName)
       engineTesterProjectName: $(engineTesterProjectName)
+      buildPlatform: $(buildPlatform)
+      buildConfiguration: $(buildConfiguration)
+      vstsFeed: '$(kinsonDigitalNugetFeed)'
