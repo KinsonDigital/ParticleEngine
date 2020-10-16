@@ -21,19 +21,18 @@ jobs:
       vstsFeed: ${{parameters.vstsFeed}}
 
 
-  - task: CmdLine@2
-    displayName: '🟣Create ${{parameters.engineProjectName}} Nuget Package Artifact'
+  - task: CmdLine@2 #🟣
+    displayName: 'Create ${{parameters.engineProjectName}} Nuget Package Artifact'
     inputs:
       script: "dotnet pack \"$(System.DefaultWorkingDirectory)\\${{parameters.engineProjectName}}\\${{parameters.engineProjectName}}.csproj\" -c ${{parameters.buildConfiguration}} /p:Platform=${{parameters.buildPlatform}} -o $(Build.ArtifactStagingDirectory)"
 
 
-  - task: PublishBuildArtifacts@1
-    displayName: '🟣Publish ${{parameters.engineProjectName}} Build Artifacts'
+  - task: PublishBuildArtifacts@1 #🟣
+    displayName: 'Publish ${{parameters.engineProjectName}} Build Artifacts'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'
       publishLocation: 'Container'
-
 
 
 
@@ -46,8 +45,8 @@ jobs:
       vstsFeed: ${{parameters.vstsFeed}}
 
 
-  - task: DotNetCoreCLI@2
-    displayName: '🟣Publish ${{parameters.engineTesterProjectName}} Artifacts'
+  - task: DotNetCoreCLI@2 #🟣
+    displayName: 'Publish ${{parameters.engineTesterProjectName}} Artifacts'
     inputs:
       command: 'publish'
       publishWebProjects: false
@@ -57,20 +56,20 @@ jobs:
       modifyOutputPath: false
 
 
-  - task: CmdLine@2
-    displayName: '🟣Rename ${{parameters.engineTesterProjectName}} Artifact'
+  - task: CmdLine@2 #🟣
+    displayName: 'Rename ${{parameters.engineTesterProjectName}} Artifact'
     inputs:
       script: 'ren "$(Build.ArtifactStagingDirectory)\a.zip" "${{parameters.engineTesterProjectName}}.zip"'
 
 
-  - task: CmdLine@2
-    displayName: '🟣Copy ${{parameters.engineTesterProjectName}} Project File'
+  - task: CmdLine@2 #🟣
+    displayName: 'Copy ${{parameters.engineTesterProjectName}} Project File'
     inputs:
       script: 'copy "$(System.DefaultWorkingDirectory)\${{parameters.engineTesterProjectName}}\${{parameters.engineTesterProjectName}}.csproj" "$(Build.ArtifactStagingDirectory)" /Y'
 
 
-  - task: PublishBuildArtifacts@1
-    displayName: '🟣Publish ${{parameters.engineTesterProjectName}} Build Artifacts'
+  - task: PublishBuildArtifacts@1 #🟣
+    displayName: 'Publish ${{parameters.engineTesterProjectName}} Build Artifacts'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'

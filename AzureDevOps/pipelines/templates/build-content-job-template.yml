@@ -14,14 +14,14 @@ jobs:
   # The MonoGame tool cannot be installed every time due to exit code 1 errors if it is already installed.
   # The workaround is to just update it every time to avoid the error.  Have to ignore failed sources
   # so it can just simply pull the tool down and install it
-  - task: CmdLine@2
+  - task: CmdLine@2 #🟣
     displayName: 'Install/Update MonoGame Content Builder Tool'
     inputs:
       script: 'dotnet tool update dotnet-mgcb --tool-path "$(Agent.ToolsDirectory)/MGCB" --ignore-failed-sources'
       workingDirectory: '$(Agent.ToolsDirectory)/'
 
 
-  - task: CopyFiles@2
+  - task: CopyFiles@2 #🟣
     displayName: 'Prepare MGCB Tool For Execution'
     inputs:
       SourceFolder: '$(Agent.ToolsDirectory)/${{parameters.monoToolDirName}}'
@@ -30,7 +30,7 @@ jobs:
       OverWrite: true
 
 
-  - task: CmdLine@2
+  - task: CmdLine@2 #🟣
     displayName: 'Build MonoGame Content With MGCB Tool'
     inputs:
       script: 'mgcb /@:${{parameters.contentFileName}}'
