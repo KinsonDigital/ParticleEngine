@@ -12,32 +12,24 @@ parameters:
 
 
 jobs:
-- job: 'Build_Solution_Job'
-  displayName: 'Build Projects'
-  dependsOn: Build_Content_Job
+- job: 'Build_Particle_Engine_Job' #🟠
+  displayName: 'Build ParticleEngine'
   steps:
-  - task: NuGetToolInstaller@1
-    displayName: 'Set Up Nuget Installer Tool'  
+  - template: build-project-task-template.yml
+    parameters:
+      projectName: ${{parameters.engineProjectName}}
+      buildPlatform: ${{parameters.buildPlatform}}
+      buildConfiguration: ${{parameters.buildConfiguration}}
+      vstsFeed: ${{parameters.vstsFeed}}
 
-  - task: NuGetCommand@2
-    displayName: 'Restore Nuget Packages'
-    inputs:
-      command: 'restore'
-      restoreSolution: '**/*.sln'
-      feedsToUse: 'select'
-      vstsFeed: '${{parameters.vstsFeed}}'
-      includeNuGetOrg: true
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Build Particle Engine Project'
-    inputs:
-      command: 'build'
-      projects: '**\${{parameters.engineProjectName}}.csproj'
-      arguments: '-c ${{parameters.buildConfiguration}}'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Build ${{parameters.engineTesterProjectName}} Project'
-    inputs:
-      command: 'build'
-      projects: '**\${{parameters.engineTesterProjectName}}.csproj'
-      arguments: '-c ${{parameters.buildConfiguration}}'
+- job: 'Build_Engine_Tester_Job' #🟠
+  dependsOn: Build_Engine_Tester_Content_Job
+  displayName: 'Build ParticleEngineTester'
+  steps:
+  - template: build-project-task-template.yml
+    parameters:
+      projectName: ${{parameters.engineTesterProjectName}}
+      buildPlatform: ${{parameters.buildPlatform}}
+      buildConfiguration: ${{parameters.buildConfiguration}}
+      vstsFeed: ${{parameters.vstsFeed}}
