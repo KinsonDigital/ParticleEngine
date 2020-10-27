@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngineTests.Fakes
+namespace KDParticleEngineTests.Fakes
 {
     using KDParticleEngine.Behaviors;
 

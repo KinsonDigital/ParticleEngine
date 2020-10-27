@@ -2,7 +2,7 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngineTests.Behaviors
+namespace KDParticleEngineTests.Behaviors
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

@@ -2,10 +2,10 @@
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
-namespace ParticleEngineTests.Behaviors
+namespace KDParticleEngineTests.Behaviors
 {
     using KDParticleEngine;
-    using ParticleEngineTests.Fakes;
+    using KDParticleEngineTests.Fakes;
     using Xunit;
 
     public class BehaviorSettingsTests
