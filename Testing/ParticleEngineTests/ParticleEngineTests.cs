@@ -10,6 +10,7 @@ namespace KDParticleEngineTests
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
+    using KDParticleEngineTests.Fakes;
     using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
@@ -21,6 +22,7 @@ namespace KDParticleEngineTests
     {
         private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
+        private readonly FakeTexture fakeTexture;
         private Mock<IRandomizerService> mockRandomizerService;
         private ParticleEngine engine;
 
@@ -30,7 +32,11 @@ namespace KDParticleEngineTests
         public ParticleEngineTests()
         {
             this.mockRandomizerService = new Mock<IRandomizerService>();
+
+            this.fakeTexture = new FakeTexture();
             this.mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(this.fakeTexture);
+
             this.mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
             this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
@@ -78,6 +84,25 @@ namespace KDParticleEngineTests
             // Assert
             Assert.Single(actual);
             Assert.Equal(effect, this.engine.ParticlePools[0].Effect);
+        }
+
+        [Fact]
+        public void TexturesLoaded_WhenGettingValueAfterTexturesAreLoaded_ReturnsTrue()
+        {
+            // Arrange
+            var settings = new EasingRandomBehaviorSettings[]
+            {
+                new EasingRandomBehaviorSettings(),
+            };
+            var effect = new ParticleEffect(It.IsAny<string>(), settings);
+            this.engine.CreatePool(effect, this.mockBehaviorFactory.Object);
+            this.engine.LoadTextures();
+
+            // Act
+            var actual = this.engine.TexturesLoaded;
+
+            // Assert
+            Assert.True(actual);
         }
         #endregion
 
@@ -147,6 +172,9 @@ namespace KDParticleEngineTests
         [Fact]
         public void Update_WithTexturesNotLoaded_ThrowsException()
         {
+            // Arrange
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(() => null);
+
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<Exception>(() =>
             {
@@ -258,6 +286,7 @@ namespace KDParticleEngineTests
             this.mockRandomizerService = null;
             this.engine.Dispose();
             this.engine = null;
+            this.fakeTexture.Dispose();
             GC.SuppressFinalize(this);
         }
 
