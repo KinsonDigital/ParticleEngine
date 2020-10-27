@@ -7,9 +7,9 @@ namespace KDParticleEngineTests
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using global::ParticleEngineTests.Fakes;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
+    using KDParticleEngineTests.Fakes;
     using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;

@@ -9,6 +9,7 @@ namespace KDParticleEngineTests
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
+    using KDParticleEngineTests.Fakes;
     using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
@@ -188,6 +189,21 @@ namespace KDParticleEngineTests
 
             // Assert
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void TextureLoaded_WhenGettingValueAfterLoadingTexture_ReturnsTrue()
+        {
+            // Arrange
+            var fakeTexture = new FakeTexture();
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(fakeTexture);
+            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+
+            // Act
+            pool.LoadTexture();
+
+            // Assert
+            Assert.True(pool.TextureLoaded);
         }
         #endregion
 

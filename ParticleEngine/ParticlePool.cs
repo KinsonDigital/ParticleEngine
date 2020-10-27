@@ -1,4 +1,4 @@
-﻿// <copyright file="ParticlePool.cs" company="KinsonDigital">
+// <copyright file="ParticlePool.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -56,12 +56,12 @@ namespace KDParticleEngine
             this.spawnRate = GetRandomSpawnRate();
         }
 
-        // TODO: Implement code to make use of invoking this event.
-
         /// <summary>
         /// Occurs every time the total amount of living particles has changed.
         /// </summary>
+#pragma warning disable CS0067 // The event is never used
         public event EventHandler<EventArgs>? LivingParticlesCountChanged;
+#pragma warning restore CS0067
 
         /// <summary>
         /// Gets current total number of living <see cref="Particle"/>s.
@@ -122,6 +122,11 @@ namespace KDParticleEngine
         /// Gets the texture of the particles in the pool.
         /// </summary>
         public TTexture? PoolTexture { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the pool texture has been loaded.
+        /// </summary>
+        public bool TextureLoaded => PoolTexture != null;
 
         /// <summary>
         /// Updates the particle pool.
