@@ -8,6 +8,7 @@ namespace KDParticleEngine
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
 
@@ -21,7 +22,6 @@ namespace KDParticleEngine
         private readonly ITextureLoader<IParticleTexture> textureLoader;
         private readonly IRandomizerService randomizer;
         private bool enabled = true;
-        private bool texturesLoaded;
         private bool isDisposed;
 
         /// <summary>
@@ -60,6 +60,12 @@ namespace KDParticleEngine
         }
 
         /// <summary>
+        /// Gets a value indicating whether the textures for the <see cref="ParticlePools"/>
+        /// have been loaded.
+        /// </summary>
+        public bool TexturesLoaded => this.particlePools.Count > 0 && this.particlePools.All(p => p.TextureLoaded);
+
+        /// <summary>
         /// Creates a particle pool using the given particle <paramref name="effect"/>.
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
@@ -90,8 +96,6 @@ namespace KDParticleEngine
             {
                 pool.LoadTexture();
             }
-
-            this.texturesLoaded = true;
         }
 
         /// <summary>
@@ -105,7 +109,7 @@ namespace KDParticleEngine
         /// <param name="timeElapsed">The amount of time that has passed since the last frame.</param>
         public void Update(TimeSpan timeElapsed)
         {
-            if (!this.texturesLoaded)
+            if (!TexturesLoaded)
             {
                 throw new Exception("The textures must be loaded first.");
             }

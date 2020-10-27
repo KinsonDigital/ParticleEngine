@@ -56,8 +56,6 @@ namespace KDParticleEngine
             this.spawnRate = GetRandomSpawnRate();
         }
 
-        // TODO: Implement code to make use of invoking this event.
-
         /// <summary>
         /// Occurs every time the total amount of living particles has changed.
         /// </summary>
@@ -122,6 +120,11 @@ namespace KDParticleEngine
         /// Gets the texture of the particles in the pool.
         /// </summary>
         public TTexture? PoolTexture { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the pool texture has been loaded.
+        /// </summary>
+        public bool TextureLoaded => PoolTexture != null;
 
         /// <summary>
         /// Updates the particle pool.
