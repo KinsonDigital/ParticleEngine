@@ -9,7 +9,6 @@ namespace KDParticleEngineTests
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
-    using KDParticleEngineTests.Fakes;
     using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
@@ -21,7 +20,7 @@ namespace KDParticleEngineTests
     {
         private const string ParticleTextureName = "particle-texture";
         private readonly Mock<IRandomizerService> mockRandomizerService;
-        private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
+        private readonly Mock<ITextureLoader<IDisposable>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
         private readonly Mock<IBehavior> mockBehavior;
         private readonly EasingRandomBehaviorSettings[] settings;
@@ -39,7 +38,7 @@ namespace KDParticleEngineTests
             this.effect = new ParticleEffect(ParticleTextureName, this.settings);
 
             this.mockRandomizerService = new Mock<IRandomizerService>();
-            this.mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
+            this.mockTextureLoader = new Mock<ITextureLoader<IDisposable>>();
 
             this.mockBehavior = new Mock<IBehavior>();
             this.mockBehavior.SetupGet(p => p.Value).Returns("0");
@@ -58,7 +57,7 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoked_SetsEffectProp()
         {
             // Act
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Assert
             Assert.Equal(this.effect, pool.Effect);
@@ -70,7 +69,7 @@ namespace KDParticleEngineTests
             // Act
             this.effect.TotalParticlesAliveAtOnce = 10;
 
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Assert
             Assert.Equal(10, pool.Particles.Count);
@@ -82,7 +81,7 @@ namespace KDParticleEngineTests
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-                var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, null, this.mockRandomizerService.Object);
+                var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, null, this.mockRandomizerService.Object);
             }, "The parameter must not be null. (Parameter 'effect')");
         }
         #endregion
@@ -92,7 +91,7 @@ namespace KDParticleEngineTests
         public void TotalLivingParticles_WhenGettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -107,7 +106,7 @@ namespace KDParticleEngineTests
         {
             // Arrange
             this.effect.TotalParticlesAliveAtOnce = 10;
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -131,7 +130,7 @@ namespace KDParticleEngineTests
             // Generate a spawn rate
             this.mockRandomizerService.Setup(m => m.GetValue(It.IsAny<int>(), It.IsAny<int>())).Returns(32);
             this.effect.TotalParticlesAliveAtOnce = 100;
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
             pool.SpawnRateEnabled = true;
 
             // Act
@@ -161,7 +160,7 @@ namespace KDParticleEngineTests
         public void BurstEnabled_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.BurstEnabled = true;
@@ -181,7 +180,7 @@ namespace KDParticleEngineTests
             this.effect.BurstOnTime = 10;
             this.effect.BurstEnabled = burstingEnabled;
 
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -195,9 +194,9 @@ namespace KDParticleEngineTests
         public void TextureLoaded_WhenGettingValueAfterLoadingTexture_ReturnsTrue()
         {
             // Arrange
-            var fakeTexture = new FakeTexture();
-            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(fakeTexture);
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var mockTexture = new Mock<IDisposable>();
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(mockTexture.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.LoadTexture();
@@ -216,7 +215,7 @@ namespace KDParticleEngineTests
             // Arrange
             this.effect.SpawnRateMin = rateMin;
             this.effect.SpawnRateMax = rateMax;
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IDisposable>>(), this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -229,7 +228,7 @@ namespace KDParticleEngineTests
         public void Update_WhenInvoked_SpawnsNewParticle()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IDisposable>>(), this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -252,7 +251,7 @@ namespace KDParticleEngineTests
             this.effect.BurstSpawnRateMax = 444;
             this.effect.BurstEnabled = burstingEnabled;
 
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
@@ -265,7 +264,7 @@ namespace KDParticleEngineTests
         [Fact]
         public void KillAllParticles_WhenInvoked_KillsAllParticles()
         {
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IParticleTexture>>(), this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, It.IsAny<ITextureLoader<IDisposable>>(), this.effect, this.mockRandomizerService.Object);
             pool.Update(new TimeSpan(0, 0, 0, 0, 16));
 
             // Act
@@ -279,7 +278,7 @@ namespace KDParticleEngineTests
         public void LoadTexture_WhenInvoked_LoadsTextureWithEffectTextureName()
         {
             // Arrange
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             pool.LoadTexture();
@@ -298,7 +297,7 @@ namespace KDParticleEngineTests
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var poolA = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
             var otherObj = new object();
 
             // Act
@@ -318,8 +317,8 @@ namespace KDParticleEngineTests
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var poolA = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var poolB = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             // Act
             var actual = poolA.Equals(poolB);
@@ -350,8 +349,8 @@ namespace KDParticleEngineTests
                 UseColorsFromList = true,
             };
 
-            var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, effectA, this.mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, effectB, this.mockRandomizerService.Object);
+            var poolA = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, effectA, this.mockRandomizerService.Object);
+            var poolB = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, effectB, this.mockRandomizerService.Object);
 
             // Act
             var actual = poolA.Equals(poolB);
@@ -370,8 +369,8 @@ namespace KDParticleEngineTests
             this.effect.TotalParticlesAliveAtOnce = 99;
             this.effect.UseColorsFromList = true;
 
-            var poolA = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
-            var poolB = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var poolA = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
+            var poolB = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object, this.mockTextureLoader.Object, this.effect, this.mockRandomizerService.Object);
 
             poolA.LoadTexture();
             poolB.LoadTexture();
@@ -388,14 +387,14 @@ namespace KDParticleEngineTests
         {
             // Arrange
             var effect = new ParticleEffect();
-            var mockTexture = new Mock<IParticleTexture>();
+            var mockTexture = new Mock<IDisposable>();
 
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 return mockTexture.Object;
             });
 
-            var pool = new ParticlePool<IParticleTexture>(this.mockBehaviorFactory.Object,
+            var pool = new ParticlePool<IDisposable>(this.mockBehaviorFactory.Object,
                 this.mockTextureLoader.Object,
                 effect,
                 this.mockRandomizerService.Object);

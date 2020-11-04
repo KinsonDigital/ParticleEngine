@@ -1,4 +1,4 @@
-// <copyright file="ParticlePool.cs" company="KinsonDigital">
+﻿// <copyright file="ParticlePool.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -18,7 +18,7 @@ namespace KDParticleEngine
     /// </summary>
     /// <typeparam name="TTexture">The texture for the particles in the pool.</typeparam>
     public class ParticlePool<TTexture> : IDisposable
-        where TTexture : class, IParticleTexture
+        where TTexture : class, IDisposable
     {
         private readonly IRandomizerService randomService;
         private readonly ITextureLoader<TTexture> textureLoader;
