@@ -3,6 +3,7 @@ using System.Drawing;
 using XNARect = Microsoft.Xna.Framework.Rectangle;
 using XNAColor = Microsoft.Xna.Framework.Color;
 using KDParticleEngine;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ParticleSandbox
 {
@@ -29,19 +30,19 @@ namespace ParticleSandbox
 
 
         /// <summary>
-        /// Returns a rectangle of a <see cref="IParticleTexture"/>.
+        /// Returns a rectangle of a <see cref="Texture2D"/>.
         /// </summary>
-        /// <param name="texture">The texture to construct a rectagle from.</param>
+        /// <param name="texture">The texture to construct a rectangle from.</param>
         /// <returns></returns>
-        public static XNARect GetSrcRect(this IParticleTexture texture) => new XNARect(0, 0, texture.Width, texture.Height);
+        public static XNARect GetSrcRect(this Texture2D texture) => new XNARect(0, 0, texture.Width, texture.Height);
 
 
         /// <summary>
-        /// Returns the origin location of the given <see cref="IParticleTexture"/>.
+        /// Returns the origin location of the given <see cref="Texture2D"/>.
         /// </summary>
         /// <param name="texture">The texture to calculate an origin from.</param>
         /// <returns></returns>
-        public static Vector2 GetOriginAsCenter(this IParticleTexture texture) => new Vector2(texture.Width / 2, texture.Height / 2);
+        public static Vector2 GetOriginAsCenter(this Texture2D texture) => new Vector2(texture.Width / 2, texture.Height / 2);
         #endregion
     }
 }

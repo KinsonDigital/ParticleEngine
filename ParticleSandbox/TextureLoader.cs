@@ -8,7 +8,7 @@ namespace ParticleSandbox
     /// Loads textures.
     /// </summary>
     /// <typeparam name="T">The type of particle texture to load.</typeparam>
-    public class TextureLoader : ITextureLoader<IParticleTexture>
+    public class TextureLoader : ITextureLoader<Texture2D>
     {
         #region Private Fields
         private readonly ContentManager _content;
@@ -30,13 +30,7 @@ namespace ParticleSandbox
         /// </summary>
         /// <param name="imageFilePath">The file path of the image to load.</param>
         /// <returns></returns>
-        public IParticleTexture LoadTexture(string imageFilePath)
-        {
-            var texture2D = this._content.Load<Texture2D>(imageFilePath);
-
-
-            return new Texture(texture2D);
-        }
+        public Texture2D LoadTexture(string imageFilePath) => this._content.Load<Texture2D>(imageFilePath);
         #endregion
     }
 }
