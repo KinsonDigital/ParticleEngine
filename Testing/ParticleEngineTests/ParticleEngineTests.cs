@@ -1,4 +1,4 @@
-// <copyright file="ParticleEngineTests.cs" company="KinsonDigital">
+﻿// <copyright file="ParticleEngineTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -117,7 +117,7 @@ namespace KDParticleEngineTests
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
-                // All pools use the same istance of texture loader so we have
+                // All pools use the same instance of texture loader so we have
                 // to mock out the correct texture to go with the correct pool,
                 // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
@@ -247,7 +247,7 @@ namespace KDParticleEngineTests
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
-                // All pools use the same istance of texture loader so we have
+                // All pools use the same instance of texture loader so we have
                 // to mock out the correct texture to go with the correct pool,
                 // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
