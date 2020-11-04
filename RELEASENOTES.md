@@ -1,5 +1,15 @@
 # **Particle Engine Release Notes**
 
+## <span style="color:mediumseagreen;font-weight:bold">Particle Engine v0.21.0</span>
+
+### **Breaking Changes** 💣
+
+1. Changed how the particle engine deals with **Textures**
+   * The **Particle Engine** now requires a generic type the represents the type of texture that will be rendered
+2. Changed the **Texture Loader** interface to align with **Texture** changes
+
+---
+
 ## <span style="color:mediumseagreen;font-weight:bold">Particle Engine v0.20.0</span>
 
 ### **New** 🎉
