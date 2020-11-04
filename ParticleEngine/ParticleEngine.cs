@@ -16,20 +16,22 @@ namespace KDParticleEngine
     /// Manages multiple <see cref="Particle"/>s with various settings that dictate
     /// how all of the <see cref="Particle"/>s behave and look on the screen.
     /// </summary>
-    public class ParticleEngine : IDisposable
+    /// <typeparam name="TTexture">The type of texture for the particles.</typeparam>
+    public class ParticleEngine<TTexture> : IDisposable
+        where TTexture : class, IDisposable
     {
-        private readonly List<ParticlePool<IParticleTexture>> particlePools = new List<ParticlePool<IParticleTexture>>();
-        private readonly ITextureLoader<IParticleTexture> textureLoader;
+        private readonly List<ParticlePool<TTexture>> particlePools = new List<ParticlePool<TTexture>>();
+        private readonly ITextureLoader<TTexture> textureLoader;
         private readonly IRandomizerService randomizer;
         private bool enabled = true;
         private bool isDisposed;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ParticleEngine"/> class.
+        /// Initializes a new instance of the <see cref="ParticleEngine{TTexture}"/> class.
         /// </summary>
         /// <param name="textureLoader">Loads particle textures.</param>
         /// <param name="randomizer">Randomizes numbers.</param>
-        public ParticleEngine(ITextureLoader<IParticleTexture> textureLoader, IRandomizerService randomizer)
+        public ParticleEngine(ITextureLoader<TTexture> textureLoader, IRandomizerService randomizer)
         {
             this.textureLoader = textureLoader;
             this.randomizer = randomizer;
@@ -38,8 +40,8 @@ namespace KDParticleEngine
         /// <summary>
         /// Gets all of the particle pools.
         /// </summary>
-        public ReadOnlyCollection<ParticlePool<IParticleTexture>> ParticlePools
-            => new ReadOnlyCollection<ParticlePool<IParticleTexture>>(this.particlePools.ToArray());
+        public ReadOnlyCollection<ParticlePool<TTexture>> ParticlePools
+            => new ReadOnlyCollection<ParticlePool<TTexture>>(this.particlePools.ToArray());
 
         /// <summary>
         /// Gets or sets a value indicating whether the engine is enabled or disabled.
@@ -70,7 +72,7 @@ namespace KDParticleEngine
         /// </summary>
         /// <param name="effect">The particle effect for the pool to use.</param>
         /// <param name="behaviorFactory">The factory used for creating behaviors.</param>
-        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => this.particlePools.Add(new ParticlePool<IParticleTexture>(behaviorFactory, this.textureLoader, effect, this.randomizer));
+        public void CreatePool(ParticleEffect effect, IBehaviorFactory behaviorFactory) => this.particlePools.Add(new ParticlePool<TTexture>(behaviorFactory, this.textureLoader, effect, this.randomizer));
 
         /// <summary>
         /// Clears all of the current existing pools.

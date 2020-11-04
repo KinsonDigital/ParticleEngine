@@ -4,12 +4,14 @@
 
 namespace KDParticleEngine
 {
+    using System;
+
     /// <summary>
     /// Loads textures.
     /// </summary>
-    /// <typeparam name="T">The type of texture to load.</typeparam>
-    public interface ITextureLoader<T>
-        where T : class
+    /// <typeparam name="TTexture">The type of texture to load.</typeparam>
+    public interface ITextureLoader<TTexture>
+        where TTexture : class, IDisposable
     {
         /// <summary>
         /// Loads and returns a texture with the given <paramref name="assetName"/>.
@@ -20,6 +22,6 @@ namespace KDParticleEngine
         ///     The name is abstract and is left to the implementation on how to handle it.
         /// </remarks>
         /// <returns>The texture.</returns>
-        T LoadTexture(string assetName);
+        TTexture LoadTexture(string assetName);
     }
 }

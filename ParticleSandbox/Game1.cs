@@ -27,8 +27,8 @@ namespace ParticleSandbox
         private Texture2D background;
         private SpriteFont gameFont;
         private readonly TrueRandomizerService randomService;
-        private readonly ParticleEngine engine;
-        private readonly ITextureLoader<IParticleTexture> textureLoader;
+        private readonly ParticleEngine<Texture2D> engine;
+        private readonly ITextureLoader<Texture2D> textureLoader;
         private readonly FrameCounter frameCounter = new FrameCounter();
         private KeyboardState prevKeyState;
         private KeyboardState currentKeyState;
@@ -41,7 +41,7 @@ namespace ParticleSandbox
             IsFixedTimeStep = true;
             this.randomService = new TrueRandomizerService();
             this.textureLoader = new TextureLoader(Content);
-            this.engine = new ParticleEngine(this.textureLoader, this.randomService);
+            this.engine = new ParticleEngine<Texture2D>(this.textureLoader, this.randomService);
 
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
 
@@ -268,12 +268,10 @@ namespace ParticleSandbox
                     {
                         var particleDestRect = new Rectangle((int)particle.Position.X, (int)particle.Position.Y, (int)(pool.PoolTexture.Width * particle.Size), (int)(pool.PoolTexture.Height * particle.Size));
 
-                        var monoTexture = (pool.PoolTexture as Texture).MonoTexture;
-
                         // Setup transparency for the sprite
                         var preMultipliedColor = Color.FromNonPremultiplied(particle.TintColor.R, particle.TintColor.G, particle.TintColor.B, particle.TintColor.A);
 
-                        this.spriteBatch.Draw(monoTexture, particleDestRect, pool.PoolTexture.GetSrcRect(), preMultipliedColor, ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
+                        this.spriteBatch.Draw(pool.PoolTexture, particleDestRect, pool.PoolTexture.GetSrcRect(), preMultipliedColor, ToRadians(particle.Angle), pool.PoolTexture.GetOriginAsCenter(), SpriteEffects.None, 0f);
                     }
                 }
             }

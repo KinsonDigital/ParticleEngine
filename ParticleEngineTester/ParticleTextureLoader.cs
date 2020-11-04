@@ -9,7 +9,7 @@ namespace ParticleEngineTester
     /// <summary>
     /// Loads a particle texture for rendering to the screen.
     /// </summary>
-    public class ParticleTextureLoader : ITextureLoader<IParticleTexture>
+    public class ParticleTextureLoader : ITextureLoader<ITexture>
     {
         private readonly IContentLoader contentLoader;
 
@@ -20,11 +20,6 @@ namespace ParticleEngineTester
         public ParticleTextureLoader(IContentLoader contentLoader) => this.contentLoader = contentLoader;
 
         /// <inheritdoc/>
-        public IParticleTexture LoadTexture(string assetName)
-        {
-            var loadedTexture = this.contentLoader.LoadTexture(assetName);
-
-            return new ParticleTexture(loadedTexture);
-        }
+        public ITexture LoadTexture(string assetName) => this.contentLoader.LoadTexture(assetName);
     }
 }

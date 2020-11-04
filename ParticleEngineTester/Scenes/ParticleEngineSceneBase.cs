@@ -31,13 +31,13 @@ namespace ParticleEngineTester.Scenes
             : base(renderer, contentLoader, name)
         {
             var loader = new ParticleTextureLoader(contentLoader);
-            Engine = new ParticleEngine(loader, new TrueRandomizerService());
+            Engine = new ParticleEngine<ITexture>(loader, new TrueRandomizerService());
         }
 
         /// <summary>
         /// Gets the particle engine in the scene.
         /// </summary>
-        public ParticleEngine Engine { get; private set; }
+        public ParticleEngine<ITexture> Engine { get; private set; }
 
         /// <inheritdoc/>
         public override void LoadContent()
@@ -61,23 +61,18 @@ namespace ParticleEngineTester.Scenes
             {
                 foreach (var particle in pool.Particles)
                 {
-                    if (particle.IsAlive)
+                    if (pool.PoolTexture != null && particle.IsAlive)
                     {
-                        if (!(pool.PoolTexture is ParticleTexture monoTexture))
-                        {
-                            throw new NullReferenceException("The mono texture is null.");
-                        }
-
                         var particleDestRect = new XNARect((int)particle.Position.X, (int)particle.Position.Y, (int)(pool.PoolTexture.Width * particle.Size), (int)(pool.PoolTexture.Height * particle.Size));
 
                         // Setup transparency for the sprite
                         var preMultipliedColor = Color.FromNonPremultiplied(particle.TintColor.R, particle.TintColor.G, particle.TintColor.B, particle.TintColor.A);
 
-                        var srcRect = new XNARect(0, 0, monoTexture.Width, monoTexture.Height);
-                        var origin = new Vector2(monoTexture.Width / 2, monoTexture.Height / 2);
+                        var srcRect = new XNARect(0, 0, pool.PoolTexture.Width, pool.PoolTexture.Height);
+                        var origin = new Vector2(pool.PoolTexture.Width / 2, pool.PoolTexture.Height / 2);
 
                         Renderer.Draw(
-                            monoTexture,
+                            pool.PoolTexture,
                             particleDestRect,
                             srcRect,
                             preMultipliedColor,
