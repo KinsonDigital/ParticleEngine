@@ -10,7 +10,6 @@ namespace KDParticleEngineTests
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
     using KDParticleEngine.Services;
-    using KDParticleEngineTests.Fakes;
     using KDParticleEngineTests.XUnitHelpers;
     using Moq;
     using Xunit;
@@ -20,11 +19,11 @@ namespace KDParticleEngineTests
     /// </summary>
     public class ParticleEngineTests : IDisposable
     {
-        private readonly Mock<ITextureLoader<IParticleTexture>> mockTextureLoader;
+        private readonly Mock<ITextureLoader<IDisposable>> mockTextureLoader;
         private readonly Mock<IBehaviorFactory> mockBehaviorFactory;
-        private readonly FakeTexture fakeTexture;
+        private readonly Mock<IDisposable> fakeTexture;
         private Mock<IRandomizerService> mockRandomizerService;
-        private ParticleEngine engine;
+        private ParticleEngine<IDisposable> engine;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEngineTests"/> class.
@@ -33,13 +32,13 @@ namespace KDParticleEngineTests
         {
             this.mockRandomizerService = new Mock<IRandomizerService>();
 
-            this.fakeTexture = new FakeTexture();
-            this.mockTextureLoader = new Mock<ITextureLoader<IParticleTexture>>();
-            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(this.fakeTexture);
+            this.fakeTexture = new Mock<IDisposable>();
+            this.mockTextureLoader = new Mock<ITextureLoader<IDisposable>>();
+            this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns(this.fakeTexture.Object);
 
             this.mockBehaviorFactory = new Mock<IBehaviorFactory>();
 
-            this.engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
+            this.engine = new ParticleEngine<IDisposable>(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
         }
 
         #region Constructor Tests
@@ -49,7 +48,7 @@ namespace KDParticleEngineTests
             // Act & Assert
             AssertHelpers.ThrowsWithMessage<ArgumentNullException>(() =>
             {
-                var pool = new ParticlePool<IParticleTexture>(null, null, null, null);
+                var pool = new ParticlePool<IDisposable>(null, null, null, null);
             }, "The parameter must not be null. (Parameter 'behaviorFactory')");
         }
         #endregion
@@ -111,14 +110,14 @@ namespace KDParticleEngineTests
         public void ClearPools_WhenInvoked_DisposesOfManagedResources()
         {
             // Arrange
-            var mockPool1Texture = new Mock<IParticleTexture>();
-            var mockPool2Texture = new Mock<IParticleTexture>();
+            var mockPool1Texture = new Mock<IDisposable>();
+            var mockPool2Texture = new Mock<IDisposable>();
             var textureALoaded = false;
 
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
-                // All pools use the same istance of texture loader so we have
+                // All pools use the same instance of texture loader so we have
                 // to mock out the correct texture to go with the correct pool,
                 // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
@@ -133,7 +132,7 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
+            var engine = new ParticleEngine<IDisposable>(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools
             engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -241,14 +240,14 @@ namespace KDParticleEngineTests
         public void Dispose_WhenInvoked_DisposesOfManagedResources()
         {
             // Arrange
-            var mockPool1Texture = new Mock<IParticleTexture>();
-            var mockPool2Texture = new Mock<IParticleTexture>();
+            var mockPool1Texture = new Mock<IDisposable>();
+            var mockPool2Texture = new Mock<IDisposable>();
             var textureALoaded = false;
 
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
             {
                 // Load the correct texture depending on the pool.
-                // All pools use the same istance of texture loader so we have
+                // All pools use the same instance of texture loader so we have
                 // to mock out the correct texture to go with the correct pool,
                 // so we can verify that each pool is disposing of there textures
                 if (textureALoaded)
@@ -263,7 +262,7 @@ namespace KDParticleEngineTests
             });
 
             var effect = new ParticleEffect();
-            var engine = new ParticleEngine(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
+            var engine = new ParticleEngine<IDisposable>(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools
             engine.CreatePool(effect, this.mockBehaviorFactory.Object);
@@ -286,7 +285,6 @@ namespace KDParticleEngineTests
             this.mockRandomizerService = null;
             this.engine.Dispose();
             this.engine = null;
-            this.fakeTexture.Dispose();
             GC.SuppressFinalize(this);
         }
 

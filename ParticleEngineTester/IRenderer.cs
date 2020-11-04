@@ -65,18 +65,6 @@ namespace ParticleEngineTester
         void Draw(ITexture texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float layerDepth);
 
         /// <summary>
-        /// Draws the texture on the screen.
-        /// </summary>
-        /// <param name="texture">A texture.</param>
-        /// <param name="destinationRectangle">The drawing bounds on screen.</param>
-        /// <param name="sourceRectangle">An optional region on the texture which will be rendered.  if nul, draws full texture.</param>
-        /// <param name="color">A color mask.</param>
-        /// <param name="rotation">A rotation of this texture.</param>
-        /// <param name="origin">Center of the rotation, 0,0 by default.</param>
-        /// <param name="layerDepth">A depth of the layer of this sprite.</param>
-        void Draw(ParticleTexture texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float layerDepth);
-
-        /// <summary>
         /// Draws text on the screen.
         /// </summary>
         /// <param name="spriteFont">The font to draw.</param>
