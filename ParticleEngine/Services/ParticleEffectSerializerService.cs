@@ -14,7 +14,7 @@ namespace KDParticleEngine.Services
     /// </summary>
     /// <typeparam name="T">The type of object to serialize.</typeparam>
     [ExcludeFromCodeCoverage]
-    public class ParticleEffectSerializerService : ISerilizerService<ParticleEffect>
+    public class ParticleEffectSerializerService : ISerializerService<ParticleEffect>
     {
         private readonly JsonSerializerSettings jsonSettings;
 
