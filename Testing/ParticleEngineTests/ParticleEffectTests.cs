@@ -4,6 +4,7 @@
 
 namespace KDParticleEngineTests
 {
+    using System;
     using System.Drawing;
     using KDParticleEngine;
     using KDParticleEngine.Behaviors;
@@ -20,7 +21,7 @@ namespace KDParticleEngineTests
         public void Ctor_WhenInvoked_SetsParticleTextureName()
         {
             // Act
-            var effect = new ParticleEffect("effect-name", It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = new ParticleEffect("effect-name", Array.Empty<BehaviorSettings>());
 
             // Assert
             Assert.Equal("effect-name", effect.ParticleTextureName);
@@ -58,7 +59,7 @@ namespace KDParticleEngineTests
         public void SpawnLocation_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = CreateEffect();
 
             // Act
             effect.SpawnLocation = new PointF(11, 22);
@@ -72,7 +73,7 @@ namespace KDParticleEngineTests
         public void TotalParticlesAliveAtOnce_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = CreateEffect();
 
             // Act
             effect.TotalParticlesAliveAtOnce = 1234;
@@ -86,7 +87,7 @@ namespace KDParticleEngineTests
         public void SpawnRateMin_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = CreateEffect();
 
             // Act
             effect.SpawnRateMin = 1234;
@@ -100,7 +101,7 @@ namespace KDParticleEngineTests
         public void SpawnRateMax_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = CreateEffect();
 
             // Act
             effect.SpawnRateMax = 1234;
@@ -114,7 +115,7 @@ namespace KDParticleEngineTests
         public void UseColorsFromList_WhenSettingValue_ReturnsCorrectResult()
         {
             // Arrange
-            var effect = new ParticleEffect(It.IsAny<string>(), It.IsAny<EasingRandomBehaviorSettings[]>());
+            var effect = CreateEffect();
 
             // Act
             effect.UseColorsFromList = true;
@@ -290,5 +291,11 @@ namespace KDParticleEngineTests
             Assert.False(actual);
         }
         #endregion
+
+        /// <summary>
+        /// Creates a <see cref="ParticleEffect"/> instance for the purpose of testing.
+        /// </summary>
+        /// <returns>The instance to return.</returns>
+        private static ParticleEffect CreateEffect() => new ParticleEffect(It.IsAny<string>(), Array.Empty<BehaviorSettings>());
     }
 }

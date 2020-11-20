@@ -1,4 +1,4 @@
-﻿// <copyright file="ParticlePoolTests.cs" company="KinsonDigital">
+// <copyright file="ParticlePoolTests.cs" company="KinsonDigital">
 // Copyright (c) KinsonDigital. All rights reserved.
 // </copyright>
 
@@ -386,7 +386,7 @@ namespace KDParticleEngineTests
         public void Dispose_WhenInvoked_ProperlyFreesManagedResources()
         {
             // Arrange
-            var effect = new ParticleEffect();
+            var effect = new ParticleEffect(It.IsAny<string>(), Array.Empty<BehaviorSettings>());
             var mockTexture = new Mock<IDisposable>();
 
             this.mockTextureLoader.Setup(m => m.LoadTexture(It.IsAny<string>())).Returns<string>((textureName) =>
