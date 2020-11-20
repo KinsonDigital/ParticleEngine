@@ -4,7 +4,7 @@
 
 ### **New** 🎉
 
-1. Added new `ParticleEffectSerializerService` with associated `ISerilizerService` for the purpose of serializing and deserializing `ParticleEffect` objects.
+1. Added new `ParticleEffectSerializerService` with associated `ISerializerService` for the purpose of serializing and deserializing `ParticleEffect` objects.
    * Example: This is used to save particle effect settings in the **Particle Maker** application
 
 ### **Nuget/Library Updates** 📦
