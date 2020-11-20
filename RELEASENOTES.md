@@ -1,5 +1,20 @@
 # **Particle Engine Release Notes**
 
+## <span style="color:mediumseagreen;font-weight:bold">Particle Engine v0.22.0</span>
+
+### **New** 🎉
+
+1. Added new `ParticleEffectSerializerService` with associated `ISerilizerService` for the purpose of serializing and deserializing `ParticleEffect` objects.
+   * Example: This is used to save particle effect settings in the **Particle Maker** application
+
+### **Nuget/Library Updates** 📦
+
+1. Update nuget package **Microsoft.CodeAnalysis.FxCopAnalyzers** from **v3.3.0** to **v3.3.1**
+2. Update nuget package **Moq** from **v4.14.6** to **v4.15.1**
+3. Update nuget package **Microsoft.NET.Test.Sdk** from **v16.7.1** to **v16.8.0**
+
+---
+
 ## <span style="color:mediumseagreen;font-weight:bold">Particle Engine v0.21.0</span>
 
 ### **Breaking Changes** 💣
@@ -68,11 +83,14 @@
 
 ### **Other** 👏
 
-1. Updated **MonoGame** nuget from **v3.7.0.7** to **v3.8.0.1641** in sand box project.
+1. Updated **Microsoft.NET.Test.Sdk** from **v16.7.0** to **v16.7.1**
+2. Increased code coverage of code base.
+3. Updated unit testing **editorconfig** file to new version.
+
+### **Nuget/Library Updates** 📦
+
+1. Updated nuget package **MonoGame** from **v3.7.0.7** to **v3.8.0.1641**.
    * This was to improve and keep the testing sand box developer project up to date.
-2. Updated **Microsoft.NET.Test.Sdk** from **v16.7.0** to **v16.7.1**
-3. Increased code coverage of code base.
-4. Updated unit testing **editorconfig** file to new version.
 
 ---
 
@@ -92,13 +110,15 @@
 ### **New** 🎉
 
 1. Added code analyzers to the solution to enforce coding standards and keep code clean.
-   * This required adding nuget packages to allow the analyzers to run.
-		1. Microsoft.CodeAnalysis.FxCopAnalyzers - v3.3.0
-		2. StyleCop.Analyzers - v1.1.118
    * Added/setup required **editorconfig** files with appropriate coding analyzer rules.
    * Added **stylecop.json** files for the stylecop analyzer.
 2. Refactored code to meet code analyzer requirements.
    * This was a very large code refactor.
+
+### **Nuget/Library Updates** 📦
+
+1. Updated nuget package **Microsoft.CodeAnalysis.FxCopAnalyzers** to **v3.3.0**
+2. Updated nuget package**StyleCop.Analyzers** to **v1.1.118**
 
 ---
 
