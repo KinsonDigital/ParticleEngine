@@ -131,7 +131,7 @@ namespace KDParticleEngineTests
                 }
             });
 
-            var effect = new ParticleEffect();
+            var effect = new ParticleEffect(It.IsAny<string>(), Array.Empty<BehaviorSettings>());
             var engine = new ParticleEngine<IDisposable>(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools
@@ -261,7 +261,7 @@ namespace KDParticleEngineTests
                 }
             });
 
-            var effect = new ParticleEffect();
+            var effect = new ParticleEffect(It.IsAny<string>(), Array.Empty<BehaviorSettings>());
             var engine = new ParticleEngine<IDisposable>(this.mockTextureLoader.Object, this.mockRandomizerService.Object);
 
             // Create 2 pools

@@ -8,16 +8,21 @@ namespace KDParticleEngine
     using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
     using KDParticleEngine.Behaviors;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Holds the particle setup settings data for the <see cref="ParticleEngine"/> to consume.
     /// </summary>
     public class ParticleEffect
     {
+        private BehaviorSettings[] behaviorSettings = Array.Empty<BehaviorSettings>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEffect"/> class.
         /// </summary>
+        [JsonConstructor]
         public ParticleEffect()
         {
         }
@@ -29,10 +34,13 @@ namespace KDParticleEngine
         /// <param name="settings">The settings used to setup the particle effect.</param>
         public ParticleEffect(string particleTextureName, BehaviorSettings[] settings)
         {
+            if (settings is null)
+            {
+                throw new ArgumentNullException(nameof(settings), "Parameter must not be null.");
+            }
+
             ParticleTextureName = particleTextureName;
-            BehaviorSettings = settings is null
-                ? new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>())
-                : new ReadOnlyCollection<BehaviorSettings>(settings);
+            this.behaviorSettings = settings;
         }
 
         /// <summary>
@@ -108,9 +116,13 @@ namespace KDParticleEngine
         public bool UseColorsFromList { get; set; }
 
         /// <summary>
-        /// Gets the list of behavior settings that describe how the particle effect is setup.
+        /// Gets or sets the list of behavior settings that describe how the particle effect is setup.
         /// </summary>
-        public ReadOnlyCollection<BehaviorSettings> BehaviorSettings { get; } = new ReadOnlyCollection<BehaviorSettings>(Array.Empty<BehaviorSettings>());
+        public ReadOnlyCollection<BehaviorSettings> BehaviorSettings
+        {
+            get => new ReadOnlyCollection<BehaviorSettings>(this.behaviorSettings);
+            set => this.behaviorSettings = value.ToArray();
+        }
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
