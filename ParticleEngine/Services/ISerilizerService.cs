@@ -13,7 +13,7 @@ namespace KDParticleEngine.Services
         /// <summary>
         /// Serializes the given <paramref name="obj"/> at the given <paramref name="filePath"/>.
         /// </summary>
-        /// <param name="filePath">The path and file name of the serialized object.</param>
+        /// <param name="filePath">The path and file name of the data file.</param>
         /// <param name="obj">The object to serialize.</param>
         void Serialize(string filePath, T obj);
 
