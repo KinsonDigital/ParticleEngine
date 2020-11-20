@@ -8,7 +8,7 @@ namespace KDParticleEngine.Services
     /// Serializes and deserializes and object of type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of object to serialize.</typeparam>
-    public interface ISerilizerService<T>
+    public interface ISerializerService<T>
     {
         /// <summary>
         /// Serializes the given <paramref name="obj"/> at the given <paramref name="filePath"/>.
