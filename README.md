@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/KinsonDigital/GameDevTools/_apis/build/status/ParticleEngine/ParticleEngine?branchName=master)](https://dev.azure.com/KinsonDigital/GameDevTools/_build/latest?definitionId=37&branchName=master)
+
 <span style='font-weight: bold; color: dodgerblue'></span>
 
 
